@@ -19,7 +19,7 @@
       <img v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
-        <button v-if="!collected" @click="collect" class="btn btn-outline-success">Collect</button>
+        <button v-if="!collected" @click="importAndCollect" class="btn btn-outline-success">Collect</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
@@ -85,11 +85,10 @@
           this.playing = false;
           this.player.stopVideo();
         },
-        collect:function() {
+        importAndCollect:function() {
           let self = this;
-          $ajax.post('/api/collect', {
-            index:this.id,
-            table:'youtube_videos'
+          $ajax.post('/api/youtube/import', {
+            vid:this.vid
           }).then((resp) => {
             if(resp.status == 200) {
               self.collected = true;

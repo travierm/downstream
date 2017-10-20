@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Youtube;
+use YouTube;
 
 class SearchController extends Controller
 {
@@ -18,7 +18,7 @@ class SearchController extends Controller
 
   public function postSearchYouTube(Request $req)
   {
-    $res = Youtube::search($req->input('query'), 10);
+    $res = YouTube::search($req->input('query'), 10);
     if(!$res) {
       return redirect()->back()->withErrors("No results found!");
     }

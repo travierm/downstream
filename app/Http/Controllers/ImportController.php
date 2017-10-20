@@ -23,6 +23,41 @@ class ImportController extends Controller
     return view('import.index');
   }
 
+  public function attemptYouTubeImport($userId, $vid)
+  {
+    $vid = $this->cleanVid($vid);
+
+    if(!$vid) {
+      return [false, "Video ID could not be found."];
+    }
+
+    $apiInfo = YouTube::getVideoInfo($vid);
+    if(!$apiInfo) {
+      return [false, "Could not find video on YouTube."];
+    }
+
+    if(YouTubeVideo::isDuplicate($vid)) {
+      return [true, "Already imported"];
+    }
+
+    $video = new YouTubeVideo;
+    $video->vid = $vid;
+    $video->user_id = $userId;
+    $video->title = $apiInfo->snippet->title;
+    $video->description = $apiInfo->snippet->description;
+    if(@$apiInfo->snippet->tags) {
+      $video->tags = json_encode($apiInfo->snippet->tags);
+    }
+    $video->view_count = $apiInfo->statistics->viewCount;
+    $status = $video->save();
+
+    if(!$status) {
+      return [false, "Database error."];
+    }else{
+      return [true, "Imported video successfully"];
+    }
+  }
+
   public function postImportVideo(Request $req)
   {
     $vid = $this->cleanVid($req->input('vid'));

@@ -17,6 +17,10 @@ class YouTubeAPIController extends Controller
 
   public function importAndCollect(Request $req)
   {
+    $userId = Auth::guard('api')->user()->id;
+    $vid = $req->input('vid');
 
+    $result = app('App\Http\Controllers\ImportController')->attemptYouTubeImport($userId, $vid);
+    dd($result);
   }
 }

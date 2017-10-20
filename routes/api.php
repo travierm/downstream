@@ -17,5 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('like', 'LikeController');
-Route::resource('collect', 'CollectionAPIController');
+Route::post("/api/youtube/import", "YouTubeAPIController@importAndCollect");
+
+//Route::resource('like', 'LikeController');
+//Route::resource('collect', 'CollectionAPIController');
