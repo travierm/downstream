@@ -19,7 +19,7 @@
     @if(@$videos)
       @foreach($videos as $video)
       <div class="col-lg-3 pushFromTop">
-        <youtube-player-card id="{{$video->id->videoId}}" :collected="false" vid="{{$video->id->videoId}}"></youtube-player-card>
+        <youtube-player-card collected="{{$video->collected}}" id="{{$video->id}}" vid={{$video->vid}} ></youtube-player-card>
       </div>
       @endforeach
     @endif

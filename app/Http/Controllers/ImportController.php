@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Youtube;
+use YouTube;
 use Auth;
 use App\UserLike;
 use App\YouTubeVideo;
@@ -28,16 +28,17 @@ class ImportController extends Controller
     $vid = $this->cleanVid($vid);
 
     if(!$vid) {
-      return [false, "Video ID could not be found."];
+      return false;
     }
 
     $apiInfo = YouTube::getVideoInfo($vid);
     if(!$apiInfo) {
-      return [false, "Could not find video on YouTube."];
+      return false;
     }
 
     if(YouTubeVideo::isDuplicate($vid)) {
-      return [true, "Already imported"];
+      $id = YouTubeVideo::where('vid', $vid)->first()->id;
+      return $id;
     }
 
     $video = new YouTubeVideo;
@@ -52,9 +53,9 @@ class ImportController extends Controller
     $status = $video->save();
 
     if(!$status) {
-      return [false, "Database error."];
+      return false;
     }else{
-      return [true, "Imported video successfully"];
+      return $video->id;
     }
   }
 

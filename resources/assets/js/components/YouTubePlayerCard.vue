@@ -19,8 +19,8 @@
       <img v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
-        <button v-if="!collected" @click="importAndCollect" class="btn btn-outline-success">Collect</button>
-        <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
+        <button v-if="!isCollected" @click="importAndCollect" class="btn btn-outline-success">Collect</button>
+        <button v-if="isCollected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
   </div>
@@ -34,6 +34,7 @@
       data:() => {
         return {
           playing:false,
+          isCollected:false,
           player:false
         }
       },
@@ -60,9 +61,9 @@
           default: true
         },
         collected:{
-          type: Boolean,
-          required: false,
-          default: false
+          type: String,
+          required: true,
+          default: "false"
         },
         canEdit: {
           type: Boolean,
@@ -71,6 +72,10 @@
         }
       },
       mounted() {
+        if(this.collected) {
+          this.isCollected = true;
+        }
+
         this.player = YouTubePlayer(this.id, {
           videoId: this.vid,
           width:$('#' + this.vid).width()
@@ -87,16 +92,23 @@
         },
         importAndCollect:function() {
           let self = this;
-          $ajax.post('/api/youtube/import', {
+          $ajax.post('/api/youtube/collect', {
             vid:this.vid
           }).then((resp) => {
             if(resp.status == 200) {
-              self.collected = true;
+              self.isCollected = true;
             }
           });
         },
         toss:function() {
-
+          let self = this;
+          $ajax.post('/api/youtube/toss', {
+            id:this.id
+          }).then((resp) => {
+            if(resp.status == 200) {
+              self.isCollected = false;
+            }
+          });
         }
       }
     }

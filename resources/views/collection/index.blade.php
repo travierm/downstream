@@ -5,7 +5,7 @@
     @if(@$videos)
       @foreach($videos as $video)
       <div class="col-lg-3">
-        <youtube-player-card id="{{$video->id}}" collected="{{$video->wasCollected}}" title="{{$video->title}}"  vid="{{$video->vid}}"></youtube-player-card>
+        <youtube-player-card id="{{$video->id}}" collected="{{$video->collected}}" title="{{$video->title}}"  vid="{{$video->vid}}"></youtube-player-card>
       </div>
       @endforeach
     @endif

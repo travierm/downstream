@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\UserLike;
+use App\UserCollection;
 use Illuminate\Http\Request;
 
 class CollectionController extends Controller
@@ -14,7 +14,7 @@ class CollectionController extends Controller
 
   public function getIndex()
   {
-    $videos = UserLike::getYouTubeVideos();
+    $videos = UserCollection::getYouTubeVideos();
 
     return view('collection.index', [
       'videos' => $videos

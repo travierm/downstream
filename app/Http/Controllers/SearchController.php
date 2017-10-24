@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use YouTube;
+use App\YouTubeVideo;
 
 class SearchController extends Controller
 {
@@ -28,13 +29,16 @@ class SearchController extends Controller
       return (!@is_null($row->id->videoId));
     });
 
-    $videoIds = $results->keyBy(function($row) {
+    $videoIds = array_map(function($row) {
       return $row->id->videoId;
-    });
+    }, $results->all());
+
+    $videos = YouTubeVideo::cleanSearchResults($videoIds);
+    //dd($videos);
 
     return view('search.index')->with([
       'query' => $req->input('query'),
-      'videos' => $videoIds->all(),
+      'videos' => $videos,
       'success' => true
     ]);
   }

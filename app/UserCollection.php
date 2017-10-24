@@ -10,6 +10,18 @@ class UserCollection extends Model
 {
   protected $table = "user_collections";
 
+  public static function getYouTubeCollectable($id)
+  {
+    $userId = Auth::user()->id;
+
+    $collectable = UserCollection::where('user_id', $userId)
+      ->where('table', 'youtube_videos')
+      ->where('index', $id)
+      ->first();
+      
+    return $collectable;
+  }
+
   public static function didLikeVideo($id)
   {
     $videoLike = self::where('user_id', Auth::user()->id)
@@ -26,6 +38,12 @@ class UserCollection extends Model
       ->where('table', 'youtube_videos')
       ->pluck('index');
 
-    return YouTubeVideo::whereIn('id', $videoIndexes)->get();
+    $videos = YouTubeVideo::whereIn('id', $videoIndexes)->get();
+    $videos->map(function($video) {
+      $video->collected = true;
+      return $video;
+    });
+
+    return $videos;
   }
 }
