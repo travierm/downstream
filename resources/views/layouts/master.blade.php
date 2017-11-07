@@ -13,54 +13,59 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/">Dowstream</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <div id="app">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Dowstream</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto">
-          @if(!Auth::guest())
-          <li class="nav-item">
-            <a class="nav-link" href="/">Front Page</a>
-          </li>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav mr-auto">
+            @if(!Auth::guest())
+            <li class="nav-item">
+              <a class="nav-link" href="/">Front Page</a>
+            </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/import">Import</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/import">Import</a>
+            </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/search">Search</a>
-          </li>
-          @endif
-        </ul>
-        <ul class="navbar-nav">
-          @if(Auth::guest())
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/login') }}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/register') }}">Register</a>
-          </li>
-          @else
-          <li class="nav-item">
-            <a class="nav-link" href="/collection">My Collection</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/search">Search</a>
+            </li>
+            @endif
+          </ul>
+          <ul class="navbar-nav">
+            @if(Auth::guest())
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('/login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('/register') }}">Register</a>
+            </li>
+            @else
+            <li class="nav-item">
+              <router-link class="nav-link" to="/collection">Collection</router-link>
+            </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="">{{Auth::user()->shrinkHash()}}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
-          </li>
-          @endif
-        </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="">{{Auth::user()->shrinkHash()}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            @endif
+          </ul>
+        </div>
+        </nav>
+
+        <div class="container-fluid">
+          <router-view></router-view>
+          @yield('content')
+        </div>
+      <!-- End App -->
       </div>
-    </nav>
-    <div id="app" class="container-fluid">
-      @yield('content')
-    </div>
 
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
     <script src="{{ mix('js/app.js') }}"></script>

@@ -14,15 +14,18 @@
         "bootstrap": "^4.0.0-beta",
         "cross-env": "^5.0.1",
         "jquery": "^3.1.1",
+        "jshint": "^2.9.5",
         "laravel-mix": "*",
         "lodash": "^4.17.4",
         "tether": "^1.4.0",
-        "vue": "2.5.2",
+        "vue": "2.5.3",
         "youtube-player": "^5.4.0"
     },
     "dependencies": {
         "shortid": "^2.2.8",
         "vue-class-component": "^5.0.2",
-        "vue-template-compiler": "^2.5.2"
+        "vue-router": "^3.0.1",
+        "vue-template-compiler": "2.5.3",
+        "vuex": "^3.0.1"
     }
 }
