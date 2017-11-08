@@ -61,12 +61,22 @@
         </nav>
 
         <div class="container-fluid">
+          <!-- Vue Router View -->
           <router-view></router-view>
-          @yield('content')
+
+          <!-- PHP Generated HTML -->
+          <div id="hardContent">
+            @yield('content')
+          </div>
         </div>
       <!-- End App -->
       </div>
 
+    <script>
+    window.Laravel = <?php echo json_encode([
+           'csrfToken' => csrf_token(),
+       ]); ?>;
+    </script>
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
     <script src="{{ mix('js/app.js') }}"></script>
   </body>

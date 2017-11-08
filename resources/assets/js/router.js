@@ -1,17 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import CollectionPage from './pages/collection';
 
 Vue.use(VueRouter);
 
-//Vue Router Setup
-const Foo = { template: '<div>foo</div>' }
-const Bar = { template: '<div>bar</div>' }
-
 const routes = [
-  { path: '/foo', component: Foo },
-  { path: '/collection', component: Bar }
-]
+  { path: '/collection', component: CollectionPage }
+];
 
 export default new VueRouter({
-  routes // short for `routes: routes`
-})
+  routes
+});

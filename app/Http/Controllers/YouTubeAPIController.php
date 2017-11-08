@@ -15,6 +15,10 @@ class YouTubeAPIController extends Controller
     $this->middleware('auth:api');
   }
 
+  public function test() {
+    return "test";
+  }
+
   public function toss(Request $req)
   {
     $id = $req->input('id');

@@ -5,9 +5,15 @@ export default class Ajax {
     this.api_token = token;
   }
 
-  post(url, data) {
-    data['api_token'] = this.api_token;
-    
+  get(url) {
+    return this.axios.get(url);
+  }
+
+  post(url, params) {
+    const data = {
+      params
+    }
+
     return this.axios.post(url, data);
   }
 }

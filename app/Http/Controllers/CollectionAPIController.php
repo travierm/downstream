@@ -19,7 +19,7 @@ class CollectionAPIController extends Controller
      */
     public function index()
     {
-        //
+      return [1,2,3];
     }
 
     /**
@@ -29,7 +29,7 @@ class CollectionAPIController extends Controller
      */
     public function create()
     {
-        //
+      return true;
     }
 
     /**

@@ -20,5 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("/youtube/collect", "YouTubeAPIController@collect");
 Route::post("/youtube/toss", "YouTubeAPIController@toss");
 
+Route::post("/test", "YouTubeAPIController@test");
+
 //Route::resource('like', 'LikeController');
-//Route::resource('collect', 'CollectionAPIController');
+Route::get('collection', 'CollectionAPIController@index');

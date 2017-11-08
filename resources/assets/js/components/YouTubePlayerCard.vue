@@ -1,21 +1,13 @@
 <template>
-  <div id="card1" class="card cardHeight">
+  <div id="card1" class="card">
 
     <!-- Editor -->
     <div v-if="canEdit" class="card-header">
       <button class="float-right btn btn-sm btn-outline-danger">Remove</button>
     </div>
 
-    <!-- YouTube Player -->
-    <div :id="this.id"></div>
-    <div class="card-body">
-      <div v-if="showText">
-        <h4 class="card-title text-truncate">{{title}}</h4>
-        <p class="card-text">{{description}}</p>
-      </div>
-
+    <div id="cardToolbar" class="card-block">
       <img v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
-
       <img v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
@@ -23,6 +15,8 @@
         <button v-if="isCollected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
+    <!-- YouTube Player -->
+    <div :id="this.id"></div>
   </div>
 </template>
 
@@ -92,7 +86,7 @@
         },
         importAndCollect:function() {
           let self = this;
-          $ajax.post('/api/youtube/collect', {
+          axios.post('/api/youtube/collect', {
             vid:this.vid
           }).then((resp) => {
             if(resp.status == 200) {
@@ -102,7 +96,7 @@
         },
         toss:function() {
           let self = this;
-          $ajax.post('/api/youtube/toss', {
+          axios.post('/api/youtube/toss', {
             id:this.id
           }).then((resp) => {
             if(resp.status == 200) {
@@ -113,3 +107,9 @@
       }
     }
 </script>
+
+<style>
+#cardToolbar {
+  margin: 15px 15px 15px 15px;
+}
+</style>

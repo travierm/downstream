@@ -37,9 +37,7 @@ let token = document.head.querySelector('meta[name="csrf-token"]');
 let apiToken = document.head.querySelector('meta[name="xyz-token"]');
 
 if(apiToken) {
-  window.$ajax = new Ajax(window.axios, apiToken.content);
-}else{
-  window.$ajax = false;
+  window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken.content;
 }
 
 if (token) {
