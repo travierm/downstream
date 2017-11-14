@@ -29,6 +29,11 @@ class User extends Authenticatable
         'password', 'remember_token', 'api_token'
     ];
 
+    public function media()
+    {
+      return $this->hasMany('App\UserMedia');
+    }
+
     public function shrinkHash()
     {
       return substr($this->hash, 0, 8);

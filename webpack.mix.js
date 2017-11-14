@@ -15,14 +15,9 @@ mix
   .js('resources/assets/js/app.js', 'public/js/app.js')
   .sass('resources/assets/sass/app.scss', 'public/css');
 
-/*mix.webpackConfig({
-  module: {
-    rules: [{
-      test: /\.js?$/,
-      use: [{
-        loader: 'babel-loader',
-        options: mix.config.babel()
-      }]
-    }]
+mix.webpackConfig({
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
   }
-});*/
+});

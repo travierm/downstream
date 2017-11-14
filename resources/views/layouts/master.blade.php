@@ -63,6 +63,7 @@
         <div class="container-fluid">
           <!-- Vue Router View -->
           <router-view></router-view>
+          <master-bar></master-bar>
 
           <!-- PHP Generated HTML -->
           <div id="hardContent">

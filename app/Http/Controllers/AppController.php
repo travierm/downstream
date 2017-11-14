@@ -10,10 +10,9 @@ class AppController extends Controller
 {
   public function getIndex()
   {
-    $videos = YouTubeVideo::all();
+    //$videos = YouTubeVideo::all();
 
     return view('index', [
-      'videos' => $videos
     ]);
   }
 }

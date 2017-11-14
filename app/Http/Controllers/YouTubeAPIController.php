@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use YouTube;
+use YouTubeServiceService;
 use App\UserCollection;
-use App\YouTubeVideo;
+use App\YouTubeServiceVideo;
 use Illuminate\Http\Request;
 
 class YouTubeAPIController extends Controller
@@ -23,13 +23,13 @@ class YouTubeAPIController extends Controller
   {
     $id = $req->input('id');
 
-    $collectable = UserCollection::getYouTubeCollectable($id);
+    $collectable = UserCollection::getYouTubeServiceCollectable($id);
 
     if($collectable) {
       $collectable->delete();
       return response()->json([
             'code'      =>  200,
-            'message'   =>  "Tossed YouTube Video from collection"
+            'message'   =>  "Tossed YouTubeService Video from collection"
         ], 200);
     }else{
       return response()->json([
@@ -45,7 +45,7 @@ class YouTubeAPIController extends Controller
     $vid = $req->input('vid');
 
     //returns either false for bad import or the id of the video
-    $result = app('App\Http\Controllers\ImportController')->attemptYouTubeImport($userId, $vid);
+    $result = app('App\Http\Controllers\ImportController')->attemptYouTubeServiceImport($userId, $vid);
     if(!$result) {
       return response()->json([
             'code'      =>  401,
@@ -53,7 +53,7 @@ class YouTubeAPIController extends Controller
         ], 401);
     }
 
-    //database id of video not youtube.video_id
+    //database id of video not YouTubeService.video_id
     $videoId = $result;
     //check if user already liked this video
     if(UserCollection::didLikeVideo($videoId)) {
@@ -65,7 +65,7 @@ class YouTubeAPIController extends Controller
 
     $collectable = new UserCollection;
     $collectable->user_id = $userId;
-    $collectable->table = "youtube_videos";
+    $collectable->table = "YouTubeService_videos";
     $collectable->index = $videoId;
     $result = $collectable->save();
 
@@ -77,7 +77,7 @@ class YouTubeAPIController extends Controller
     }else{
       return response()->json([
             'code'      =>  200,
-            'message'   =>  "Collected YouTube Video"
+            'message'   =>  "Collected YouTubeService Video"
         ], 200);
     }
   }

@@ -1,23 +1,20 @@
 <template>
   <div class="container-fluid pushFromTop">
     <div class="row">
-        <div class="col-lg-3">
-          <h1>Here 6</h1>
+        <div class="col-lg-3"  v-for="video in collection">
+          <youtube-player-card v-bind:vid="video.vid" collected="false"></youtube-player-card>
         </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
+
   export default {
-    data:() => {
-      return {
-        collection:[]
-      }
-    },
-    mounted() {
-      this.$store.dispatch('fetchCollection');
-    }
+    computed: mapGetters([
+      'collection'
+    ])
   }
 </script>
 

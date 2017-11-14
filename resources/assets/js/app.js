@@ -13,10 +13,10 @@ window.Vue = require('vue');
 
 //Components
 Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));
+Vue.component('master-bar', require('./components/MasterBar.vue'));
 //Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 
-//
 router.beforeEach((to, from, next) => {
 
   if(to.path !== "/")
@@ -24,6 +24,9 @@ router.beforeEach((to, from, next) => {
 
   next();
 });
+
+//Make initial api requests
+store.dispatch('fetchCollection');
 
 const app = new Vue({
   router,

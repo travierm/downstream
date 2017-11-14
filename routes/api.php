@@ -24,3 +24,12 @@ Route::post("/test", "YouTubeAPIController@test");
 
 //Route::resource('like', 'LikeController');
 Route::get('collection', 'CollectionAPIController@index');
+
+Route::get('/media/index', 'MediaAPIController@index');
+Route::get('/media/collected', 'MediaAPIController@collected');
+
+//Auto Resolved Media Actions
+Route::get('/media/collect', 'MediaAPIController@resolve');
+Route::get('/media/remove', 'MediaAPIController@resolve');
+Route::post('/media/add', 'MediaAPIController@resolve');
+Route::post('/media/discover', 'MediaAPIController@resolve');

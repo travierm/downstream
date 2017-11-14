@@ -19,7 +19,9 @@ class CollectionAPIController extends Controller
      */
     public function index()
     {
-      return [1,2,3];
+      $videos = UserCollection::getYouTubeVideos();
+
+      return $videos;
     }
 
     /**

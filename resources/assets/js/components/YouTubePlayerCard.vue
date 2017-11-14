@@ -27,16 +27,13 @@
     export default {
       data:() => {
         return {
+          id:SID.generate(),
           playing:false,
           isCollected:false,
           player:false
         }
       },
       props:{
-        id: {
-          type: String,
-          required: true
-        },
         vid: {
           type: String,
           required: true
@@ -70,10 +67,10 @@
           this.isCollected = true;
         }
 
-        this.player = YouTubePlayer(this.id, {
-          videoId: this.vid,
-          width:$('#' + this.vid).width()
-        });
+        this.$store.dispatch('registerVideo', {
+          id:this.id,
+          vid:this.vid
+        })
       },
       methods:{
         play:function() {
