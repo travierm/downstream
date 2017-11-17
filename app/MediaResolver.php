@@ -22,6 +22,7 @@ class MediaResolver {
     $methods = get_class_methods($typeClass);
     $methods = array_diff($methods, ['__construct']);
 
+    //@TODO make sure my meta logic with arguments vs params is correct
     if(in_array($action, $methods)) {
       $arguments = $this->matchArguments($typeClass, $action, $input);
       return $typeClass->{$action}(...$arguments);
