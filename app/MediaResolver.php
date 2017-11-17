@@ -1,29 +1,50 @@
 <?php
 namespace App;
 
+use Auth;
 use App\Media\YouTube;
 
 class MediaResolver {
 
-  private static $types = [];
-  private static $routes = [];
+  private $userId;
+  private $types = [];
 
-  public static function init($userId)
+  public function __construct($userId)
   {
-    self::$types = [
+    $this->types = [
       "youtube" => new YouTube($userId)
     ];
   }
 
-  public static function dispatch($type, $action, $params)
+  public function dispatch($type, $action, $input)
   {
-    $typeClass = self::$types[$type];
+    $typeClass = $this->types[$type];
     $methods = get_class_methods($typeClass);
     $methods = array_diff($methods, ['__construct']);
 
     if(in_array($action, $methods)) {
-      return $typeClass->{$action}();
+      $arguments = $this->matchArguments($typeClass, $action, $input);
+      return $typeClass->{$action}(...$arguments);
     }
+  }
+
+  private function matchArguments($class, $method, $arguments)
+  {
+    $params = [];
+
+    $ref = new \ReflectionMethod($class, $method);
+    foreach($ref->getParameters() as $param) {
+      $params[] = $param->name;
+    }
+
+    $data = [];
+    //match param to available arguments
+    foreach($params as $param) {
+      //fill array will correct param order instead of key => value
+      $data[] = $arguments[$param];
+    }
+
+    return $data;
   }
 }
 ?>

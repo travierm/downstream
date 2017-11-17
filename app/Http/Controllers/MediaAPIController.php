@@ -20,16 +20,21 @@ class MediaAPIController extends Controller
       'track'
     ]
   ];
+  private $userId = false;
 
   public function __construct()
   {
     //$this->middleware('auth:api');
 
-    //$userId = Auth::guard('api')->user()->id;
-    $userId = null;
+
+    $this->middleware(function ($request, $next) {
+           $this->userId = Auth::user()->id;
+
+           return $next($request);
+    });
 
 
-    MediaResolver::init($userId);
+    MediaResolver::init($this->userId);
   }
 
   public function resolve(Request $request)

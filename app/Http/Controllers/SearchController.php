@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
-use YouTube;
+use YouTubeService;
 use App\YouTubeVideo;
+use App\MediaResolver;
 
 class SearchController extends Controller
 {
+  private $userId = false;
   public function __construct()
   {
     $this->middleware('auth');
+    $this->middleware(function ($request, $next) {
+       $this->userId = Auth::user()->id;
+
+       return $next($request);
+    });
+
+    $this->resolver = new MediaResolver($this->userId);
   }
 
   public function getIndex() {
@@ -19,22 +29,11 @@ class SearchController extends Controller
 
   public function postSearchYouTube(Request $req)
   {
-    $res = YouTube::search($req->input('query'), 10);
-    if(!$res) {
-      return redirect()->back()->withErrors("No results found!");
-    }
+    $results = $this->resolver->dispatch('youtube', 'search', [
+      'query' => $req->input('query')
+    ]);
 
-    $results = collect($res);
-    $results = $results->filter(function($row) {
-      return (!@is_null($row->id->videoId));
-    });
-
-    $videoIds = array_map(function($row) {
-      return $row->id->videoId;
-    }, $results->all());
-
-    $videos = YouTubeVideo::cleanSearchResults($videoIds);
-    //dd($videos);
+    dd($results);
 
     return view('search.index')->with([
       'query' => $req->input('query'),

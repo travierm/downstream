@@ -33,8 +33,10 @@ class YouTube {
 
   }
 
-  public function search($query)
+  public function search($query, $test2)
   {
+    dd($query);
+
     $results = YouTubeService::search($query, 10);
     if(!$results) {
       return false;
@@ -49,14 +51,7 @@ class YouTube {
       return $row->id->videoId;
     }, $results->all());
 
-    $videos = YouTubeVideo::cleanSearchResults($videoIds);
-    //dd($videos);
-
-    return view('search.index')->with([
-      'query' => $req->input('query'),
-      'videos' => $videos,
-      'success' => true
-    ]);
+    dd($videoIds);
   }
 
   private function cleanSearchResults($videoIds)
