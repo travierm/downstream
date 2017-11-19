@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class UserMedia extends Model
 {
   protected $table = 'user_media';
+  protected $fillable = ['media_id', 'user_id'];
+
+  public static function findById($mediaId, $userId)
+  {
+    return self::where('media_id', $mediaId)
+      ->where('user_id', $userId);
+  }
 
   public static function collection($type = false)
   {
@@ -23,7 +30,7 @@ class UserMedia extends Model
 
   public static function didCollect($mediaId)
   {
-    self::where('media_id', $mediaId)
+    return self::where('media_id', $mediaId)
       ->where('user_id', Auth::user()->id)
       ->exists();
   }

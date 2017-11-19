@@ -13,7 +13,7 @@ class clearMedia extends Command
      *
      * @var string
      */
-    protected $signature = 'clear:media';
+    protected $signature = 'media:clear';
 
     /**
      * The console command description.

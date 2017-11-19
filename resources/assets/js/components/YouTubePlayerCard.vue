@@ -34,6 +34,10 @@
         }
       },
       props:{
+        mediaId: {
+          required: false,
+          default: false
+        },
         vid: {
           type: String,
           required: true
@@ -101,10 +105,11 @@
           });
         },
         toss:function() {
+          if(!this.mediaId) {
+            return false;
+          }
           let self = this;
-          axios.post('/api/youtube/toss', {
-            id:this.id
-          }).then((resp) => {
+          axios.get('/api/media/toss?type=youtube&mediaId=' + this.mediaId).then((resp) => {
             if(resp.status == 200) {
               self.isCollected = false;
             }

@@ -32,9 +32,21 @@ class YouTube {
 
   }
 
-  public function toss()
+  /**
+   * Toss media from UserMedia
+   * Media is still kept with user_id attached
+   * @return [type] [description]
+   */
+  public function toss($mediaId)
   {
+    $userMedia = UserMedia::findById($mediaId, $this->userId);
+    echo $mediaId;
+    exit;
+    if($media) {
+      $userMedia->delete();
+    }
 
+    return true;
   }
 
   //Add to media library and add to user collectables
@@ -45,6 +57,7 @@ class YouTube {
       return false;
     }
 
+    //Create Meta data array
     $meta = [];
     $meta['title'] = $video->snippet->title;
     $meta['view_count'] = $video->statistics->viewCount;
@@ -53,22 +66,21 @@ class YouTube {
     if(@$video->snippet->tags) {
       $meta['tags'] = $video->snippet->tags;
     }
-
     $meta = json_encode($meta);
 
-    $media = new Media();
-    $media->origin = 'youtube#search';
-    $media->type = 'youtube';
-    $media->subtype = 'video';
-    $media->index = $videoId;
-    $media->user_id = $this->userId;
-    $media->meta = $meta;
-    $media->save();
+    $media = Media::returnOrCreate([
+      'origin' => 'youtube#search',
+      'type' => 'youtube',
+      'subtype' => 'video',
+      'index' => $videoId,
+      'user_id' => $this->userId,
+      'meta' => $meta
+    ]);
 
-    $userMedia = new UserMedia();
-    $userMedia->media_id = $media->id;
-    $userMedia->user_id = $this->userId;
-    $userMedia->save();
+    $userMedia = UserMedia::firstOrCreate([
+      'media_id' => $media->id,
+      'user_id' => $this->userId
+    ]);
 
     return true;
   }
@@ -109,7 +121,7 @@ class YouTube {
         $result->collected = UserMedia::didCollect($media->id);
         $result->id = $media->id;
       }else{
-        $result->id = uniqid();
+        $result->id = false;
       }
 
       $results[] = $result;

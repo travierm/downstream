@@ -31,5 +31,6 @@ Route::get('/media/collected', 'MediaAPIController@collected');
 //Auto Resolved Media Actions
 Route::get('/media/collect', 'MediaAPIController@resolve');
 Route::get('/media/remove', 'MediaAPIController@resolve');
+Route::get('/media/toss', 'MediaAPIController@resolve');
 Route::post('/media/add', 'MediaAPIController@resolve');
 Route::post('/media/discover', 'MediaAPIController@resolve');
