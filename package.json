@@ -17,7 +17,7 @@
         "jshint": "^2.9.5",
         "laravel-mix": "*",
         "lodash": "^4.17.4",
-        "tether": "^1.4.0",
+        "tether": "^1.4.1",
         "vue": "2.5.3",
         "youtube-player": "^5.4.0"
     },
