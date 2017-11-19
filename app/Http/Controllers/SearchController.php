@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Media\YouTube;
 use Illuminate\Http\Request;
-use YouTubeService;
-use App\YouTubeVideo;
-use App\MediaResolver;
 
 class SearchController extends Controller
 {
@@ -16,11 +14,10 @@ class SearchController extends Controller
     $this->middleware('auth');
     $this->middleware(function ($request, $next) {
        $this->userId = Auth::user()->id;
+      $this->youtube = new YouTube($this->userId);
 
        return $next($request);
     });
-
-    $this->resolver = new MediaResolver($this->userId);
   }
 
   public function getIndex() {
@@ -29,15 +26,12 @@ class SearchController extends Controller
 
   public function postSearchYouTube(Request $req)
   {
-    $results = $this->resolver->dispatch('youtube', 'search', [
-      'query' => $req->input('query')
-    ]);
-
-    dd($results);
+    $query = $req->input('query');
+    $results = $this->youtube->search($query);
 
     return view('search.index')->with([
       'query' => $req->input('query'),
-      'videos' => $videos,
+      'videos' => $results,
       'success' => true
     ]);
   }

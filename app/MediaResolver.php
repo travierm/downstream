@@ -8,6 +8,13 @@ class MediaResolver {
 
   private $userId;
   private $types = [];
+  private $cache = [
+    'class' => false,
+    'method' => false,
+    'args' => false,
+    'results' => false,
+    'success' => false
+  ];
 
   public function __construct($userId)
   {
@@ -18,15 +25,53 @@ class MediaResolver {
 
   public function dispatch($type, $action, $input)
   {
-    $typeClass = $this->types[$type];
-    $methods = get_class_methods($typeClass);
+    $class = $this->types[$type];
+    $methods = get_class_methods($class);
     $methods = array_diff($methods, ['__construct']);
 
     //@TODO make sure my meta logic with arguments vs params is correct
     if(in_array($action, $methods)) {
-      $arguments = $this->matchArguments($typeClass, $action, $input);
-      return $typeClass->{$action}(...$arguments);
+      $arguments = $this->matchArguments($class, $action, $input);
+      $results = $class->{$action}(...$arguments);
+      //update cache
+      $this->cache($class, $action, $arguments, $results);
+    }else{
+      //clear cache
+      $this->cache();
     }
+
+    return $this;
+  }
+
+  public function didError()
+  {
+    return ($this->cache['success'] ? false : true);
+  }
+
+  public function getJSONResponse()
+  {
+    if($this->didError()) {
+      return response()->json([
+        'code'      =>  401,
+        'message'   =>  "Failed to resolve action"
+      ], 401);
+    }
+
+    return response()->json([
+      'code'      =>  200,
+      'data' => $this->cache['results']
+    ], 200);
+  }
+
+  private function cache($class = false, $method = false, $args = false, $results = false)
+  {
+    $this->cache = [
+      'class' => $class,
+      'method' => $method,
+      'args' => $args,
+      'results' => $results,
+      'success' => ($results ? true : false)
+    ];
   }
 
   private function matchArguments($class, $method, $arguments)

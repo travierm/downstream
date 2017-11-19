@@ -24,22 +24,17 @@ class MediaAPIController extends Controller
 
   public function __construct()
   {
-    //$this->middleware('auth:api');
-
-
+    $this->middleware('auth:api');
     $this->middleware(function ($request, $next) {
            $this->userId = Auth::user()->id;
+           $this->resolver = new MediaResolver($this->userId);
 
            return $next($request);
     });
-
-
-    MediaResolver::init($this->userId);
   }
 
   public function resolve(Request $request)
   {
-
       $uri = Route::current()->uri;
       $action = $this->getURIAction($uri);
       $type = $request->type;
@@ -51,8 +46,8 @@ class MediaAPIController extends Controller
         ], 401);
       }
 
-
-      return MediaResolver::dispatch($type, $action, $request->input());
+      $this->resolver->dispatch($type, $action, $request->input());
+      return $this->resolver->getJSONResponse();
   }
 
   private function getURIAction($uri)

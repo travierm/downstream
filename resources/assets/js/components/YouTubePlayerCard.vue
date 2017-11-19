@@ -11,7 +11,7 @@
       <img v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
-        <button v-if="!isCollected" @click="importAndCollect" class="btn btn-outline-success">Collect</button>
+        <button v-if="!isCollected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="isCollected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
@@ -37,6 +37,11 @@
         vid: {
           type: String,
           required: true
+        },
+        //most song will have been imported before being displayed
+        imported: {
+          type: Boolean,
+          default: true
         },
         title: {
           type: String,
@@ -73,18 +78,22 @@
         })
       },
       methods:{
-        play:function() {
+        play() {
           this.playing = true;
           this.player.playVideo();
         },
-        pause:function() {
+        pause() {
           this.playing = false;
           this.player.stopVideo();
         },
-        importAndCollect:function() {
+        collect() {
+
+        },
+        discover() {
           let self = this;
-          axios.post('/api/youtube/collect', {
-            vid:this.vid
+          axios.post('/api/media/discover', {
+            type:'youtube',
+            videoId:this.vid
           }).then((resp) => {
             if(resp.status == 200) {
               self.isCollected = true;

@@ -1,8 +1,8 @@
 <?php
 namespace App\Media;
 
-use Media;
-use UserMedia;
+use App\Media;
+use App\UserMedia;
 use YouTubeService;
 
 class YouTube {
@@ -16,26 +16,65 @@ class YouTube {
   }
 
   //Add to media library
-  public function add()
+  private function add()
   {
     return [1, 2, 3];
   }
 
   //Remove from library
-  public function remove()
+  private function remove()
+  {
+
+  }
+
+  public function collect()
+  {
+
+  }
+
+  public function toss()
   {
 
   }
 
   //Add to media library and add to user collectables
-  public function discover()
+  public function discover($videoId)
   {
+    $video = YouTubeService::getVideoInfo($videoId);
+    if(!$video) {
+      return false;
+    }
 
+    $meta = [];
+    $meta['title'] = $video->snippet->title;
+    $meta['view_count'] = $video->statistics->viewCount;
+    $meta['thumbnail'] = $video->snippet->thumbnails->standard->url;
+    $meta['categoryId'] = $video->snippet->categoryId;
+    if(@$video->snippet->tags) {
+      $meta['tags'] = $video->snippet->tags;
+    }
+
+    $meta = json_encode($meta);
+
+    $media = new Media();
+    $media->origin = 'youtube#search';
+    $media->type = 'youtube';
+    $media->subtype = 'video';
+    $media->index = $videoId;
+    $media->user_id = $this->userId;
+    $media->meta = $meta;
+    $media->save();
+
+    $userMedia = new UserMedia();
+    $userMedia->media_id = $media->id;
+    $userMedia->user_id = $this->userId;
+    $userMedia->save();
+
+    return true;
   }
 
-  public function search($query, $test2)
+  public function search($query)
   {
-    dd($query);
 
     $results = YouTubeService::search($query, 10);
     if(!$results) {
@@ -51,7 +90,7 @@ class YouTube {
       return $row->id->videoId;
     }, $results->all());
 
-    dd($videoIds);
+    return $this->cleanSearchResults($videoIds);
   }
 
   private function cleanSearchResults($videoIds)
@@ -60,15 +99,15 @@ class YouTube {
     foreach($videoIds as $vid)
     {
       $result = new \stdClass();
-      $video = self::findByVID($vid);
+      $media = self::findByIndex($vid);
 
       $result->imported = false;
       $result->collected = false;
       $result->vid = $vid;
-      if($video) {
+      if($media) {
         $result->imported = true;
-        $result->collected = UserCollection::didLikeVideo($video->id);
-        $result->id = $video->id;
+        $result->collected = UserMedia::didCollect($media->id);
+        $result->id = $media->id;
       }else{
         $result->id = uniqid();
       }
@@ -79,19 +118,15 @@ class YouTube {
     return $results;
   }
 
-  private static function findByVID($vid)
+  private function findByIndex($index)
   {
-    return self::where('vid', $vid)->first();
+    return Media::findByType('youtube', $index)->first();
   }
 
-  private static function isDuplicate($vid)
-  {
-    return self::where('vid', $vid)->exists();
-  }
 
-  private static function getUserVideos()
+  private function isDuplicate($index)
   {
-    return self::where('user_id', Auth::user()->id)->get();
+    return UserMedia::findByType('youtube', $index)->exists();
   }
 
   private function cleanVid($data)
