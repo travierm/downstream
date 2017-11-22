@@ -15,6 +15,7 @@
         <button v-if="isCollected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
+
     <!-- YouTube Player -->
     <div :id="this.id"></div>
   </div>
@@ -76,19 +77,28 @@
           this.isCollected = true;
         }
 
-        this.$store.dispatch('registerVideo', {
-          id:this.id,
-          vid:this.vid
+        var player = YouTubePlayer(this.id, {
+          videoId: this.vid,
+          width:$('#' + this.id).width()
         })
+
+        this.$store.dispatch('media/registerVideo', {
+          id:this.id,
+          player
+        });
       },
       methods:{
         play() {
           this.playing = true;
-          this.player.playVideo();
+          this.$store.dispatch('media/playVideo', {
+            id:this.id
+          });
         },
         pause() {
           this.playing = false;
-          this.player.stopVideo();
+          this.$store.dispatch('media/pauseVideo', {
+            id:this.id
+          });
         },
         collect() {
 

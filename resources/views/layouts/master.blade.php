@@ -24,7 +24,7 @@
           <ul class="navbar-nav mr-auto">
             @if(!Auth::guest())
             <li class="nav-item">
-              <a class="nav-link" href="/">Front Page</a>
+              <router-link class="nav-link" to="/frontpage">Front Page</router-link>
             </li>
 
             <li class="nav-item">
@@ -63,7 +63,6 @@
         <div class="container-fluid">
           <!-- Vue Router View -->
           <router-view></router-view>
-          <master-bar></master-bar>
 
           <!-- PHP Generated HTML -->
           <div id="hardContent">

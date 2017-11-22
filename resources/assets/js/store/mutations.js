@@ -10,4 +10,4 @@ export const endFetch = (state, status) => {
 
 export const updateCollection = (state, videos) => {
   state.collection = videos;
-}
+};
