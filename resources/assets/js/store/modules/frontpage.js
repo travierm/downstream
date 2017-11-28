@@ -1,7 +1,7 @@
-import * as types from '../mutation-types'
+import * as types from '../mutation-types';
 
 const state = {
-  tracks:[]
+  videos:[]
 };
 
 const getters = {
@@ -9,21 +9,22 @@ const getters = {
 };
 
 const actions = {
-  fetch() {
-    axios.get('/api/frontpage/all').then((resp) => {
-      if(resp.status == 200) {
-        console.log(resp);
-      }
-    });
+  update({commit}, videos) {
+    commit(types.FRONTPAGE_UPDATE, videos);
+  },
+  remove({commit}, id) {
+    commit(types.FRONTPAGE_REMOVE, id);
   }
 };
 
 const mutations = {
-  set() {
-
+  [types.FRONTPAGE_UPDATE](state, videos) {
+    state.videos = videos;
   },
-  clear() {
-
+  [types.FRONTPAGE_REMOVE](state, id) {
+    state.videos = state.videos.filter((video) => {
+      return video.id !== id;
+    });
   }
 };
 

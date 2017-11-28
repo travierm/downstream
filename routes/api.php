@@ -27,6 +27,7 @@ Route::get('collection', 'CollectionAPIController@index');
 
 Route::get('/media/index', 'MediaAPIController@index');
 Route::get('/media/collected', 'MediaAPIController@collected');
+Route::get('/media/collection', 'MediaAPIController@collection');
 
 //Auto Resolved Media Actions
 Route::get('/media/collect', 'MediaAPIController@resolve');

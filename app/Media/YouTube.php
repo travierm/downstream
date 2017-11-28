@@ -27,9 +27,14 @@ class YouTube {
 
   }
 
-  public function collect()
+  public function collection()
   {
+    $mediaIds = UserMedia::where('user_id', $this->userId)
+      ->pluck('media_id');
 
+    $collection = Media::find($mediaIds);
+
+    return $collection;
   }
 
   /**
@@ -40,9 +45,7 @@ class YouTube {
   public function toss($mediaId)
   {
     $userMedia = UserMedia::findById($mediaId, $this->userId);
-    echo $mediaId;
-    exit;
-    if($media) {
+    if($userMedia) {
       $userMedia->delete();
     }
 
@@ -61,7 +64,7 @@ class YouTube {
     $meta = [];
     $meta['title'] = $video->snippet->title;
     $meta['view_count'] = $video->statistics->viewCount;
-    $meta['thumbnail'] = $video->snippet->thumbnails->standard->url;
+    $meta['thumbnail'] = @$video->snippet->thumbnails->standard->url;
     $meta['categoryId'] = $video->snippet->categoryId;
     if(@$video->snippet->tags) {
       $meta['tags'] = $video->snippet->tags;

@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import * as types from '../mutation-types';
-import YouTubePlayer from 'youtube-player';
 
 const state = {
   videos:[],
@@ -21,11 +20,13 @@ const actions = {
     commit(types.MEDIA_PAUSE_VIDEO, {id});
   },
   registerVideo({commit}, {id, player}) {
-
     commit(types.MEDIA_REGISTER_VIDEO, {
       id,
       player
     });
+  },
+  destroyVideo({commit}, {id}) {
+    commit(types.MEDIA_DESTROY_VIDEO, {id});
   }
 };
 
@@ -49,7 +50,6 @@ const mutations = {
     });
 
     let video = state.videos[index];
-    console.log(video);
     state.currentVideo = video;
   },
   [types.MEDIA_REGISTER_VIDEO](state, {id, player}) {
@@ -57,6 +57,9 @@ const mutations = {
       id,
       player
     });
+  },
+  [types.MEDIA_DESTROY_VIDEO](state, {id}) {
+    state.videos = _.remove(state.videos, video => video.id == id);
   }
 };
 

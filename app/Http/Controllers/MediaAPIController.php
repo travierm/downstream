@@ -33,10 +33,16 @@ class MediaAPIController extends Controller
     });
   }
 
+  public function collection(Request $request)
+  {
+    return $this->resolver->collection($request->input('byUser'));
+  }
+
   public function resolve(Request $request)
   {
       $uri = Route::current()->uri;
       $action = $this->getURIAction($uri);
+
       $type = $request->type;
 
       if(!$type or !$action) {

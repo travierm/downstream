@@ -7,6 +7,9 @@
     </div>
 
     <div id="cardToolbar" class="card-block">
+      <p>
+        {{title}}
+      </p>
       <img v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
       <img v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
@@ -29,9 +32,9 @@
       data:() => {
         return {
           id:SID.generate(),
+          player:false,
           playing:false,
           isCollected:false,
-          player:false
         }
       },
       props:{
@@ -77,15 +80,23 @@
           this.isCollected = true;
         }
 
-        var player = YouTubePlayer(this.id, {
+        console.log(this.id);
+        let player = YouTubePlayer(this.id, {
           videoId: this.vid,
           width:$('#' + this.id).width()
-        })
+        });
+        this.player = player;
 
         this.$store.dispatch('media/registerVideo', {
           id:this.id,
           player
         });
+      },
+      beforeDestroy() {
+        //this.player.destroy();
+        /*this.$store.dispatch('media/destroyVideo', {
+          id:this.id
+        });*/
       },
       methods:{
         play() {
@@ -104,32 +115,31 @@
 
         },
         discover() {
-          let self = this;
-          axios.post('/api/media/discover', {
+          this.$store.dispatch('collection/discover', {
             type:'youtube',
             videoId:this.vid
-          }).then((resp) => {
-            if(resp.status == 200) {
-              self.isCollected = true;
-            }
           });
+          this.isCollected = true;
         },
-        toss:function() {
+        toss() {
           if(!this.mediaId) {
             return false;
           }
-          let self = this;
-          axios.get('/api/media/toss?type=youtube&mediaId=' + this.mediaId).then((resp) => {
-            if(resp.status == 200) {
-              self.isCollected = false;
-            }
+
+          this.$store.dispatch('collection/toss', {
+            type:'youtube',
+            mediaId:this.mediaId
           });
+          //this.player.destroy();
         }
       }
     }
 </script>
 
 <style>
+.card {
+  margin-bottom: 20px;
+}
 #cardToolbar {
   margin: 15px 15px 15px 15px;
 }

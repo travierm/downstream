@@ -10,13 +10,9 @@ import media from './modules/media';
 Vue.use(Vuex);
 
 const state = {
-  collection:[],
   api: {
     fetching:false,
     fetchStatus:null
-  },
-  mediaService: {
-    players:[]
   }
 };
 

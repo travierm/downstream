@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+import { sync } from 'vuex-router-sync'
 import store from './store/index';
 import router from './router';
 import $ from 'jquery';
@@ -13,6 +14,7 @@ window.Vue = require('vue');
 
 //Components
 Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));
+Vue.component('youtube-player', require('./components/YouTubePlayer.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
 //Forms
 Vue.component('import-form', require('./forms/Import.vue'));
@@ -26,7 +28,7 @@ router.beforeEach((to, from, next) => {
 });
 
 //Make initial api requests
-store.dispatch('fetchCollection');
+store.dispatch('collection/update');
 
 const app = new Vue({
   router,

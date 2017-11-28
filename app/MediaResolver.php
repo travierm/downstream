@@ -23,6 +23,23 @@ class MediaResolver {
     ];
   }
 
+  public function collection()
+  {
+    $collectionByType = [];
+    foreach($this->types as $class)
+    {
+      if(method_exists($class, 'collection')) {
+        $collectionByType[$class->typeName] = $class->collection();
+      }
+    }
+
+    return response()->json([
+      'collection' => $collectionByType,
+      'code'      =>  200,
+      'message'   =>  "Success"
+    ], 200);
+  }
+
   public function dispatch($type, $action, $input)
   {
     $class = $this->types[$type];
