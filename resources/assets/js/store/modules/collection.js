@@ -1,28 +1,32 @@
+/* global _ */
 import * as types from '../mutation-types';
 
 const state = {
-  videos:[]
+  videos: [],
 };
 
 const getters = {
+  videos(state) {
+    return state.videos;
+  },
 };
 
 const actions = {
-  update({commit}) {
+  update({ commit }) {
     axios.get('/api/media/collection').then((resp) => {
-      if(resp.status == 200) {
-        var collection = resp.data.collection;
-        commit(types.COLLECTION_UPDATE, {collection});
+      if (resp.status === 200) {
+        const { collection } = resp.data;
+        commit(types.COLLECTION_UPDATE, { collection });
       }
     });
   },
-  discover({commit}, {type, videoId}) {
-    var self = this;
+  discover({ commit }, { type, videoId }) {
+    const self = this;
     axios.post('/api/media/discover', {
-      type:type,
-      videoId:videoId
+      type,
+      videoId,
     }).then((resp) => {
-      if(resp.status == 200) {
+      if (resp.status === 200) {
         self.dispatch('collection/update');
       }
     });
@@ -30,28 +34,27 @@ const actions = {
   collect() {
 
   },
-  toss({commit}, {type, mediaId}) {
-    let self = this;
-    axios.get('/api/media/toss?type=' + type + '&mediaId=' + mediaId).then((resp) => {
-      if(resp.status == 200) {
+  toss({ commit }, { type, mediaId }) {
+    const self = this;
+    axios.get(`/api/media/toss?type=${type}&mediaId=${mediaId}`).then((resp) => {
+      if (resp.status === 200) {
         commit(types.COLLECTION_TOSS, mediaId);
-        //self.dispatch('collection/update');
+        // self.dispatch('collection/update');
       }
     });
-  }
+  },
 };
 
 const mutations = {
-  [types.COLLECTION_UPDATE](state, {collection}) {
+  [types.COLLECTION_UPDATE](state, { collection }) {
+    console.log('updated collection');
     state.videos = collection.youtube;
   },
   [types.COLLECTION_TOSS](state, mediaId) {
-    const index = _.findIndex(state.videos, (video) => {
-      return video.id == mediaId;
-    })
+    const index = _.findIndex(state.videos, video => video.id === mediaId);
 
     state.videos.splice(index, 1);
-  }
+  },
 };
 
 const namespaced = true;
@@ -60,5 +63,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

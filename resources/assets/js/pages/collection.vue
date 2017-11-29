@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid pushFromTop">
     <div class="row">
-      <div class="col-lg-6"  v-for="video in videos">
+      <div class="col-lg-3" v-for="video in videos" :key="video.id">
         <youtube-player-card v-bind:title="video.index" v-bind:vid="video.index" v-bind:media-id="video.id" collected="false"></youtube-player-card>
       </div>
     </div>
@@ -9,18 +9,16 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
-
   export default {
     mounted() {
-      this.$store.dispatch('collection/update');
+      console.log(`mounted with ${this.videos.length}`);
     },
-    data() {
-      return {
-        videos:this.$store.state.collection.videos
-      }
-    }
-  }
+    computed: {
+      videos() {
+        return this.$store.getters['collection/videos'];
+      },
+    },
+  };
 </script>
 
 <style>

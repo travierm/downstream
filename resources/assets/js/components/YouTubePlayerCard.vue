@@ -7,9 +7,6 @@
     </div>
 
     <div id="cardToolbar" class="card-block">
-      <p>
-        {{title}}
-      </p>
       <img v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
       <img v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
@@ -25,90 +22,87 @@
 </template>
 
 <script>
-    import YouTubePlayer from "youtube-player";
+    import YouTubePlayer from 'youtube-player';
     import SID from 'shortid';
 
     export default {
-      data:() => {
-        return {
-          id:SID.generate(),
-          player:false,
-          playing:false,
-          isCollected:false,
-        }
-      },
-      props:{
+      data: () => ({
+        id: SID.generate(),
+        player: false,
+        playing: false,
+        isCollected: false,
+    }),
+      props: {
         mediaId: {
           required: false,
-          default: false
+          default: false,
         },
         vid: {
           type: String,
-          required: true
+          required: true,
         },
-        //most song will have been imported before being displayed
+        // most song will have been imported before being displayed
         imported: {
           type: Boolean,
-          default: true
+          default: true,
         },
         title: {
           type: String,
-          required: false
+          required: false,
         },
         description: {
           type: String,
-          required: false
+          required: false,
         },
         showText: {
           type: Boolean,
           required: false,
-          default: true
+          default: true,
         },
-        collected:{
+        collected: {
           type: String,
           required: true,
-          default: "false"
+          default: 'false',
         },
         canEdit: {
           type: Boolean,
           required: false,
-          default: false
-        }
+          default: false,
+        },
       },
       mounted() {
-        if(this.collected) {
+        if (this.collected) {
           this.isCollected = true;
         }
 
-        console.log(this.id);
-        let player = YouTubePlayer(this.id, {
+        const player = YouTubePlayer(this.id, {
           videoId: this.vid,
-          width:$('#' + this.id).width()
+          width: $(`#${this.id}`).width(),
         });
         this.player = player;
 
         this.$store.dispatch('media/registerVideo', {
-          id:this.id,
-          player
+          id: this.id,
+          player,
         });
       },
       beforeDestroy() {
-        //this.player.destroy();
-        /*this.$store.dispatch('media/destroyVideo', {
+        this.player.destroy();
+        /* this.$store.dispatch('media/destroyVideo', {
           id:this.id
-        });*/
+        }); */
       },
-      methods:{
+      methods: {
         play() {
           this.playing = true;
           this.$store.dispatch('media/playVideo', {
-            id:this.id
+            id: this.id,
           });
         },
         pause() {
           this.playing = false;
           this.$store.dispatch('media/pauseVideo', {
-            id:this.id
+            id: this.id,
           });
         },
         collect() {
@@ -116,24 +110,23 @@
         },
         discover() {
           this.$store.dispatch('collection/discover', {
-            type:'youtube',
-            videoId:this.vid
+            type: 'youtube',
+            videoId: this.vid,
           });
           this.isCollected = true;
         },
         toss() {
-          if(!this.mediaId) {
+          if (!this.mediaId) {
             return false;
           }
 
           this.$store.dispatch('collection/toss', {
-            type:'youtube',
-            mediaId:this.mediaId
+            type: 'youtube',
+            mediaId: this.mediaId,
           });
-          //this.player.destroy();
-        }
-      }
-    }
+        },
+      },
+    };
 </script>
 
 <style>

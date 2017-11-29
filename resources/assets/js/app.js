@@ -4,6 +4,8 @@ import { sync } from 'vuex-router-sync'
 import store from './store/index';
 import router from './router';
 import $ from 'jquery';
+
+const unsync = sync(store, router);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
