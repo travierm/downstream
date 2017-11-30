@@ -1,9 +1,10 @@
-require('./bootstrap');
-
-import { sync } from 'vuex-router-sync'
+import $ from 'jquery';
+import { sync } from 'vuex-router-sync';
 import store from './store/index';
 import router from './router';
-import $ from 'jquery';
+
+require('./bootstrap');
+
 
 const unsync = sync(store, router);
 /**
@@ -14,25 +15,24 @@ const unsync = sync(store, router);
 
 window.Vue = require('vue');
 
-//Components
+// Components
 Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));
 Vue.component('youtube-player', require('./components/YouTubePlayer.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
-//Forms
+// Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 
 router.beforeEach((to, from, next) => {
-
-  if(to.path !== "/")
-    $('#hardContent').remove();
+  if (to.path !== '/') { $('#hardContent').remove(); }
 
   next();
 });
 
-//Make initial api requests
+// Make initial api requests
 store.dispatch('collection/update');
+store.dispatch('frontpage/update');
 
 const app = new Vue({
   router,
-  store
+  store,
 }).$mount('#app');

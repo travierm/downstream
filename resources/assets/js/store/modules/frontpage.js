@@ -5,12 +5,19 @@ const state = {
 };
 
 const getters = {
-
+  videos(state) {
+    return state.videos;
+  },
 };
 
 const actions = {
-  update({ commit }, videos) {
-    commit(types.FRONTPAGE_UPDATE, videos);
+  update({ commit }) {
+    axios.get('/api/frontpage').then((resp) => {
+      if (resp.status === 200) {
+        const { videos } = resp.data;
+        commit(types.FRONTPAGE_UPDATE, videos);
+      }
+    });
   },
   remove({ commit }, id) {
     commit(types.FRONTPAGE_REMOVE, id);

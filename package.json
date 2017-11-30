@@ -20,7 +20,6 @@
         "eslint-plugin-jsx-a11y": "^6.0.2",
         "eslint-plugin-react": "^7.5.1",
         "eslint-plugin-vue-libs": "^1.2.1",
-        "jquery": "^3.1.1",
         "jshint": "^2.9.5",
         "laravel-mix": "*",
         "lodash": "^4.17.4",
@@ -29,6 +28,7 @@
         "youtube-player": "^5.4.0"
     },
     "dependencies": {
+        "jquery": "^3.2.1",
         "shortid": "^2.2.8",
         "vue-class-component": "^5.0.2",
         "vue-router": "^3.0.1",

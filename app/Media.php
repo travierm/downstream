@@ -2,11 +2,22 @@
 
 namespace App;
 
+use App\UserMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
   protected $fillable = ['origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
+
+  public static function addUserCollectedProp($rows)
+  {
+    foreach($rows as &$media)
+    {
+      $media->collected = UserMedia::didCollect($media->id);
+    }
+
+    return $rows;
+  }
 
   public static function returnOrCreate($data)
   {
@@ -24,6 +35,11 @@ class Media extends Model
     return self::where('type', $type)
       ->where('index', $index)
       ->exists();
+  }
+
+  public static function byType($type)
+  {
+    return self::where('type', $type);
   }
 
   public static function findByType($type, $index)

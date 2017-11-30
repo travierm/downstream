@@ -1,5 +1,3 @@
-
-import Ajax from './services/Ajax';
 window._ = require('lodash');
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -8,13 +6,12 @@ window._ = require('lodash');
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+  window.$ = window.jQuery = require('jquery');
 
 
-    window.Tether = require('tether');
+  window.Tether = require('tether');
 
-    require('bootstrap');
-
+  require('bootstrap');
 } catch (e) {}
 
 /**
@@ -33,17 +30,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * a simple convenience so we don't have to attach every token manually.
  */
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
-let apiToken = document.head.querySelector('meta[name="xyz-token"]');
+const token = document.head.querySelector('meta[name="csrf-token"]');
+const apiToken = document.head.querySelector('meta[name="xyz-token"]');
 
-if(apiToken) {
-  window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken.content;
+if (apiToken) {
+  window.axios.defaults.headers.common.Authorization = `Bearer ${apiToken.content}`;
 }
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 

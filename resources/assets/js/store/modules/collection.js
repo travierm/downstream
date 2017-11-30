@@ -47,7 +47,6 @@ const actions = {
 
 const mutations = {
   [types.COLLECTION_UPDATE](state, { collection }) {
-    console.log('updated collection');
     state.videos = collection.youtube;
   },
   [types.COLLECTION_TOSS](state, mediaId) {

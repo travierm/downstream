@@ -11,8 +11,8 @@
       <img v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
-        <button v-if="!isCollected" @click="discover" class="btn btn-outline-success">Collect</button>
-        <button v-if="isCollected" @click="toss" class="btn btn-success">Collected</button>
+        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-success">Collect</button>
+        <button v-if="videoCollected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
         id: SID.generate(),
         player: false,
         playing: false,
-        isCollected: false,
+        isCollected: false
     }),
       props: {
         mediaId: {
@@ -60,7 +60,6 @@
           default: true,
         },
         collected: {
-          type: String,
           required: true,
           default: 'false',
         },
@@ -70,11 +69,15 @@
           default: false,
         },
       },
+      computed: {
+        videoCollected() {
+          return this.isCollected;
+        }
+      },
       mounted() {
-        if (this.collected) {
+        if(this.collected) {
           this.isCollected = true;
         }
-
         const player = YouTubePlayer(this.id, {
           videoId: this.vid,
           width: $(`#${this.id}`).width(),
@@ -113,7 +116,7 @@
             type: 'youtube',
             videoId: this.vid,
           });
-          this.isCollected = true;
+          this.collected = true;
         },
         toss() {
           if (!this.mediaId) {
@@ -124,6 +127,7 @@
             type: 'youtube',
             mediaId: this.mediaId,
           });
+          this.isCollected = false;
         },
       },
     };
