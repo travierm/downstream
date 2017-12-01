@@ -26,12 +26,14 @@
     import SID from 'shortid';
 
     export default {
-      data: () => ({
-        id: SID.generate(),
-        player: false,
-        playing: false,
-        isCollected: false
-    }),
+      data() {
+        return {
+          id: SID.generate(),
+          player: false,
+          playing: false,
+          isCollected: this.collected,
+        };
+      },
       props: {
         mediaId: {
           required: false,
@@ -61,7 +63,7 @@
         },
         collected: {
           required: true,
-          default: 'false',
+          default: false,
         },
         canEdit: {
           type: Boolean,
@@ -75,9 +77,6 @@
         }
       },
       mounted() {
-        if(this.collected) {
-          this.isCollected = true;
-        }
         const player = YouTubePlayer(this.id, {
           videoId: this.vid,
           width: $(`#${this.id}`).width(),
@@ -116,7 +115,7 @@
             type: 'youtube',
             videoId: this.vid,
           });
-          this.collected = true;
+          this.isCollected = true;
         },
         toss() {
           if (!this.mediaId) {

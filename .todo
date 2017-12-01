@@ -1,8 +1,16 @@
-☐ Index and Collection should pull from User Model not UserLike
-☐ Add unlike feature
-☐ Search feature
-☐ SoundCloud Integration
-☐ Master playbar
+☐ Master Playbar & Media Service
+☐ Move to Media playing with type resolution
+☐
+☐
+☐
+☐
+
+-Master Playbar
+
+-Media Service
+Types:
+YouTube
+Soundcloud
 
 GET	  /nerds	index	nerds.index
 GET	  /nerds/create	create	nerds.create

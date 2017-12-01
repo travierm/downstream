@@ -13,7 +13,7 @@ class SearchController extends Controller
   {
     $this->middleware('auth');
     $this->middleware(function ($request, $next) {
-       $this->userId = Auth::user()->id;
+      $this->userId = Auth::user()->id;
       $this->youtube = new YouTube($this->userId);
 
        return $next($request);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
-  protected $fillable = ['origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
+  protected $fillable = ['id', 'origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
 
   public static function addUserCollectedProp($rows)
   {

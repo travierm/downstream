@@ -27,9 +27,9 @@
               <router-link class="nav-link" to="/frontpage">Front Page</router-link>
             </li>
 
-            <li class="nav-item">
+            <!--<li class="nav-item">
               <a class="nav-link" href="/import">Import</a>
-            </li>
+            </li>-->
 
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
@@ -74,8 +74,8 @@
 
     <script>
     window.Laravel = <?php echo json_encode([
-           'csrfToken' => csrf_token(),
-       ]); ?>;
+      'csrfToken' => csrf_token(),
+    ]); ?>;
     </script>
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
     <script src="{{ mix('js/app.js') }}"></script>

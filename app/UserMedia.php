@@ -21,11 +21,11 @@ class UserMedia extends Model
   {
     $mediaIds = self::all()->pluck('media_id');
 
-    $query = Media;
+    $query = new Media;
     if($type)
       $query = Media::where('type', $type);
 
-    return $query::find($mediaIds);
+    return $query->find($mediaIds);
   }
 
   public static function didCollect($mediaId)

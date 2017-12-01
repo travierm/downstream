@@ -33,6 +33,7 @@ class YouTube {
       ->pluck('media_id');
 
     $collection = Media::find($mediaIds);
+    $collection = Media::addUserCollectedProp($collection);
 
     return $collection;
   }

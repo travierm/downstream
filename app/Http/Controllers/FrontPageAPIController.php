@@ -16,6 +16,7 @@ class FrontPageAPIController extends Controller
   public function index(Request $req)
   {
     $videos = Media::byType('youtube')
+      ->limit(25)
       ->orderByRaw('created_at DESC')
       ->get();
 
