@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 const routes = [
   { name:'theater', path: '/theater/:mediaId', component: TheaterPage },
   { path: '/collection', component: CollectionPage },
-  { path: '/frontpage', component: FrontPage }
+  { path: '/frontpage', component: FrontPage },
 ];
 
 export default new VueRouter({

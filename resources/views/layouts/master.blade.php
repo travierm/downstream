@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="{{ URL::asset('css/app.css') }}" rel="stylesheet" >
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(!Auth::guest())
@@ -14,50 +15,52 @@
 
   <body>
     <div id="app">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Dowstream</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a id="brand" class="navbar-brand" href="#/frontpage">Downstream</a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav mr-auto">
-            @if(!Auth::guest())
-            <li class="nav-item">
-              <router-link class="nav-link" to="/frontpage">Front Page</router-link>
-            </li>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+              @if(!Auth::guest())
+              <li class="nav-item">
+                <router-link class="nav-link" to="/frontpage">Front Page</router-link>
+              </li>
 
-            <!--<li class="nav-item">
-              <a class="nav-link" href="/import">Import</a>
-            </li>-->
+              <!--<li class="nav-item">
+                <a class="nav-link" href="/import">Import</a>
+              </li>-->
 
-            <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
-            </li>
-            @endif
-          </ul>
-          <ul class="navbar-nav">
-            @if(Auth::guest())
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url('/login') }}">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url('/register') }}">Register</a>
-            </li>
-            @else
-            <li class="nav-item">
-              <router-link class="nav-link" to="/collection">Collection</router-link>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/search">Search</a>
+              </li>
+              @endif
+            </ul>
+            <ul class="navbar-nav">
+              @if(Auth::guest())
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url('/login') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url('/register') }}">Register</a>
+              </li>
+              @else
+              <li class="nav-item">
+                <router-link class="nav-link" to="/collection">Collection</router-link>
+              </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="">{{Auth::user()->shrinkHash()}}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
-            </li>
-            @endif
-          </ul>
-        </div>
+              <li class="nav-item">
+                <a class="nav-link" href="/hash">{{Auth::user()->getNavDisplayName()}}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+              @endif
+            </ul>
+          </div>
+          </div>
         </nav>
 
         <div class="container-fluid">

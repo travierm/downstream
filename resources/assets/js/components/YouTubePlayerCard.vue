@@ -80,6 +80,7 @@
         const player = YouTubePlayer(this.id, {
           videoId: this.vid,
           width: $(`#${this.id}`).width(),
+          controls:false
         });
         this.player = player;
 

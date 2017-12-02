@@ -12,6 +12,10 @@
 */
 Auth::routes();
 
+Route::get('/hashMe', function() {
+  return genUniqueHash(20);
+});
+
 Route::get('/', 'AppController@getIndex');
 
 //Search

@@ -3,13 +3,14 @@
 @section('content')
 <div class="container pushFromTop">
   <div class="alert alert-success" role="alert">
-    <h4 class="alert-heading">You're Registered!</h4>
-    <p>We've generated a unique hash for you. Use it to login to this account in the future!</p>
+    <h3 class="alert-heading">Welcome!</h3>
+    <h4 style="color:black;">{{$displayName}}</h4>
+    <p>We've generated a unique hash for you..</p>
     <a href="" class="alert-link">{{$hash}}</a>
-    <hr>
-    <p class="mb-0">We use hashes instead of usernames to keep things interesting. You'll be able to set a display name for your friends to see soon!</p>
+    <p class="mb-0">This hash will be used to identify you on the network. Your display name is set to help your friends know what hash is who.</p>
   </div>
 
-  <button class="btn btn-outline-success">Import Songs</button>
+  <router-link class="btn btn-outline-success" to="/frontpage">Frontpage</router-link>
+  <a href="/search" class="btn btn-outline-warning">Search</a>
 </div>
 @endsection

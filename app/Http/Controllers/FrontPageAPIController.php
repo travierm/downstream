@@ -10,7 +10,7 @@ class FrontPageAPIController extends Controller
 
   public function __construct()
   {
-    $this->middleware('auth:api');
+    //$this->middleware('auth:api');
   }
 
   public function index(Request $req)
@@ -20,7 +20,7 @@ class FrontPageAPIController extends Controller
       ->orderByRaw('created_at DESC')
       ->get();
 
-    $videos = Media::addUserCollectedProp($videos);
+    //$videos = Media::addUserCollectedProp($videos);
 
     return response()->json([
       'code' =>  200,

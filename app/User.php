@@ -34,6 +34,19 @@ class User extends Authenticatable
       return $this->hasMany('App\UserMedia');
     }
 
+    public function getNavDisplayName()
+    {
+      $name = $this->display_name;
+      $string = false;
+      if($name) {
+        $string = $name . "(" . $this->shrinkHash() . ")";
+      }else{
+        $string = $this->shrinkHash();
+      }
+
+      return $string;
+    }
+
     public function shrinkHash()
     {
       return substr($this->hash, 0, 8);

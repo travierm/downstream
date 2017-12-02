@@ -10,9 +10,11 @@ class UserController extends Controller
   public function getHash()
   {
     $hash = Auth::user()->hash;
+    $displayName = Auth::user()->display_name;
 
     return view('user.hash', [
-      'hash' => $hash
+      'hash' => $hash,
+      'displayName' => $displayName
     ]);
   }
 
