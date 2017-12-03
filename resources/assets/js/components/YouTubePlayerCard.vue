@@ -1,5 +1,5 @@
 <template>
-  <div id="card1" class="card">
+  <div class="card">
 
     <!-- Editor -->
     <div v-if="canEdit" class="card-header">
@@ -18,6 +18,11 @@
 
     <!-- YouTube Player -->
     <div :id="this.id"></div>
+
+    <div class="card-block" v-if="title && meta">
+      <h4 class="card-title">{{title}}</h4>
+      <h6 class="card-subtitle mb-2">Views - <span class="text-success">{{numberWithCommas(meta.view_count)}}</span></h6>
+    </div>
   </div>
 </template>
 
@@ -65,6 +70,17 @@
           required: true,
           default: false,
         },
+        meta: {
+          default: false
+        },
+        height: {
+          required: false,
+          default: false,
+        },
+        width: {
+          required: false,
+          default: false,
+        },
         canEdit: {
           type: Boolean,
           required: false,
@@ -74,13 +90,22 @@
       computed: {
         videoCollected() {
           return this.isCollected;
-        }
+        },
       },
       mounted() {
+        const options = {};
+        if (this.height) {
+          options.height = this.height;
+        }
+        if (this.width) {
+          options.width = this.width;
+        } else {
+          options.width = $(`#${this.id}`).width();
+        }
+
         const player = YouTubePlayer(this.id, {
           videoId: this.vid,
-          width: $(`#${this.id}`).width(),
-          controls:false
+          ...options,
         });
         this.player = player;
 
@@ -96,6 +121,9 @@
         }); */
       },
       methods: {
+        numberWithCommas(x) {
+          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        },
         play() {
           this.playing = true;
           this.$store.dispatch('media/playVideo', {

@@ -6,7 +6,16 @@ Move to next media
 -->
 <template>
   <div class="container-fluid pushFromTop">
-    <div class="row">
+    <div style="display:body;" class="row justify-content-center">
+      <div class="col-lg-3">
+
+      </div>
+      <div class="col-lg-6" v-if="video">
+        <youtube-player-card :meta="video.meta" :title="video.meta.title" height="500" :vid="video.index" v-bind:media-id="video.id" :collected="video.collected"></youtube-player-card>
+      </div>
+      <div class="col-lg-3">
+
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +35,21 @@ Move to next media
       this.$store.dispatch('media/getTheaterQueue', this.currentMediaId);
     },
     computed: {
+      video() {
+        let self = this;
+        let videos = this.videos.filter((video) => {
+          return video.id !== self.currentMediaId;
+        })
+        if(videos.length <= 0) {
+          return false;
+        }
+
+        let selected = videos[0];
+        console.log(selected);
+        selected.meta = JSON.parse(selected.meta);
+
+        return selected;
+      },
       videos() {
         return this.$store.state.frontpage.videos;
       }
