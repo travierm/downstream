@@ -10,8 +10,8 @@ Move to next media
       <div class="col-lg-3">
 
       </div>
-      <div class="col-lg-6" v-if="video">
-        <youtube-player-card :meta="video.meta" :title="video.meta.title" height="500" :vid="video.index" v-bind:media-id="video.id" :collected="video.collected"></youtube-player-card>
+      <div class="col-lg-6" v-if="getVideo()" key="video.id">
+        <youtube-player-card :meta="getVideo().meta" :title="getVideo().title" height="500" :vid="getVideo().index" v-bind:media-id="getVideo().id" :collected="getVideo().collected"></youtube-player-card>
       </div>
       <div class="col-lg-3">
 
@@ -31,27 +31,29 @@ Move to next media
         playing: false
       };
     },
-    mounted() {
-      this.$store.dispatch('media/getTheaterQueue', this.currentMediaId);
+    created() {
+      this.video = this.getVideo(this.currentMediaId);
     },
-    computed: {
-      video() {
-        let self = this;
+    methods: {
+      getVideo() {
+        const mediaId = this.currentMediaId;
         let videos = this.videos.filter((video) => {
-          return video.id !== self.currentMediaId;
+          return video.id == mediaId;
         })
-        if(videos.length <= 0) {
+
+        if(videos.length < 1) {
           return false;
         }
-
-        let selected = videos[0];
-        console.log(selected);
-        selected.meta = JSON.parse(selected.meta);
-
-        return selected;
-      },
-      videos() {
-        return this.$store.state.frontpage.videos;
+        
+        return videos[0];
+      }
+    },
+    computed: {
+      videos: {
+        cache: false,
+        get() {
+          return this.$store.getters['collection/videos'];
+        }
       }
     }
   }

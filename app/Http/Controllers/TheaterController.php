@@ -51,7 +51,7 @@ class TheaterController extends Controller
 
       Media::addUserCollectedProp($frontPageVideos);
 
-      $videos = $videos->concat($frontPageVideos);
+      $videos = $videos->concat($frontPageVideos)->unique();
     }
 
     return $videos->all();

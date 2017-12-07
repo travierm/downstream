@@ -1,5 +1,11 @@
 <template>
   <div class="container-fluid pushFromTop">
+    <div class="row" style="padding-bottom:10px;">
+      <div class="col">
+        <button @click="gotoTheater()" class="btn btn-outline-primary" style="padding-bottom-">Theater</button>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-lg-6 center" v-if="videos.length == 0">
         <h3>Nothing in collection..</h3>
@@ -19,13 +25,12 @@
 <script>
   export default {
     mounted() {
-      let self = this;
-      document.body.onkeyup = function(e){
-          if(e.keyCode == 32){
-            console.log(self);
-            self.gotoTheater();
-          }
-      }
+      const self = this;
+      document.body.onkeyup = function (e) {
+        if (e.keyCode == 32) {
+          self.gotoTheater();
+        }
+      };
     },
     computed: {
       videos() {
@@ -34,7 +39,6 @@
     },
     methods: {
       gotoTheater() {
-        console.log('going to theater');
         const mediaId = this.videos[0].id;
         this.$router.push({
           name: 'theater',

@@ -7,7 +7,7 @@
     <h4 style="color:black;">{{$displayName}}</h4>
     <p>We've generated a unique hash for you..</p>
     <a href="" class="alert-link">{{$hash}}</a>
-    <p class="mb-0">This hash will be used to identify you on the network. Your display name is set to help your friends know what hash is who.</p>
+    <p class="mb-0">This hash will be used to identify you on the network. Your display name is used to help friends find your account!</p>
   </div>
 
   <router-link class="btn btn-outline-success" to="/frontpage">Frontpage</router-link>

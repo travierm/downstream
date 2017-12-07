@@ -3,12 +3,15 @@ import * as types from '../mutation-types';
 
 const state = {
   videos: [],
+  queue: [],
   playingVideo: false,
   currentVideo: false,
 };
 
 const getters = {
-
+  queue(state) {
+    return state.queue;
+  },
 };
 
 const actions = {
@@ -22,7 +25,7 @@ const actions = {
   //Takes MediaId and makes api request to fetch videoList
   getTheaterQueue({ commit }, mediaId) {
     axios.get('/api/theater/' + mediaId).then((res) => {
-      console.log(res);
+      commit(types.THEATER_UPDATE_QUEUE, res.data);
     });
   },
   registerVideo({ commit }, { id, player }) {
@@ -37,6 +40,9 @@ const actions = {
 };
 
 const mutations = {
+  [types.THEATER_UPDATE_QUEUE](state, videos) {
+    state.queue = videos;
+  },
   [types.MEDIA_PLAY_VIDEO](state) {
     const video = state.currentVideo;
 

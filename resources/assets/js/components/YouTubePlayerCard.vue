@@ -19,7 +19,7 @@
     <!-- YouTube Player -->
     <div :id="this.id"></div>
 
-    <div class="card-block" v-if="title && meta">
+    <div class="card-block" v-if="title && meta ">
       <h4 class="card-title">{{title}}</h4>
       <h6 class="card-subtitle mb-2">Views - <span class="text-success">{{numberWithCommas(meta.view_count)}}</span></h6>
     </div>
