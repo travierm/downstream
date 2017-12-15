@@ -11,10 +11,15 @@ Move to next media
 
       </div>
       <div class="col-lg-6" v-if="getVideo()" key="video.id">
-        <youtube-player-card :meta="getVideo().meta" :title="getVideo().title" height="500" :vid="getVideo().index" v-bind:media-id="getVideo().id" :collected="getVideo().collected"></youtube-player-card>
+        <youtube-player-card autoplay="true" :meta="getVideo().meta" :title="getVideo().title" height="500" :vid="getVideo().index" v-bind:media-id="getVideo().id" :collected="getVideo().collected"></youtube-player-card>
       </div>
       <div class="col-lg-3">
 
+      </div>
+    </div>
+
+    <div style="display:body;" class="row justify-content-center">
+      <div class="col-lg-6">
       </div>
     </div>
   </div>
@@ -44,7 +49,7 @@ Move to next media
         if(videos.length < 1) {
           return false;
         }
-        
+
         return videos[0];
       }
     },

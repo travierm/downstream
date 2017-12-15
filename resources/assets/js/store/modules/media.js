@@ -15,6 +15,9 @@ const getters = {
 };
 
 const actions = {
+  playNextVideo({ commit }, { id }) {
+    commit(type.MEDIA_PLAY_NEXT_VIDEO);
+  },
   playVideo({ commit }, { id }) {
     commit(types.MEDIA_UPDATE_CURRENT_VIDEO, { id });
     commit(types.MEDIA_PLAY_VIDEO);
@@ -42,6 +45,9 @@ const actions = {
 const mutations = {
   [types.THEATER_UPDATE_QUEUE](state, videos) {
     state.queue = videos;
+  },
+  [types.MEDIA_PLAY_NEXT_VIDEO](state) {
+
   },
   [types.MEDIA_PLAY_VIDEO](state) {
     const video = state.currentVideo;

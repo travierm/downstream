@@ -17,7 +17,6 @@ window.Vue = require('vue');
 
 // Components
 Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));
-Vue.component('youtube-player', require('./components/YouTubePlayer.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
 // Forms
 Vue.component('import-form', require('./forms/Import.vue'));
