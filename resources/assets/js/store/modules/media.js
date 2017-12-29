@@ -25,15 +25,11 @@ const actions = {
     commit(types.MEDIA_UPDATE_CURRENT_VIDEO, { id });
     commit(types.MEDIA_PLAY_VIDEO);
   },
+  updateCurrentVideo({ commit }, { id }) {
+    commit(types.MEDIA_UPDATE_CURRENT_VIDEO, { id });
+  },
   pauseVideo({ commit }, { id }) {
     commit(types.MEDIA_PAUSE_VIDEO, { id });
-  },
-  //Takes MediaId and makes api request to fetch videoList
-  getTheaterQueue({ commit }, mediaId) {
-    console.log('getting queue')
-    axios.post('/api/theater/' + mediaId).then((res) => {
-      commit(types.THEATER_UPDATE_QUEUE, res.data);
-    });
   },
   registerVideo({ commit }, { id, player }) {
     commit(types.MEDIA_REGISTER_VIDEO, {
@@ -54,16 +50,13 @@ const mutations = {
   },
   [types.MEDIA_PLAY_VIDEO](state) {
     const video = state.currentVideo;
-
     video.player.playVideo();
     state.playing = true;
   },
   [types.MEDIA_PAUSE_VIDEO](state, { id }) {
     const video = state.currentVideo;
-    if (video.id == id) {
-      video.player.pauseVideo();
-      state.playing = false;
-    }
+    video.player.pauseVideo();
+    state.playing = false;
   },
   [types.MEDIA_UPDATE_CURRENT_VIDEO](state, { id }) {
     const index = _.findIndex(state.videos, video => video.id == id);

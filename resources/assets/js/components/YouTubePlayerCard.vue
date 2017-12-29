@@ -121,6 +121,9 @@
           //is playing
           if(event.data == 1) {
             self.playing = true;
+            self.$store.dispatch('media/updateCurrentVideo', {
+              id: this.mediaId
+            });
           }else if (event.data == 2) {
             self.playing = false;
           }else {
