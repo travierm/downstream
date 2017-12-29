@@ -9,8 +9,6 @@
     <div id="cardToolbar" class="card-block">
       <img v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
       <img class="media-icon" v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
-      <img class="media-icon" height="30" width="30" src="/open-iconic-master/svg/media-step-backward.svg">
-      <img height="30" width="30" src="/open-iconic-master/svg/media-step-forward.svg">
 
       <div class="float-right">
         <button v-if="!videoCollected" @click="discover" class="btn btn-outline-success">Collect</button>
@@ -45,6 +43,10 @@
         autoplay: {
           required: false,
           default: false,
+        },
+        showQueueControls: {
+          required: false,
+          default: false
         },
         mediaId: {
           required: false,
@@ -116,7 +118,7 @@
         this.player = player;
 
         this.$store.dispatch('media/registerVideo', {
-          id: this.id,
+          id: this.mediaId,
           player,
         });
 
@@ -126,9 +128,9 @@
       },
       beforeDestroy() {
         this.player.destroy();
-        /* this.$store.dispatch('media/destroyVideo', {
-          id:this.id
-        }); */
+        this.$store.dispatch('media/destroyVideo', {
+          id:this.mediaId
+        });
       },
       methods: {
         numberWithCommas(x) {
@@ -137,13 +139,13 @@
         play() {
           this.playing = true;
           this.$store.dispatch('media/playVideo', {
-            id: this.id,
+            id: this.mediaId,
           });
         },
         pause() {
           this.playing = false;
           this.$store.dispatch('media/pauseVideo', {
-            id: this.id,
+            id: this.mediaId,
           });
         },
         collect() {

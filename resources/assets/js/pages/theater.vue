@@ -11,7 +11,7 @@ Move to next media
 
       </div>
       <div class="col-lg-6" v-if="getVideo()" key="video.id">
-        <youtube-player-card autoplay="true" :meta="getVideo().meta" :title="getVideo().title" height="500" :vid="getVideo().index" v-bind:media-id="getVideo().id" :collected="getVideo().collected"></youtube-player-card>
+        <youtube-player-card show-queue-controls="true" autoplay="true" :meta="getVideo().meta" :title="getVideo().title" height="500" :vid="getVideo().index" v-bind:media-id="getVideo().id" :collected="getVideo().collected"></youtube-player-card>
       </div>
       <div class="col-lg-3">
 
@@ -36,6 +36,9 @@ Move to next media
         playing: false
       };
     },
+    mounted() {
+      this.$store.dispatch('media/getTheaterQueue', this.currentMediaId);
+    },
     created() {
       this.video = this.getVideo(this.currentMediaId);
     },
@@ -57,7 +60,7 @@ Move to next media
       videos: {
         cache: false,
         get() {
-          return this.$store.getters['collection/videos'];
+          return this.$store.getters['media/queue'];
         }
       }
     }

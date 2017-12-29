@@ -9,6 +9,9 @@ const state = {
 };
 
 const getters = {
+  collection(state, getters, rootState) {
+    return rootState.collection.videos
+  },
   queue(state) {
     return state.queue;
   },
@@ -27,7 +30,8 @@ const actions = {
   },
   //Takes MediaId and makes api request to fetch videoList
   getTheaterQueue({ commit }, mediaId) {
-    axios.get('/api/theater/' + mediaId).then((res) => {
+    console.log('getting queue')
+    axios.post('/api/theater/' + mediaId).then((res) => {
       commit(types.THEATER_UPDATE_QUEUE, res.data);
     });
   },
@@ -47,7 +51,6 @@ const mutations = {
     state.queue = videos;
   },
   [types.MEDIA_PLAY_NEXT_VIDEO](state) {
-
   },
   [types.MEDIA_PLAY_VIDEO](state) {
     const video = state.currentVideo;

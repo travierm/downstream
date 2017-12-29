@@ -32,7 +32,7 @@ Route::get('/media/collected', 'MediaAPIController@collected');
 Route::get('/media/collection', 'MediaAPIController@collection');
 
 //Auto Resolved Media Actions
-Route::get('/theater/{mediaId}', 'TheaterController@queueFromMediaId');
+Route::post('/theater/{mediaId}', 'TheaterController@queueFromMediaId');
 Route::get('/media/collect', 'MediaAPIController@resolve');
 Route::get('/media/remove', 'MediaAPIController@resolve');
 Route::get('/media/toss', 'MediaAPIController@resolve');

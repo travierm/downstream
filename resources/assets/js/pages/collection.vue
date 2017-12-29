@@ -1,8 +1,9 @@
 <template>
   <div class="container-fluid pushFromTop">
-    <div class="row" style="padding-bottom:10px;">
+
+    <div class="row" style="padding-bottom:20px;">
       <div class="col">
-        <button @click="gotoTheater()" class="btn btn-outline-primary" style="padding-bottom-">Theater</button>
+        <!-- <master-bar></master-bar> -->
       </div>
     </div>
 
@@ -18,19 +19,12 @@
         <youtube-player-card v-bind:title="video.index" v-bind:vid="video.index" v-bind:media-id="video.id" :collected="video.collected"></youtube-player-card>
       </div>
     </div>
-    <input type="hidden" v-on:keyup.space="gotoTheater">
   </div>
 </template>
 
 <script>
   export default {
     mounted() {
-      const self = this;
-      document.body.onkeyup = function (e) {
-        if (e.keyCode == 32) {
-          self.gotoTheater();
-        }
-      };
     },
     computed: {
       videos() {
