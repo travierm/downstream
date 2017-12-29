@@ -101,6 +101,7 @@
         },
       },
       mounted() {
+        let self = this;
         const options = {};
         if (this.height) {
           options.height = this.height;
@@ -116,6 +117,16 @@
           ...options,
         });
         this.player = player;
+        this.player.on('stateChange', (event) => {
+          //is playing
+          if(event.data == 1) {
+            self.playing = true;
+          }else if (event.data == 2) {
+            self.playing = false;
+          }else {
+            self.playing = false;
+          }
+        });
 
         this.$store.dispatch('media/registerVideo', {
           id: this.mediaId,
