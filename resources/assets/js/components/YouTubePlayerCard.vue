@@ -117,6 +117,7 @@
           ...options,
         });
         this.player = player;
+        //@TODO Move this code into the media store module
         this.player.on('stateChange', (event) => {
           //is playing
           if(event.data == 1) {
