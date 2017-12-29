@@ -17,7 +17,7 @@
     <div id="app">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container-fluid">
-          <a id="brand" class="navbar-brand" href="#/frontpage">Downstream</a>
+          <a id="brand" class="navbar-brand" href="/">Downstream</a>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -26,7 +26,7 @@
             <ul class="navbar-nav mr-auto">
               @if(!Auth::guest())
               <li class="nav-item">
-                <router-link class="nav-link" to="/frontpage">Front Page</router-link>
+                <a class="nav-link" href="{{ url('/') }}">Front Page</a>
               </li>
 
               <!--<li class="nav-item">

@@ -16,7 +16,7 @@ Route::get('/hashMe', function() {
   return genUniqueHash(20);
 });
 
-Route::get('/', 'AppController@getIndex');
+Route::get('/', 'FrontPageController@index');
 
 //Search
 Route::get('/search', 'SearchController@getIndex');
