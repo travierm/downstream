@@ -16,6 +16,10 @@ Route::get('/hashMe', function() {
   return genUniqueHash(20);
 });
 
+Route::middleware(['admin'])->group(function() {
+  Route::get('/admin', 'AdminController@index');
+});
+
 Route::get('/', 'FrontPageController@index');
 
 //Search
