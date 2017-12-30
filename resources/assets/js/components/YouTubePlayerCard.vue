@@ -27,7 +27,6 @@
 </template>
 
 <script>
-    import YouTubePlayer from 'youtube-player';
     import SID from 'shortid';
 
     export default {
