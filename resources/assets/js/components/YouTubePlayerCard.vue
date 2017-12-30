@@ -112,38 +112,20 @@
           options.width = $(`#${this.id}`).width();
         }
 
-        const player = YouTubePlayer(this.id, {
-          videoId: this.vid,
-          ...options,
-        });
-        this.player = player;
-        //@TODO Move this code into the media store module
-        this.player.on('stateChange', (event) => {
-          //is playing
-          if(event.data == 1) {
-            self.playing = true;
-            self.$store.dispatch('media/updateCurrentVideo', {
-              id: this.mediaId
-            });
-          }else if (event.data == 2) {
-            self.playing = false;
-          }else {
-            self.playing = false;
-          }
-        });
+        options.fullscreen = false;
+        options.width -= 2;
 
-        this.$store.dispatch('media/registerVideo', {
+        console.log('registering video');
+        this.$store.dispatch('video/register', {
           id: this.mediaId,
-          player,
+          vid: this.vid,
+          element: this.id,
+          options: options
         });
-
-        if(this.autoplay) {
-          this.play();
-        }
       },
       beforeDestroy() {
         this.player.destroy();
-        this.$store.dispatch('media/destroyVideo', {
+        this.$store.dispatch('video/destroy', {
           id:this.mediaId
         });
       },
@@ -153,15 +135,11 @@
         },
         play() {
           this.playing = true;
-          this.$store.dispatch('media/playVideo', {
-            id: this.mediaId,
-          });
+          this.$store.dispatch('video/play', this.mediaId);
         },
         pause() {
           this.playing = false;
-          this.$store.dispatch('media/pauseVideo', {
-            id: this.mediaId,
-          });
+          this.$store.dispatch('video/pause', this.mediaId);
         },
         collect() {
 
