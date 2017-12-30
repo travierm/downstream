@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\User;
 use Illuminate\Console\Command;
 
-class UpdateUserType extends Command
+class UserType extends Command
 {
     /**
      * The name and signature of the console command.
