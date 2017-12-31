@@ -15,7 +15,7 @@
 
   <body>
     <div id="app">
-      <nav class="main-navbar navbar navbar-dark" style="background-color: #311B92;">
+      <nav class="main-navbar navbar-expand-md navbar navbar-dark" style="background-color: #311B92;">
         <div class="container-fluid">
           <a id="brand" class="navbar-brand" href="/">Downstream</a>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

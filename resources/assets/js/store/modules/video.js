@@ -4,6 +4,7 @@ import YTPlayer from 'yt-player';
 const state = {
   registeredVideos: [],
   currentVideo: false,
+  nextVideo: false,
 };
 
 const getters = {
@@ -20,7 +21,7 @@ const actions = {
     player.load(vid);
     player.setVolume(100);
 
-    commit(types.REGISTER_VIDEO, { id, player });
+    commit(types.REGISTER_VIDEO, { id, player, commit});
   },
   destory({ commit }, id) {
     commit(types.DESTROY_VIDEO, id);
@@ -31,12 +32,32 @@ const actions = {
   },
   play({ commit }, id) {
     commit(types.UPDATE_CURRENT_VIDEO, id);
-    commit(types.PLAY_VIDEO, id);
+    commit(types.PLAY_VIDEO);
+    commit(types.QUEUE_NEXT_VIDEO, commit);
+  },
+  startVideoQueue({commit}) {
+    commit(types.START_VIDEO_QUEUE, commit);
   },
 };
 
 const mutations = {
-  [types.REGISTER_VIDEO](state, { id, player }) {
+  [types.START_VIDEO_QUEUE](state, commit) {
+    if(!state.currentVideo) {
+      commit(types.UPDATE_CURRENT_VIDEO, state.registeredVideos[0].id);
+    }else{
+      commit(types.PLAY_VIDEO);
+    }
+  },
+  [types.REGISTER_VIDEO](state, { id, player, commit }) {
+    player.on('playing', () => {
+      if(state.currentVideo.id !== id) {
+        console.log('updating current video');
+        commit(types.UPDATE_CURRENT_VIDEO, id);
+        commit(types.QUEUE_NEXT_VIDEO, commit);
+      }
+    });
+
+
     state.registeredVideos.push({
       id,
       player,
@@ -48,10 +69,21 @@ const mutations = {
   [types.PAUSE_VIDEO](state, id) {
     state.currentVideo.player.pause();
   },
-  [types.PLAY_VIDEO](state, id) {
-    state.currentVideo.player.play();
+  [types.PLAY_VIDEO](state) {
+    const player = state.currentVideo.player;
+    window._player = player;
+    player.play();
+  },
+  [types.QUEUE_NEXT_VIDEO](state, commit) {
+    //million dollar code
+    state.currentVideo.player.on('ended', () => {
+      console.log('playing next video!');
+      commit(types.UPDATE_CURRENT_VIDEO, state.nextVideo.id);
+      commit(types.PLAY_VIDEO);
+    })
   },
   [types.UPDATE_CURRENT_VIDEO](state, id) {
+
     const index = _.findIndex(state.registeredVideos, video => video.id == id);
     const video = state.registeredVideos[index];
 
@@ -63,7 +95,13 @@ const mutations = {
       state.currentVideo.player.pause();
     }
 
+    let nextVideoIndex = parseInt(state.registeredVideos.indexOf(video)) + 1;
+    if(nextVideoIndex >= state.registeredVideos.length) {
+      nextVideoIndex = 0;
+    }
+
     state.currentVideo = video;
+    state.nextVideo = state.registeredVideos[nextVideoIndex];
   },
 };
 
