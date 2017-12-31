@@ -1,36 +1,48 @@
 <template>
-  <nav class="navbar sticky-top navbar-light rounded bg-success">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="Col">
-          <img v @click="startQueue" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
-          <img v-if="playerState == 'playing'" @click="startQueue" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
-        </div>
+  <div class="container">
+    <nav class="navbar fixed-bottom bg-faded navbar-light rounded justify-content-between" style="background-color: #1ABC9C;">
+      <div style="width:60%;">
+        <img class="icon" @click="playPrevious"height="30" width="30" src="/open-iconic-master/svg/media-step-backward.svg" />
+        <img class="icon" @click="startQueue" v-if="!playing" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
+        <img class="icon" @click="pause" v-if="playing" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
+        <img class="icon" @click="playNext" height="30" width="30" src="/open-iconic-master/svg/media-step-forward.svg" />
       </div>
-    </div>
-
-  </nav>
+    </nav>
+  </div>
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
-    data:() => {
-      return {}
-    },
+    data: () => ({
+      playing:false,
+    }),
     computed: {
-      playerState() {
-        if(this.$store.state.video.currentVideo) {
-          return this.$store.state.video.currentVideo.player.getState();
-        }
+    },
+    mounted() {
+    },
+    methods: {
+      pause() {
+        this.playing = false;
+        this.$store.dispatch('video/pauseCurrent');
+      },
+      startQueue() {
+        this.playing = true;
+        this.$store.dispatch('video/startQueue');
+      },
+      playPrevious() {
+        this.$store.dispatch('video/playPrevious');
+      },
+      playNext() {
+        this.$store.dispatch('video/playNext');
       }
     },
-    methods:{
-      startQueue() {
-        this.$store.dispatch('video/startVideoQueue');
-      }
-    }
-  }
+  };
 </script>
 
 <style>
+.icon {
+   padding-left: 5px;
+}
 </style>

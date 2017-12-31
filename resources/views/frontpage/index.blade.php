@@ -9,6 +9,9 @@
       </div>
       @endforeach
   </div>
+  <div class="row">
+    <master-bar></master-bar>
+  </div>
   @else
   <div class="row">
     <div class="col-lg-6 center" v-if="videos.length == 0">

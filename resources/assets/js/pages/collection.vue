@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid pushFromTop">
 
-    <div class="row" style="padding-bottom:20px;">
-      <div class="col">
-        <!-- <master-bar></master-bar> -->
+    <div class="row">
+      <div class="col-lg-2">
+        <master-bar></master-bar>
       </div>
     </div>
 

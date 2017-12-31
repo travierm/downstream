@@ -3,6 +3,7 @@ import YTPlayer from 'yt-player';
 
 const state = {
   registeredVideos: [],
+  previousVideo: false,
   currentVideo: false,
   nextVideo: false,
 };
@@ -30,20 +31,34 @@ const actions = {
     commit(types.UPDATE_CURRENT_VIDEO, id);
     commit(types.PAUSE_VIDEO, id);
   },
+  pauseCurrent({commit, state}, id) {
+    commit(types.PAUSE_VIDEO, state.currentVideo.id);
+  },
   play({ commit }, id) {
     commit(types.UPDATE_CURRENT_VIDEO, id);
     commit(types.PLAY_VIDEO);
     commit(types.QUEUE_NEXT_VIDEO, commit);
   },
-  startVideoQueue({commit}) {
-    commit(types.START_VIDEO_QUEUE, commit);
+  playPrevious({commit, state}) {
+    commit(types.UPDATE_CURRENT_VIDEO, state.previousVideo.id);
+    commit(types.PLAY_VIDEO);
+    commit(types.QUEUE_NEXT_VIDEO, commit);
   },
+  playNext({commit}) {
+    commit(types.UPDATE_CURRENT_VIDEO, state.nextVideo.id);
+    commit(types.PLAY_VIDEO);
+    commit(types.QUEUE_NEXT_VIDEO, commit);
+  },
+  startQueue({commit}) {
+    commit(types.START_VIDEO_QUEUE, commit);
+  }
 };
 
 const mutations = {
   [types.START_VIDEO_QUEUE](state, commit) {
     if(!state.currentVideo) {
       commit(types.UPDATE_CURRENT_VIDEO, state.registeredVideos[0].id);
+      commit(types.PLAY_VIDEO);
     }else{
       commit(types.PLAY_VIDEO);
     }
@@ -71,11 +86,10 @@ const mutations = {
   },
   [types.PLAY_VIDEO](state) {
     const player = state.currentVideo.player;
-    window._player = player;
     player.play();
   },
   [types.QUEUE_NEXT_VIDEO](state, commit) {
-    //million dollar code
+    //@MILLION$
     state.currentVideo.player.on('ended', () => {
       console.log('playing next video!');
       commit(types.UPDATE_CURRENT_VIDEO, state.nextVideo.id);
@@ -96,12 +110,15 @@ const mutations = {
     }
 
     let nextVideoIndex = parseInt(state.registeredVideos.indexOf(video)) + 1;
+    let previousVideoIndex = parseInt(state.registeredVideos.indexOf(video)) - 1;
     if(nextVideoIndex >= state.registeredVideos.length) {
       nextVideoIndex = 0;
+      previousVideoIndex = state.registeredVideos.length - 1;
     }
 
     state.currentVideo = video;
     state.nextVideo = state.registeredVideos[nextVideoIndex];
+    state.previousVideo = state.registeredVideos[previousVideoIndex];
   },
 };
 
