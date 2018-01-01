@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "jquery": "^3.2.1",
+        "mobile-detect": "^1.4.1",
         "shortid": "^2.2.8",
         "vue-class-component": "^5.0.2",
         "vue-router": "^3.0.1",

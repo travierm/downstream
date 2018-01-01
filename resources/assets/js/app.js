@@ -29,7 +29,6 @@ router.beforeEach((to, from, next) => {
 
 // Make initial api requests
 store.dispatch('collection/update');
-store.dispatch('frontpage/update');
 
 const app = new Vue({
   router,

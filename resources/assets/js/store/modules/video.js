@@ -1,5 +1,9 @@
 import * as types from '../mutation-types';
 import YTPlayer from 'yt-player';
+import MobileDetect from 'mobile-detect';
+
+var md = new MobileDetect(window.navigator.userAgent);
+const isMobile = md.mobile();
 
 const state = {
   registeredVideos: [],
@@ -18,9 +22,15 @@ const actions = {
   register({ commit }, {
     id, vid, element, options,
   }) {
+    if(isMobile) {
+      console.log('Im mobile!');
+      options.autoplay = true;
+    }
     const player = new YTPlayer(`#${element}`, options);
+    if(isMobile) {
+      player.setVolume(0);
+    }
     player.load(vid);
-    player.setVolume(100);
 
     commit(types.REGISTER_VIDEO, { id, player, commit});
   },
@@ -86,6 +96,7 @@ const mutations = {
   },
   [types.PLAY_VIDEO](state) {
     const player = state.currentVideo.player;
+    player.setVolume(100);
     player.play();
   },
   [types.QUEUE_NEXT_VIDEO](state, commit) {
