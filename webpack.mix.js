@@ -16,6 +16,10 @@ mix
   .sass('resources/assets/sass/app.scss', 'public/css')
   .sourceMaps();
 
+if (mix.inProduction()) {
+    mix.version();
+}
+
 mix.webpackConfig({
   watchOptions: {
     aggregateTimeout: 300,
