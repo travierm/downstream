@@ -17,7 +17,7 @@
     <div id="app">
       <nav class="main-navbar navbar-expand-md navbar navbar-dark" style="background-color: #311B92;">
         <div class="container-fluid">
-          <a id="brand" class="navbar-brand" style="color:#1abc9c; font-size:1.5em;" href="/">Downstream</a>
+          <a id="brand" class="navbar-brand" style="font-size:1.6em;" href="/">Downstream</a>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>

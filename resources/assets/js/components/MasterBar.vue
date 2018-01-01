@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <nav class="navbar fixed-bottom bg-faded navbar-light rounded justify-content-between" style="background-color: #1ABC9C;">
+    <nav class="navbar fixed-bottom bg-faded navbar-light rounded justify-content-between" style="background-color: #D35400;">
       <div style="width:60%;">
         <img class="icon" @click="playPrevious"height="30" width="30" src="/open-iconic-master/svg/media-step-backward.svg" />
         <img class="icon" @click="startQueue" v-if="!playing" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
