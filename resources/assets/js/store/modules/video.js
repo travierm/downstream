@@ -1,6 +1,7 @@
 import * as types from '../mutation-types';
 import YTPlayer from 'yt-player';
 import MobileDetect from 'mobile-detect';
+import _ from 'lodash';
 
 const md = new MobileDetect(window.navigator.userAgent);
 const isMobile = md.mobile();
@@ -25,7 +26,7 @@ const actions = {
     if (isMobile) {
       options.autoplay = true;
     }
-    
+
     const player = new YTPlayer(`#${element}`, options);
     player.load(vid);
     if (isMobile) {
@@ -34,6 +35,9 @@ const actions = {
     }
 
     commit(types.REGISTER_VIDEO, { id, player, commit });
+  },
+  registerEventAction({ commit }, {id, eventType, callback}) {
+    commit(types.REGISTER_VIDEO_EVENT_ACTION, {id, eventType, callback});
   },
   destory({ commit }, id) {
     commit(types.DESTROY_VIDEO, id);
@@ -133,6 +137,22 @@ const mutations = {
     state.nextVideo = state.registeredVideos[nextVideoIndex];
     state.previousVideo = state.registeredVideos[previousVideoIndex];
   },
+  [types.REGISTER_VIDEO_EVENT_ACTION](state, {id, eventType, callback}) {
+    const index = _.findIndex(state.registeredVideos, video => video.id == id);
+    const video = state.registeredVideos[index];
+
+    if(video.player) {
+      if(_.isArray(eventType)) {
+        _.forEach(eventType, (type) => {
+          video.player.on(type, callback);
+        });
+      }else{
+        video.player.on(eventType, callback);
+      }
+    }else{
+      throw new Error("Can not register event for undefined video");
+    }
+  }
 };
 
 export default {

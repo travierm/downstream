@@ -121,6 +121,22 @@
           element: this.id,
           options: options
         });
+
+        this.$store.dispatch('video/registerEventAction', {
+          id: this.mediaId,
+          eventType: 'playing',
+          callback:() => {
+            self.playing = true;
+          }
+        });
+
+        this.$store.dispatch('video/registerEventAction', {
+          id: this.mediaId,
+          eventType: ['ended', 'paused'],
+          callback:() => {
+            self.playing = false;
+          }
+        });
       },
       beforeDestroy() {
         this.player.destroy();
