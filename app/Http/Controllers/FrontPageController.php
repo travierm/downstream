@@ -12,7 +12,7 @@ class FrontPageController extends Controller
   public function index()
   {
     $videos = Media::byType('youtube')
-      ->limit(25)
+      ->limit(10)
       ->orderByRaw('created_at DESC')
       ->get();
 

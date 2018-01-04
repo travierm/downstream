@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <nav class="navbar fixed-bottom bg-faded navbar-light rounded justify-content-between" style="background-color: #D35400;">
+    <nav class="navbar fixed-bottom bg-faded navbar-light rounded bg-success" style="background-color:#28B463;">
       <div style="width:60%;">
-        <img class="icon" @click="playPrevious"height="30" width="30" src="/open-iconic-master/svg/media-step-backward.svg" />
-        <img class="icon" @click="startQueue" v-if="!playing" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
-        <img class="icon" @click="pause" v-if="playing" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
-        <img class="icon" @click="playNext" height="30" width="30" src="/open-iconic-master/svg/media-step-forward.svg" />
+        <img class="icon" @click="playPrevious"height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
+        <img class="icon" @click="startQueue" v-if="!playing" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
+        <img class="icon" @click="pause" v-if="playing" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
+        <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
       </div>
     </nav>
   </div>
@@ -44,5 +44,8 @@
 <style>
 .icon {
    padding-left: 5px;
+}
+.iconic-property-fill {
+  fill: white;
 }
 </style>

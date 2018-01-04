@@ -17,6 +17,7 @@ class UserCollection extends Model
     $collectable = UserCollection::where('user_id', $userId)
       ->where('table', 'youtube_videos')
       ->where('index', $id)
+      ->orderBy('created_at', 'DESC')
       ->first();
       
     return $collectable;
