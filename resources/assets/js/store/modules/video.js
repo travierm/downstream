@@ -107,11 +107,11 @@ const mutations = {
     player.play();
   },
   [types.QUEUE_NEXT_VIDEO](state, commit) {
-    // @MILLION$
+    // @MILLION
     state.currentVideo.player.on('ended', () => {
-      console.log('playing next video!');
       commit(types.UPDATE_CURRENT_VIDEO, state.nextVideo.id);
       commit(types.PLAY_VIDEO);
+      commit(types.QUEUE_NEXT_VIDEO, commit);
     });
   },
   [types.UPDATE_CURRENT_VIDEO](state, id) {

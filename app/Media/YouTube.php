@@ -1,6 +1,7 @@
 <?php
 namespace App\Media;
 
+use DB;
 use App\Media;
 use App\UserMedia;
 use YouTubeService;
@@ -30,9 +31,14 @@ class YouTube {
   public function collection()
   {
     $mediaIds = UserMedia::where('user_id', $this->userId)
+      ->orderBy('created_at', 'DESC')
       ->pluck('media_id');
 
-    $collection = Media::find($mediaIds);
+    $collection = [];
+    foreach($mediaIds as $id) {
+      $collection[] = Media::find($id);
+    }
+
     $collection = Media::addUserCollectedProp($collection);
 
     return $collection;

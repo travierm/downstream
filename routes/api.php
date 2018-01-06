@@ -22,9 +22,6 @@ Route::post("/youtube/toss", "YouTubeAPIController@toss");
 
 Route::post("/test", "YouTubeAPIController@test");
 
-//Route::resource('like', 'LikeController');
-Route::get('collection', 'CollectionAPIController@index');
-
 Route::get('/frontpage', 'FrontPageAPIController@index');
 
 Route::get('/media/index', 'MediaAPIController@index');

@@ -30,9 +30,6 @@ Route::post('/search', 'SearchController@postSearchYouTube');
 Route::get('/import', 'ImportController@getIndex');
 Route::post('/import', 'ImportController@postImportVideo');
 
-//Collection
-Route::get('/collection', 'CollectionController@getIndex');
-
 Route::get('/hash', 'UserController@getHash');
 
 Auth::routes();
