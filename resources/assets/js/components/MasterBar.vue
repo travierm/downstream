@@ -3,8 +3,8 @@
     <nav class="navbar fixed-bottom bg-faded navbar-light rounded bg-success" style="background-color:#28B463;">
       <div style="width:60%;">
         <img class="icon" @click="playPrevious"height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
-        <img class="icon" @click="startQueue" v-if="!playing" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
-        <img class="icon" @click="pause" v-if="playing" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
+        <img class="icon" @click="startQueue" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
+        <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
         <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
       </div>
     </nav>
@@ -19,6 +19,9 @@
       playing:false,
     }),
     computed: {
+      isPlaying() {
+        return this.$store.getters['video/isPlaying'];
+      }
     },
     mounted() {
     },

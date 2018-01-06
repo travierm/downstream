@@ -7,6 +7,7 @@ const md = new MobileDetect(window.navigator.userAgent);
 const isMobile = md.mobile();
 
 const state = {
+  isPlaying: false,
   registeredVideos: [],
   previousVideo: false,
   currentVideo: false,
@@ -16,6 +17,9 @@ const state = {
 const getters = {
   videos(state) {
     return state.videos;
+  },
+  isPlaying(state) {
+    return state.isPlaying;
   },
 };
 
@@ -81,9 +85,9 @@ const mutations = {
   [types.REGISTER_VIDEO](state, { id, player, commit }) {
     player.on('playing', () => {
       if (state.currentVideo.id !== id) {
-        console.log('updating current video');
         commit(types.UPDATE_CURRENT_VIDEO, id);
         commit(types.QUEUE_NEXT_VIDEO, commit);
+        commit(types.UPDATE_PLAYING_STATUS, true);
       }
     });
 
@@ -96,9 +100,14 @@ const mutations = {
     state.registeredVideos = state.registeredVideos.filter(video => video.id !== id);
   },
   [types.PAUSE_VIDEO](state, id) {
+    state.isPlaying = false;
     state.currentVideo.player.pause();
   },
+  [types.UPDATE_PLAYING_STATUS](state, status) {
+    state.isPlaying = status;
+  },
   [types.PLAY_VIDEO](state) {
+    state.isPlaying = true;
     const player = state.currentVideo.player;
     player.on('error', (err) => {
       console.log(err);
