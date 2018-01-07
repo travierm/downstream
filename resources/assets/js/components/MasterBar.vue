@@ -6,6 +6,7 @@
         <img class="icon" @click="startQueue" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
         <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
         <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
+        <input v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" style="margin-bottom: -10px;" class="align-middle" />
       </div>
     </nav>
   </div>
@@ -21,6 +22,9 @@
     computed: {
       isPlaying() {
         return this.$store.getters['video/isPlaying'];
+      },
+      volume() {
+        return this.$store.getters['video/volume'];
       }
     },
     mounted() {
@@ -33,6 +37,9 @@
       startQueue() {
         this.playing = true;
         this.$store.dispatch('video/startQueue');
+      },
+      updateVolume(event) {
+        this.$store.dispatch('video/updateVolume', event.target.value);
       },
       playPrevious() {
         this.$store.dispatch('video/playPrevious');

@@ -7,6 +7,7 @@ const md = new MobileDetect(window.navigator.userAgent);
 const isMobile = md.mobile();
 
 const state = {
+  volume: 75,
   isPlaying: false,
   registeredVideos: [],
   previousVideo: false,
@@ -15,6 +16,9 @@ const state = {
 };
 
 const getters = {
+  volume(state) {
+    return state.volume;
+  },
   videos(state) {
     return state.videos;
   },
@@ -68,12 +72,20 @@ const actions = {
     commit(types.PLAY_VIDEO);
     commit(types.QUEUE_NEXT_VIDEO, commit);
   },
+  updateVolume({ commit }, volumeInt) {
+    commit(types.UPDATE_VIDEO_VOLUME, volumeInt);
+  },
   startQueue({ commit }) {
     commit(types.START_VIDEO_QUEUE, commit);
   },
 };
 
 const mutations = {
+  [types.UPDATE_VIDEO_VOLUME](state, volumeInt) {
+    state.volume = volumeInt;
+    if(state.currentVideo)
+      state.currentVideo.player.setVolume(volumeInt);
+  },
   [types.START_VIDEO_QUEUE](state, commit) {
     if (!state.currentVideo) {
       commit(types.UPDATE_CURRENT_VIDEO, state.registeredVideos[0].id);
@@ -83,9 +95,11 @@ const mutations = {
     }
   },
   [types.REGISTER_VIDEO](state, { id, player, commit }) {
+    player.setVolume(state.volume);
     player.on('playing', () => {
       if (state.currentVideo.id !== id) {
         commit(types.UPDATE_CURRENT_VIDEO, id);
+        commit(types.UPDATE_VIDEO_VOLUME, state.volume);
         commit(types.QUEUE_NEXT_VIDEO, commit);
         commit(types.UPDATE_PLAYING_STATUS, true);
       }
@@ -112,7 +126,7 @@ const mutations = {
     player.on('error', (err) => {
       console.log(err);
     });
-    player.setVolume(100);
+    player.setVolume(state.volume);
     player.play();
   },
   [types.QUEUE_NEXT_VIDEO](state, commit) {
