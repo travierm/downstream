@@ -1,13 +1,23 @@
 export const FRONTPAGE_UPDATE = 'FRONTPAGE_UPDATE';
 export const FRONTPAGE_REMOVE = 'FRONTPAGE_REMOVE';
 
+
+//register a video properties
+export const REGISTER_VIDEO = 'REGISTER_VIDEO';
+//render video
+export const RENDER_VIDEO = 'LOAD_VIDEO';
+
+//play current video
+export const PLAY_CURRENT_VIDEO = 'PLAY_VIDEO';
+export const UPDATE_CURRENT_VIDEO = 'UPDATE_CURRENT_VIDEO';
+//pause current video
+export const PAUSE_CURRENT_VIDEO = 'PAUSE_CURRENT_VIDEO';
+export const LOAD_VIDEO = 'LOAD_VIDEO';
+//destroy
+export const DESTROY_VIDEO = 'DESTROY_VIDEO';
+
 export const UPDATE_VIDEO_VOLUME = 'UPDATE_VIDEO_VOLUME';
 export const START_VIDEO_QUEUE = 'START_VIDEO_QUEUE';
-export const REGISTER_VIDEO = 'REGISTER_VIDEO';
-export const DESTROY_VIDEO = 'DESTROY_VIDEO';
-export const PLAY_VIDEO = 'PLAY_VIDEO';
-export const PAUSE_VIDEO = 'PAUSE_VIDEO';
-export const UPDATE_CURRENT_VIDEO = 'UPDATE_CURRENT_VIDEO';
 export const UPDATE_PLAYING_STATUS = 'UPDATE_PLAYING_STATUS';
 export const QUEUE_NEXT_VIDEO = 'QUEUE_NEXT_VIDEO';
 export const REGISTER_VIDEO_EVENT_ACTION = 'REGISTER_VIDEO_EVENT_ACTION';

@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid pushFromTop">
 
-    <div class="row">
+    <div class="row" v-if="!isMobile">
       <div class="col-lg-2">
-        <master-bar></master-bar>
+        <!-- <master-bar></master-bar> -->
       </div>
     </div>
 
@@ -16,7 +16,7 @@
 
     <div class="row">
       <div class="col-lg-3" v-for="video in videos" :key="video.id">
-        <youtube-player-card v-bind:title="video.index" v-bind:vid="video.index" v-bind:media-id="video.id" :collected="video.collected"></youtube-player-card>
+        <video-player-card v-bind:media="video"></video-player-card>
       </div>
     </div>
   </div>
@@ -27,6 +27,9 @@
     mounted() {
     },
     computed: {
+      isMobile() {
+        return window._isMobile;
+      },
       videos() {
         return this.$store.getters['collection/videos'];
       },

@@ -5,7 +5,7 @@ import CollectionPage from './pages/collection';
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/collection', component: CollectionPage },
+  { path: '/collection', component: CollectionPage }
 ];
 
 export default new VueRouter({

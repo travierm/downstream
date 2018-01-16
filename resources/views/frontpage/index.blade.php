@@ -5,7 +5,7 @@
   <div class="row">
       @foreach($videos as $video)
       <div class="col-lg-3">
-        <youtube-player-card media-id="{{$video->id}}" collected="{{$video->collected}}" title="{{$video->title}}"  vid="{{$video->index}}"></youtube-player-card>
+        <video-player-card :media="{{ $video }}"></video-player-card>
       </div>
       @endforeach
   </div>

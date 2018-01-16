@@ -1,4 +1,10 @@
+import Utils from './services/Utils.js';
+import MobileDetect from 'mobile-detect';
 window._ = require('lodash');
+window._utils = new Utils;
+
+const md = new MobileDetect(window.navigator.userAgent);
+window._isMobile = md.mobile();
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This

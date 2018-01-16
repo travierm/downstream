@@ -17,12 +17,23 @@ mix
   .sourceMaps();
 
 if (mix.inProduction()) {
-    mix.version();
+  mix.version();
 }
 
 mix.webpackConfig({
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
+  },
+  resolve: {
+    extensions: ['.ts']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader'
+      }
+    ]
   }
 });

@@ -36,7 +36,9 @@ class YouTube {
 
     $collection = [];
     foreach($mediaIds as $id) {
-      $collection[] = Media::find($id);
+      $media = Media::find($id);
+      $media->meta = json_decode($media->meta);
+      $collection[] = $media;
     }
 
     $collection = Media::addUserCollectedProp($collection);

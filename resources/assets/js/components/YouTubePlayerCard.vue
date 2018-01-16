@@ -18,9 +18,11 @@
 
     <!-- YouTube Player -->
     <div :id="this.id"></div>
+    <img class="img-fluid" width="this.width" height="this.height" v-if="this.thumbnail && this.showThumbnail" v-bind:src="thumbnail" />
 
     <div class="card-block" v-if="title && meta ">
       <h4 class="card-title">{{title}}</h4>
+      
       <h6 class="card-subtitle mb-2">Views - <span class="text-success">{{numberWithCommas(meta.view_count)}}</span></h6>
     </div>
   </div>
@@ -36,6 +38,8 @@
           player: false,
           playing: false,
           isCollected: this.collected,
+          lazyLoad: false,
+          showThumbnail: true
         };
       },
       props: {
@@ -63,6 +67,10 @@
         title: {
           type: String,
           required: false,
+        },
+        thumbnail: {
+          type: String,
+          required: false
         },
         description: {
           type: String,
@@ -100,43 +108,20 @@
         },
       },
       mounted() {
+
+        if(this.thumbnail) {
+          this.showThumbnail = true;
+          this.lazyLoad = true;
+        }
+
         let self = this;
-        const options = {};
-        if (this.height) {
-          options.height = this.height;
-        }
-        if (this.width) {
-          options.width = this.width;
-        } else {
-          options.width = $(`#${this.id}`).width();
+
+        if(!this.lazyLoad) {
+          this.registerVideo();
         }
 
-        options.fullscreen = false;
-        options.width -= 2;
-
-        console.log('registering video');
-        this.$store.dispatch('video/register', {
-          id: this.mediaId,
-          vid: this.vid,
-          element: this.id,
-          options: options
-        });
-
-        this.$store.dispatch('video/registerEventAction', {
-          id: this.mediaId,
-          eventType: 'playing',
-          callback:() => {
-            self.playing = true;
-          }
-        });
-
-        this.$store.dispatch('video/registerEventAction', {
-          id: this.mediaId,
-          eventType: ['ended', 'paused'],
-          callback:() => {
-            self.playing = false;
-          }
-        });
+        console.log(this.height);
+       
       },
       beforeDestroy() {
         this.player.destroy();
@@ -145,11 +130,51 @@
         });
       },
       methods: {
+        registerVideo() {
+          const options = {};
+
+          if (this.height) {
+            options.height = this.height;
+          }
+          if (this.width) {
+            options.width = this.width;
+          } else {
+            options.width = $(`#${this.id}`).width();
+          }
+          options.fullscreen = false;
+          options.width -= 2;
+          this.$store.dispatch('video/register', {
+            id: this.mediaId,
+            vid: this.vid,
+            element: this.id,
+            options: options
+          });
+
+          this.$store.dispatch('video/registerEventAction', {
+            id: this.mediaId,
+            eventType: 'playing',
+            callback:() => {
+              self.playing = true;
+            }
+          });
+
+          this.$store.dispatch('video/registerEventAction', {
+            id: this.mediaId,
+            eventType: ['ended', 'paused'],
+            callback:() => {
+              self.playing = false;
+            }
+          });
+        },
         numberWithCommas(x) {
           return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         },
         play() {
           this.playing = true;
+          if(this.lazyLoad) {
+            this.showThumbnail = false;
+            this.registerVideo();
+          }
           this.$store.dispatch('video/play', this.mediaId);
         },
         pause() {

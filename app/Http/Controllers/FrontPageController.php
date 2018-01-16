@@ -20,6 +20,11 @@ class FrontPageController extends Controller
       $videos = Media::addUserCollectedProp($videos);
     }
 
+    foreach($videos as &$video) {
+      $video->meta = json_decode($video->meta);
+    }
+
+
     return view('frontpage.index', [
       'videos' => $videos
     ]);
