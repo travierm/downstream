@@ -12,7 +12,7 @@
     </div>
 
     <div class="media-container" v-if="media.meta.thumbnail && this.showThumbnail">
-      <img :id="this.id + '_thumbnail'" class="img-fluid" width="this.width" v-bind:src="media.meta.thumbnail" />
+      <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid" width="this.width" v-bind:src="media.meta.thumbnail" />
       <div class="col">
         <div class="col-sm-12">
           <p style="color:white;">{{ media.meta.title }} </p>
@@ -64,7 +64,7 @@
         },
       },
       mounted() {
-       this.height = $('')
+       //this.height = $('')
        this.registerVideo();
 
         let self = this;
@@ -100,7 +100,7 @@
           }
         },
         registerVideo(options = {}) {
-          options.height = $("#" + this.id + "_thumbnail").height()
+          options.height = $(".media-container").height();
           options.width = $(`#${this.id}`).width();
 
           this.$store.dispatch('video/register', {

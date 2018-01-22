@@ -73,6 +73,11 @@ const mutations = {
       return;
     }
 
+    //@TODO pause previous video
+    if(state.currentVideo) {
+      state.currentVideo.player.pause();
+    }
+
     //set next ids for queue
     let nextVideoIndex = parseInt(state.registeredVideos.indexOf(video)) + 1;
     let previousVideoIndex = parseInt(state.registeredVideos.indexOf(video)) - 1;
