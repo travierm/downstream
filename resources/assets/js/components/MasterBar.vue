@@ -1,15 +1,17 @@
 <template>
-  <div class="container">
-    <nav class="navbar fixed-bottom bg-faded navbar-light rounded bg-success" style="background-color:#28B463;">
-      <div style="width:60%;">
-        <img class="icon" @click="playPrevious"height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
-        <img class="icon" @click="startQueue" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
-        <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
-        <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
-        <input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" style="margin-bottom: -10px;" class="align-middle" />
+    <nav class="navbar fixed-bottom bg-faded navbar-light rounded" style="background-color:#311B92;">
+      <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <button class="btn btn-outline-warning">Suggestion Box</button>
+            </div>
+
+            <div class="col-lg-6">
+              <input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" style="margin-bottom: -10px;" class="align-middle" />
+            </div>
+          </div>
       </div>
     </nav>
-  </div>
 </template>
 
 <script>
@@ -52,7 +54,16 @@
   };
 </script>
 
-<style>
+<style scoped>
+.navbar {
+  height: 5%;
+}
+
+.navbar > li {
+  position: relative;
+  display: block;
+}
+
 .icon {
    padding-left: 5px;
 }

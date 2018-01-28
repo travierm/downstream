@@ -6,7 +6,7 @@ import _ from 'lodash';
 const isMobile = window._isMobile;
 
 const state = {
-  volume: 75,
+  volume: 50,
   isPlaying: false,
   registeredVideos: [],
   loadedVideos:[],
@@ -35,10 +35,10 @@ const actions = {
     commit(types.REGISTER_VIDEO, { media, player });
   },
   pause({ commit }) {
-    commit(types.PAUSE_CURRENT_VIDEO);
+    commit(types.PAUSE_CURRENT_VIDEO, commit);
   },
   play({ commit }, mediaId) {
-    commit(types.LOAD_VIDEO, mediaId);
+    commit(types.LOAD_VIDEO, { mediaId, commit});
     commit(types.UPDATE_CURRENT_VIDEO, mediaId);
     commit(types.PLAY_CURRENT_VIDEO);
     commit(types.QUEUE_NEXT_VIDEO, commit);
@@ -46,13 +46,20 @@ const actions = {
   registerEventAction({ commit }, { id, eventType, callback }) {
     commit(types.REGISTER_VIDEO_EVENT_ACTION, { id, eventType, callback });
   },
+  updateVolume({ commit }, volumeInt) {
+    commit(types.UPDATE_VIDEO_VOLUME, volumeInt);
+  },
 };
 
 const mutations = {
+  [types.UPDATE_VIDEO_VOLUME](state, volumeInt) {
+    state.volume = volumeInt;
+    if (state.currentVideo) { state.currentVideo.player.setVolume(volumeInt); }
+  },
   [types.REGISTER_VIDEO](state, video) {
     state.registeredVideos.push(video);
   },
-  [types.LOAD_VIDEO](state, mediaId) {
+  [types.LOAD_VIDEO](state, { mediaId, commit}) {
 
     if(findById(state.loadedVideos, mediaId)) {
       //video loaded already
@@ -61,8 +68,22 @@ const mutations = {
     }
 
     let video = findById(state.registeredVideos, mediaId);
+    if(!video) {
+      console.error("Could not LOAD " + mediaId);
+      return;
+    }
     video.player.load(video.media.index);
     video.player.setVolume(state.volume);
+
+    video.player.on('playing', () => {
+      if(state.currentVideo.media.id !== video.media.id) {
+        //video started playing without being the current video
+        console.info("started playing while not current video");
+        commit(types.UPDATE_CURRENT_VIDEO, video.media.id);
+        commit(types.QUEUE_NEXT_VIDEO, commit);
+        state.isPlaying = true;
+      }
+    });
 
     state.loadedVideos.push(video);
   },
@@ -73,9 +94,9 @@ const mutations = {
       return;
     }
 
-    //@TODO pause previous video
     if(state.currentVideo) {
       state.currentVideo.player.pause();
+      state.currentVideo.player.seek(0);
     }
 
     //set next ids for queue
@@ -98,18 +119,31 @@ const mutations = {
   },
   [types.QUEUE_NEXT_VIDEO](state, commit) {
     state.currentVideo.player.on('ended', () => {
-      commit(types.LOAD_VIDEO, state.nextId);
+      if(state.currentVideo.player.getState() == "unstarted") {
+        //@TODO possible yt-player bug which calls ended event on unstarted video
+        //dont queue next video becuase this one didn't play
+        //only happens when current video queued in  a player event closure
+        return;
+      }
+
+      console.info("player ended starting next video");
+      commit(types.LOAD_VIDEO, { mediaId: state.nextId, commit});
       commit(types.UPDATE_CURRENT_VIDEO, state.nextId);
-      commit(types.PLAY_CURRENT_VIDEO);
       commit(types.QUEUE_NEXT_VIDEO, commit);
+      commit(types.PLAY_CURRENT_VIDEO);
     });
   },
-  [types.PAUSE_CURRENT_VIDEO](state) {
-    state.currentVideo.player.pause();
+  [types.PAUSE_CURRENT_VIDEO](state, commit) {
+    if(state.currentVideo) {
+      state.currentVideo.player.pause();
+    }
   },
   [types.PLAY_CURRENT_VIDEO](state) {
     state.currentVideo.player.play();
   },
+  /*
+    Register Video
+   */
   [types.REGISTER_VIDEO_EVENT_ACTION](state, { id, eventType, callback }) {
     const index = _.findIndex(state.registeredVideos, video => video.media.id == id);
     const video = state.registeredVideos[index];

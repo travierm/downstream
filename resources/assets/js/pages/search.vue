@@ -8,17 +8,22 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6 center" v-if="videos.length == 0">
-        <h3>Nothing in collection..</h3>
-        <img src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
+      <div class="col-lg-12">
+        <img height="125" width="125" class="img-fluid" src="images/yt_logo_rgb_light.png"></img>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-3" v-for="video in videos" :key="video.id">
-        <video-player-card v-bind:media="video"></video-player-card>
+    <div class="row pushFromTop">
+      <div class="col-lg-2">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-outline-danger" type="button">Query</button>
+          </span>
+        </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -35,15 +40,6 @@
       },
     },
     methods: {
-      gotoTheater() {
-        const mediaId = this.videos[0].id;
-        this.$router.push({
-          name: 'theater',
-          params: {
-            mediaId,
-          },
-        });
-      },
     },
   };
 </script>

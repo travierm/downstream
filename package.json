@@ -37,6 +37,7 @@
         "vue-server-renderer": "^2.5.13"
     },
     "dependencies": {
+        "bootstrap-vue": "^2.0.0-rc.1",
         "jquery": "^3.2.1",
         "mobile-detect": "^1.4.1",
         "shortid": "^2.2.8",

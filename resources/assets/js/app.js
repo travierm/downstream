@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { sync } from 'vuex-router-sync';
 import store from './store/index';
 import router from './router';
+import BootstrapVue from 'bootstrap-vue';
 
 require('./bootstrap');
 
@@ -14,6 +15,8 @@ const unsync = sync(store, router);
  */
 
 window.Vue = require('vue');
+
+Vue.use(BootstrapVue);
 
 // Components
 Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));

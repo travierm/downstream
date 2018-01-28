@@ -100,8 +100,12 @@
           }
         },
         registerVideo(options = {}) {
-          options.height = $(".media-container").height();
+          options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
+
+          if(options.height == 0) {
+            options.height = $(`#${this.id}_thumbnail`).first().height();
+          }
 
           this.$store.dispatch('video/register', {
             media:this.media,
