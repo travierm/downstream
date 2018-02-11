@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col lead">
         <h2>Purpose - Discover, Manage, Play</h2>
-        <p>Downstream is a media/music service powered by YouTube. Downstream started as an empty library, You the user also start off with an empty collection. You can discover new songs through our search system or by collecting items other users discovered on our frontpage. By doing this you increase our librarys size and help other users discover great content.</p>
+        <p>Downstream is a media/music service powered by YouTube. Downstream started as an empty library, You the user also start with an empty collection. You can discover new songs through our search system or by collecting items other users discovered on our frontpage. By doing this you increase our librarys size and help other users discover great content.</p>
 
         <h2>Users: <span class="text-success">{{ userCountWithCommas }}</span></h2>
-        <h2 style="padding-bottom: 10px;">Library Size: <span class="text-primary">{{ itemCount }}</span> items</h2>
+        <h2 style="padding-bottom: 10px;">Library Size: <span class="text-primary">{{ itemCountWithCommas }}</span> items</h2>
 
         <h2>Planned Features:</h2>
         <ul>
@@ -39,13 +39,13 @@
   export default {
     data() {
       return {
-        librarySize: 0,
+        itemCount: 0,
         userCount: 0
       }
     },
     computed: {
-      itemCount() {
-        return window._utils.numberWithCommas(this.librarySize);
+      itemCountWithCommas() {
+        return window._utils.numberWithCommas(this.itemCount);
       },
       userCountWithCommas() {
         return window._utils.numberWithCommas(this.userCount);
@@ -54,7 +54,7 @@
     mounted() {
       let self = this;
       axios.get('/api/stat/library/size').then((resp) => {
-        self.librarySize = resp.data.count;
+        self.itemCount = resp.data.count;
       });
 
       axios.get('/api/stat/user/count').then((resp) => {

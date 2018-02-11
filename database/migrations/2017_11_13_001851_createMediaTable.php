@@ -24,6 +24,7 @@ class CreateMediaTable extends Migration
           //Original user_id that added media to library
           $table->integer('user_id')->references('id')->on('users');
           $table->timestamps();
+          $table->softDeletes();
       });
     }
 

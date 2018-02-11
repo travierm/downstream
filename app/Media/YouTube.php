@@ -73,7 +73,14 @@ class YouTube {
     $meta = [];
     $meta['title'] = $video->snippet->title;
     $meta['view_count'] = $video->statistics->viewCount;
-    $meta['thumbnail'] = @$video->snippet->thumbnails->standard->url;
+
+    //thumbnail
+    if($video->snippet->thumbnails->standard->url) {
+      $meta['thumbnail'] = @$video->snippet->thumbnails->standard->url;
+    }else{
+      $meta['thumbnail'] = @$video->snippet->thumbnails->default->url;
+    }
+
     $meta['categoryId'] = $video->snippet->categoryId;
     if(@$video->snippet->tags) {
       $meta['tags'] = $video->snippet->tags;

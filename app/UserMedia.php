@@ -5,9 +5,12 @@ namespace App;
 use Auth;
 use App\Media;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserMedia extends Model
 {
+  use SoftDeletes;
+  
   protected $table = 'user_media';
   protected $fillable = ['media_id', 'user_id'];
 

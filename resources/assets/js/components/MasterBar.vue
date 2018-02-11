@@ -3,10 +3,6 @@
       <div class="container">
           <div class="row">
             <div class="col-lg-6">
-              <button class="btn btn-outline-warning">Suggestion Box</button>
-            </div>
-
-            <div class="col-lg-6">
               <input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" style="margin-bottom: -10px;" class="align-middle" />
             </div>
           </div>

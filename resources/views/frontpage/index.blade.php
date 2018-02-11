@@ -1,14 +1,17 @@
 @extends('layouts.master')
 @section('content')
 <div class="container-fluid pushFromTop">
-  @if(@$videos)
+  @if(@$rows)
+  @foreach($rows as $row)
+  <h3>{{ $row['title'] }}</h3>
   <div class="row">
-      @foreach($videos as $video)
-      <div class="col-lg-3">
-        <video-player-card :media="{{ $video }}"></video-player-card>
-      </div>
-      @endforeach
+    @foreach($row['media'] as $media)
+    <div class="col-lg-3">
+      <video-player-card :media="{{ $media }}"></video-player-card>
+    </div>
+    @endforeach
   </div>
+  @endforeach
   @else
   <div class="row">
     <div class="col-lg-6 center" v-if="videos.length == 0">
