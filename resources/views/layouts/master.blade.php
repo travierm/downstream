@@ -31,6 +31,10 @@
               @endif
             </ul>
             <ul class="navbar-nav">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/about">About</router-link>
+              </li>
+
               @if(Auth::guest())
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('/login') }}">Login</a>

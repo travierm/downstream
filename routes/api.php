@@ -27,6 +27,8 @@ Route::get('/frontpage', 'FrontPageAPIController@index');
 Route::get('/media/index', 'MediaAPIController@index');
 Route::get('/media/collected', 'MediaAPIController@collected');
 Route::get('/media/collection', 'MediaAPIController@collection');
+Route::get('/stat/library/size', 'StatAPIController@getLibrarySize');
+Route::get('/stat/user/count', 'StatAPIController@getUserCount');
 
 //Auto Resolved Media Actions
 Route::post('/theater/{mediaId}', 'TheaterController@queueFromMediaId');
@@ -35,3 +37,4 @@ Route::get('/media/remove', 'MediaAPIController@resolve');
 Route::get('/media/toss', 'MediaAPIController@resolve');
 Route::post('/media/add', 'MediaAPIController@resolve');
 Route::post('/media/discover', 'MediaAPIController@resolve');
+Route::post('/media/search', 'MediaAPIController@resolve');

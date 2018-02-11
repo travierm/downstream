@@ -13,14 +13,20 @@
       </div>
     </div>
 
-    <div class="row pushFromTop">
+    <div class="row pushFromTop" style="padding-bottom:10px;">
       <div class="col-lg-2">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for...">
+          <input autocomplete="true" @keyup.enter="runQuery" v-model="query" type="text" class="form-control" placeholder="Search for...">
           <span class="input-group-btn">
-            <button class="btn btn-outline-danger" type="button">Query</button>
+            <button @click="runQuery" class="btn btn-outline-danger" type="button">Query</button>
           </span>
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3" v-for="video in results" :key="video.vid">
+        <youtube-player-card v-bind:vid="video.vid" v-bind:collected="video.collected"></youtube-player-card>
       </div>
     </div>
 
@@ -28,8 +34,36 @@
 </template>
 
 <script>
+  window.suggestHandler = function(res) {
+    console.log(res);
+  }
   export default {
+    data() {
+      return {
+        query:"",
+        results: []
+      }
+    },
     mounted() {
+    },
+    methods: {
+      /*autoSuggest() {
+        let query = this.query;
+        var url = "https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&jsonp=window.suggestHandler&q=" + encodeURIComponent(query) + "&cp=1";
+        $.ajax({
+          type: "GET",
+          url: url,
+          dataType: "script",
+        });
+      }*/
+      runQuery() {
+        let self = this;
+        axios.post('/api/media/search', { type: 'youtube', query: this.query })
+          .then((resp) => {
+            console.log(resp);
+            this.results = resp.data;
+          });
+      }
     },
     computed: {
       isMobile() {
@@ -38,8 +72,6 @@
       videos() {
         return this.$store.getters['collection/videos'];
       },
-    },
-    methods: {
     },
   };
 </script>

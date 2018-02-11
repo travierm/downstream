@@ -60,7 +60,7 @@
       },
       computed: {
         videoCollected() {
-          return this.isCollected;
+          return this.media.collected;
         },
       },
       mounted() {
@@ -100,11 +100,11 @@
           }
         },
         registerVideo(options = {}) {
-          options.height = $(`.img-fluid`).first().height();
+          //options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
 
           if(options.height == 0) {
-            options.height = $(`#${this.id}_thumbnail`).first().height();
+            //options.height = $(`#${this.id}_thumbnail`).first().height();
           }
 
           this.$store.dispatch('video/register', {
@@ -136,7 +136,7 @@
 
           this.$store.dispatch('collection/toss', {
             type: 'youtube',
-            mediaId: this.media.mediaId,
+            mediaId: this.media.id,
           });
           this.isCollected = false;
         },

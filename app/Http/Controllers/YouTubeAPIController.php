@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Media\YouTube;
 use YouTubeServiceService;
 use App\UserCollection;
 use App\YouTubeServiceVideo;
@@ -17,6 +18,14 @@ class YouTubeAPIController extends Controller
 
   public function test() {
     return "test";
+  }
+
+  public function postSearchByQuery($req)
+  {
+    $query = $req->input('query');
+    $results = $this->youtube->search($query);
+
+    dd($results);
   }
 
   public function toss(Request $req)

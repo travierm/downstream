@@ -11,7 +11,8 @@ class SearchController extends Controller
   private $userId = false;
   public function __construct()
   {
-    $this->middleware('auth');
+    $this->middleware('auth:api');
+
     $this->middleware(function ($request, $next) {
       $this->userId = Auth::user()->id;
       $this->youtube = new YouTube($this->userId);

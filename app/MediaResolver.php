@@ -74,10 +74,7 @@ class MediaResolver {
       ], 401);
     }
 
-    return response()->json([
-      'code'      =>  200,
-      'data' => $this->cache['results']
-    ], 200);
+    return response()->json($this->cache['results'], 200);
   }
 
   private function cache($class = false, $method = false, $args = false, $results = false)
