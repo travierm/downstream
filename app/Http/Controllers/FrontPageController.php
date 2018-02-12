@@ -23,9 +23,17 @@ class FrontPageController extends Controller
 
     $this->createRow("Lil Peep", [
       //Display name for code reading => media_id to fetch video (used in code)
-      'Beamer Boy' => 3,
+      'Beamer Boy' => 1,
       '19' => 2,
-      'Spotlight' => 1
+      'Spotlight' => 3,
+      'Shooting Star' => 4
+    ]);
+
+    $this->createRow("Lil Skies", [
+      'Clique' => 8,
+      'Red Rose' => 7,
+      'Red' => 6,
+      'Red ose' => 5,
     ]);
 
 
