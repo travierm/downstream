@@ -30,9 +30,11 @@ const getters = {
 
 const actions = {
   register({ commit }, {media, elementId, options}) {
-    const player = new YTPlayer("#" + elementId, options);
-
-    commit(types.REGISTER_VIDEO, { media, player });
+    let playerOpts = {elementId, options};
+    commit(types.REGISTER_VIDEO, { media, playerOpts });
+  },
+  unregisterAll({ commit }) {
+    commit(types.UNREGISTER_ALL);
   },
   pause({ commit }) {
     commit(types.PAUSE_CURRENT_VIDEO, commit);
@@ -43,6 +45,9 @@ const actions = {
     commit(types.PLAY_CURRENT_VIDEO);
     commit(types.QUEUE_NEXT_VIDEO, commit);
   },
+  destroy({ commit }, mediaId) {
+    commit(types.DESTROY_VIDEO, mediaId);
+  },
   registerEventAction({ commit }, { id, eventType, callback }) {
     commit(types.REGISTER_VIDEO_EVENT_ACTION, { id, eventType, callback });
   },
@@ -52,9 +57,22 @@ const actions = {
 };
 
 const mutations = {
+  [types.UNREGISTER_ALL](state) {
+    state.registeredVideos = [];
+  },
   [types.UPDATE_VIDEO_VOLUME](state, volumeInt) {
     state.volume = volumeInt;
     if (state.currentVideo) { state.currentVideo.player.setVolume(volumeInt); }
+  },
+  [types.DESTROY_VIDEO](state, mediaId) 
+  {
+    state.registeredVideos = _.remove(state.registeredVideos, (n) => {
+      return n.media.id !== mediaId;
+    })
+
+    state.loadedVideos = _.remove(state.registeredVideos, (n) => {
+      return n.media.id !== mediaId;
+    })
   },
   [types.REGISTER_VIDEO](state, video) {
     state.registeredVideos.push(video);
@@ -72,6 +90,17 @@ const mutations = {
       console.error("Could not LOAD " + mediaId);
       return;
     }
+
+    if(!$("#" + video.playerOpts.elementId).length) {
+      console.error("Video player anchor element [" + video.playerOpts.elementId + "] undefined");
+      return; 
+    }
+    video.player = new YTPlayer("#" + video.playerOpts.elementId, video.playerOpts.options);
+    video.player.on('unplayable', (err) => {
+      console.error(err);
+
+    })
+
     video.player.load(video.media.index);
     video.player.setVolume(state.volume);
 
@@ -138,6 +167,9 @@ const mutations = {
       state.currentVideo.player.pause();
     }
   },
+  /*
+    PLAY CURRENT VIDEO
+  */
   [types.PLAY_CURRENT_VIDEO](state) {
     state.currentVideo.player.play();
   },
@@ -145,6 +177,8 @@ const mutations = {
     Register Video
    */
   [types.REGISTER_VIDEO_EVENT_ACTION](state, { id, eventType, callback }) {
+    //@REMOVE
+    return;
     const index = _.findIndex(state.registeredVideos, video => video.media.id == id);
     const video = state.registeredVideos[index];
 

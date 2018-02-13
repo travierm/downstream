@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 const routes = [
   { path: '/collection', component: CollectionPage },
   { path: '/search', component: SearchPage },
-   { path: '/about', component: AboutPage }
+  { path: '/about', component: AboutPage }
 ];
 
 export default new VueRouter({

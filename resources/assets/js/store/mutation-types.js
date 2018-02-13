@@ -1,7 +1,7 @@
 export const FRONTPAGE_UPDATE = 'FRONTPAGE_UPDATE';
 export const FRONTPAGE_REMOVE = 'FRONTPAGE_REMOVE';
 
-
+export const UNREGISTER_ALL = 'UNREGISTER_ALL';
 //register a video properties
 export const REGISTER_VIDEO = 'REGISTER_VIDEO';
 //render video

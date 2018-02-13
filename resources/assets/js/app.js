@@ -28,11 +28,14 @@ Vue.component('import-form', require('./forms/Import.vue'));
 router.beforeEach((to, from, next) => {
   if (to.path !== '/') { $('#hardContent').remove(); }
 
+  store.dispatch('video/unregisterAll');
+
   next();
 });
 
 // Make initial api requests
 store.dispatch('collection/update');
+store.dispatch('video/unregisterAll');
 
 const app = new Vue({
   router,

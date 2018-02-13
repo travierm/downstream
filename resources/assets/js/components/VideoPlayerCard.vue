@@ -33,7 +33,6 @@
 
 <script>
     import SID from 'shortid';
-
     let Utils = window._utils;
 
 
@@ -86,9 +85,8 @@
        })
       },
       beforeDestroy() {
-        this.$store.dispatch('video/destroy', {
-          id:this.mediaId
-        });
+        console.log("being destroyed");
+        this.$store.dispatch('video/destroy', this.media.id);
       },
       methods: {
         updatePlayingState(playing) {
@@ -116,6 +114,7 @@
         play() {
           this.playing = true;
           this.showThumbnail = false;
+          console.log(this.id);
           this.$store.dispatch('video/play', this.media.id);
         },
         pause() {
@@ -145,6 +144,12 @@
 </script>
 
 <style>
+
+.media-glow {
+  -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+     filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+}
+
 .media-icon {
   margin-right: 10px;
 }

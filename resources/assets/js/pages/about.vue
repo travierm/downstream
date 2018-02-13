@@ -24,7 +24,7 @@
 
     <div class="row">
       <div class="col">
-        <h2>Message Developer: (<a href="mailto:downstreamsupport@protonmail.com">downstreamsuppport@protonmail.com</a>)</h2>
+        <h2>Message Developer: (<a href="mailto:downstreamsupport@protonmail.com">downstreamsupport@protonmail.com</a>)</h2>
         <p>For Suggestions, Bug Reporting, and Business inquiry.</p>
 
         <h3>Thanks for your interest in Downstream!</h3>
