@@ -6,7 +6,7 @@
   <h3>{{ $row['title'] }}</h3>
   <div class="row">
     @foreach($row['media'] as $media)
-    <div class="col-lg-3">
+    <div class="col-lg-3 col-md-6 col-sm-12">
       <video-player-card :media="{{ $media }}"></video-player-card>
     </div>
     @endforeach

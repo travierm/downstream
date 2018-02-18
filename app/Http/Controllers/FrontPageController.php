@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
+use Cache;
 use App\Media;
 
 use Illuminate\Http\Request;
@@ -16,10 +18,26 @@ class FrontPageController extends Controller
   {
     $latestVideos = Media::byType('youtube')
       ->limit(4)
-      ->orderByRaw('created_at DESC')
+      ->orderBy('id', 'DESC')
       ->get();
 
-    $this->createCustomRow("Latest Videos", $latestVideos);
+    if(Cache::get('showLatestVideos') == 'yes') {
+      $this->createCustomRow("Latest Videos", $latestVideos);
+    }
+
+    $this->createRow("House Beats", [
+      'Yellow Claw Party' => 26,
+      'Apollo' => 27,
+      'Snakehips' =>  18,
+      'Locked Up' => 16
+    ]);
+
+    $this->createRow("Chill Beats", [
+      'Still got you' => 30,
+      "actually i'm good" => 29,
+      'Where we go' =>  14,
+      'Home' => 22
+    ]);
 
     $this->createRow("Lil Peep", [
       //Display name for code reading => media_id to fetch video (used in code)
@@ -28,14 +46,6 @@ class FrontPageController extends Controller
       'Spotlight' => 3,
       'Shooting Star' => 4
     ]);
-
-    $this->createRow("Lil Skies", [
-      'Clique' => 8,
-      'Red Rose' => 7,
-      'Red' => 6,
-      'Red ose' => 5,
-    ]);
-
 
     return view('frontpage.index', [
       'rows' => $this->rowRenderIndex
@@ -78,9 +88,11 @@ class FrontPageController extends Controller
       'media' => []
     ];
 
+    $orderedIds = implode(',', $mediaIds);
+
     //get media items by id
     $row['media'] = Media::whereIn('id', array_values($mediaIds))
-      ->orderBy('created_at', 'DESC')
+      ->orderByRaw(DB::raw("FIELD(id, $orderedIds)"))
       ->get();
 
     if(count($row['media']) <= 0) {

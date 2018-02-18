@@ -45,6 +45,9 @@ const actions = {
     commit(types.PLAY_CURRENT_VIDEO);
     commit(types.QUEUE_NEXT_VIDEO, commit);
   },
+  unmute({ commit }) {
+    commit(types.UNMUTE_CURRENT_VIDEO);
+  },
   destroy({ commit }, mediaId) {
     commit(types.DESTROY_VIDEO, mediaId);
   },
@@ -57,6 +60,9 @@ const actions = {
 };
 
 const mutations = {
+  [types.UNMUTE_CURRENT_VIDEO](state) {
+    state.currentVideo.player.unMute();
+  },
   [types.UNREGISTER_ALL](state) {
     state.registeredVideos = [];
   },
@@ -95,14 +101,33 @@ const mutations = {
       console.error("Video player anchor element [" + video.playerOpts.elementId + "] undefined");
       return; 
     }
+    video.playerOpts.options.autoplay = false;
     video.player = new YTPlayer("#" + video.playerOpts.elementId, video.playerOpts.options);
-    video.player.on('unplayable', (err) => {
+
+    video.player.on('error', (err) => {
+      console.log("VIDEO ERROR")
       console.error(err);
 
     })
 
-    video.player.load(video.media.index);
-    video.player.setVolume(state.volume);
+    video.player.on('unplayable', () => {
+      console.log("Unplayable");
+    })
+
+    video.player.on('unstarted', () => {
+      console.log("Can't play video: unstarted");
+    })
+
+    window.video = video.player;
+    
+    if(window._isMobile) {
+      console.log('is mobile and muting')
+      video.player.mute();
+    }
+
+    video.player.load(video.media.index, false);
+    //video.player.pause();
+
 
     video.player.on('playing', () => {
       if(state.currentVideo.media.id !== video.media.id) {
@@ -111,10 +136,21 @@ const mutations = {
         commit(types.UPDATE_CURRENT_VIDEO, video.media.id);
         commit(types.QUEUE_NEXT_VIDEO, commit);
         state.isPlaying = true;
+        video.player.setVolume(state.volume);
+
+        setTimeout(() => {
+          video.player.unMute();
+        }, 5000)
       }
     });
 
     state.loadedVideos.push(video);
+
+    if(video.events) {
+      video.events.forEach(function(event) {
+        commit(types.REGISTER_VIDEO_EVENT_ACTION, event);
+      });
+    }
   },
   [types.UPDATE_CURRENT_VIDEO](state, mediaId) {
     let video = findById(state.loadedVideos, mediaId);
@@ -177,10 +213,28 @@ const mutations = {
     Register Video
    */
   [types.REGISTER_VIDEO_EVENT_ACTION](state, { id, eventType, callback }) {
-    //@REMOVE
-    return;
-    const index = _.findIndex(state.registeredVideos, video => video.media.id == id);
-    const video = state.registeredVideos[index];
+    const index = _.findIndex(state.loadedVideos, video => video.media.id == id);
+    const video = state.loadedVideos[index];
+
+    if(!video) {
+      const index = _.findIndex(state.registeredVideos, video => video.media.id == id);
+      const unloadedVideo = state.registeredVideos[index];
+
+      if(unloadedVideo) {
+        if(!unloadedVideo.events) {
+          unloadedVideo.events = [];
+        }
+
+        unloadedVideo.events.push({
+          id,
+          eventType,
+          callback
+        });
+
+        return;
+      }
+    }
+
 
     if (video.player) {
       if (_.isArray(eventType)) {

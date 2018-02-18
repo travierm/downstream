@@ -9,6 +9,7 @@ export const RENDER_VIDEO = 'LOAD_VIDEO';
 
 //play current video
 export const PLAY_CURRENT_VIDEO = 'PLAY_VIDEO';
+export const UNMUTE_CURRENT_VIDEO = 'UNMUTE_PLAY_VIDEO';
 export const UPDATE_CURRENT_VIDEO = 'UPDATE_CURRENT_VIDEO';
 //pause current video
 export const PAUSE_CURRENT_VIDEO = 'PAUSE_CURRENT_VIDEO';

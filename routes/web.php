@@ -17,7 +17,8 @@ Route::get('/hashMe', function() {
 });
 
 Route::middleware(['admin'])->group(function() {
-  Route::get('/admin', 'AdminController@index');
+  Route::get('/admin/dash', 'AdminController@index');
+  Route::post('/admin/dash/settings', 'AdminController@postServerSettings');
 });
 
 Route::get('/', 'FrontPageController@index');

@@ -25,7 +25,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-3" v-for="video in results" :key="video.vid">
+      <div class="col-lg-3 col-md-6 col-sm-12" v-for="video in results" :key="video.vid">
         <youtube-player-card v-bind:vid="video.vid" v-bind:collected="video.collected"></youtube-player-card>
       </div>
     </div>

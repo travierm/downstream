@@ -31,7 +31,7 @@ class YouTube {
   public function collection()
   {
     $mediaIds = UserMedia::where('user_id', $this->userId)
-      ->orderBy('created_at', 'DESC')
+      ->orderBy('id', 'DESC')
       ->pluck('media_id');
 
     $collection = [];

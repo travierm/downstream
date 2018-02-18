@@ -34,6 +34,11 @@ class User extends Authenticatable
       return $this->hasMany('App\UserMedia');
     }
 
+    public function isAdmin()
+    {
+      return ($this->type == 'admin');
+    }
+
     public function getNavDisplayName()
     {
       $name = $this->display_name;

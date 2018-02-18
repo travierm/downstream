@@ -14,8 +14,10 @@
       </div>
     </div>
 
+    <mobile-unmute-bar></mobile-unmute-bar>
+
     <div class="row">
-      <div class="col-lg-3" v-for="video in videos" :key="video.id">
+      <div class="col-lg-3 col-md-6 col-sm-12" v-for="video in videos" :key="video.id">
         <video-player-card v-bind:media="video"></video-player-card>
       </div>
     </div>

@@ -22,6 +22,7 @@ Vue.use(BootstrapVue);
 Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));
 Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
+Vue.component('mobile-unmute-bar', require('./components/MobileUnmuteBar.vue'));
 // Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 

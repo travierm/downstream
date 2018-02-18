@@ -6,8 +6,8 @@
       <img class="media-icon" v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
-        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-success">Collect</button>
-        <button v-if="videoCollected" @click="toss" class="btn btn-success">Collected</button>
+        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
+        <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
       </div>
     </div>
 
@@ -41,7 +41,7 @@
         return {
           id: SID.generate(),
           playing: false,
-          isCollected: this.collected,
+          isCollected: this.media.collected,
           lazyLoad: false,
           showThumbnail: true,
           Utils:Utils
@@ -59,19 +59,20 @@
       },
       computed: {
         videoCollected() {
-          return this.media.collected;
+          return this.isCollected;
         },
       },
       mounted() {
        //this.height = $('')
        this.registerVideo();
 
-        let self = this;
+       let self = this;
 
        this.$store.dispatch('video/registerEventAction', {
           id:this.media.id,
-          eventType: "buffering",
+          eventType: ["buffering", "playing"],
           callback: () => {
+            console.log("started playing");
             self.updatePlayingState(true);
           }
        })
@@ -80,12 +81,12 @@
           id:this.media.id,
           eventType: ["paused", "ended"],
           callback: () => {
+            console.log('stopppped');
             self.updatePlayingState(false);
           }
        })
       },
       beforeDestroy() {
-        console.log("being destroyed");
         this.$store.dispatch('video/destroy', this.media.id);
       },
       methods: {
@@ -114,7 +115,6 @@
         play() {
           this.playing = true;
           this.showThumbnail = false;
-          console.log(this.id);
           this.$store.dispatch('video/play', this.media.id);
         },
         pause() {
@@ -129,14 +129,11 @@
           this.isCollected = true;
         },
         toss() {
-          if (!this.media.id) {
-            return false;
-          }
-
           this.$store.dispatch('collection/toss', {
             type: 'youtube',
             mediaId: this.media.id,
           });
+
           this.isCollected = false;
         },
       },

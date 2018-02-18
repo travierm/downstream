@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar fixed-bottom bg-faded navbar-light rounded" style="background-color:#311B92;">
+    <nav class="navbar fixed-bottom bg-faded navbar-light rounded" style="background-color:#117F90;">
       <div class="container">
           <div class="row">
             <div class="col-lg-6">
