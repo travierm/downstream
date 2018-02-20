@@ -103,6 +103,8 @@ const mutations = {
       return; 
     }
     video.playerOpts.options.autoplay = false;
+    video.playerOpts.options.height = $(`#${video.playerOpts.elementId}_media`).height();
+    //video.playerOpts.options.height += 555;
     video.player = new YTPlayer("#" + video.playerOpts.elementId, video.playerOpts.options);
 
     video.player.on('error', (err) => {
@@ -186,7 +188,13 @@ const mutations = {
     }
 
     state.nextId = state.registeredVideos[nextVideoIndex].media.id;
-    state.previousId = state.registeredVideos[previousVideoIndex].media.id;
+
+    if(state.registeredVideos[previousVideoIndex].media.id) {
+      state.previousId = state.registeredVideos[previousVideoIndex].media.id;
+    }else{
+      console.info(state.registeredVideos);
+    }
+
     state.currentVideo = video;
 
   },

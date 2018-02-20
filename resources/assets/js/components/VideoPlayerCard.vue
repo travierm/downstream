@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="media-container" v-if="media.meta.thumbnail && this.showThumbnail">
+    <div :id="this.id + '_media'" class="media-container" v-if="media.meta.thumbnail && this.showThumbnail">
       <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid" width="this.width" v-bind:src="media.meta.thumbnail" />
       <div class="col">
         <div class="col-sm-12">
@@ -101,9 +101,10 @@
         registerVideo(options = {}) {
           //options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
-
+          console.log(options.height);
+          console.log($(`#${this.id}_media`).height());
           if(options.height == 0) {
-            //options.height = $(`#${this.id}_thumbnail`).first().height();
+
           }
 
           this.$store.dispatch('video/register', {
