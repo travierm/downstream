@@ -41,7 +41,7 @@
         return {
           id: SID.generate(),
           playing: false,
-          isCollected: this.media.collected,
+          isCollected: (this.media.collected == true),
           lazyLoad: false,
           showThumbnail: true,
           Utils:Utils
