@@ -3,9 +3,9 @@ import { sync } from 'vuex-router-sync';
 import store from './store/index';
 import router from './router';
 import BootstrapVue from 'bootstrap-vue';
+import VueAnalytics from 'vue-analytics';
 
 require('./bootstrap');
-
 
 const unsync = sync(store, router);
 /**
@@ -15,6 +15,7 @@ const unsync = sync(store, router);
  */
 
 window.Vue = require('vue');
+
 
 Vue.use(BootstrapVue);
 
@@ -36,6 +37,11 @@ router.beforeEach((to, from, next) => {
 // Make initial api requests
 store.dispatch('collection/update');
 store.dispatch('video/unregisterAll');
+
+Vue.use(VueAnalytics, {
+  id: "UA-111656856-1",
+  router
+});
 
 const app = new Vue({
   router,
