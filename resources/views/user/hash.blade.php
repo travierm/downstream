@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container pushFromTop">
-  <div class="alert alert-success" role="alert">
+  <div class="alert alert-info" role="alert">
     <h3 class="alert-heading">Welcome!</h3>
     <h4 style="color:black;">{{$displayName}}</h4>
     <p>We've generated a unique hash for you..</p>
@@ -10,7 +10,7 @@
     <p class="mb-0">This hash will be used to identify you on the network. Your display name is used to help friends find your account!</p>
   </div>
 
-  <router-link class="btn btn-outline-success" to="/frontpage">Frontpage</router-link>
-  <a href="/search" class="btn btn-outline-warning">Search</a>
+  <a href="/" class="btn btn-outline-info">Frontpage</a>
+  <router-link class="btn btn-outline-danger" to="/search">Search</router-link>
 </div>
 @endsection

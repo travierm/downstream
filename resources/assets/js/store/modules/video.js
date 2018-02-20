@@ -65,6 +65,7 @@ const mutations = {
   },
   [types.UNREGISTER_ALL](state) {
     state.registeredVideos = [];
+    state.currentVideo = false;
   },
   [types.UPDATE_VIDEO_VOLUME](state, volumeInt) {
     state.volume = volumeInt;
@@ -160,8 +161,15 @@ const mutations = {
     }
 
     if(state.currentVideo) {
-      state.currentVideo.player.pause();
-      state.currentVideo.player.seek(0);
+      try {
+         state.currentVideo.player.pause();
+         state.currentVideo.player.seek(0);
+      } catch(e) {
+        console.info("try failed");
+        console.log(state.currentVideo);
+      }
+     
+
     }
 
     //set next ids for queue
