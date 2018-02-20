@@ -101,11 +101,6 @@
         registerVideo(options = {}) {
           //options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
-          console.log(options.height);
-          console.log($(`#${this.id}_media`).height());
-          if(options.height == 0) {
-
-          }
 
           this.$store.dispatch('video/register', {
             media:this.media,
