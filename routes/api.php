@@ -27,6 +27,7 @@ Route::get('/frontpage', 'FrontPageAPIController@index');
 Route::get('/media/index', 'MediaAPIController@index');
 Route::get('/media/collected', 'MediaAPIController@collected');
 Route::get('/media/collection', 'MediaAPIController@collection');
+Route::get('/media/profile/{hash}', 'MediaAPIController@profile');
 Route::get('/stat/library/size', 'StatAPIController@getLibrarySize');
 Route::get('/stat/user/count', 'StatAPIController@getUserCount');
 

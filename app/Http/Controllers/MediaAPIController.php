@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Route;
+use App\User;
 use App\MediaResolver;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,21 @@ class MediaAPIController extends Controller
 
            return $next($request);
     });
+  }
+
+  public function profile(Request $request, $hash)
+  {
+
+    $user = User::where('hash', $hash)->first();
+    
+    if(!$user) {
+     return response()->json([
+        'code'      =>  401,
+        'message'   =>  "Unknown user hash: $userHash"
+      ], 401);
+    }
+
+    return $this->resolver->collection($user->id);
   }
 
   public function collection(Request $request)

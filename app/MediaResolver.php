@@ -23,13 +23,13 @@ class MediaResolver {
     ];
   }
 
-  public function collection()
+  public function collection($userId = false)
   {
     $collectionByType = [];
     foreach($this->types as $class)
     {
       if(method_exists($class, 'collection')) {
-        $collectionByType[$class->typeName] = $class->collection();
+        $collectionByType[$class->typeName] = $class->collection($userId);
       }
     }
 

@@ -3,6 +3,7 @@ namespace App\Media;
 
 use DB;
 use App\Media;
+use App\User;
 use App\UserMedia;
 use YouTubeService;
 
@@ -28,9 +29,14 @@ class YouTube {
 
   }
 
-  public function collection()
+  public function collection($customUserId = false)
   {
-    $mediaIds = UserMedia::where('user_id', $this->userId)
+    $profileId = $this->userId;
+    if($customUserId) {
+      $profileId = $customUserId;
+    }
+
+    $mediaIds = UserMedia::where('user_id', $profileId)
       ->orderBy('id', 'DESC')
       ->pluck('media_id');
 
@@ -38,6 +44,12 @@ class YouTube {
     foreach($mediaIds as $id) {
       $media = Media::find($id);
       $media->meta = json_decode($media->meta);
+
+      $user = User::find($media->user_id);
+      $user->smallHash = $user->shrinkHash();
+      $user->profileLink = "/user/" . $user->hash . "/profile";
+
+      $media->user = $user;
       $collection[] = $media;
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use App\User;
 use Auth;
 use Cache;
 use App\Media;
@@ -60,6 +61,12 @@ class FrontPageController extends Controller
 
     foreach($items as &$item) {
       $item->meta = json_decode($item->meta);
+
+      $user = User::find($item->user_id);
+      $user->smallHash = $user->shrinkHash();
+      $user->profileLink = "/user/" . $user->hash . "/profile";
+
+      $item->user = $user;
     }
 
     return $items;

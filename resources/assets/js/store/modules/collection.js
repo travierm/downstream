@@ -3,15 +3,36 @@ import * as types from '../mutation-types';
 
 const state = {
   videos: [],
+  profiles: []
 };
 
 const getters = {
+  profileByHash(state) {
+    return (hash) => {
+      return state.profiles[hash];
+    }
+  },
+  profiles(state) {
+    return state.profiles;
+  },
   videos(state) {
     return state.videos;
   },
 };
 
 const actions = {
+  fetchUserProfile({ commit }, hash) {
+    axios.get('/api/media/profile/' + hash).then((resp) => {
+      if(resp.status === 200) {
+        let params = {
+          hash,
+          profile:resp.data.collection.youtube
+        };
+
+        commit(types.COLLECTION_ADD_PROFILE, params);
+      }
+    });
+  },
   update({ commit }) {
     axios.get('/api/media/collection').then((resp) => {
       if (resp.status === 200) {
@@ -33,9 +54,6 @@ const actions = {
       }
     });
   },
-  collect() {
-
-  },
   toss({ commit }, { type, mediaId }) {
     const self = this;
     axios.get(`/api/media/toss?type=${type}&mediaId=${mediaId}`).then((resp) => {
@@ -48,6 +66,16 @@ const actions = {
 };
 
 const mutations = {
+  [types.COLLECTION_ADD_PROFILE](state, { hash, profile}) {
+    console.log("added profile for " + hash);
+    console.log(profile);
+    //bail if already fetched
+    if(state.profiles[hash]) return;
+
+    state.profiles[hash] = profile;
+
+    console.log(state);
+  },
   [types.COLLECTION_UPDATE](state, { collection }) {
     state.videos = collection.youtube;
   },
