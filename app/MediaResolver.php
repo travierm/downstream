@@ -23,7 +23,7 @@ class MediaResolver {
     ];
   }
 
-  public function collection($userId = false)
+  public function collection($userId = false, $returnArray = false)
   {
     $collectionByType = [];
     foreach($this->types as $class)
@@ -33,11 +33,15 @@ class MediaResolver {
       }
     }
 
-    return response()->json([
-      'collection' => $collectionByType,
-      'code'      =>  200,
-      'message'   =>  "Success"
-    ], 200);
+    if(!$returnArray) {
+      return response()->json([
+        'collection' => $collectionByType,
+        'code'      =>  200,
+        'message'   =>  "Success"
+      ], 200);
+    }
+
+    return $collectionByType;
   }
 
   public function dispatch($type, $action, $input)

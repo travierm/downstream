@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Route;
 use App\User;
+use App\UserMedia;
 use App\MediaResolver;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,20 @@ class MediaAPIController extends Controller
       ], 401);
     }
 
-    return $this->resolver->collection($user->id);
+    $user->media_count = UserMedia::where('user_id', $user->id)->count();
+    $joined = date_create($user->created_at);
+    $today = date_create(Date("Y-m-d H:i:s"));
+
+    //difference between two dates
+    $diff = date_diff($joined, $today);
+    $user->days_since_joined = $diff->format("%a");
+
+ 
+    return response()->json([
+      'code'      =>  200,
+      'collection' => $this->resolver->collection($user->id, true),
+      'user' => $user
+    ], 200);
   }
 
   public function collection(Request $request)

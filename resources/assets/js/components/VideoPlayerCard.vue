@@ -64,10 +64,9 @@
         },
       },
       mounted() {
+       let self = this;
        //this.height = $('')
        this.registerVideo();
-
-       let self = this;
 
        this.$store.dispatch('video/registerEventAction', {
           id:this.media.id,
@@ -101,6 +100,8 @@
         registerVideo(options = {}) {
           //options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
+
+          console.log('video registered');
 
           this.$store.dispatch('video/register', {
             media:this.media,

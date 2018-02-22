@@ -78,7 +78,7 @@
 
         <div class="container-fluid">
           <!-- Vue Router View -->
-          <router-view></router-view>
+          <router-view :key="$route.fullPath"></router-view>
 
           <!-- PHP Generated HTML -->
           <div id="hardContent">
