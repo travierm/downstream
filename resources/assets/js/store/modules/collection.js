@@ -38,9 +38,10 @@ const actions = {
       if (resp.status === 200) {
         const { collection } = resp.data;
         commit(types.COLLECTION_UPDATE, { collection });
-      }else{
-        console.error("failed to auth");
+        window._authed = true;
       }
+    }).catch(error => {
+      window._authed = false;
     });
   },
   discover({ commit }, { type, videoId }) {

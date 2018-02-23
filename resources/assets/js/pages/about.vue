@@ -2,8 +2,9 @@
   <div class="container pushFromTop">
     <div class="row">
       <div class="col lead">
-        <h2>Purpose - Discover, Manage, Play</h2>
-        <p>Downstream is a media/music service powered by YouTube. Downstream started as an empty library, You the user also start with an empty collection. You can discover new songs through our search system or by collecting items other users discovered on our frontpage. By doing this you increase our librarys size and help other users discover great content.</p>
+        <h2>Purpose - Discover, Collect, Play</h2>
+        <p>We’ve harnessed the quality and scale of YouTube into full blown media service. You can search, collect and play any type of media found on YouTube through our site. Not only will you be collecting for yourself but you’ll also help other users discover great content.
+Register on our site today and be apart of something unique!</p>
 
         <h2>Users: <span class="text-success">{{ userCountWithCommas }}</span></h2>
         <h2 style="padding-bottom: 10px;">Library Size: <span class="text-primary">{{ itemCountWithCommas }}</span> items</h2>
@@ -24,11 +25,7 @@
 
     <div class="row">
       <div class="col">
-        <h2>Message Developer: (<a href="mailto:downstreamsupport@protonmail.com">downstreamsupport@protonmail.com</a>)</h2>
-        <p>For Suggestions, Bug Reporting, and Business inquiry.</p>
-
         <h3>Thanks for your interest in Downstream!</h3>
-
       </div>
     </div>
   </div>
