@@ -16,7 +16,7 @@ const state = {
 };
 
 function findById(array, id) {
-  return _.find(array, {media: { id: id}});
+  return _.find(array, {media: { sessionId: id}});
 }
 
 const getters = {
@@ -39,17 +39,17 @@ const actions = {
   pause({ commit }) {
     commit(types.PAUSE_CURRENT_VIDEO, commit);
   },
-  play({ commit }, mediaId) {
-    commit(types.LOAD_VIDEO, { mediaId, commit});
-    commit(types.UPDATE_CURRENT_VIDEO, mediaId);
+  play({ commit }, sessionId) {
+    commit(types.LOAD_VIDEO, { sessionId, commit});
+    commit(types.UPDATE_CURRENT_VIDEO, sessionId);
     commit(types.PLAY_CURRENT_VIDEO);
     commit(types.QUEUE_NEXT_VIDEO, commit);
   },
   unmute({ commit }) {
     commit(types.UNMUTE_CURRENT_VIDEO);
   },
-  destroy({ commit }, mediaId) {
-    commit(types.DESTROY_VIDEO, mediaId);
+  destroy({ commit }, sessionId) {
+    commit(types.DESTROY_VIDEO, sessionId);
   },
   registerEventAction({ commit }, { id, eventType, callback }) {
     commit(types.REGISTER_VIDEO_EVENT_ACTION, { id, eventType, callback });
@@ -71,30 +71,30 @@ const mutations = {
     state.volume = volumeInt;
     if (state.currentVideo) { state.currentVideo.player.setVolume(volumeInt); }
   },
-  [types.DESTROY_VIDEO](state, mediaId) 
+  [types.DESTROY_VIDEO](state, sessionId) 
   {
     state.registeredVideos = _.remove(state.registeredVideos, (n) => {
-      return n.media.id !== mediaId;
+      return n.media.sessionId !== sessionId;
     })
 
     state.loadedVideos = _.remove(state.registeredVideos, (n) => {
-      return n.media.id !== mediaId;
+      return n.media.sessionId !== sessionId;
     })
   },
   [types.REGISTER_VIDEO](state, video) {
     state.registeredVideos.push(video);
   },
-  [types.LOAD_VIDEO](state, { mediaId, commit}) {
+  [types.LOAD_VIDEO](state, { sessionId, commit}) {
 
-    if(findById(state.loadedVideos, mediaId)) {
+    if(findById(state.loadedVideos, sessionId)) {
       //video loaded already
       console.info('video already loaded');
       return;
     }
 
-    let video = findById(state.registeredVideos, mediaId);
+    let video = findById(state.registeredVideos, sessionId);
     if(!video) {
-      console.error("Could not LOAD " + mediaId);
+      console.error("Could not LOAD " + sessionId);
       return;
     }
 
@@ -133,10 +133,10 @@ const mutations = {
 
 
     video.player.on('playing', () => {
-      if(state.currentVideo.media.id !== video.media.id) {
+      if(state.currentVideo.media.sessionId !== video.media.sessionId) {
         //video started playing without being the current video
         console.info("started playing while not current video");
-        commit(types.UPDATE_CURRENT_VIDEO, video.media.id);
+        commit(types.UPDATE_CURRENT_VIDEO, video.media.sessionId);
         commit(types.QUEUE_NEXT_VIDEO, commit);
         state.isPlaying = true;
         video.player.setVolume(state.volume);
@@ -155,10 +155,10 @@ const mutations = {
       });
     }
   },
-  [types.UPDATE_CURRENT_VIDEO](state, mediaId) {
-    let video = findById(state.loadedVideos, mediaId);
+  [types.UPDATE_CURRENT_VIDEO](state, sessionId) {
+    let video = findById(state.loadedVideos, sessionId);
     if(!video) {
-      console.error("Could not update to video " + mediaId);
+      console.error("Could not update to video " + sessionId);
       return;
     }
 
@@ -187,10 +187,10 @@ const mutations = {
       previousVideoIndex = state.registeredVideos.length - 1;
     }
 
-    state.nextId = state.registeredVideos[nextVideoIndex].media.id;
+    state.nextId = state.registeredVideos[nextVideoIndex].media.sessionId;
 
-    if(state.registeredVideos[previousVideoIndex].media.id) {
-      state.previousId = state.registeredVideos[previousVideoIndex].media.id;
+    if(state.registeredVideos[previousVideoIndex].media.sessionId) {
+      state.previousId = state.registeredVideos[previousVideoIndex].media.sessionId;
     }else{
       console.info(state.registeredVideos);
     }
@@ -208,7 +208,7 @@ const mutations = {
       }
 
       console.info("player ended starting next video");
-      commit(types.LOAD_VIDEO, { mediaId: state.nextId, commit});
+      commit(types.LOAD_VIDEO, { sessionId: state.nextId, commit});
       commit(types.UPDATE_CURRENT_VIDEO, state.nextId);
       commit(types.QUEUE_NEXT_VIDEO, commit);
       commit(types.PLAY_CURRENT_VIDEO);
@@ -229,11 +229,11 @@ const mutations = {
     Register Video
    */
   [types.REGISTER_VIDEO_EVENT_ACTION](state, { id, eventType, callback }) {
-    const index = _.findIndex(state.loadedVideos, video => video.media.id == id);
+    const index = _.findIndex(state.loadedVideos, video => video.media.sessionId == id);
     const video = state.loadedVideos[index];
 
     if(!video) {
-      const index = _.findIndex(state.registeredVideos, video => video.media.id == id);
+      const index = _.findIndex(state.registeredVideos, video => video.media.sessionId == id);
       const unloadedVideo = state.registeredVideos[index];
 
       if(unloadedVideo) {
