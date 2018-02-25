@@ -73,13 +73,13 @@ const mutations = {
   },
   [types.DESTROY_VIDEO](state, sessionId) 
   {
-    state.registeredVideos = _.remove(state.registeredVideos, (n) => {
+    /*state.registeredVideos = _.remove(state.registeredVideos, (n) => {
       return n.media.sessionId !== sessionId;
     })
 
     state.loadedVideos = _.remove(state.registeredVideos, (n) => {
       return n.media.sessionId !== sessionId;
-    })
+    })*/
   },
   [types.REGISTER_VIDEO](state, video) {
     state.registeredVideos.push(video);
@@ -147,6 +147,7 @@ const mutations = {
       }
     });
 
+    console.log("loaded");
     state.loadedVideos.push(video);
 
     if(video.events) {
@@ -170,8 +171,6 @@ const mutations = {
         console.info("try failed");
         console.log(state.currentVideo);
       }
-     
-
     }
 
     //set next ids for queue
@@ -271,5 +270,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 };

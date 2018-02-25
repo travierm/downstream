@@ -86,6 +86,7 @@
        })
       },
       beforeDestroy() {
+        console.log('destroyed video');
         this.$store.dispatch('video/destroy', this.media.id);
       },
       methods: {
