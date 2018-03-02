@@ -18,21 +18,28 @@ class FrontPageController extends Controller
   public function index()
   {
 
-    $this->createRow("Fresh Hits", [
-      'Posty Psycho' => 38,
-      'Gods plan' => 11,
-      'Snakehips' => 18,
-      'The Clique' => 8
-    ]);
-
     $latestVideos = Media::byType('youtube')
-      ->limit(8)
+      ->limit(4)
       ->orderBy('id', 'DESC')
       ->get();
 
     if(Cache::get('showLatestVideos') == 'yes') {
-      $this->createCustomRow("Latest Videos", $latestVideos);
+      $this->createCustomRow("Newly Discovered", $latestVideos);
     }
+
+    $this->createRow("Spring Chill", [
+      'Girls' => 72,
+      'AAYEAHH' => 68,
+      'Stricly Skies' => 64,
+      'Money Man' => 65
+    ]);
+
+    $this->createRow("Electric Soul", [
+      'HeartBeat' => 36,
+      'Fields' => 57,
+      'Got You' => 30,
+      'Fell Apart' => 32
+    ]);
 
     return view('frontpage.index', [
       'rows' => $this->rowRenderIndex
