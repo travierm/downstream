@@ -36,9 +36,6 @@ Route::get('/hash', 'UserController@getHash');
 Auth::routes();
 
 Route::get('/logout', 'UserController@logout');
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/{vue_capture?}', function () {
     return view('index');
