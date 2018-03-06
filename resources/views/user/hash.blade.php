@@ -11,6 +11,6 @@
   </div>
 
   <a href="/" class="btn btn-outline-info">Frontpage</a>
-  <a href="/#/search" class="btn btn-outline-danger">Search</a>
+  <a href="/search" class="btn btn-outline-danger">Search</a>
 </div>
 @endsection
