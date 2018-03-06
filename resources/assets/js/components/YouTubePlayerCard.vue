@@ -6,8 +6,8 @@
       <img class="media-icon" v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
-        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-success">Collect</button>
-        <button v-if="videoCollected" @click="toss" class="btn btn-success">Collected</button>
+        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
+        <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
       </div>
     </div>
 

@@ -84,10 +84,12 @@
             self.updatePlayingState(false);
           }
        })
+
+       //check for bad video
       },
       beforeDestroy() {
-        console.log('destroyed video');
         this.$store.dispatch('video/destroy', this.media.id);
+
       },
       methods: {
         updatePlayingState(playing) {
@@ -101,8 +103,6 @@
         registerVideo(options = {}) {
           //options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
-
-          console.log('video registered');
 
           this.media.sessionId = this.id;
 

@@ -104,6 +104,7 @@ const mutations = {
     }
     video.playerOpts.options.autoplay = false;
     video.playerOpts.options.height = $(`#${video.playerOpts.elementId}_media`).height();
+      console.log($('#' + this.id + '_thumbnail').height());
     //video.playerOpts.options.height += 555;
     video.player = new YTPlayer("#" + video.playerOpts.elementId, video.playerOpts.options);
 

@@ -26,12 +26,22 @@ Vue.component('master-bar', require('./components/MasterBar.vue'));
 // Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 
+const hardPaths = [
+	'/',
+	'/hash',
+	'/login',
+	'/logout',
+	'/register',
+	'/admin/dash'
+];
+
 router.beforeEach((to, from, next) => {
-  if (to.path !== '/') { $('#hardContent').remove(); }
+	//Hide PHP generated html when not on a hard path
+	if (!isHardPath(to.path)) { $('#hardContent').remove(); }
 
-  store.dispatch('video/unregisterAll');
+  	store.dispatch('video/unregisterAll');
 
-  next();
+  	next();
 });
 
 // Make initial api requests
@@ -47,3 +57,17 @@ const app = new Vue({
   router,
   store,
 }).$mount('#app');
+
+//
+function isHardPath(path) {
+	for(var i = 0; i <= path.length; i++) {
+		let hardPath = hardPaths[i];
+
+		if(path == hardPath) {
+			console.log("hard path");
+			return true;
+		}
+	}
+
+	return false;
+}
