@@ -27,18 +27,18 @@ class FrontPageController extends Controller
       $this->createCustomRow("Newly Discovered", $latestVideos);
     }
 
-    $this->createRow("Spring Chill", [
-      'Girls' => 72,
-      'AAYEAHH' => 68,
-      'Stricly Skies' => 64,
-      'Money Man' => 65
+    $this->createRow("Bobby Tarantino", [
+      'Rick and Morty' => 95,
+      'Midnight' => 94,
+      'Indica' => 91,
+      'Overnight' => 93
     ]);
 
-    $this->createRow("Electric Soul", [
-      'HeartBeat' => 36,
-      'Fields' => 57,
-      'Got You' => 30,
-      'Fell Apart' => 32
+    $this->createRow("Chill", [
+      "Hey i miss you" => 81,
+      "Resonance" => 22,
+      "Wizards" => 85,
+      "Fly" => 33
     ]);
 
     return view('frontpage.index', [

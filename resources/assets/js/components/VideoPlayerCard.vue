@@ -6,7 +6,7 @@
       <img class="media-icon" v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
 
       <div class="float-right">
-        <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link>
+        <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
         <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
         <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
       </div>
