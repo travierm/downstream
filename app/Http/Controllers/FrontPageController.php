@@ -27,16 +27,16 @@ class FrontPageController extends Controller
       $this->createCustomRow("Newly Discovered", $latestVideos);
     }
 
-    $this->createRow("Bobby Tarantino", [
+    $this->createRow("Bobby Tarantino ||", [
       'Rick and Morty' => 95,
+      'Overnight' => 93,
       'Midnight' => 94,
       'Indica' => 91,
-      'Overnight' => 93,
       //Row 2
       'Yuck' => 96,
       'Wassup' => 97,
       'Contra' => 98,
-      '1 800' => 99
+      '44 more' => 100
     ]);
 
     $this->createRow("Chill", [
