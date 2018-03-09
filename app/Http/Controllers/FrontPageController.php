@@ -31,7 +31,12 @@ class FrontPageController extends Controller
       'Rick and Morty' => 95,
       'Midnight' => 94,
       'Indica' => 91,
-      'Overnight' => 93
+      'Overnight' => 93,
+      //Row 2
+      'Yuck' => 96,
+      'Wassup' => 97,
+      'Contra' => 98,
+      '1 800' => 99
     ]);
 
     $this->createRow("Chill", [
