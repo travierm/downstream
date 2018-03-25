@@ -3,25 +3,25 @@ import Vuex from 'vuex';
 import * as mutations from './mutations';
 import * as actions from './actions';
 import * as getters from './getters';
-import collection from './modules/collection';
-import video from './modules/video';
+
+// Modules
+import media from './modules/media';
 
 Vue.use(Vuex);
 
 const state = {
   api: {
-    fetching:false,
-    fetchStatus:null
-  }
+    fetching: false,
+    fetchStatus: null,
+  },
 };
 
 export default new Vuex.Store({
   modules: {
-    video,
-    collection
+    media,
   },
   mutations,
   getters,
   actions,
-  state
+  state,
 });

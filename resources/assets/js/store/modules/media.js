@@ -1,79 +1,127 @@
 import _ from 'lodash';
 import * as types from '../mutation-types';
+import YouTubeVideoPlayer from '../../services/YouTubeVideoPlayer';
+
+const videoPlayer = new YouTubeVideoPlayer();
+const initPreloadedVideos = 5;
+
+let didPreload = false;
+let preloadTimeout = false;
 
 const state = {
-  videos: [],
-  queue: [],
-  playingVideo: false,
-  currentVideo: false,
+  index: [],
+  player: videoPlayer,
+  current: false,
+  history: [],
+  fetched: {
+    collection: []
+  }
 };
 
 const getters = {
-  collection(state, getters, rootState) {
-    return rootState.collection.videos
-  },
-  queue(state) {
-    return state.queue;
+  collection(state) {
+    return state.fetched.collection;
   },
 };
 
 const actions = {
-  playNextVideo({ commit }, { id }) {
-    commit(type.MEDIA_PLAY_NEXT_VIDEO);
+  // Commits element to index
+  indexAdd({ commit, dispatch }, sessionId) {
+    commit(types.INDEX_ADD, sessionId);
+
+    if(!didPreload) {
+      if(preloadTimeout) {
+        clearTimeout(preloadTimeout);
+      }
+
+      preloadTimeout = setTimeout(() => {
+        dispatch('preloadIndex');
+      }, 500)
+    }
   },
-  playVideo({ commit }, { id }) {
-    commit(types.MEDIA_UPDATE_CURRENT_VIDEO, { id });
-    commit(types.MEDIA_PLAY_VIDEO);
+  videoAdd({ commit }, { sessionId, videoId, options }) {
+    videoPlayer.registerVideo(sessionId, videoId, options);
   },
-  updateCurrentVideo({ commit }, { id }) {
-    commit(types.MEDIA_UPDATE_CURRENT_VIDEO, { id });
-  },
-  pauseVideo({ commit }, { id }) {
-    commit(types.MEDIA_PAUSE_VIDEO, { id });
-  },
-  registerVideo({ commit }, { id, player }) {
-    commit(types.MEDIA_REGISTER_VIDEO, {
-      id,
-      player,
+  pause({ commit, state, dispatch}, sessionId) {
+    //pause video
+    videoPlayer.pauseVideo(sessionId);
+
+    videoPlayer.registerEvent(sessionId, ['playing'], () => {
+      if(state.current == sessionId) {
+        return;
+      }
+      dispatch('updateCurrent', sessionId);
+      dispatch('play', sessionId);
     });
   },
-  destroyVideo({ commit }, { id }) {
-    commit(types.MEDIA_DESTROY_VIDEO, { id });
+  updateCurrent({ commit, dispatch}, sessionId) {
+    if(state.current) {
+      //pause previously playing video
+      dispatch('pause', state.current);
+    }
+
+    commit(types.UPDATE_CURRENT_VIDEO, sessionId);
+  },
+  play({ commit, state, dispatch }, sessionId) {
+    //update current video
+    dispatch('updateCurrent', sessionId);
+
+    videoPlayer.playVideo(sessionId);
+
+    //play next video once ended
+    videoPlayer.registerEvent(sessionId, ['ended'], () => {
+      const nextVideoIndex = getNextVideoId(state.index, sessionId);
+      dispatch('play', nextVideoIndex);
+    });
+  },
+  preloadIndex({ commit, state }) {
+
+    let loadIndex = [];
+    for(var i = 0; i < initPreloadedVideos; i++) {
+      loadIndex.push(state.index[i]);
+    }
+
+    _.forEach(loadIndex, (video) => {
+      videoPlayer.preloadVideo(video);
+    });
+  },
+  registerEvent({}, {sessionId, eventType, callback}) {
+    videoPlayer.registerEvent(sessionId, eventType, callback);
+  },
+  // AJAX CALLS
+  getCollection({ commit }) {
+    axios.get('/api/media/collection').then((resp) => {
+      if (resp.status === 200) {
+        // items refers to media items in a users collection
+        const { items } = resp.data;
+        commit(types.COLLECTION_UPDATE, items);
+      }
+    }).catch((error) => {
+      if (error) throw error;
+    });
   },
 };
 
 const mutations = {
-  [types.THEATER_UPDATE_QUEUE](state, videos) {
-    state.queue = videos;
+  [types.INDEX_ADD](state, sessionId) {
+    state.index.push(sessionId);
   },
-  [types.MEDIA_PLAY_NEXT_VIDEO](state) {
+  [types.COLLECTION_UPDATE](state, items) {
+    state.fetched.collection = items;
   },
-  [types.MEDIA_PLAY_VIDEO](state) {
-    const video = state.currentVideo;
-    video.player.playVideo();
-    state.playing = true;
-  },
-  [types.MEDIA_PAUSE_VIDEO](state, { id }) {
-    const video = state.currentVideo;
-    video.player.pauseVideo();
-    state.playing = false;
-  },
-  [types.MEDIA_UPDATE_CURRENT_VIDEO](state, { id }) {
-    const index = _.findIndex(state.videos, video => video.id == id);
-
-    const video = state.videos[index];
-    state.currentVideo = video;
-  },
-  [types.MEDIA_REGISTER_VIDEO](state, { id, player }) {
-    state.videos.push({
-      id,
-      player,
-    });
-  },
-  [types.MEDIA_DESTROY_VIDEO](state, { id }) {
-    state.videos = _.remove(state.videos, video => video.id == id);
-  },
+  [types.UPDATE_CURRENT_VIDEO](state, sessionId) {
+    state.current = sessionId;
+  }
 };
+
+
+function getNextVideoId(index, currentId) {
+  if(index.indexOf(currentId) >= index.length) {
+    return index[0];
+  }
+
+  return index[index.indexOf(currentId) + 1];
+}
 
 export default {
   namespaced: true,

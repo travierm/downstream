@@ -6,6 +6,7 @@ use Auth;
 use Route;
 use App\User;
 use App\UserMedia;
+use App\Media\YouTube;
 use App\MediaResolver;
 use Illuminate\Http\Request;
 
@@ -28,11 +29,14 @@ class MediaAPIController extends Controller
   {
     $this->middleware('auth:api');
     $this->middleware(function ($request, $next) {
-           $this->userId = Auth::user()->id;
-           $this->resolver = new MediaResolver($this->userId);
+          $this->userId = Auth::user()->id;
+          $this->resolver = new MediaResolver($this->userId);
+          $this->YouTube = new YouTube($this->userId);
 
-           return $next($request);
+          return $next($request);
     });
+
+
   }
 
   public function profile(Request $request, $hash)
@@ -65,7 +69,12 @@ class MediaAPIController extends Controller
 
   public function collection(Request $request)
   {
-    return $this->resolver->collection($request->input('byUser'));
+    $items = [];
+    $items = $this->YouTube->collection();
+
+    return response()->json([
+      'items' => $items
+    ], 200);
   }
 
   public function resolve(Request $request)

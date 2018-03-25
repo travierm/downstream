@@ -61,6 +61,8 @@
         },
       },
       mounted() {
+
+        
         this.registerVideo(this.vid);
       },
       beforeDestroy() {

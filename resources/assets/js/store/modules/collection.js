@@ -2,21 +2,19 @@
 import * as types from '../mutation-types';
 
 const state = {
-  videos: []
 };
 
 const getters = {
-  videos(state) {
-    return state.videos;
-  },
 };
 
 const actions = {
-  update({ commit }) {
+  update({ commit, dispatch }) {
     axios.get('/api/media/collection').then((resp) => {
       if (resp.status === 200) {
-        const { collection } = resp.data;
-        commit(types.COLLECTION_UPDATE, { collection });
+        const { items } = resp.data;
+        commit(types.COLLECTION_UPDATE, { item });
+
+        dispatch('media/register', { items:collection }, {root: true});
         window._authed = true;
       }
     }).catch(error => {

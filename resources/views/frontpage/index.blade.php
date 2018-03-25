@@ -2,6 +2,7 @@
 @section('content')
 <div class="container-fluid pushFromTop">
   @if(@$rows)
+  <master-bar></master-bar>
   @foreach($rows as $row)
   <h3>{{ $row['title'] }}</h3>
   <div class="row">
@@ -19,7 +20,7 @@
       <img height="250" width="450" src="https://media.giphy.com/media/hICCrVIACYZY4/giphy.gif" />
       <h4>Search & Collect to populate this page for others!</h4>
     </div>
-  </div>
+  </div> 
   @endif
 </div>
 @endsection

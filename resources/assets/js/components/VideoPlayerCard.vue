@@ -64,32 +64,10 @@
         },
       },
       mounted() {
-       let self = this;
-       //this.height = $('')
-       this.registerVideo();
-
-       this.$store.dispatch('video/registerEventAction', {
-          id:this.media.sessionId,
-          eventType: ["buffering", "playing"],
-          callback: () => {
-            console.log("started playing");
-            self.updatePlayingState(true);
-          }
-       })
-
-       this.$store.dispatch('video/registerEventAction', {
-          id:this.media.sessionId,
-          eventType: ["paused", "ended"],
-          callback: () => {
-            self.updatePlayingState(false);
-          }
-       })
-
-       //check for bad video
+        this.registerVideo();
       },
       beforeDestroy() {
         this.$store.dispatch('video/destroy', this.media.id);
-
       },
       methods: {
         updatePlayingState(playing) {
@@ -101,21 +79,44 @@
           }
         },
         registerVideo(options = {}) {
-          //options.height = $(`.img-fluid`).first().height();
+          // options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
 
-          this.media.sessionId = this.id;
+          const vid = this.media.index;
 
-          this.$store.dispatch('video/register', {
-            media:this.media,
-            elementId: this.id,
-            options
+          this.$store.dispatch('media/indexAdd', this.id);
+          this.$store.dispatch('media/videoAdd', { sessionId: this.id, videoId:vid, options});
+
+          this.$store.dispatch('media/registerEvent', {
+            sessionId: this.id,
+            eventType: ['playing'],
+            callback:() => {
+              $('#' + this.id).show();
+              this.playing = true;
+              this.showThumbnail = false;
+            }
           })
+
+          this.$store.dispatch('media/registerEvent', {
+            sessionId: this.id,
+            eventType: ['ended'],
+            callback:() => {
+              //$('#' + this.id).hide();
+              this.playing = false;
+              this.showThumbnail = true;
+            }
+          })
+
+          $('#' + this.id).hide();
         },
         play() {
           this.playing = true;
           this.showThumbnail = false;
-          this.$store.dispatch('video/play', this.id);
+
+          //show player element
+          $('#' + this.id).show();
+
+          this.$store.dispatch('media/play', this.id);
         },
         pause() {
           this.playing = false;

@@ -1,4 +1,15 @@
 <template>
+  <div class="container-fluid fixed-bottom">
+    <div class="row" v-if="popOutPlayer">
+      <div class="col-lg-2">
+        <div class="card">
+          <div class="card-block">
+            <h1>Player</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <nav class="navbar fixed-bottom bg-faded navbar-light rounded" style="background-color:#117F90;">
       <div class="container">
           <div class="row">
@@ -8,6 +19,7 @@
           </div>
       </div>
     </nav>
+  </div>
 </template>
 
 <script>
@@ -16,7 +28,8 @@
   export default {
     data: () => ({
       playing:false,
-      isMobile: window._isMobile
+      isMobile: window._isMobile,
+      popOutPlayer:false
     }),
     computed: {
       isPlaying() {
@@ -27,6 +40,7 @@
       }
     },
     mounted() {
+      console.log("master bar mounted");
     },
     methods: {
       pause() {

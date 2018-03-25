@@ -4,6 +4,9 @@ import store from './store/index';
 import router from './router';
 import BootstrapVue from 'bootstrap-vue';
 import VueAnalytics from 'vue-analytics';
+import consl from './services/Consl';
+
+window.consl = consl;
 
 require('./bootstrap');
 
@@ -39,14 +42,11 @@ router.beforeEach((to, from, next) => {
 	//Hide PHP generated html when not on a hard path
 	if (!isHardPath(to.path)) { $('#hardContent').remove(); }
 
-  	store.dispatch('video/unregisterAll');
-
   	next();
 });
 
 // Make initial api requests
-store.dispatch('collection/update');
-store.dispatch('video/unregisterAll');
+store.dispatch('media/getCollection');
 
 Vue.use(VueAnalytics, {
   id: "UA-111656856-1",

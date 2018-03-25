@@ -20,20 +20,13 @@ if (mix.inProduction()) {
   mix.version();
 }
 
+mix.options({
+  purifyCss: true
+});
+
 mix.webpackConfig({
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
-  },
-  resolve: {
-    extensions: ['.ts']
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        loader: 'ts-loader'
-      }
-    ]
   }
 });

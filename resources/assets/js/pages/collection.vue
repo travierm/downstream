@@ -1,3 +1,4 @@
+
 <template>
   <div class="container-fluid pushFromTop">
 
@@ -31,19 +32,10 @@
         return window._isMobile;
       },
       videos() {
-        return this.$store.getters['collection/videos'];
+        return this.$store.getters['media/collection'];
       },
     },
     methods: {
-      gotoTheater() {
-        const mediaId = this.videos[0].id;
-        this.$router.push({
-          name: 'theater',
-          params: {
-            mediaId,
-          },
-        });
-      },
     },
   };
 </script>
