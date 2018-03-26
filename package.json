@@ -11,7 +11,24 @@
         "lint": "eslint --ext .js,.vue src",
         "test": "./node_modules/.bin/jest"
     },
+    "jest": {
+        "roots": [
+            "<rootDir>/resources/assets/js/"
+        ],
+        "moduleNameMapper": {
+            "^vue$": "vue/dist/vue.common.js"
+        },
+        "moduleFileExtensions": [
+            "js",
+            "vue"
+        ],
+        "transform": {
+            "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+            ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
+        }
+    },
     "devDependencies": {
+        "@vue/test-utils": "^1.0.0-beta.12",
         "axios": "^0.16.2",
         "babel-jest": "^22.4.1",
         "bootstrap": "^4.0.0",
@@ -36,7 +53,8 @@
         "ts-loader": "^3.5.0",
         "typescript": "^2.7.2",
         "vue": "2.5.3",
-        "vue-server-renderer": "^2.5.16"
+        "vue-server-renderer": "^2.5.16",
+        "vue-test-utils": "^1.0.0-beta.11"
     },
     "dependencies": {
         "bootstrap-vue": "^2.0.0-rc.2",

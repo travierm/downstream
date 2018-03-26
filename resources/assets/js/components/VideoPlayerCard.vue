@@ -34,6 +34,7 @@
 
 <script>
     import SID from 'shortid';
+    import $ from 'jquery';
     let Utils = window._utils;
 
 
@@ -49,6 +50,10 @@
         };
       },
       props: {
+        tested: {
+          required: false,
+          default: false
+        },
         autoplay: {
           required: false,
           default: false,
@@ -64,7 +69,9 @@
         },
       },
       mounted() {
-        this.registerVideo();
+        if(!this.tested) {
+          this.registerVideo();
+        }
       },
       beforeDestroy() {
         this.$store.dispatch('video/destroy', this.media.id);

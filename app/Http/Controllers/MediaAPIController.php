@@ -39,6 +39,10 @@ class MediaAPIController extends Controller
 
   }
 
+  public function testVideo() {
+    $this->YouTube->testVideoInfo();
+  }
+
   public function profile(Request $request, $hash)
   {
 

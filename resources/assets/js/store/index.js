@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as mutations from './mutations';
 import * as actions from './actions';
-import * as getters from './getters';
+//import * as getters from './getters';
 
 // Modules
 import media from './modules/media';
@@ -23,7 +23,5 @@ export default new Vuex.Store({
     collection
   },
   mutations,
-  getters,
-  actions,
   state,
 });

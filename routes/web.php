@@ -32,6 +32,7 @@ Route::get('/import', 'ImportController@getIndex');
 Route::post('/import', 'ImportController@postImportVideo');
 
 Route::get('/hash', 'UserController@getHash');
+Route::get('/test/video', 'MediaAPIController@testVideo');
 
 Auth::routes();
 

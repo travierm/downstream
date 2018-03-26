@@ -50,4 +50,9 @@ class Media extends Model
     return self::where('type', $type)
       ->where('index', $index);
   }
+
+  public function getMeta()
+  {
+    return json_decode($this->meta);
+  }
 }

@@ -29,6 +29,12 @@ class YouTube {
 
   }
 
+  public function testVideoInfo()
+  {
+    $res = YouTubeService::getVideoInfo('IKj3iZgqnwA');
+    dd($res);
+  }
+
   public function collection($customUserId = false)
   {
     $profileId = $this->userId;
