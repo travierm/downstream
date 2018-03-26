@@ -28,7 +28,7 @@ const actions = {
       videoId,
     }).then((resp) => {
       if (resp.status === 200) {
-        self.dispatch('collection/update');
+        self.dispatch('media/getCollection');
       }
     });
   },

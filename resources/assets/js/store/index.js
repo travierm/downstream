@@ -6,6 +6,7 @@ import * as getters from './getters';
 
 // Modules
 import media from './modules/media';
+import collection from './modules/collection';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ const state = {
 export default new Vuex.Store({
   modules: {
     media,
+    collection
   },
   mutations,
   getters,
