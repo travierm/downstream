@@ -15,19 +15,33 @@ class FrontPageController extends Controller
 {
   private $rowRenderIndex = [];
 
+  public function getLanding()
+  {
+    //$videos = YouTubeVideo::all();
+    $this->createRow("Landing Page", [
+      'Rocket Man' => 110,
+      'Under The Trees' => 106,
+      "White Wine" => 118
+    ]);
+
+    return view('landing.main', [
+      'videos' => $this->rowRenderIndex[0]['media']
+    ]);
+  }
+
   public function index()
   {
 
     $latestVideos = Media::byType('youtube')
-      ->limit(4)
+      ->limit(12)
       ->orderBy('id', 'DESC')
       ->get();
 
     if(Cache::get('showLatestVideos') == 'yes') {
-      $this->createCustomRow("Newly Discovered", $latestVideos);
+      $this->createCustomRow("Most Recent", $latestVideos);
     }
 
-    $this->createRow("Bobby Tarantino ||", [
+    /*$this->createRow("Bobby Tarantino ||", [
       'Rick and Morty' => 95,
       'Overnight' => 93,
       'Midnight' => 94,
@@ -37,14 +51,7 @@ class FrontPageController extends Controller
       'Wassup' => 97,
       'Contra' => 98,
       '44 more' => 100
-    ]);
-
-    $this->createRow("Chill", [
-      "Hey i miss you" => 81,
-      "Resonance" => 22,
-      "Wizards" => 85,
-      "Fly" => 33
-    ]);
+    ]);*/
 
     return view('frontpage.index', [
       'rows' => $this->rowRenderIndex

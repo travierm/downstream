@@ -29,8 +29,12 @@ Vue.component('master-bar', require('./components/MasterBar.vue'));
 // Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 
+//Pages
+Vue.component('about-page', require('./pages/about.vue'));
+
 const hardPaths = [
 	'/',
+	'/all',
 	'/hash',
 	'/login',
 	'/logout',

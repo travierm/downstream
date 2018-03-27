@@ -21,7 +21,8 @@ Route::middleware(['admin'])->group(function() {
   Route::post('/admin/dash/settings', 'AdminController@postServerSettings');
 });
 
-Route::get('/', 'FrontPageController@index');
+Route::get('/', 'FrontPageController@getLanding');
+Route::get('/all', 'FrontPageController@index');
 
 //Search
 Route::get('/search', 'SearchController@getIndex');

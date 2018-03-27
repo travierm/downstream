@@ -2,30 +2,23 @@
   <div class="container pushFromTop">
     <div class="row">
       <div class="col lead">
-        <h2>Purpose - Discover, Collect, Play</h2>
-        <p>We’ve harnessed the quality and scale of YouTube into full blown media service. You can search, collect and play any type of media found on YouTube through our site. Not only will you be collecting for yourself but you’ll also help other users discover great content.
-Register on our site today and be apart of something unique!</p>
-
-        <h2>Users: <span class="text-success">{{ userCountWithCommas }}</span></h2>
-        <h2 style="padding-bottom: 10px;">Library Size: <span class="text-primary">{{ itemCountWithCommas }}</span> items</h2>
-
-        <h2>Planned Features:</h2>
-        <ul>
-          <li>Playlists</li>
-          <li>Friending/Following</li>
-          <li>Better Mobile player</li>
-          <li>Better Discovery and Frontpage mechanics</li>
-          <li>Original Artist Content and Tools for Artists</li>
-        </ul>  
-
-        <h2>Development State: <span class="text-warning"> &Alpha;LPHA</span></h2>
-        <p>We're at the very beginning of the development proccess. I have a few more big features planned and will continue development beyond depending on user growth and activity.</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <h3>Thanks for your interest in Downstream!</h3>
+        <h2>Service Stats:</h2>
+        <ul class="list-group mb-2">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Total Users:</h6>
+                <small class="text-muted">Number of active users.</small>
+              </div>
+              <span class="text-success">{{ userCountWithCommas }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Library Size</h6>
+                <small class="text-muted">Number of items our users have imported into the network through search.</small>
+              </div>
+              <span class="text-primary">{{ itemCountWithCommas }}</span>
+            </li>
+          </ul>
       </div>
     </div>
   </div>

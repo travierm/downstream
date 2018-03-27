@@ -116,7 +116,9 @@ const mutations = {
 
 
 function getNextVideoId(index, currentId) {
-  if(index.indexOf(currentId) >= index.length) {
+  consl(index.length);
+  consl(index.indexOf(currentId));
+  if(index.indexOf(currentId) >= (index.length - 1)) {
     return index[0];
   }
 

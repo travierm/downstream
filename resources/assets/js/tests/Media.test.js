@@ -2,6 +2,7 @@ import media from '../store/modules/media';
 import * as types from '../store/mutation-types';
 
 describe('Media Mutations', () => {
+	
 	const mutations = media.mutations;
 	it('updateCurrent', () => {
 		// mock state

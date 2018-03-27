@@ -25,8 +25,12 @@
   <body>
     <div id="app">
       <nav class="main-navbar navbar-expand-md navbar navbar-dark navbar-deco" style="background-color: #038294;">
-        <div class="container-fluid"> 
-          <a id="brand" class="navbar-brand" style="font-size:1.6em;" href="{{ url('/') }}">Downstream</a>
+        <div class="container-fluid">
+           @if(Auth::guest())
+            <a id="brand" class="navbar-brand" style="font-size:1.6em;" href="{{ url('/') }}">Downstream</a>
+          @else
+            <a id="brand" class="navbar-brand" style="font-size:1.6em;" href="{{ url('/all') }}">Downstream</a>
+          @endif
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -40,16 +44,12 @@
               @endif
             </ul>
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <router-link class="nav-link" to="/about">About</router-link>
-              </li>
-
               @if(Auth::guest())
               <li class="nav-item">
-                <a class="nav-link" href="{{ url('/login') }}">Login</a>
+                <a class="nav-link" href="{{ url('/register') }}">Register</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url('/register') }}">Register</a>
+                <a class="nav-link" href="{{ url('/login') }}">Login</a>
               </li>
               @else
 
