@@ -8,7 +8,7 @@
         <p class="flex">{{ media.id }}</p>
       </div>
 
-      <div class="float-right" v-if="authed">
+      <div class="float-right">
         <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
         <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
         <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
@@ -142,8 +142,13 @@
           this.$store.dispatch('collection/discover', {
             type: 'youtube',
             videoId: this.media.index,
+          }).then((err, resp) => {
+            this.isCollected = true;
+            this.$store.dispatch('media/getCollection');
+          }, (err) => {
+
+            this.$root.$emit('bv::show::modal','registermodal')
           });
-          this.isCollected = true;
         },
         toss() {
           this.$store.dispatch('collection/toss', {

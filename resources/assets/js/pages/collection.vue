@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="row pushFromTop">
+    <div class="row">
       <div class="col-lg-12">
         <h5>Things you can do</h5>
         <router-link class="btn btn-outline-danger" to="/search">Search for Music</router-link>

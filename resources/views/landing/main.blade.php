@@ -21,7 +21,7 @@
   		<a href="/register" class="btn btn-outline-info btn-lg btn-block">Register</a>
   	</div>
   	<div class="col-lg-3">
-  		<a href="/register" class="btn btn-outline-info btn-lg btn-block">Login</a>
+  		<a href="/login" class="btn btn-outline-info btn-lg btn-block">Login</a>
   	</div>
   </div>
 
@@ -30,5 +30,12 @@
   		<about-page></about-page>
   	</div>
   </div>
+
+   <b-modal :hide-header=true :hide-footer=true title="Register" id="registermodal" title="Bootstrap-Vue">
+   	<h4>Please Register!</h4>
+    <p class="my-4">We only need your email and a secure password.</p>
+    <p class="my-4">Click the button below to register in only a few secs!</p>
+	<a href="/register" class="btn btn-info btn-lg btn-block">Register</a> 
+  </b-modal>
 </div>
 @endsection

@@ -2,6 +2,7 @@
 import * as types from '../mutation-types';
 
 const state = {
+  collectionAccess: true
 };
 
 const getters = {
@@ -23,13 +24,9 @@ const actions = {
   },
   discover({ commit }, { type, videoId }) {
     const self = this;
-    axios.post('/api/media/discover', {
+    return axios.post('/api/media/discover', {
       type,
       videoId,
-    }).then((resp) => {
-      if (resp.status === 200) {
-        self.dispatch('media/getCollection');
-      }
     });
   },
   toss({ commit }, { type, mediaId }) {
@@ -37,12 +34,17 @@ const actions = {
     axios.get(`/api/media/toss?type=${type}&mediaId=${mediaId}`).then((resp) => {
       if (resp.status === 200) {
         commit(types.COLLECTION_TOSS, mediaId);
+      }else if(resp.status === 401) {
+        commit(types.COLLECTION_ACCESS, false)
       }
     });
   },
 };
 
 const mutations = {
+  [types.COLLECTION_ACCESS](state, status) {
+    state.collectionAccess = status;
+  },
   [types.COLLECTION_UPDATE](state, { collection }) {
     state.videos = collection.youtube;
   },
