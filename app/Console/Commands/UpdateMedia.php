@@ -41,6 +41,15 @@ class UpdateMedia extends Command
     {   
         $this->info("Lets update a media item!");
         $mediaId = $this->ask("Media ID?");
+
+        $media = Media::find($mediaId);
+
+        if(!$media) {
+            $this->error("Could not find media by that ID");
+            return;
+        }
+        $this->info("Found!");
+        $this->comment($media->getMeta()->title);
         $videoId = $this->ask("New Video ID to use for Media?");
 
         $res = YouTubeV2::updateMedia($mediaId, $videoId);
@@ -50,10 +59,8 @@ class UpdateMedia extends Command
             return;
         }
 
-        $media = Media::find($mediaId);
-
         $this->info("Updated media item!");
-        $this->info("title: " . $media->getMeta()->title);
-        $this->info('index: ' . $media->index);
+        $this->comment("title: " . $media->getMeta()->title);
+        $this->comment('index: ' . $media->index);
     }
 }

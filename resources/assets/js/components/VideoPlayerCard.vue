@@ -146,7 +146,7 @@
             this.isCollected = true;
             this.$store.dispatch('media/getCollection');
           }, (err) => {
-
+            this.isCollected = false;
             this.$root.$emit('bv::show::modal','registermodal')
           });
         },
