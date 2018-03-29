@@ -93,7 +93,7 @@ class YouTube {
     $meta['view_count'] = $video->statistics->viewCount;
 
     //thumbnail
-    if($video->snippet->thumbnails->standard->url) {
+    if(@$video->snippet->thumbnails->standard->url) {
       $meta['thumbnail'] = @$video->snippet->thumbnails->standard->url;
     }else{
       $meta['thumbnail'] = @$video->snippet->thumbnails->default->url;

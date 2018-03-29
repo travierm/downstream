@@ -33,7 +33,7 @@ class FrontPageController extends Controller
   {
 
     $latestVideos = Media::byType('youtube')
-      ->limit(12)
+      ->limit(16)
       ->orderBy('id', 'DESC')
       ->get();
 
