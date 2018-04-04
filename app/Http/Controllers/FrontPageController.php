@@ -37,7 +37,7 @@ class FrontPageController extends Controller
       ->orderBy('id', 'DESC')
       ->get();
 
-    if(Cache::get('showLatestVideos') == 'yes') {
+    if(Cache::get('showLatestVideos', 'yes') == 'yes') {
       $this->createCustomRow("Most Recent", $latestVideos);
     }
 

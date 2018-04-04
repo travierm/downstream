@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card mx-auto">
 
     <div id="cardToolbar" class="card-block">
       <img class="media-icon" v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
@@ -16,7 +16,7 @@
     </div>
 
     <div :id="this.id + '_media'" class="media-container" v-if="media.meta.thumbnail && this.showThumbnail">
-      <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid" width="this.width" v-bind:src="media.meta.thumbnail" />
+      <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid image-placeholder" v-bind:src="media.meta.thumbnail" />
       <div class="col">
         <div class="col-sm-12">
           <p style="color:white;">{{ media.meta.title }} </p>
@@ -181,4 +181,38 @@
 
 .media-container {position: relative;} 
 .media-container .col {position: absolute; z-index: 1; top: 0; left: 0; color: white; margin-top: 10px;}
+
+
+/* Thumbnail Sizing */
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .image-placeholder {
+    background-color: #eee;
+    display: flex;
+    height: 180px;
+    width: 320px;
+  }
+}
+
+
+
+/* Thumbnail Sizing */
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .image-placeholder {
+    background-color: #eee;
+    display: flex;
+    height: 480px;
+    width: 640px;
+  }
+}
+
+@media (min-width: 1200px)  {
+  .image-placeholder {
+    background-color: #eee;
+    display: flex;
+    height: 480px;
+    width: 640px;
+  }
+}
 </style>
