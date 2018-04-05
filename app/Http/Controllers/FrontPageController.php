@@ -21,8 +21,8 @@ class FrontPageController extends Controller
     $this->createRow("Landing Page", [
       'Rocket Man' => 110,
       'Under The Trees' => 106,
-      "White Wine" => 118,
-      "Clique" => 8
+      "Sunflower Feelings" => 131,
+      "White Wine" => 118
     ]);
 
     return view('landing.main', [
