@@ -16,7 +16,8 @@
     </div>
 
     <div :id="this.id + '_media'" class="media-container" v-if="media.meta.thumbnail && this.showThumbnail">
-      <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid image-placeholder" v-bind:src="media.meta.thumbnail" />
+
+      <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid" :src="thumbnail" />
       <div class="col">
         <div class="col-sm-12">
           <p style="color:white;">{{ media.meta.title }} </p>
@@ -48,6 +49,7 @@
           playing: false,
           isCollected: (this.media.collected == true),
           lazyLoad: false,
+          thumbnail: this.media.meta.thumbnail,
           showThumbnail: true,
           Utils:Utils
         };
@@ -67,6 +69,9 @@
         }
       },
       computed: {
+        badThumbnail() {
+          return (this.media.meta.thumbnail.includes('/default.jpg') || this.media.meta.thumbnail.includes('/hqdefault.jpg'));
+        },
         authed() {
           return window._authed;
         },
@@ -78,6 +83,10 @@
         },
       },
       mounted() {
+        if(this.badThumbnail == true) {
+          this.thumbnail = "http://via.placeholder.com/640x480/000000?text=" + this.media.meta.title;
+        }
+        
         if(!this.tested) {
           this.registerVideo();
         }
@@ -163,12 +172,6 @@
 </script>
 
 <style>
-
-.media-glow {
-  -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
-     filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
-}
-
 .media-icon {
   margin-right: 10px;
 }
@@ -181,38 +184,4 @@
 
 .media-container {position: relative;} 
 .media-container .col {position: absolute; z-index: 1; top: 0; left: 0; color: white; margin-top: 10px;}
-
-
-/* Thumbnail Sizing */
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .image-placeholder {
-    background-color: #eee;
-    display: flex;
-    height: 180px;
-    width: 320px;
-  }
-}
-
-
-
-/* Thumbnail Sizing */
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  .image-placeholder {
-    background-color: #eee;
-    display: flex;
-    height: 480px;
-    width: 640px;
-  }
-}
-
-@media (min-width: 1200px)  {
-  .image-placeholder {
-    background-color: #eee;
-    display: flex;
-    height: 480px;
-    width: 640px;
-  }
-}
 </style>
