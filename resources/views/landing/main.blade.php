@@ -10,7 +10,7 @@
 
   <div class="row">
   	@foreach($videos as $media)
-  	<div class="col-lg-4">
+  	<div class="col-sm-12 col-md-6 col-lg-6">
       <video-player-card :media="{{ $media }}"></video-player-card>
     </div>
     @endforeach

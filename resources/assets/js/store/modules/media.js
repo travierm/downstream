@@ -7,6 +7,7 @@ const initPreloadedVideos = 5;
 
 let didPreload = false;
 let preloadTimeout = false;
+const isMobile = window._isMobile;
 
 const state = {
   index: [],
@@ -40,6 +41,11 @@ const actions = {
     }
   },
   videoAdd({ commit }, { sessionId, videoId, options }) {
+    if(isMobile) {
+      //@TODO mute player and then start autoplaying somehow
+      options.fullscreen = false;
+    }
+
     videoPlayer.registerVideo(sessionId, videoId, options);
   },
   pause({ commit, state, dispatch}, sessionId) {
