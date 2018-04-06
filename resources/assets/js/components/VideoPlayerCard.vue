@@ -84,7 +84,7 @@
       },
       mounted() {
         if(this.badThumbnail == true) {
-          this.thumbnail = "http://via.placeholder.com/640x480/000000?text=" + this.media.meta.title;
+          this.thumbnail = "https://via.placeholder.com/640x480/000000?text=" + this.media.meta.title;
         }
         
         if(!this.tested) {
