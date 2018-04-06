@@ -15,6 +15,9 @@
     <meta name="application-name" content="Downstream">
     <meta name="msapplication-TileColor" content="#026876">
     <meta name="theme-color" content="#026876">
+
+    @yield('added-meta')
+
     @if(!Auth::guest())
     <meta name="xyz-token" content="{{ auth()->user()->api_token }}">
     @endif
