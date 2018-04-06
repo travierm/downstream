@@ -11,7 +11,7 @@
 	<meta property="og:image" content="{{$media->meta->thumbnail }}" />
 	@endsection
 
-    <div class="col-lg-4 col-md-12 col-sm-12">
+    <div class="col-lg-4 col-md-12 col-sm-12 pushFromTop">
       <video-player-card autoplay="true" :media="{{ $media }}"></video-player-card>
     </div>
     @else
