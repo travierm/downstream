@@ -86,10 +86,14 @@
         if(this.badThumbnail == true) {
           this.thumbnail = "https://via.placeholder.com/640x480/000000?text=" + this.media.meta.title;
         }
-        
-        if(!this.tested) {
-          this.registerVideo();
-        }
+
+        let t = setInterval(() => {
+          if (document.readyState === 'complete') {
+              // run after page has finished loading
+              this.registerVideo();
+              clearInterval(t)
+          }
+        }, 500)
       },
       beforeDestroy() {
         this.$store.dispatch('video/destroy', this.media.id);

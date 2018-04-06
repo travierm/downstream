@@ -32,7 +32,6 @@ export default class YouTubeVideoPlayer {
 		this.videos.push(newVideo);
 
 		if(options.autoplay) {
-			this.preloadVideo(sessionId);
 			this.playVideo(sessionId);
 		}
 
