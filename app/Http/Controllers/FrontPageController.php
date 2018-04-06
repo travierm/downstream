@@ -15,6 +15,19 @@ class FrontPageController extends Controller
 {
   private $rowRenderIndex = [];
 
+  public function getMediaItem($mediaIndex)
+  {
+    $media = Media::findByType('youtube', $mediaIndex)->first();
+
+    if($media) {
+      $media = $this->prepareMediaItem($media);
+    }
+
+    return view('media.index', [
+      'media' => $media
+    ]);
+  }
+
   public function getLanding()
   {
     //$videos = YouTubeVideo::all();
@@ -57,6 +70,18 @@ class FrontPageController extends Controller
     return view('frontpage.index', [
       'rows' => $this->rowRenderIndex
     ]);
+  }
+
+  private function prepareMediaItem($item)
+  {
+    if(Auth::check()) {
+      $item = [$item];
+      $item = Media::addUserCollectedProp($item)[0];
+    }
+
+    $item->meta = json_decode($item->meta);
+
+    return $item;
   }
 
   private function prepareMediaItems($items = []) 

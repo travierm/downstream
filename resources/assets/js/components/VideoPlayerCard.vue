@@ -106,6 +106,7 @@
         registerVideo(options = {}) {
           // options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
+          options.autoplay = this.autoplay;
 
           const vid = this.media.index;
 

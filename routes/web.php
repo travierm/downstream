@@ -24,6 +24,9 @@ Route::middleware(['admin'])->group(function() {
 Route::get('/', 'FrontPageController@getLanding');
 Route::get('/all', 'FrontPageController@index');
 
+//Link Sharing
+Route::get('/media/{mediaIndex}', 'FrontPageController@getMediaItem');
+
 //Search
 Route::get('/search', 'SearchController@getIndex');
 Route::post('/search', 'SearchController@postSearchYouTube');
