@@ -34,6 +34,7 @@
 <script>
   export default {
     mounted() {
+      this.$store.dispatch('collection/update');
     },
     computed: {
       isMobile() {

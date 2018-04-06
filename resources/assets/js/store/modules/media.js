@@ -20,6 +20,9 @@ const state = {
 };
 
 const getters = {
+  isPlaying(state) {
+    return videoPlayer.getPlayerState();
+  },
   collection(state) {
     return state.fetched.collection;
   },
@@ -49,6 +52,10 @@ const actions = {
     videoPlayer.registerVideo(sessionId, videoId, options);
   },
   pause({ commit, state, dispatch}, sessionId) {
+    if(!sessionId) {
+      sessionId = state.current;
+    }
+
     //pause video
     videoPlayer.pauseVideo(sessionId);
 
@@ -69,8 +76,14 @@ const actions = {
     commit(types.UPDATE_CURRENT_VIDEO, sessionId);
   },
   play({ commit, state, dispatch }, sessionId) {
-    //update current video
-    dispatch('updateCurrent', sessionId);
+    if(!sessionId) {
+      sessionId = state.current;
+    }else{
+      //update current video
+      dispatch('updateCurrent', sessionId);
+      //update history
+      commit(types.MEDIA_HISTORY_ADD, sessionId);
+    }
 
     videoPlayer.playVideo(sessionId);
 
@@ -79,6 +92,29 @@ const actions = {
       const nextVideoIndex = getNextVideoId(state.index, sessionId);
       dispatch('play', nextVideoIndex);
     });
+  },
+  //master bar actions
+  historyBack({ commit, state, dispatch }) {
+    if(state.current) {
+      const nextId = getPreviousVideoId(state.index, state.current);
+      if(nextId) {
+        dispatch('play', nextId);
+      }
+    }
+  },
+  indexNext({ commit, state, dispatch }) {
+    if(!state.current) {
+      dispatch('startQueue');
+      return;
+    }
+
+    const nextId = getNextVideoId(state.index, state.current);
+    if(nextId) {
+      dispatch('play', nextId);
+    }
+  },
+  startQueue({commit, state, dispatch}) {
+    dispatch('play', state.index[0]);
   },
   preloadIndex({ commit, state }) {
 
@@ -109,6 +145,9 @@ const actions = {
 };
 
 const mutations = {
+  [types.MEDIA_HISTORY_ADD](state, sessionId) {
+    state.history.push(sessionId);
+  },
   [types.INDEX_ADD](state, sessionId) {
     state.index.push(sessionId);
   },
@@ -121,9 +160,15 @@ const mutations = {
 };
 
 
+function getPreviousVideoId(index, currentId) {
+  if(index.indexOf(currentId) >= (index.length - 1)) {
+    return index[0];
+  }
+
+  return index[index.indexOf(currentId) - 1];
+}
+
 function getNextVideoId(index, currentId) {
-  consl(index.length);
-  consl(index.indexOf(currentId));
   if(index.indexOf(currentId) >= (index.length - 1)) {
     return index[0];
   }

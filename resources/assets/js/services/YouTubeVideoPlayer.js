@@ -22,6 +22,10 @@ export default class YouTubeVideoPlayer {
 		this.playing = false;
 	}
 
+	getPlayerState() {
+		return this.playing;
+	}
+
 	registerVideo(sessionId, videoId, options) {
 		const newVideo = createVideo(sessionId, videoId, options);
 
@@ -70,6 +74,8 @@ export default class YouTubeVideoPlayer {
 		let video = this.findVideo(sessionId);
 
 		if(video.player) {
+			this.playing = false;
+
 			video.player.pause();
 		}
 	}
@@ -81,6 +87,8 @@ export default class YouTubeVideoPlayer {
 			//preload if not preloaded
 			this.preloadVideo(sessionId);
 		}
+
+		this.playing = true;
 
 		video.player.play();
 		

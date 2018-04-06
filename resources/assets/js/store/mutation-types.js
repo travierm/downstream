@@ -32,4 +32,5 @@ export const COLLECTION_ACCESS = 'COLLECTION_ACCESS';
 // Media
 export const INDEX_ADD = 'INDEX_ADD';
 export const MEDIA_REGISTER = 'MEDIA_REGISTER';
+export const MEDIA_HISTORY_ADD = 'MEDIA_HISTORY_ADD';
 
