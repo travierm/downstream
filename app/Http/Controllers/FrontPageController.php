@@ -52,7 +52,7 @@ class FrontPageController extends Controller
       ->get();
 
     if(Cache::get('showLatestVideos', 'yes') == 'yes') {
-      $this->createCustomRow("Most Recent", $latestVideos);
+      $this->createCustomRow("Latest Discoveries on the Network:", $latestVideos);
     }
 
     /*$this->createRow("Bobby Tarantino ||", [

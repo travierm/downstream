@@ -75,6 +75,23 @@ const actions = {
 
     commit(types.UPDATE_CURRENT_VIDEO, sessionId);
   },
+  preload({ commit, state, dispatch}, sessionId) {
+
+    videoPlayer.preloadVideo(sessionId);
+
+    videoPlayer.registerEvent(sessionId, ['playing'], () => {
+      if(state.current == sessionId) {
+        return;
+      }
+      dispatch('updateCurrent', sessionId);
+      dispatch('play', sessionId);
+    });
+
+    videoPlayer.registerEvent(sessionId, ['ended'], () => {
+      const nextVideoIndex = getNextVideoId(state.index, sessionId);
+      dispatch('play', nextVideoIndex);
+    });
+  },
   play({ commit, state, dispatch }, sessionId) {
     if(!sessionId) {
       sessionId = state.current;
@@ -89,6 +106,7 @@ const actions = {
 
     //play next video once ended
     videoPlayer.registerEvent(sessionId, ['ended'], () => {
+      consl('playing next');
       const nextVideoIndex = getNextVideoId(state.index, sessionId);
       dispatch('play', nextVideoIndex);
     });

@@ -1,5 +1,5 @@
 <template>
-  <div class="card mx-auto">
+  <div :id="cardId" :class="{ card: true , 'border-info': isPlaying, 'mx-auto': true }">
 
     <div id="cardToolbar" class="card-block">
       <img class="media-icon" v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
@@ -10,6 +10,7 @@
 
       <div class="float-right">
         <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
+        <button @click="shareMediaLink" class="btn btn-outline-success">Link</button>
         <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
         <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
       </div>
@@ -25,14 +26,7 @@
       </div>
     </div>
     <!-- YouTube Player -->
-    <div :id="this.id"></div>
-   
-
-    <div class="card-block">
-      <h4 class="card-title"></h4>
-      
-      <!-- <h6 class="card-subtitle mb-2">Views - <span class="text-success">{{Utils.numberWithCommas(media.meta.view_count)}}</span></h6> -->
-    </div>
+    <div class="border-success" :id="this.id"></div>
   </div>
 </template>
 
@@ -41,6 +35,9 @@
     import $ from 'jquery';
     let Utils = window._utils;
 
+    function copyToClipboard(text) {
+      window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+    }
 
     export default {
       data() {
@@ -59,6 +56,10 @@
           required: false,
           default: false
         },
+        preload: {
+          required: false,
+          default: false
+        },
         autoplay: {
           required: false,
           default: false,
@@ -69,7 +70,13 @@
         }
       },
       computed: {
-        badThumbnail() {
+        isPlaying(state) {
+          return state.playing;
+        },
+        cardId(state) {
+          return state.id + "-card";
+        },
+        badThumbnail(state) {
           return (this.media.meta.thumbnail.includes('/default.jpg') || this.media.meta.thumbnail.includes('/hqdefault.jpg'));
         },
         authed() {
@@ -93,12 +100,16 @@
               this.registerVideo();
               clearInterval(t)
           }
-        }, 500)
+        }, 200)
       },
       beforeDestroy() {
-        this.$store.dispatch('video/destroy', this.media.id);
       },
       methods: {
+        shareMediaLink() {
+          const link = "https://down-stream.org/media/" + this.media.index;
+
+          copyToClipboard(link);
+        },
         updatePlayingState(playing) {
           if(playing) {
             this.playing = true;
@@ -112,10 +123,26 @@
           options.width = $(`#${this.id}`).width();
           options.autoplay = this.autoplay;
 
+          if(this.preload) {
+            if(window._isMobile) {
+              options.height = 220;
+            }else{
+              options.height = 380;
+            }
+
+            $('#' + this.id).show();
+          }else{
+            $('#' + this.id).hide();
+          }
+
           const vid = this.media.index;
 
           this.$store.dispatch('media/indexAdd', this.id);
           this.$store.dispatch('media/videoAdd', { sessionId: this.id, videoId:vid, options});
+
+          if(this.preload) {
+            this.$store.dispatch('media/preload', this.id);
+          }
 
           this.$store.dispatch('media/registerEvent', {
             sessionId: this.id,
@@ -137,7 +164,14 @@
             }
           })
 
-          $('#' + this.id).hide();
+          this.$store.dispatch('media/registerEvent', {
+            sessionId: this.id,
+            eventType: ['paused'],
+            callback:() => {
+              //$('#' + this.id).hide();
+              this.playing = false;
+            }
+          })
         },
         play() {
           this.playing = true;
@@ -161,7 +195,8 @@
             this.$store.dispatch('media/getCollection');
           }, (err) => {
             this.isCollected = false;
-            this.$root.$emit('bv::show::modal','registermodal')
+            $('#modals').show();
+            this.$root.$emit('bv::show::modal','registerModal')
           });
         },
         toss() {

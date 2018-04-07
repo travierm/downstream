@@ -14,7 +14,8 @@
       <div class="container">
           <div class="row">
             <div class="col-lg-8">
-              <img class="icon" @click="playPrevious"height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
+              <button class="btn btn-dark my-2 my-sm-0" v-scroll-to="currentCardId">Focus</button>
+              <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
               <img class="icon" @click="startQueue" v-if="!isPlaying && !startedQueue" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
               <img class="icon" @click="play" v-if="!isPlaying && startedQueue" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
               <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
@@ -41,6 +42,9 @@
       popOutPlayer:false
     }),
     computed: {
+      currentCardId() {
+        return "#" + this.$store.state.media.current + "-card";
+      },
       isPlaying() {
         return this.$store.getters['media/isPlaying'];
       },
@@ -52,6 +56,14 @@
       console.log("master bar mounted");
     },
     methods: {
+      focusOnCurrent() {
+        let sessionId = this.$store.state.media.current;
+        console.log("doin focus " + sessionId);
+
+        $('html, body').animate({
+        scrollTop: $("#" + sessionId + "-card").offset().top
+        }, 1000);
+      },
       pause() {
         this.playing = false;
         this.$store.dispatch('media/pause');

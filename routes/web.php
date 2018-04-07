@@ -27,10 +27,6 @@ Route::get('/all', 'FrontPageController@index');
 //Link Sharing
 Route::get('/media/{mediaIndex}', 'FrontPageController@getMediaItem');
 
-//Search
-Route::get('/search', 'SearchController@getIndex');
-Route::post('/search', 'SearchController@postSearchYouTube');
-
 //Import
 Route::get('/import', 'ImportController@getIndex');
 Route::post('/import', 'ImportController@postImportVideo');

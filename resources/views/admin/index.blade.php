@@ -18,10 +18,16 @@
 			 	</select>
 			 </div>
 	  	</div>
-
-	  	<button class="btn btn-info">Save</button>
   	</form>	
 
+  </div>
+
+  <button class="btn btn-info">Save</button>
+
+  <div class="row">
+  	<div class="col-lg-8" style="margin-top: 25px;">
+  		<about-page></about-page>
+  	</div>
   </div>
 </div>
 @endsection

@@ -5,13 +5,14 @@
   <div class="row justify-content-md-center">
   	@if($media)
   	@section('added-meta')
-  	<meta property="og:url"   content="https://down-stream.org/media/{{$media->index}}" />
-	<meta property="og:type"  content="music.song" />
-	<meta property="og:title" content="{{$media->meta->title }}" />
-	<meta property="og:image" content="{{$media->meta->thumbnail }}" />
-	@endsection
+    	<meta property="og:url"   content="https://down-stream.org/media/{{$media->index}}" />
+  	  <meta property="og:type"  content="music.song" />
+  	  <meta property="og:title" content="{{$media->meta->title }}" />
+  	  <meta property="og:image" content="{{$media->meta->thumbnail }}" />
+      <meta property="og:description" content="Listen now on Downstream!" />
+	  @endsection
 
-    <div class="col-lg-4 col-md-12 col-sm-12 pushFromTop">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12" style="margin-top: 15px;">
       <video-player-card autoplay="true" :media="{{ $media }}"></video-player-card>
     </div>
     @else

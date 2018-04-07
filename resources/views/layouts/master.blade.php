@@ -36,11 +36,9 @@
 
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
-              @if(!Auth::guest())
               <li class="nav-item">
-                <router-link class="nav-link" to="/search">Search</router-link>
+                <a class="nav-link" href="{{ url('/all') }}">All</a>
               </li>
-              @endif
             </ul>
             <ul class="navbar-nav">
               @if(Auth::guest())
@@ -52,20 +50,20 @@
               </li>
               @else
               <li class="nav-item">
-                <a class="nav-link" href="{{ url('/all') }}">All</a>
+                <router-link class="nav-link" to="/search">Search</router-link>
               </li>
 
               <li class="nav-item">
                 <router-link class="nav-link" to="/collection">Collection</router-link>
               </li>
 
-              <li class="nav-item">
+              <!--<li class="nav-item">
                 <a class="nav-link" href="/hash">{{Auth::user()->getNavDisplayName()}}</a>
-              </li>
+              </li>-->
 
               @if(Auth::user()->isAdmin())
               <li class="nav-item">
-                <a class="nav-link" href="/admin/dash">Admin CP</a>
+                <a class="nav-link" href="/admin/dash">Admin</a>
               </li>
               @endif
               
@@ -87,14 +85,16 @@
             @yield('content')
           </div>
 
-          <!-- Modals -->
-          <b-modal :hide-header=true :hide-footer=true title="Register" id="registermodal" title="Bootstrap-Vue">
-            <h4>Please Register!</h4>
-            <p class="my-4">We only need your email and a secure password.</p>
-            <p class="my-4">Click the button below to register in only a few secs!</p>
-             <a href="/register" class="btn btn-info btn-lg btn-block">Register</a> 
-          </b-modal>
-        </div>
+          <div id="modals" style="display: none;">
+            <!-- Modals -->
+            <b-modal :visible=false id="registerModal" :lazy=true :hide-header=true :hide-footer=true title="Register" title="Bootstrap-Vue">
+              <h4>Please Register!</h4>
+              <p class="my-4">We only need your email and a secure password.</p>
+              <p class="my-4">Click the button below to register in only a few secs!</p>
+               <a href="/register" class="btn btn-info btn-lg btn-block">Register</a> 
+            </b-modal>
+          </div>
+      </div>
       <!-- End App -->
       </div>
 

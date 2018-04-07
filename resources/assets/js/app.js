@@ -18,9 +18,23 @@ const unsync = sync(store, router);
  */
 
 window.Vue = require('vue');
-
+var VueScrollTo = require('vue-scrollto');
 
 Vue.use(BootstrapVue);
+Vue.use(VueScrollTo);
+
+VueScrollTo.setDefaults({
+    container: "body",
+    duration: 500,
+    easing: "ease",
+    offset: -50,
+    cancelable: true,
+    onStart: false,
+    onDone: false,
+    onCancel: false,
+    x: false,
+    y: true
+})
 
 // Components
 Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));
@@ -60,7 +74,7 @@ Vue.use(VueAnalytics, {
 
 const app = new Vue({
   router,
-  store,
+  store
 }).$mount('#app');
 
 //
@@ -68,7 +82,11 @@ function isHardPath(path) {
 	for(var i = 0; i <= path.length; i++) {
 		let hardPath = hardPaths[i];
 
-		if(path == hardPath || path.includes(hardPath)) {
+		if(hardPath == '/media' && path.includes(hardPath)) {
+			return true;
+		}
+
+		if(path == hardPath) {
 			return true;
 		}
 	}

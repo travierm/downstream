@@ -31,6 +31,11 @@ export default class YouTubeVideoPlayer {
 
 		this.videos.push(newVideo);
 
+		if(options.preload) {
+			consl('doing preload');
+			this.preloadVideo(sessionId);
+		}
+
 		if(options.autoplay) {
 			this.playVideo(sessionId);
 		}
@@ -54,7 +59,8 @@ export default class YouTubeVideoPlayer {
 
 		//override options
 		video.options.autoplay = false;
-    	video.options.height = $(`#${video.sessionId}_media`).height();
+		if(!video.options.height) 
+    		video.options.height = $(`#${video.sessionId}_media`).height();
 
     	//create iframe yt player on element
     	video.player = new YTPlayer("#" + video.sessionId, video.options);
@@ -97,7 +103,7 @@ export default class YouTubeVideoPlayer {
 		video.player.play();
 		
 		this.registerEvent(sessionId, 'ended', () => {
-			video.player.destroy();
+			//video.player.destroy();
 			video.player = false;
 		});
 	}
