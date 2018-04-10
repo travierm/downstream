@@ -9,11 +9,8 @@
   </div>
 
   <div class="row justify-content-md-center">
-    <div class="col-lg-3 col-sm-12">
+    <div class="col-lg-3 col-sm-6">
       <a href="/register" class="btn btn-outline-info btn-lg btn-block">Register</a>
-    </div>
-    <div class="col-lg-3 col-sm-12">
-      <a href="/login" class="btn btn-outline-info btn-lg btn-block">Login</a>
     </div>
   </div>
 

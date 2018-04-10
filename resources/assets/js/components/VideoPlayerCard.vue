@@ -1,5 +1,5 @@
 <template>
-  <div :id="cardId" :class="{ card: true , 'border-info': isPlaying, 'mx-auto': true }">
+  <div :id="cardId" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
 
     <div id="cardToolbar" class="card-block">
       <img class="media-icon" v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
@@ -158,7 +158,7 @@
             sessionId: this.id,
             eventType: ['ended'],
             callback:() => {
-              //$('#' + this.id).hide();
+              $('#' + this.id).hide();
               this.playing = false;
               this.showThumbnail = true;
             }

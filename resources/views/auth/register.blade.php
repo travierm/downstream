@@ -8,6 +8,7 @@
                 <div class="card-header">Register</div>
 
                 <div class="card-body">
+                    <a href="/login">Need to login?</a>
                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
