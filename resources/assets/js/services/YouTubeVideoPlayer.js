@@ -18,8 +18,21 @@ export default class YouTubeVideoPlayer {
 	constructor() {
 		this.videos = [];
 		this.eventBacklog = [];
+		this.volume = 75;
 
 		this.playing = false;
+	}
+
+	setVolume(volumeLevel) {
+		this.volume = volumeLevel;
+	}
+
+	updatePlayerVolume(sessionId) {
+		let video = this.findVideo(sessionId);
+
+		if(video.player) {
+			video.player.setVolume(this.volume);
+		} 
 	}
 
 	getPlayerState() {
@@ -66,6 +79,7 @@ export default class YouTubeVideoPlayer {
     	video.player = new YTPlayer("#" + video.sessionId, video.options);
     	//load the iframe player
     	video.player.load(video.videoId);
+    	video.player.setVolume(this.volume);
 
     	const videoEvents = this.eventBacklog[sessionId];
     	if(videoEvents) {
@@ -100,6 +114,7 @@ export default class YouTubeVideoPlayer {
 
 		this.playing = true;
 
+		video.player.setVolume(this.volume);
 		video.player.play();
 		
 		this.registerEvent(sessionId, 'ended', () => {

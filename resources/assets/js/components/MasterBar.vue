@@ -49,7 +49,7 @@
         return this.$store.getters['media/isPlaying'];
       },
       volume() {
-        return this.$store.getters['video/volume'];
+        return this.$store.getters['media/playerVolumeLevel'];
       }
     },
     mounted() {

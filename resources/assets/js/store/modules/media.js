@@ -2,6 +2,7 @@ import _ from 'lodash';
 import * as types from '../mutation-types';
 import YouTubeVideoPlayer from '../../services/YouTubeVideoPlayer';
 
+const initVolume = 100;
 const videoPlayer = new YouTubeVideoPlayer();
 const initPreloadedVideos = 5;
 
@@ -9,17 +10,24 @@ let didPreload = false;
 let preloadTimeout = false;
 const isMobile = window._isMobile;
 
+videoPlayer.setVolume(initVolume);
+
 const state = {
   index: [],
   player: videoPlayer,
   current: false,
   history: [],
+  //0 - 100
+  volume: initVolume,
   fetched: {
     collection: []
   }
 };
 
 const getters = {
+  playerVolumeLevel(state) {
+    return state.volume;
+  },
   isPlaying(state) {
     return videoPlayer.getPlayerState();
   },
@@ -111,6 +119,18 @@ const actions = {
       dispatch('play', nextVideoIndex);
     });
   },
+  updateVolume({ commit, dispatch, state}, volumeLevel) {
+    //update state volume
+    commit(types.UPDATE_VOLUME_LEVEL, volumeLevel);
+
+    //sync player service volume
+    videoPlayer.setVolume(volumeLevel);
+
+    if(state.current) {
+      //update current playing video volume
+      videoPlayer.updatePlayerVolume(state.current);
+    }
+  },
   //master bar actions
   historyBack({ commit, state, dispatch }) {
     if(state.current) {
@@ -174,8 +194,11 @@ const mutations = {
   },
   [types.UPDATE_CURRENT_VIDEO](state, sessionId) {
     state.current = sessionId;
+  },
+  [types.UPDATE_VOLUME_LEVEL](state, volumeLevel) {
+    state.volume = volumeLevel;
   }
-};
+}; 
 
 
 function getPreviousVideoId(index, currentId) {
