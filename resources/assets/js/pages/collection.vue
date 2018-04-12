@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6 center" v-if="videos.length == 0">
+      <div id="collectionMeme" hidden class="col-lg-6 center" v-if="videos.length == 0">
         <h3>Nothing in collection..</h3>
         <img src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
       </div>
@@ -41,6 +41,10 @@
         return window._isMobile;
       },
       videos() {
+        if(this.$store.getters['media/collection'] <= 0) {
+          $('#collectionMeme').show();
+        }
+        
         return this.$store.getters['media/collection'];
       },
     },

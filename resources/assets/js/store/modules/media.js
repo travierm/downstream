@@ -1,3 +1,10 @@
+/**
+ * Media Module
+ *
+ * An interface for handling Media
+ * VideoPlayCard will register its own media payload with this modules
+ */
+
 import _ from 'lodash';
 import * as types from '../mutation-types';
 import YouTubeVideoPlayer from '../../services/YouTubeVideoPlayer';

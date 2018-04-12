@@ -72,6 +72,9 @@ export default class YouTubeVideoPlayer {
 
 		//override options
 		video.options.autoplay = false;
+		video.options.modestbranding = true;
+		video.options.related = false;
+		
 		if(!video.options.height) 
     		video.options.height = $(`#${video.sessionId}_media`).height();
 
@@ -80,6 +83,10 @@ export default class YouTubeVideoPlayer {
     	//load the iframe player
     	video.player.load(video.videoId);
     	video.player.setVolume(this.volume);
+
+    	if(video.options.mute) {
+    		video.player.mute();
+    	}
 
     	const videoEvents = this.eventBacklog[sessionId];
     	if(videoEvents) {
