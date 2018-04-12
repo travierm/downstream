@@ -4,7 +4,11 @@
 <div class="container-fluid pushFromTop ">
   <div class="row justify-content-md-center">
   	@if($media)
-  	@section('added-meta')
+
+  	@section('meta')
+      @if(env("FB_APP_ID"))
+        <meta property="fb:app_id"  content="{{ env('FB_APP_ID') }}" />
+      @endif
     	<meta property="og:url"   content="https://down-stream.org/media/{{$media->index}}" />
   	  <meta property="og:type"  content="music.song" />
   	  <meta property="og:title" content="{{$media->meta->title }}" />

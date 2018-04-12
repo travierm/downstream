@@ -102,11 +102,9 @@
           }
         }, 200)
       },
-      beforeDestroy() {
-      },
       methods: {
         shareMediaLink() {
-          const link = "https://down-stream.org/media/" + this.media.index;
+          const link = window.config.APP_LINK_URL + this.media.index;
 
           copyToClipboard(link);
         },

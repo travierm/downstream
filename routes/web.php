@@ -25,7 +25,10 @@ Route::get('/', 'FrontPageController@getLanding');
 Route::get('/all', 'FrontPageController@index');
 
 //Link Sharing
-Route::get('/media/{mediaIndex}', 'FrontPageController@getMediaItem');
+//View a media item
+Route::get('/v/{index}', 'LinkController@viewMediaItem');
+//Backward compat for old links
+Route::get('/media/{index}', 'LinkController@viewMediaItem');
 
 //Import
 Route::get('/import', 'ImportController@getIndex');

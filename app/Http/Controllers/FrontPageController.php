@@ -23,7 +23,7 @@ class FrontPageController extends Controller
       $media = $this->prepareMediaItem($media);
     }
 
-    return view('media.index', [
+    return view('link.view-media', [
       'media' => $media
     ]);
   }

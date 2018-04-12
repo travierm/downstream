@@ -16,7 +16,7 @@
     <meta name="msapplication-TileColor" content="#026876">
     <meta name="theme-color" content="#026876">
 
-    @yield('added-meta')
+    @yield('meta')
 
     @if(!Auth::guest())
     <meta name="xyz-token" content="{{ auth()->user()->api_token }}">
@@ -102,6 +102,10 @@
     window.Laravel = <?php echo json_encode([
       'csrfToken' => csrf_token(),
     ]); ?>;
+
+    window.config = {
+      APP_LINK_URL: "<?php echo env('APP_LINK_URL'); ?>"
+    };
     </script>
 
     <script src="{{ mix('js/app.js') }}"></script>

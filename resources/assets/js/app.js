@@ -54,6 +54,7 @@ const hardPaths = [
 	'/logout',
 	'/register',
 	'/media',
+	'/v',
 	'/admin/dash'
 ];
 
@@ -82,7 +83,7 @@ function isHardPath(path) {
 	for(var i = 0; i <= path.length; i++) {
 		let hardPath = hardPaths[i];
 
-		if(hardPath == '/media' && path.includes(hardPath)) {
+		if((hardPath == '/v' || hardPath == '/media') && path.includes(hardPath)) {
 			return true;
 		}
 

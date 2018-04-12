@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use App\UserMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +12,38 @@ class Media extends Model
   use SoftDeletes;
   
   protected $fillable = ['id', 'origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
+
+  /**
+   * Adds collected prop and decodes meta json
+   * Takes a single Media item or an array of Media items
+   * returns either the single item or an array automagically
+   * @param  array||object $items items to be prepared
+   * @return array||object prepared items
+   */
+  public static function prepareItemMeta($items)
+  {
+    $returnArray = true;
+    if(!is_array($items)) {
+      $returnArray = false;
+
+      $items = [$items];
+    }
+
+
+    if(Auth::check()) {
+      self::addUserCollectedProp($items);
+    }
+
+    foreach($items as $item) {
+      $item->meta = json_decode($item->meta);
+    }
+
+    if(!$returnArray) {
+      return $items[0];
+    }
+
+    return $items;
+  }
 
   public static function addUserCollectedProp($rows)
   {
