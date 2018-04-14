@@ -7,6 +7,12 @@ use App\UserMedia;
 use YouTubeService;
 
 class YouTubeV2 {
+
+  public static function getInfo($index) 
+  {
+    return YouTubeService::getVideoInfo($index);
+  }
+  
   public static function getBrokenVideoIds()
   {
     $cachedItems = Cache::get('youtube.brokenVideoIds');
@@ -63,6 +69,17 @@ class YouTubeV2 {
     $media->save();
 
     return true;
+  }
+
+  public static function searchFirst($query)
+  {
+    $results = self::search($query, 1);
+
+    if(count($results) >= 1) {
+      return $results[0];
+    }
+
+    return false;
   }
 
   public static function search($query, $limit = 8)

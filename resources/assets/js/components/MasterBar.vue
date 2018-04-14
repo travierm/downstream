@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top: 50px;">
       <nav class="navbar fixed-bottom bg-faded navbar-light" style="background-color:#117F90;">
         <div class="container">
             <div class="row form-inline">

@@ -182,7 +182,7 @@
         },
         pause() {
           this.playing = false;
-          this.$store.dispatch('video/pause');
+          this.$store.dispatch('media/pause', this.id);
         },
         discover() {
           this.$store.dispatch('collection/discover', {
