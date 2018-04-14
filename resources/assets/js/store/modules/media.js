@@ -78,6 +78,7 @@ const actions = {
       if(state.current == sessionId) {
         return;
       }
+
       dispatch('updateCurrent', sessionId);
       dispatch('play', sessionId);
     });
@@ -207,10 +208,9 @@ const mutations = {
   }
 }; 
 
-
 function getPreviousVideoId(index, currentId) {
-  if(index.indexOf(currentId) >= (index.length - 1)) {
-    return index[0];
+  if(index.indexOf(currentId) == 0) {
+    return index[index.length - 1];
   }
 
   return index[index.indexOf(currentId) - 1];

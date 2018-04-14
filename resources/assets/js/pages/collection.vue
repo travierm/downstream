@@ -1,13 +1,6 @@
 
 <template>
   <div class="container-fluid pushFromTop">
-
-    <div class="row" v-if="!isMobile">
-      <div class="col-lg-2">
-        <master-bar></master-bar>
-      </div>
-    </div>
-
     <div class="row">
       <div id="collectionMeme" hidden class="col-lg-6 center" v-if="videos.length == 0">
         <h3>Nothing in collection..</h3>
@@ -24,10 +17,12 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-12" v-for="video in videos" :key="video.id">
+      <div class="col-lg-3 col-md-12 col-sm-12" v-for="video in videos" :key="video.id">
         <video-player-card v-bind:media="video"></video-player-card>
       </div>
     </div>
+
+    <master-bar></master-bar>
   </div>
 </template>
 

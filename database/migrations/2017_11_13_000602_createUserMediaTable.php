@@ -16,7 +16,7 @@ class CreateUserMediaTable extends Migration
       Schema::create('user_media', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('user_id')->references('id')->on('users');
-          $table->integer('media_id')->references('id')->on('media');;
+          $table->integer('media_id')->references('id')->on('media');
           $table->softDeletes();
           $table->timestamps();
       });

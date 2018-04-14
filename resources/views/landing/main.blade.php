@@ -8,11 +8,13 @@
 	  </div>
   </div>
 
+  @if(Auth::guest())
   <div class="row justify-content-md-center">
     <div class="col-lg-3 col-sm-6">
       <a href="/register" class="btn btn-outline-info btn-lg btn-block">Register</a>
     </div>
   </div>
+  @endif
 
   <div class="row" style="margin-top: 15px;">
   	@foreach($videos as $media)
@@ -21,7 +23,7 @@
     </div>
     @endforeach
   </div>
-
-  <master-bar></master-bar>
 </div>
+
+<master-bar></master-bar>
 @endsection

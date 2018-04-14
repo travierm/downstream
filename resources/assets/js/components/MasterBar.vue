@@ -1,33 +1,22 @@
 <template>
-  <div class="container-fluid fixed-bottom">
-    <div class="row" v-if="popOutPlayer">
-      <div class="col-lg-2">
-        <div class="card">
-          <div class="card-block">
-            <h1>Player</h1>
-          </div>
+  <div class="container-fluid">
+      <nav class="navbar fixed-bottom bg-faded navbar-light" style="background-color:#117F90;">
+        <div class="container">
+            <div class="row form-inline">
+              <div class="col-lg-8">
+                <button type="button" class="btn btn-dark p-2 my-sm-0" v-scroll-to="currentCardId">Focus</button>
+                <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
+                <img class="icon" @click="play" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
+                <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
+                <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
+              </div>
+
+              <div class="col-lg-4">
+                <input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" style="margin-bottom: -10px;" class="align-middle" />
+              </div>
+            </div>
         </div>
-      </div>
-    </div>
-
-    <nav class="navbar fixed-bottom bg-faded navbar-light rounded" style="background-color:#117F90;">
-      <div class="container">
-          <div class="row">
-            <div class="col-lg-8">
-              <button class="btn btn-dark my-2 my-sm-0" v-scroll-to="currentCardId">Focus</button>
-              <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
-              <img class="icon" @click="startQueue" v-if="!isPlaying && !startedQueue" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
-              <img class="icon" @click="play" v-if="!isPlaying && startedQueue" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
-              <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
-              <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
-            </div>
-
-            <div class="col-lg-4">
-              <input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" style="margin-bottom: -10px;" class="align-middle" />
-            </div>
-          </div>
-      </div>
-    </nav>
+      </nav>
   </div>
 </template>
 
@@ -77,8 +66,12 @@
         this.$store.dispatch('media/updateVolume', event.target.value);
       },
       play() {
-        consl("PLAYING EXISTING");
         this.playing = true;
+
+        if(!this.$store.state.media.current) {
+          return this.startQueue();
+        }
+        
         this.$store.dispatch('media/play');
       },
       playPrevious() {
@@ -92,6 +85,10 @@
 </script>
 
 <style scoped>
+#focusBtn {
+  padding-top: 10px;
+}
+
 .navbar {
   height: 5%;
 }

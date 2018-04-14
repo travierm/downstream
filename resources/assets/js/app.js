@@ -37,7 +37,6 @@ VueScrollTo.setDefaults({
 })
 
 // Components
-Vue.component('youtube-player-card', require('./components/YouTubePlayerCard.vue'));
 Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
 // Forms
