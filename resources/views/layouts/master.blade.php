@@ -15,6 +15,7 @@
     <meta name="application-name" content="Downstream">
     <meta name="msapplication-TileColor" content="#026876">
     <meta name="theme-color" content="#026876">
+    <meta name="Description" content="A unique music service built around YouTube">
 
     @yield('meta')
 
