@@ -33,6 +33,11 @@ class UserMedia extends Model
 
   public static function didCollect($mediaId)
   {
+    if(@!Auth::user()->id) {
+      return false;
+    }
+
+
     return self::where('media_id', $mediaId)
       ->where('user_id', Auth::user()->id)
       ->exists();

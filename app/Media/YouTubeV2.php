@@ -3,6 +3,7 @@ namespace App\Media;
 
 use Cache;
 use App\Media;
+use App\UserMedia;
 use YouTubeService;
 
 class YouTubeV2 {
@@ -62,6 +63,56 @@ class YouTubeV2 {
     $media->save();
 
     return true;
+  }
+
+  public static function search($query, $limit = 8)
+  {
+
+    $results = YouTubeService::search($query, $limit);
+    if(!$results) {
+      return false;
+    }
+
+    $results = collect($results);
+    $results = $results->filter(function($row) {
+      return (!@is_null($row->id->videoId));
+    });
+
+    $videoIds = array_map(function($row) {
+      return $row->id->videoId;
+    }, $results->all());
+
+    return self::cleanSearchResults($videoIds);
+  }
+
+  private static function cleanSearchResults($videoIds)
+  {
+    $results = [];
+    foreach($videoIds as $vid)
+    {
+      $result = new \stdClass();
+      $media = self::findByIndex($vid);
+
+      $result->imported = false;
+      $result->collected = false;
+      $result->vid = $vid;
+      if($media) {
+        $result->imported = true;
+        $result->collected = UserMedia::didCollect($media->id);
+        $result->id = $media->id;
+      }else{
+        $result->id = false;
+      }
+
+      $results[] = $result;
+    }
+
+    return $results;
+  }
+
+  private static function findByIndex($index)
+  {
+    return Media::findByType('youtube', $index)->first();
   }
 }
 

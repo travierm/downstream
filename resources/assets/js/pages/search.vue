@@ -25,7 +25,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-12" v-for="media in results" :key="media.id">
+      <div class="col-lg-3 col-md-6 col-sm-12" v-for="media in results" :key="media.index">
         <video-player-card :preload=true :media="media"></video-player-card>
       </div>
     </div>
@@ -66,6 +66,12 @@
           });
       },
       processResults(data) {
+        if(data) {
+          //clear existing results
+          consl("here");
+          this.results = [];
+        }
+
         for(var i = 0; i <= data.length - 1; i++) {
           let item = data[i];
 
@@ -79,15 +85,14 @@
 
           this.results.push(media);
         }
+
+        consl(this.results);
       }
     },
     computed: {
       isMobile() {
         return window._isMobile;
-      },
-      videos() {
-        return this.$store.getters['collection/videos'];
-      },
+      }
     },
   };
 </script>
