@@ -1,11 +1,5 @@
 <template>
-  <div class="container-fluid pushFromTop">
-
-    <div class="row" v-if="!isMobile">
-      <div class="col-lg-2">
-        <master-bar></master-bar>
-      </div>
-    </div>
+  <div class="container-fluid">
 
     <div class="row" style="margin-top: 10px;">
       <div class="col-lg-12">
@@ -30,6 +24,9 @@
       </div>
     </div>
 
+    <div v-if="!isMobile">
+      <master-bar></master-bar>
+    </div>
   </div>
 </template>
 

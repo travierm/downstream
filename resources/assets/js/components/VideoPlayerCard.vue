@@ -2,8 +2,6 @@
   <div :id="cardId" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
 
     <div id="cardToolbar" class="card-block">
-      <img class="media-icon" v-if="playing == false" @click="play" height="30" width="30" src="/open-iconic-master/svg/media-play.svg" />
-      <img class="media-icon" v-if="playing == true" @click="pause" height="30" width="30" src="/open-iconic-master/svg/media-pause.svg" />
       <div v-if="isAdmin">
         <p class="flex">{{ media.id }}</p>
       </div>
