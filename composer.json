@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "asvae/laravel-api-tester": "^2.0",
         "fideloper/proxy": "~4.0",
+        "jwilsson/spotify-web-api-php": "^2.2",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
         "madcoda/php-youtube-api": "^1.2"
