@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('spotify:recommendations')
            ->everyFiveMinutes()
+           ->appendOutputTo(storage_path('recommendation-log'));
            ->emailOutputTo('moorlagrx@gmail.com');
     }
 
