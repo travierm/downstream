@@ -120,5 +120,16 @@ class SpotifyRecommendations extends Command
         //cleanup
         $expiresAt = now()->addDays(3);
         Cache::put('spotifyFailedSearchMediaIds', $badMediaIds, $expiresAt);
+
+        $count = DB::table('media')
+            ->whereNotIn('id', function($query) {
+                $query->select('media_id')->from('media_remote_references');
+            })
+            ->whereNotIn('id', $badMediaIds)
+            ->orderBy('id', 'ASC')
+            ->limit($take)
+            ->count();
+        
+        $this->info("done. " . $count . " more media items to process");
     }
 }
