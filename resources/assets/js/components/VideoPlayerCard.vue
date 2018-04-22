@@ -40,7 +40,7 @@
         return {
           id: SID.generate(),
           playing: false,
-          isCollected: "",
+          isCollected: false,
           lazyLoad: false,
           showThumbnail: true,
           Utils:Utils
@@ -127,6 +127,10 @@
         },
       },
       mounted() {
+        if(this.media.collected) {
+          this.isCollected = true;
+        }
+
         if(this.hasBadThumbnail == true) {
           this.media.meta.thumbnail = "https://via.placeholder.com/640x480/000000?text=" + this.getTitle
         }

@@ -90,7 +90,7 @@ class SpotifyRecommendations extends Command
                     'seed_tracks' => [$spotifyTrackId]
                 ]);
 
-                if($results) {
+                if($results->tracks) {
                     //got seed recommendations
                     foreach($results->tracks as $track) {
                         //search youtube for track
@@ -113,6 +113,9 @@ class SpotifyRecommendations extends Command
                             $this->info("discovered " . $ref->title);
                         }
                     }
+                }else{
+                    $badMediaIds[] = $media->id;
+                    $this->error('no seed recommendations');
                 }
             }
         }
