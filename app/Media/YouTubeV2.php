@@ -75,8 +75,15 @@ class YouTubeV2 {
   {
     $results = self::search($query, 1);
 
+    if(!$results) {
+      return false;
+    }
+
     if(count($results) >= 1) {
-      return $results[0];
+      $video = $results[0];
+      $video->info = self::cleanInfo(self::getInfo($video->vid));
+
+      return $video;
     }
 
     return false;
@@ -100,6 +107,21 @@ class YouTubeV2 {
     }, $results->all());
 
     return self::cleanSearchResults($videoIds);
+  }
+
+  public static function cleanInfo($info)
+  {
+    $return = new \stdClass();
+
+    $return->title = $info->snippet->title;
+
+    if(@$info->snippet->thumbnails->standard->url) {
+      $return->thumbnail = @$info->snippet->thumbnails->standard->url;
+    }else{
+      $return->thumbnail = @$info->snippet->thumbnails->high->url;
+    }
+
+    return $return;
   }
 
   private static function cleanSearchResults($videoIds)

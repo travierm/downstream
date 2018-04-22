@@ -17,7 +17,9 @@ class MediaRemoteReferencesTable extends Migration
           $table->increments('id');
           $table->integer('media_id')->references('id')->on('media');
           $table->string('source');
-          $table->string('index', 150);
+          $table->string('index', 150)->unqiue();
+          $table->string('title', 300);
+          $table->string('thumbnail', 500);
           $table->softDeletes();
           $table->timestamps();
       });

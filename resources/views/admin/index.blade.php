@@ -6,12 +6,21 @@
   </div>
 
   <div class="row">
+    <div class="col">
+      <h4>Links:</h4>
+
+      <a href="/admin/engine">Recommendation Engine Feed</a>
+    </div>
+  </div>
+
+  <h4>Service Settings:</h4>
+  <div class="row">
   	<form action="/admin/dash/settings" method="POST">
   		{{ csrf_field() }}
 
 	  	<div class="col-lg-12">
 			<div class="form-group">
-			    <label for="select1">Show Latest Video on /</label>
+			    <label for="select1">Show /all to users</label>
 			    <select name="settings_showLatestVideos" class="form-control" id="select1">
 			      <option @if($settings['showLatestVideos'] == "no") selected @endif value="no">Disabled</option>
 			      <option @if($settings['showLatestVideos'] == "yes") selected @endif value="yes">Enabled</option>

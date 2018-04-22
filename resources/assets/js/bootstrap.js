@@ -24,6 +24,16 @@ try {
   console.log(e);
 }
 
+window.share = function(index) {
+  const link = window.config.APP_LINK_URL + "/v/" + index;
+
+  copyToClipboard(link);
+}
+
+window.copyToClipboard = function(text) {
+    window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+}
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

@@ -8,18 +8,18 @@
 
       <div class="float-right">
         <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
-        <button @click="shareMediaLink" class="btn btn-outline-success">Link</button>
+        <a v-if="media.index" :href="'/v/' + getVid" class="btn btn-outline-success">Link</a>
         <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
         <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
       </div>
     </div>
 
-    <div :id="this.id + '_media'" class="media-container" v-if="media.meta.thumbnail && this.showThumbnail">
+    <div :id="this.id + '_media'" class="media-container">
 
-      <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid" :src="thumbnail" />
-      <div class="col">
+      <img @click="play" :id="this.id + '_thumbnail'" class="img-fluid" :src="getThumbnail" v-if="showThumbnail"  />
+      <div class="col" v-if="showThumbnail">
         <div class="col-sm-12">
-          <p style="color:white;">{{ media.meta.title }} </p>
+          <p style="color:white;">{{ getTitle }}</p>
         </div>
       </div>
     </div>
@@ -29,22 +29,19 @@
 </template>
 
 <script>
-    import SID from 'shortid';
     import $ from 'jquery';
+    import SID from 'shortid';
     let Utils = window._utils;
 
-    function copyToClipboard(text) {
-      window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-    }
+    
 
     export default {
       data() {
         return {
           id: SID.generate(),
           playing: false,
-          isCollected: (this.media.collected == true),
+          isCollected: "",
           lazyLoad: false,
-          thumbnail: this.media.meta.thumbnail,
           showThumbnail: true,
           Utils:Utils
         };
@@ -62,20 +59,62 @@
           required: false,
           default: false,
         },
+        vid: {
+          required: false,
+        },
+        title: {
+          default: "",
+          required: false
+        },
+        thumbnail: {
+          default: "",
+          required: false
+        },
         media: {
-          required: true,
-          default: false
+          required: false,
+          default: () => {
+            return {
+              meta: {
+                thumbnail: false,
+                title: false,
+                vid: false
+              }
+            }
+          }
         }
       },
       computed: {
+        getVid() {
+          if(this.media.index) {
+            return this.media.index;
+          }
+
+          return this.vid;
+        },
+        getTitle(state) {
+          if(this.media.meta.title) {
+            return this.media.meta.title;
+          }
+
+          return this.title;
+        },
+        getThumbnail(state) {
+          if(this.media.meta.thumbnail) {
+            return this.media.meta.thumbnail;
+          }
+
+          return this.thumbnail;
+        },
+        hasBadThumbnail() {
+          const thumbnail = this.getThumbnail;
+
+          return (thumbnail.includes('/default.jpg') || thumbnail.includes('/hqdefault.jpg'));
+        },
         isPlaying(state) {
           return state.playing;
         },
         cardId(state) {
           return state.id + "-card";
-        },
-        badThumbnail(state) {
-          return (this.media.meta.thumbnail.includes('/default.jpg') || this.media.meta.thumbnail.includes('/hqdefault.jpg'));
         },
         authed() {
           return window._authed;
@@ -88,8 +127,8 @@
         },
       },
       mounted() {
-        if(this.badThumbnail == true) {
-          this.thumbnail = "https://via.placeholder.com/640x480/000000?text=" + this.media.meta.title;
+        if(this.hasBadThumbnail == true) {
+          this.media.meta.thumbnail = "https://via.placeholder.com/640x480/000000?text=" + this.getTitle
         }
 
         let t = setInterval(() => {
@@ -115,7 +154,6 @@
           }
         },
         registerVideo(options = {}) {
-          // options.height = $(`.img-fluid`).first().height();
           options.width = $(`#${this.id}`).width();
           options.autoplay = this.autoplay;
 
@@ -131,7 +169,7 @@
             $('#' + this.id).hide();
           }
 
-          const vid = this.media.index;
+          const vid = this.getVid;
 
           this.$store.dispatch('media/indexAdd', this.id);
           this.$store.dispatch('media/videoAdd', { sessionId: this.id, videoId:vid, options});
@@ -164,7 +202,6 @@
             sessionId: this.id,
             eventType: ['paused'],
             callback:() => {
-              //$('#' + this.id).hide();
               this.playing = false;
             }
           })
@@ -185,7 +222,7 @@
         discover() {
           this.$store.dispatch('collection/discover', {
             type: 'youtube',
-            videoId: this.media.index,
+            videoId: this.getVid,
           }).then((err, resp) => {
             this.isCollected = true;
             this.$store.dispatch('media/getCollection');

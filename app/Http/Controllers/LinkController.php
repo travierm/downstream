@@ -10,15 +10,17 @@ class LinkController extends Controller
  	public function viewMediaItem($index)
  	{
  		$media = Media::findByType('youtube', $index)->first();
+ 		$recommendations = [];
 
  		if($media) {
  			$media = Media::prepareItemMeta($media);
  		}
 
- 		//dd($media);
+ 		$recommendations = $media->getReferences();
 
  		return view('link.view-media', [
-      		'media' => $media
+      		'media' => $media,
+      		'recommendations' => $recommendations
     	]);
  	}
 }

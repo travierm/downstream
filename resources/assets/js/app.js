@@ -54,6 +54,7 @@ const hardPaths = [
 	'/register',
 	'/media',
 	'/v',
+	'/admin/engine',
 	'/admin/dash'
 ];
 

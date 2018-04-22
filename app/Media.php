@@ -4,6 +4,7 @@ namespace App;
 
 use Auth;
 use App\UserMedia;
+use App\MediaRemoteReference;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -82,6 +83,11 @@ class Media extends Model
   {
     return self::where('type', $type)
       ->where('index', $index);
+  }
+
+  public function getReferences()
+  {
+    return MediaRemoteReference::where('media_id', $this->id)->get();
   }
 
   public function getMeta()

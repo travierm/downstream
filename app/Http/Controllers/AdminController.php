@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Cache;
+use App\MediaRemoteReference;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -22,6 +24,15 @@ class AdminController extends Controller
 
     return view('admin.index', [
     	'settings' => $settings
+    ]);
+  }
+
+  public function getEngineFeed()
+  {
+    $items = MediaRemoteReference::orderBy('created_at', 'DESC')->get();
+
+    return view('admin.engine-feed', [
+      'items' => $items
     ]);
   }
 
