@@ -22,8 +22,11 @@ class AdminController extends Controller
   {
   	$settings = $this->getSettings();
 
+    $badMediaIds = Cache::get('spotifyFailedSearchMediaIds', []);
+
     return view('admin.index', [
-    	'settings' => $settings
+    	'settings' => $settings,
+      'engineBadIdCount' => count($badMediaIds)
     ]);
   }
 

@@ -9,7 +9,7 @@
     <div class="col">
       <h4>Links:</h4>
 
-      <a href="/admin/engine">Recommendation Engine Feed</a>
+      <a href="/admin/engine">Recommendation Engine Feed (Bad ID's {{ $engineBadIdCount }})</a>
     </div>
   </div>
 
