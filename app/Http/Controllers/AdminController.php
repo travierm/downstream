@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Cache;
+use App\Media;
 use App\MediaRemoteReference;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,17 @@ class AdminController extends Controller
     return view('admin.index', [
     	'settings' => $settings,
       'engineBadIdCount' => count($badMediaIds)
+    ]);
+  }
+
+  public function getEngineClean()
+  {
+    $badMediaIds = Cache::get('spotifyFailedSearchMediaIds', []);
+
+    $items = Media::whereIn('id', $badMediaIds)->get();
+
+    return view('admin.clean', [
+      'items' => $items
     ]);
   }
 

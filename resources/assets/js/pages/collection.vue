@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container-fluid pushFromTop">
+  <div class="container-fluid" style="margin-top: 15px;">
     <div class="row">
       <div id="collectionMeme" hidden class="col-lg-6 center" v-if="videos.length == 0">
         <h3>Nothing in collection..</h3>
@@ -8,13 +8,13 @@
       </div>
     </div>
 
-    <div class="row">
+    <!--<div class="row">
       <div class="col-lg-12">
         <h5>Things you can do</h5>
         <router-link class="btn btn-outline-danger" to="/search">Search for Music</router-link>
         <a href="/all" class="btn btn-outline-info">See what other people are collecting</a>
       </div>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="col-lg-3 col-md-12 col-sm-12" v-for="video in videos" :key="video.id">

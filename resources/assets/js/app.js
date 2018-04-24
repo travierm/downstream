@@ -55,7 +55,10 @@ const hardPaths = [
 	'/media',
 	'/v',
 	'/admin/engine',
-	'/admin/dash'
+	'/admin/engine/clean',
+	'/admin/media/edit',
+	'/admin/dash',
+	'/admin/filter/title'
 ];
 
 router.beforeEach((to, from, next) => {

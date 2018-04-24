@@ -20,6 +20,12 @@ Route::middleware(['admin'])->group(function() {
   Route::get('/admin/engine', 'AdminController@getEngineFeed');
   Route::get('/admin/dash', 'AdminController@index');
   Route::post('/admin/dash/settings', 'AdminController@postServerSettings');
+
+  Route::get('/admin/engine/clean', 'AdminController@getEngineClean');
+  Route::get('/admin/media/edit', 'AdminController@getEngineClean');
+
+  Route::get('/admin/filter/title', 'FilterController@getTitle');
+  Route::post('/admin/filter/title', 'FilterController@postTitle');
 });
 
 Route::get('/', 'FrontPageController@getLanding');
