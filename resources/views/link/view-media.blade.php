@@ -5,7 +5,7 @@
 
   <div class="row justify-content-md-center" style="margin-top: 10px;">
     <div class="Col">
-      <button onclick="share('{{ $media->index }}')" class="btn btn-outline-success">Get Share Link</button>
+      <button onclick="share('{{ $media->index }}')" class="btn btn-outline-success">Copy Share Link</button>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
       <meta property="og:description" content="Listen now on Downstream!" />
 	  @endsection
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12" style="margin-top: 15px;">
-      <video-player-card :media="{{ $media }}"></video-player-card>
+      <video-player-card autoplay="true" :media="{{ $media }}"></video-player-card>
     </div>
     @else
     <div class="alert alert-danger col-lg-6" role="alert">
