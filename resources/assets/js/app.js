@@ -62,6 +62,8 @@ const hardPaths = [
 ];
 
 router.beforeEach((to, from, next) => {
+	store.dispatch('media/resetState');
+
 	//Hide PHP generated html when not on a hard path
 	if (!isHardPath(to.path)) { $('#hardContent').remove(); }
 

@@ -45,6 +45,10 @@ const getters = {
 
 const actions = {
   // Commits element to index
+  resetState({ commit }) {
+    videoPlayer.resetState();
+    commit(types.UPDATE_CURRENT_VIDEO, false);
+  },
   indexAdd({ commit, dispatch }, sessionId) {
     commit(types.INDEX_ADD, sessionId);
 

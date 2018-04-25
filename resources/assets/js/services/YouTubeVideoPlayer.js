@@ -23,6 +23,12 @@ export default class YouTubeVideoPlayer {
 		this.playing = false;
 	}
 
+	resetState()  {
+		this.videos = [];
+		this.eventBacklog = [];
+		this.playing = false;
+	}
+
 	setVolume(volumeLevel) {
 		this.volume = volumeLevel;
 	}
