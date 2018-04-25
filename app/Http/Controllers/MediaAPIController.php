@@ -51,7 +51,7 @@ class MediaAPIController extends Controller
 
     $collectionIds = UserMedia::where('user_id', $userId)->pluck('media_id');
 
-    shuffle($collectionIds);
+    $collectionIds = $collectionIds->shuffle();
 
     $items = MediaRemoteReference::whereIn('media_id', $collectionIds)
       ->orderBy('created_at', 'DESC')
