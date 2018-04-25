@@ -18,7 +18,7 @@
       		</div>
 		</div>
 
-		<div class="row" v-if="items.length <= 0" style="margin-top:10px;">
+		<div id="noItemsAlert" class="row" v-if="items.length <= 0" style="margin-top:10px; display: none;">
 			<div class="col">
 				<b-alert show variant="danger">You need to collect songs before we can make recommendations!</b-alert>
 			</div>
@@ -39,8 +39,10 @@
 		methods: {
 			getDiscoverables() {
 				axios.post('/api/media/discoverables').then((resp) => {
-					if(resp.data.items) {
+					if(resp.data.items.length >= 1) {
 						this.items = resp.data.items;
+					}else{
+						$('#noItemsAlert').show();
 					}
 				})
 			}
