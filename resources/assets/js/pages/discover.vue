@@ -23,6 +23,8 @@
 				<b-alert show variant="danger">You need to collect songs before we can make recommendations!</b-alert>
 			</div>
 		</div>
+
+		<master-bar></master-bar>
 	</div>
 </template>
 
