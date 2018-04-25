@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Route;
+use DB;
 use App\User;
 use App\UserMedia;
 use App\Media\YouTube;
@@ -51,8 +52,12 @@ class MediaAPIController extends Controller
 
     $collectionIds = UserMedia::where('user_id', $userId)->pluck('media_id');
 
-    $items = MediaRemoteReference::whereIn('media_id', $collectionIds)
-      ->orderBy('created_at', 'DESC')
+    $shuffledIds = $collectionIds->shuffle();
+
+    $orderByIds = implode(',', $shuffledIds->all());
+
+    $items = MediaRemoteReference::whereIn('media_id', $shuffledIds)
+      ->orderByRaw(DB::raw("FIELD(media_id, $orderByIds)"))
       ->get();
 
     return response()->json([
