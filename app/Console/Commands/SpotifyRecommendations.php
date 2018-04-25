@@ -43,6 +43,9 @@ class SpotifyRecommendations extends Command
      */
     public function handle()
     {
+        //filter media titles before doing matching
+        $this->call('filter:runner');
+
         $take = 10;
         $api = SpotifyAPI::getInstance();
         $badMediaIds = Cache::get('spotifyFailedSearchMediaIds', []);
@@ -65,58 +68,60 @@ class SpotifyRecommendations extends Command
         }
         
         foreach($items as $item) {
+            //loop media items
             $media = Media::find($item->id);
             $this->info($media->getMeta()->title);
 
             $title = $media->getMeta()->title;
-            $response = $api->search($title, 'track', [
-                'limit' => 1
-            ]);
+            $spotifyTrackId = @$media->getMeta()->spotify_id;
 
-            if(@!$response->tracks->items[0]) {
-                $this->error("No spotify ref track found");
-                $badMediaIds[] = $media->id;
-                continue;
-            }
-
-            $spotifyTrackId = $response->tracks->items[0]->id;
-            $spotifyTrackName = $response->tracks->items[0]->name;
-            //maybe do levenshtine to make sure track name matches media title
-            if($response->tracks->items[0]->id) {
-                //spotify has track
-                //do seed work
-                $results = $api->getRecommendations([
-                    'limit' => 8,
-                    'seed_tracks' => [$spotifyTrackId]
+            if(!$spotifyTrackId) {
+                //media doesn't have hard set spotify id so do search based on media title
+                $response = $api->search($title, 'track', [
+                    'limit' => 1
                 ]);
 
-                if($results->tracks) {
-                    //got seed recommendations
-                    foreach($results->tracks as $track) {
-                        //search youtube for track
-                        $trackName = $track->artists[0]->name . " " . $track->name;
-                        $youtubeResult = YouTubeV2::searchFirst($trackName);
-
-                        if(!@$youtubeResult->vid) {
-                            continue;
-                        }
-                        
-                        $ref = new MediaRemoteReference();
-                        $ref->media_id = $item->id;
-                        $ref->source = 'spotify';
-                        $ref->index = $youtubeResult->vid;
-                        $ref->title = $youtubeResult->info->title;
-                        $ref->thumbnail = $youtubeResult->info->thumbnail;
-                        $success = $ref->save();
-
-                        if($success) {
-                            $this->info("discovered " . $ref->title);
-                        }
-                    }
-                }else{
+                if(@!$response->tracks->items[0]) {
+                    $this->error("No spotify ref track found");
                     $badMediaIds[] = $media->id;
-                    $this->error('no seed recommendations');
+                    continue;
                 }
+
+                $spotifyTrackId = $response->tracks->items[0]->id;
+            }
+
+            $results = $api->getRecommendations([
+                'limit' => 8,
+                'seed_tracks' => [$spotifyTrackId]
+            ]);
+
+            if($results->tracks) {
+                //got seed recommendations
+                foreach($results->tracks as $track) {
+                    //search youtube for track
+                    $trackName = $track->artists[0]->name . " " . $track->name;
+                    $youtubeResult = YouTubeV2::searchFirst($trackName);
+
+                    if(!@$youtubeResult->vid) {
+                        continue;
+                    }
+                    
+                    $ref = new MediaRemoteReference();
+                    $ref->media_id = $item->id;
+                    $ref->source = 'spotify';
+                    $ref->source_id = $track->id;
+                    $ref->index = $youtubeResult->vid;
+                    $ref->title = $youtubeResult->info->title;
+                    $ref->thumbnail = $youtubeResult->info->thumbnail;
+                    $success = $ref->save();
+
+                    if($success) {
+                        $this->info("discovered " . $ref->title);
+                    }
+                }
+            }else{
+                $badMediaIds[] = $media->id;
+                $this->error('no seed recommendations');
             }
         }
 

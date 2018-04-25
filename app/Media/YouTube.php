@@ -49,7 +49,10 @@ class YouTube {
     $collection = [];
     foreach($mediaIds as $id) {
       $media = Media::find($id);
-      $media->meta = json_decode($media->meta);
+
+      if($media->meta) {
+        $media->meta = json_decode($media->meta);
+      }
 
       $user = User::find($media->user_id);
       $user->smallHash = $user->shrinkHash();

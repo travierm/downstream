@@ -8,6 +8,7 @@
 
       <div class="float-right">
         <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
+        <a v-if="reference" :href="'/v/' + reference" class="btn btn-outline-primary">Reference</a>
         <a v-if="media.index" :href="'/v/' + getVid" class="btn btn-outline-success">Link</a>
         <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
         <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
@@ -64,6 +65,14 @@
         },
         title: {
           default: "",
+          required: false
+        },
+        reference: {
+          default: false,
+          required: false
+        },
+        spotifyId: {
+          default: false,
           required: false
         },
         thumbnail: {
@@ -227,6 +236,7 @@
           this.$store.dispatch('collection/discover', {
             type: 'youtube',
             videoId: this.getVid,
+            spotifyId: this.spotifyId
           }).then((err, resp) => {
             this.isCollected = true;
             this.$store.dispatch('media/getCollection');

@@ -56,7 +56,7 @@ class Media extends Model
     return $rows;
   }
 
-  public static function returnOrCreate($data)
+  public static function firstOrCreate($data)
   {
     $media = self::findByType($data['type'], $data['index'])->first();
     if(!$media) {

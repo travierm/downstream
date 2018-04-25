@@ -7,6 +7,7 @@ use Route;
 use App\User;
 use App\UserMedia;
 use App\Media\YouTube;
+use App\Media\YouTubeV2;
 use App\MediaResolver;
 use Illuminate\Http\Request;
 
@@ -79,6 +80,22 @@ class MediaAPIController extends Controller
     return response()->json([
       'items' => $items
     ], 200);
+  }
+
+  public function discover(Request $request)
+  {
+    $userId = Auth::user()->id;
+    $videoId = $request->input('videoId');
+    $spotifyId = $request->input('spotifyId', false);
+
+    $meta = [];
+    if($spotifyId) {
+      $meta = [
+        'spotify_id' => $spotifyId
+      ];
+    }
+
+    YouTubeV2::discover($userId, $videoId, $meta);
   }
 
   public function resolve(Request $request)

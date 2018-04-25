@@ -89,6 +89,46 @@ class YouTubeV2 {
     return false;
   }
 
+  public static function discover($userId, $videoId, $meta = [])
+  {
+    $video = YouTubeService::getVideoInfo($videoId);
+    if(!$video) {
+      return false;
+    }
+
+    $meta['title'] = $video->snippet->title;
+    $meta['view_count'] = $video->statistics->viewCount;
+
+    //thumbnail
+    if(@$video->snippet->thumbnails->standard->url) {
+      $meta['thumbnail'] = @$video->snippet->thumbnails->standard->url;
+    }else{
+      $meta['thumbnail'] = @$video->snippet->thumbnails->high->url;
+    }
+
+    $meta['categoryId'] = $video->snippet->categoryId;
+    if(@$video->snippet->tags) {
+      $meta['tags'] = $video->snippet->tags;
+    }
+    $meta = json_encode($meta);
+
+    $media = Media::firstOrCreate([
+      'origin' => 'youtube#search',
+      'type' => 'youtube',
+      'subtype' => 'video',
+      'index' => $videoId,
+      'user_id' => $userId,
+      'meta' => $meta
+    ]);
+
+    $userMedia = UserMedia::firstOrCreate([
+      'media_id' => $media->id,
+      'user_id' => $userId
+    ]);
+
+    return true;
+  }
+
   public static function search($query, $limit = 8)
   {
 

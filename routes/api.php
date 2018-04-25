@@ -31,11 +31,12 @@ Route::get('/media/profile/{hash}', 'MediaAPIController@profile');
 Route::get('/stat/library/size', 'StatAPIController@getLibrarySize');
 Route::get('/stat/user/count', 'StatAPIController@getUserCount');
 
+Route::post('/media/discover', 'MediaAPIController@discover');
+
 //Auto Resolved Media Actions
 Route::post('/theater/{mediaId}', 'TheaterController@queueFromMediaId');
 Route::get('/media/collect', 'MediaAPIController@resolve');
 Route::get('/media/remove', 'MediaAPIController@resolve');
 Route::get('/media/toss', 'MediaAPIController@resolve');
 Route::post('/media/add', 'MediaAPIController@resolve');
-Route::post('/media/discover', 'MediaAPIController@resolve');
 Route::post('/media/search', 'MediaAPIController@resolve');

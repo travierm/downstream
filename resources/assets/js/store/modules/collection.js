@@ -22,11 +22,12 @@ const actions = {
       window._authed = false;
     });
   },
-  discover({ commit }, { type, videoId }) {
+  discover({ commit }, { type, videoId, spotifyId }) {
     const self = this;
     return axios.post('/api/media/discover', {
       type,
       videoId,
+      spotifyId
     });
   },
   toss({ commit }, { type, mediaId }) {

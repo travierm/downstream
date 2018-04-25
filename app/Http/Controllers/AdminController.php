@@ -46,6 +46,11 @@ class AdminController extends Controller
   {
     $items = MediaRemoteReference::orderBy('created_at', 'DESC')->get();
 
+    foreach($items as &$item) {
+      $item->media_vid = Media::find($item->media_id)->index;
+    }
+
+
     return view('admin.engine-feed', [
       'items' => $items
     ]);

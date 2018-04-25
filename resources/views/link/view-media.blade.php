@@ -42,7 +42,7 @@
   <div class="row">
     @foreach($recommendations as $item)
       <div class="col-lg-3 col-md-6 col-sm-12">
-        <video-player-card vid="{{ $item->index }}" title="{{ $item->title }}" thumbnail="{{ $item->thumbnail }}"></video-player-card>
+        <video-player-card spotify-id="{{ $item->source_id }}" vid="{{ $item->index }}" title="{{ $item->title }}" thumbnail="{{ $item->thumbnail }}"></video-player-card>
       </div>
     @endforeach
   </div>
