@@ -30,7 +30,8 @@ class Kernel extends ConsoleKernel
            ->emailOutputTo('moorlagrx@gmail.com');
 
         $schedule->command('filter:runner')
-            ->everyTenMinutes();
+            ->everyTenMinutes()
+            ->appendOutputTo(storage_path('logs/filter-log'));
     }
 
     /**
