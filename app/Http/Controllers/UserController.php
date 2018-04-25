@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth;
+use App\Media;
+use App\UserMedia;
+use App\MediaRemoteReference;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -16,6 +19,10 @@ class UserController extends Controller
       'hash' => $hash,
       'displayName' => $displayName
     ]);
+  }
+
+  public function getDiscover()
+  {
   }
 
   public function logout()

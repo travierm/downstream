@@ -7,6 +7,7 @@ use Route;
 use App\User;
 use App\UserMedia;
 use App\Media\YouTube;
+use App\MediaRemoteReference;
 use App\Media\YouTubeV2;
 use App\MediaResolver;
 use Illuminate\Http\Request;
@@ -42,6 +43,21 @@ class MediaAPIController extends Controller
 
   public function testVideo() {
     $this->YouTube->testVideoInfo();
+  }
+
+  public function getUserDiscoverables(Request $request)
+  {
+    $userId = Auth::user()->id;
+
+    $collectionIds = UserMedia::where('user_id', $userId)->pluck('media_id');
+
+    $items = MediaRemoteReference::whereIn('media_id', $collectionIds)
+      ->orderBy('created_at', 'DESC')
+      ->get();
+
+    return response()->json([
+      'items' => $items
+    ], 200);
   }
 
   public function profile(Request $request, $hash)

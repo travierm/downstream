@@ -40,6 +40,10 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('/all') }}">All</a>
               </li>
+
+              <li class="nav-item">
+                <router-link class="nav-link" to="/search">Search</router-link>
+              </li>
             </ul>
             <ul class="navbar-nav">
               @if(Auth::guest())
@@ -51,7 +55,7 @@
               </li>
               @else
               <li class="nav-item">
-                <router-link class="nav-link" to="/search">Search</router-link>
+                <router-link class="nav-link" to="/discover">Discover</router-link>
               </li>
 
               <li class="nav-item">
