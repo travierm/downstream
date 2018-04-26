@@ -8,11 +8,32 @@ import UserProfile from './pages/user/profile';
 
 Vue.use(VueRouter);
 
+/*
+	Single Page Router
+
+	each route must be named to seperate laravel paths from vue-router paths	
+*/
 const routes = [
-  { path: '/discover', component: DiscoverPage },
-  { path: '/collection', component: CollectionPage },
-  { path: '/search', component: SearchPage },
-  { path: '/user/:hash/profile', component: UserProfile}
+  { 
+  	name:'discover',
+  	path: '/discover', 
+  	component: DiscoverPage 
+  },
+  { 
+  	name:'collection',
+  	path: '/collection', 
+  	component: CollectionPage 
+  },
+  { 
+  	name:'search',
+  	path: '/search', 
+  	component: SearchPage 
+  },
+  { 
+  	name:'userProfile',
+  	path: '/user/:hash/profile', 
+  	component: UserProfile
+  }
 ];
 
 export default new VueRouter({
