@@ -62,13 +62,17 @@ const actions = {
       }, 500)
     }
   },
-  videoAdd({ commit }, { sessionId, videoId, options }) {
+  videoAdd({ commit, dispatch }, { sessionId, videoId, options }) {
     if(isMobile) {
       //@TODO mute player and then start autoplaying somehow
       options.fullscreen = false;
     }
 
     videoPlayer.registerVideo(sessionId, videoId, options);
+
+    if(options.autoplay) {
+      dispatch('play', sessionId);
+    }
   },
   pause({ commit, state, dispatch}, sessionId) {
     if(!sessionId) {
@@ -88,6 +92,7 @@ const actions = {
     });
   },
   updateCurrent({ commit, dispatch}, sessionId) {
+    consl('here');
     if(state.current) {
       //pause previously playing video
       dispatch('pause', state.current);

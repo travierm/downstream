@@ -55,10 +55,6 @@ export default class YouTubeVideoPlayer {
 			this.preloadVideo(sessionId);
 		}
 
-		if(options.autoplay) {
-			this.playVideo(sessionId);
-		}
-
 		//consl("registered new video " + sessionId);
 	}
 
