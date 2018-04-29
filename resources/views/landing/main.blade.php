@@ -17,7 +17,6 @@
   @endif
 
   @if(count($toplist) >= 2)
-    <h3>US Top Tracks:</h3>
     <div class="row">
     @foreach($toplist as $item)
       <div class="col-sm-12 col-md-6 col-lg-6">
