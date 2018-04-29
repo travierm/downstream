@@ -5,5 +5,5 @@
 
 <h3>Built With:</h3>
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
-<p><img src="https://vuejs.org/images/logo.png"></p>
+<p><img height="100" width="100" src="https://vuejs.org/images/logo.png"></p>
 
