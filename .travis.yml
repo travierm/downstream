@@ -1,12 +1,7 @@
-language: node_js
-node_js:
-  - "9"
-
-  
 matrix:
   include:
     - language: php
-      php: 7.0
+      php: 7.1.3
       before_script:
         - cp .env.example .env
         - composer self-update
@@ -14,7 +9,7 @@ matrix:
       script: vendor/bin/phpunit
     - language: node_js
       node_js: "9"
-      
+
 notifications:
   email:
     recipients:
