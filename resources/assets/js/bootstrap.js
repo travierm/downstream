@@ -12,6 +12,9 @@ window._authed = false;
  * code may be modified to fit the specific needs of your application.
  */
 
+//reload screen when size is changed
+window.onresize = function(){ location.reload(); }
+
 
 try {
   window.$ = window.jQuery = require('jquery');
