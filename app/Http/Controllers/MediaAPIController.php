@@ -53,6 +53,7 @@ class MediaAPIController extends Controller
     $collectionIds = UserMedia::where('user_id', $userId)->pluck('media_id');
 
     $itemIds = MediaRemoteReference::whereIn('media_id', $collectionIds)
+      ->limit(28)
       ->pluck('id');
 
     $shuffledIds = implode(',' ,$itemIds->shuffle()->all());

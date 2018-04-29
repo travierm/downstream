@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid" style="margin-top: 50px;">
-      <nav class="navbar fixed-bottom bg-faded navbar-light" style="background-color:#117F90;">
+      <nav class="navbar fixed-bottom bg-faded navbar-light footer" style="">
         <div class="container">
             <div class="row form-inline">
               <div class="col-lg-8">
@@ -41,13 +41,9 @@
         return this.$store.getters['media/playerVolumeLevel'];
       }
     },
-    mounted() {
-      console.log("master bar mounted");
-    },
     methods: {
       focusOnCurrent() {
         let sessionId = this.$store.state.media.current;
-        console.log("doin focus " + sessionId);
 
         $('html, body').animate({
         scrollTop: $("#" + sessionId + "-card").offset().top
@@ -103,5 +99,14 @@
 }
 .iconic-property-fill {
   fill: white;
+}
+
+.footer {
+  background-color:#117F90;
+  padding:20px;
+  left: 0;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
 }
 </style>
