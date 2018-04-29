@@ -10,6 +10,7 @@
       <h4>Links:</h4>
 
       <ul>
+        <li><a href="/admin/toplist">Manage Toplist</a></li>
         <li><a href="/admin/filter/title">Create Title Filters</a></li>
         <li><a href="/admin/engine/clean">Bad Media Items</a></li>  
         <li><a href="/admin/engine">Recommendation Engine Feed</a></li>        

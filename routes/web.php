@@ -26,6 +26,12 @@ Route::middleware(['admin'])->group(function() {
 
   Route::get('/admin/filter/title', 'FilterController@getTitle');
   Route::post('/admin/filter/title', 'FilterController@postTitle');
+
+  Route::get('/admin/toplist', 'Admin\ToplistController@getIndex');
+  Route::get('/admin/toplist/update', 'Admin\ToplistController@getUpdate');
+  Route::get('/admin/toplist/clear', 'Admin\ToplistController@getClear');
+  Route::get('/admin/toplist/by/{sort}', 'Admin\ToplistController@getIndex');
+  Route::get('/admin/toplist/media/visible/{tempItemId}/{isVisible}', 'Admin\ToplistController@getMediaTempVisible');
 });
 
 Route::get('/', 'FrontPageController@getLanding');

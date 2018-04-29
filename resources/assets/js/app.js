@@ -6,6 +6,8 @@ import BootstrapVue from 'bootstrap-vue';
 import VueAnalytics from 'vue-analytics';
 import VueScrollTo from 'vue-scrollto';
 import consl from './services/Consl';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 window.Vue = require('vue');
 window.consl = consl;

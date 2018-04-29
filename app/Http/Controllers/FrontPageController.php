@@ -6,6 +6,7 @@ use DB;
 use App\User;
 use Auth;
 use Cache;
+use App\MediaTempItem;
 use App\Media;
 
 use Illuminate\Http\Request;
@@ -38,13 +39,17 @@ class FrontPageController extends Controller
       "White Wine" => 118
     ]);
 
+    $toplist = MediaTempItem::where('visible', 1)->limit(8)->get();
+
     return view('landing.main', [
+      'toplist' => $toplist,
       'videos' => $this->rowRenderIndex[0]['media']
     ]);
   }
 
   public function index()
   {
+    $toplist = MediaTempItem::where('visible', 1)->get();
 
     $latestVideos = Media::byType('youtube')
       ->limit(16)
@@ -55,19 +60,13 @@ class FrontPageController extends Controller
       $this->createCustomRow("Latest Discoveries on the Network:", $latestVideos);
     }
 
-    /*$this->createRow("Bobby Tarantino ||", [
-      'Rick and Morty' => 95,
-      'Overnight' => 93,
-      'Midnight' => 94,
-      'Indica' => 91,
-      //Row 2
-      'Yuck' => 96,
-      'Wassup' => 97,
-      'Contra' => 98,
-      '44 more' => 100
-    ]);*/
+    //hack for now till I can merge temp and media items better
+    if(count($toplist) >= 2) {
+      $rows = [];
+    }
 
     return view('frontpage.index', [
+      'toplist' => $toplist,
       'rows' => $this->rowRenderIndex
     ]);
   }

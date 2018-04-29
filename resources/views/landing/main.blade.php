@@ -16,13 +16,24 @@
   </div>
   @endif
 
-  <div class="row" style="margin-top: 15px;">
-  	@foreach($videos as $media)
-  	<div class="col-sm-12 col-md-6 col-lg-6">
-      <video-player-card :media="{{ $media }}"></video-player-card>
-    </div>
+  @if(count($toplist) >= 2)
+    <h3>US Top Tracks:</h3>
+    <div class="row">
+    @foreach($toplist as $item)
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <video-player-card spotify-id="{{ $item->source_id }}" vid="{{ $item->index }}" title="{{ $item->title }}" thumbnail="{{ $item->thumbnail }}"></video-player-card>
+      </div>
     @endforeach
-  </div>
+    </div>
+  @else
+    <div class="row" style="margin-top: 15px;">
+    	@foreach($videos as $media)
+    	<div class="col-sm-12 col-md-6 col-lg-6">
+        <video-player-card :media="{{ $media }}"></video-player-card>
+      </div>
+      @endforeach
+    </div>
+  @endif
 </div>
 
 <master-bar></master-bar>

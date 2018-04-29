@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Cache;
+use App\MediaTempItem;
 use App\Media;
 use Illuminate\Console\Command;
 
@@ -64,6 +65,19 @@ class filterRunner extends Command
                 if($good) {
                     $this->info("updated $title => $filteredTitle");
                 }
+            }
+        }
+
+        $this->info("doing temp items now...");
+        $tempItems = MediaTempItem::all();
+        foreach($tempItems as $item) {
+            $title = $item->title;
+            $filteredTitle = $this->applyFilters($title, $filters);
+
+            if($title !== $filteredTitle) {
+                $item->title = trim($filteredTitle);
+                $item->save();
+                $this->info("updated $title => $filteredTitle");
             }
         }
     }
