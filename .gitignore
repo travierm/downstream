@@ -16,3 +16,5 @@ composer.lock
 package-lock.json
 /public/mix-manifest.json
 /public/js/app.js.map
+
+public/css/app\.css\.map

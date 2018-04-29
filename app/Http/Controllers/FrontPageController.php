@@ -46,7 +46,7 @@ class FrontPageController extends Controller
       'videos' => $this->rowRenderIndex[0]['media']
     ]);
   }
-
+  
   public function index()
   {
     $toplist = MediaTempItem::where('visible', 1)->get();

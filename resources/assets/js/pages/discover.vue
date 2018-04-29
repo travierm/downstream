@@ -1,8 +1,8 @@
 <template>
 	<div class="container-fluid">
 		<div class="row" style="margin-top:10px;" v-if="items.length >= 1">
-			<div class="col">
-				<b-alert show variant="primary">This page is in beta. You may see types of media we didn't intent to show you.</b-alert>
+			<div class="col-lg-6">
+				<b-alert show variant="primary"><button class="btn btn-primary" onclick="location.reload()">Refresh</button> We found some music you may like based on your collection. Click refresh to shuffle.</b-alert>
 			</div>
 		</div>
 

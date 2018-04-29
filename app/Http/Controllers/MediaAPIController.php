@@ -52,12 +52,11 @@ class MediaAPIController extends Controller
 
     $collectionIds = UserMedia::where('user_id', $userId)->pluck('media_id');
 
-    $itemIds = MediaRemoteReference::whereIn('media_id', $collectionIds)
-      ->limit(28)
-      ->pluck('id');
+    $itemIds = MediaRemoteReference::whereIn('media_id', $collectionIds)->pluck('id');
 
-    $shuffledIds = implode(',' ,$itemIds->shuffle()->all());
+    $itemIds = $itemIds->shuffle()->take(28);
 
+    $shuffledIds = implode(',' ,$itemIds->all());
     $items = MediaRemoteReference::whereIn('id', $itemIds)
       ->orderByRaw(DB::raw("FIELD(id, $shuffledIds)"))
       ->get();
