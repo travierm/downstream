@@ -6,6 +6,7 @@ matrix:
         - cp .env.example .env
         - composer self-update
         - composer install --no-interaction
+        - php artisan key:generate
       script: vendor/bin/phpunit
     - language: node_js
       node_js: "9"
