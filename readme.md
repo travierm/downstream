@@ -7,5 +7,5 @@
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 <a href="https://vuejs.org"><img height="90" width="90" src="https://vuejs.org/images/logo.png"></a>
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/gluten-free.svg)](https://forthebadge.com)
 
