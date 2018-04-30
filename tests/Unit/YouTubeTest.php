@@ -2,7 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Media\YouTubeV2;
+use YouTubeService;
+
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -14,12 +15,15 @@ class YouTubeTest extends TestCase
      * @return void
      */
     public function testSearch()
-    {
-    	$query = "drake";
+    {   
+        $limit = 1;
+        $query = "drake";
 
-        $resp = YouTubeV2::searchFirst($query);
+        $resp = YouTubeService::search($query, $limit);
 
-        if($resp->vid) {
+        $vid = $resp[0]->id->videoId;
+        
+        if($vid) {
             $test = true;
         }else{
             $test = false;
