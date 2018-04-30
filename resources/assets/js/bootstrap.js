@@ -13,7 +13,12 @@ window._authed = false;
  */
 
 //reload screen when size is changed
-window.onresize = function(){ location.reload(); }
+//disabled for mobile
+if(!window._isMobile()) {
+  window.onresize = () => { 
+    location.reload(); 
+  }
+}
 
 
 try {
