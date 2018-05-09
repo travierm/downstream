@@ -23,13 +23,11 @@ if(!window._isMobile) {
 
 try {
   window.$ = window.jQuery = require('jquery');
-
   window.Tether = require('tether');
-
   window.Popper = require('popper.js');
   require('bootstrap');
 } catch (e) {
-  console.log(e);
+  throw e;
 }
 
 window.share = function(index) {
