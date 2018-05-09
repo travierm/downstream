@@ -76,6 +76,8 @@ export default class YouTubeVideoPlayer {
 		video.options.autoplay = false;
 		video.options.modestbranding = true;
 		video.options.related = false;
+		video.options.playsinline = true;
+		video.options.fs = false;
 		
 		if(!video.options.height) 
     		video.options.height = $(`#${video.sessionId}_media`).height();

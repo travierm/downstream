@@ -14,6 +14,8 @@ class Media extends Model
   
   protected $fillable = ['id', 'origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
 
+  protected $hidden = ['user_id'];
+
   /**
    * Adds collected prop and decodes meta json
    * Takes a single Media item or an array of Media items
