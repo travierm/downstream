@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<div class="container-fluid pushFromTop">
+<div class="container-fluid">
   <div class="row">
     @if(@$videos)
       @foreach($videos as $video)

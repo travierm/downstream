@@ -2,7 +2,6 @@
 @section('content')
 <div class="container-fluid pushFromTop">
   @if(@$rows)
-  <master-bar></master-bar>
   @foreach($rows as $row)
   <h3>{{ $row['title'] }}</h3>
   <div class="row">
@@ -22,5 +21,7 @@
     </div>
   </div> 
   @endif
+
+  <master-bar></master-bar>
 </div>
 @endsection

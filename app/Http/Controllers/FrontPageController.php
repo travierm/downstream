@@ -92,11 +92,11 @@ class FrontPageController extends Controller
     foreach($items as &$item) {
       $item->meta = json_decode($item->meta);
 
-      $user = User::find($item->user_id);
+      /*$user = User::find($item->user_id);
       $user->smallHash = $user->shrinkHash();
       $user->profileLink = "/user/" . $user->hash . "/profile";
 
-      $item->user = $user;
+      $item->user = $user;*/
     }
 
     return $items;
