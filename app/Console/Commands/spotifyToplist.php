@@ -53,7 +53,7 @@ class spotifyToplist extends Command
 
         //how many toplists tracks to pull each run
         $count = 0;
-        $rounds = 15;
+        $rounds = 30;
         foreach($tracks as $track) {
             if($count == $rounds) {
                 $this->info("finished!");

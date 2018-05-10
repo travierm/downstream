@@ -13,7 +13,9 @@ const initVolume = 100;
 const videoPlayer = new YouTubeVideoPlayer();
 const initPreloadedVideos = 5;
 
-let didPreload = false;
+//set true to disable preloading
+//speed improvement doesn't justify all the requests
+let didPreload = true;
 let preloadTimeout = false;
 const isMobile = window._isMobile;
 
@@ -25,10 +27,7 @@ const state = {
   current: false,
   history: [],
   //0 - 100
-  volume: initVolume,
-  fetched: {
-    collection: []
-  }
+  volume: initVolume
 };
 
 const getters = {
@@ -184,19 +183,7 @@ const actions = {
   },
   registerEvent({}, {sessionId, eventType, callback}) {
     videoPlayer.registerEvent(sessionId, eventType, callback);
-  },
-  // AJAX CALLS
-  getCollection({ commit }) {
-    axios.get('/api/media/collection').then((resp) => {
-      if (resp.status === 200) {
-        // items refers to media items in a users collection
-        const { items } = resp.data;
-        commit(types.COLLECTION_UPDATE, items);
-      }
-    }).catch((error) => {
-      if (error) throw error;
-    });
-  },
+  }
 };
 
 const mutations = {

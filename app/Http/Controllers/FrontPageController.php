@@ -8,6 +8,7 @@ use Auth;
 use Cache;
 use App\MediaTempItem;
 use App\Media;
+use App\UserMedia;
 
 use Illuminate\Http\Request;
 
@@ -40,6 +41,13 @@ class FrontPageController extends Controller
     ]);
 
     $toplist = MediaTempItem::where('visible', 1)->limit(8)->get();
+
+    foreach($toplist as &$item) {
+      if(Auth::check()) {
+        $userId = Auth::user()->id;
+        $item->didCollect = $item->collected($userId);
+      }
+    }
 
     return view('landing.main', [
       'toplist' => $toplist,

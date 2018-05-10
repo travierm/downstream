@@ -20,7 +20,7 @@
     <div class="row">
     @foreach($toplist as $item)
       <div class="col-sm-12 col-md-6 col-lg-6">
-        <video-player-card spotify-id="{{ $item->source_id }}" vid="{{ $item->index }}" title="{{ $item->title }}" thumbnail="{{ $item->thumbnail }}"></video-player-card>
+        <video-player-card collected="{{ $item->didCollect }}" spotify-id="{{ $item->source_id }}" vid="{{ $item->index }}" title="{{ $item->title }}" thumbnail="{{ $item->thumbnail }}"></video-player-card>
       </div>
     @endforeach
     </div>

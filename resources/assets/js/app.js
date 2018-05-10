@@ -52,9 +52,6 @@ router.beforeEach((to, from, next) => {
   	next();
 });
 
-// Make initial api requests
-store.dispatch('media/getCollection');
-
 Vue.use(VueAnalytics, {
   id: "UA-111656856-1",
   router

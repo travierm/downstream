@@ -14,11 +14,11 @@ window._authed = false;
 
 //reload screen when size is changed
 //disabled for mobile
-if(!window._isMobile) {
+/*if(!window._isMobile) {
   window.onresize = () => { 
     location.reload(); 
   }
-}
+}*/
 
 
 try {

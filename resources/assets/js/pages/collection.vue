@@ -3,7 +3,7 @@
   <div class="container-fluid" style="margin-top: 15px;">
     <div class="row">
       <div class="col-lg-3 col-md-12 col-sm-12" v-for="video in videos" :key="video.id">
-        <video-player-card v-bind:media="video"></video-player-card>
+        <video-player-card v-on:tossed="updateCollection" v-bind:media="video"></video-player-card>
       </div>
     </div>
 
@@ -34,24 +34,26 @@
       };
     },
     created() {
-      let self = this;
-
-      this.$store.dispatch('collection/update').then(() => {
-        if(self.videos.length <= 0) {
-          self.emptyCollection = true;
-          $(".hide").show();
-        }
-      });
+      this.updateCollection();
     },
-    mounted() {
-      
+    methods: {
+      updateCollection() {
+        let self = this;
+
+        this.$store.dispatch('collection/update').then(() => {
+          if(self.videos.length <= 0) {
+            self.emptyCollection = true;
+            $(".hide").show();
+          }
+        });
+      }
     },
     computed: {
       isMobile() {
         return window._isMobile;
       },
       videos() {
-        return this.$store.getters['media/collection'];
+        return this.$store.state.collection.items
       },
     },
   };

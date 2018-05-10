@@ -2,24 +2,23 @@
 import * as types from '../mutation-types';
 
 const state = {
-  collectionAccess: true
+  collectionAccess: true,
+  items:[]
 };
 
 const getters = {
 };
 
 const actions = {
-  update({ commit, dispatch }) {
-    axios.get('/api/media/collection').then((resp) => {
+  update({ commit }) {
+    return axios.get('/api/media/collection').then((resp) => {
       if (resp.status === 200) {
+        // items refers to media items in a users collection
         const { items } = resp.data;
-        commit(types.COLLECTION_UPDATE, { item });
-
-        dispatch('media/register', { items:collection }, {root: true});
-        window._authed = true;
+        commit(types.COLLECTION_UPDATE, items);
       }
-    }).catch(error => {
-      window._authed = false;
+    }).catch((error) => {
+      if (error) throw error;
     });
   },
   discover({ commit }, { type, videoId, spotifyId }) {
@@ -32,7 +31,8 @@ const actions = {
   },
   toss({ commit }, { type, mediaId }) {
     const self = this;
-    axios.get(`/api/media/toss?type=${type}&mediaId=${mediaId}`).then((resp) => {
+    
+    return axios.get(`/api/media/toss?type=${type}&mediaId=${mediaId}`).then((resp) => {
       if (resp.status === 200) {
         commit(types.COLLECTION_TOSS, mediaId);
       }else if(resp.status === 401) {
@@ -46,13 +46,13 @@ const mutations = {
   [types.COLLECTION_ACCESS](state, status) {
     state.collectionAccess = status;
   },
-  [types.COLLECTION_UPDATE](state, { collection }) {
-    state.videos = collection.youtube;
+  [types.COLLECTION_UPDATE](state, items) {
+    state.items = items;
   },
   [types.COLLECTION_TOSS](state, mediaId) {
-    const index = _.findIndex(state.videos, video => video.id === mediaId);
+    const index = _.findIndex(state.items, video => video.id === mediaId);
 
-    state.videos.splice(index, 1);
+    state.items.splice(index, 1);
   },
 };
 
