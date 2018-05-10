@@ -7,14 +7,14 @@
       </div>
     </div>
 
-    <div class="row hide" v-show="videos.length <= 0">
+    <div class="row hide" v-show="emptyCollection">
       <div class="col-lg-6 center" >
         <h3>Nothing in collection..</h3>
         <img src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
       </div>
     </div>
 
-    <div class="row mt-2 hide" v-show="videos.length <= 0">
+    <div class="row mt-2 hide" v-show="emptyCollection">
       <div class="col-lg-12">
         <h5>Tools to build your collection...</h5>
         <router-link class="btn btn-outline-danger" to="/search">Search for Music</router-link>
