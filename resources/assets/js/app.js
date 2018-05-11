@@ -31,6 +31,7 @@ Vue.use(VueScrollTo, {
 // Components
 Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
+Vue.component('control-bar', require('./components/ControlBar.vue'));
 // Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 

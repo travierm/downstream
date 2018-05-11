@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <master-bar></master-bar>
+    <control-bar></control-bar>
   </div>
 </template>
 
