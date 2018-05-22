@@ -36,10 +36,7 @@ const getters = {
   },
   isPlaying(state) {
     return videoPlayer.getPlayerState();
-  },
-  collection(state) {
-    return state.fetched.collection;
-  },
+  }
 };
 
 const actions = {
@@ -60,6 +57,15 @@ const actions = {
         dispatch('preloadIndex');
       }, 500)
     }
+  },
+  indexRemove({ commit }, sessionId) {
+    commit(types.INDEX_REMOVE, sessionId);
+  },
+  indexReplace({ commit }, index) {
+    commit(types.INDEX_REPLACE, index);
+  },
+  indexClear({ commit }) {
+    commit(types.INDEX_CLEAR);
   },
   videoAdd({ commit, dispatch }, { sessionId, videoId, options }) {
     if(isMobile) {
@@ -91,7 +97,6 @@ const actions = {
     });
   },
   updateCurrent({ commit, dispatch}, sessionId) {
-    consl('here');
     if(state.current) {
       //pause previously playing video
       dispatch('pause', state.current);
@@ -163,6 +168,9 @@ const actions = {
     }
 
     const nextId = getNextVideoId(state.index, state.current);
+    console.info("trying to play next")
+    console.log(nextId)
+    console.log(state.index);
     if(nextId) {
       dispatch('play', nextId);
     }
@@ -192,6 +200,22 @@ const mutations = {
   },
   [types.INDEX_ADD](state, sessionId) {
     state.index.push(sessionId);
+  },
+  [types.INDEX_REMOVE](state, sessionId) {
+    const index = state.index.indexOf(sessionId);
+
+    if(!index) {
+      console.error("Can not remove sessionId from index");
+      return;
+    }
+
+    state.index.splice(index, 1);
+  },
+  [types.INDEX_REPLACE](state, index) {
+    state.index = index;
+  },
+  [types.INDEX_CLEAR](state) {
+    state.index = [];
   },
   [types.COLLECTION_UPDATE](state, items) {
     state.fetched.collection = items;

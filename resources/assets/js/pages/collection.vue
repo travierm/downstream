@@ -2,7 +2,13 @@
 <template>
   <div class="container-fluid" style="margin-top: 15px;">
     <div class="row">
-      <div class="col-lg-3 col-md-12 col-sm-12" v-for="video in videos" :key="video.id">
+      <div class="col-lg-6 mb-2">
+        <input class="form-control" v-model="searchQuery" type="search" placeholder="Search..." />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 col-md-12 col-sm-12" v-for="video in filteredVideos" :key="video.id">
         <video-player-card v-on:tossed="updateCollection" v-bind:media="video"></video-player-card>
       </div>
     </div>
@@ -22,15 +28,18 @@
       </div>
     </div>
 
-    <control-bar></control-bar>
+    <master-bar></master-bar>
   </div>
 </template>
 
 <script>
+  import _ from "lodash";
+
   export default {
     data() {
       return {
-        emptyCollection: false
+        emptyCollection: false,
+        searchQuery:""
       };
     },
     created() {
@@ -48,7 +57,18 @@
         });
       }
     },
+    watch: {
+      'searchQuery':function() {
+        //this.$store.dispatch('media/indexClear');
+       // this.$store.dispatch('media/indexReplace', _.map(this.filteredVideos, 'sessionId'));
+      }
+    },
     computed: {
+      filteredVideos() {
+        return this.videos.filter(video => {
+          return video.meta.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+        })
+      },
       isMobile() {
         return window._isMobile;
       },

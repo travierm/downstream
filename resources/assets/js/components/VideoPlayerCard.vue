@@ -157,6 +157,9 @@
           }
         }, 200)
       },
+      destroyed() {
+        this.$store.dispatch('media/indexRemove', this.id);
+      },
       methods: {
         shareMediaLink() {
           const link = window.config.APP_LINK_URL + this.media.index;
@@ -188,7 +191,6 @@
           }
 
           const vid = this.getVid;
-
           this.$store.dispatch('media/indexAdd', this.id);
           this.$store.dispatch('media/videoAdd', { sessionId: this.id, videoId:vid, options});
 
