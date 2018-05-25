@@ -4,6 +4,7 @@
         <div class="container">
             <div class="row form-inline">
               <div class="col-lg-8">
+                <!-- <button @click="shuffleIndex" type="button" class="btn btn-warning p-2 my-sm-0">Shuffle</button> -->
                 <button type="button" class="btn btn-dark p-2 my-sm-0" v-scroll-to="currentCardId">Focus</button>
                 <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
                 <img class="icon" @click="play" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
@@ -42,6 +43,9 @@
       }
     },
     methods: {
+      shuffleIndex() {
+        this.$store.dispatch('media/indexShuffle');
+      },
       focusOnCurrent() {
         let sessionId = this.$store.state.media.current;
 

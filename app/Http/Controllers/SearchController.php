@@ -10,19 +10,24 @@ class SearchController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth:api');
+    $this->middleware('auth');
   }
 
-  public function getIndex() {
+  public function getIndex(Request $req) {
+    if($req->input('query')) {
+      return $this->getSearchYouTube($req);
+    }
+
     return view('search.index');
   }
 
-  public function postSearchYouTube(Request $req)
+  public function getSearchYouTube(Request $req)
   {
     $query = $req->input('query');
 
     $limit = 8;
     $results = YouTubeV2::search($query, $limit);
+
 
     return view('search.index')->with([
       'query' => $req->input('query'),

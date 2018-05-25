@@ -34,6 +34,9 @@ Route::middleware(['admin'])->group(function() {
   Route::get('/admin/toplist/media/visible/{tempItemId}/{isVisible}', 'Admin\ToplistController@getMediaTempVisible');
 });
 
+Route::get('/search', 'SearchController@getIndex');
+//Route::get('/search', 'SearchController@postSearchYouTube');
+
 Route::get('/', 'FrontPageController@getLanding');
 Route::get('/all', 'FrontPageController@index');
 

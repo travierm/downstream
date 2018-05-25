@@ -11,9 +11,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/all') }}">All</a>
                 </li>
+                @if(!Auth::guest())
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/search">Search</router-link>
+                    <a class="nav-link" href="{{ url('/search') }}">Search</a>
                 </li>
+                @endif
             </ul>
             <ul class="navbar-nav">
                 @if(Auth::guest())

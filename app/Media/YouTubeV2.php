@@ -142,11 +142,11 @@ class YouTubeV2 {
       return (!@is_null($row->id->videoId));
     });
 
-    $videoIds = array_map(function($row) {
+    /*$videoIds = array_map(function($row) {
       return $row->id->videoId;
-    }, $results->all());
+    }, $results->all());*/
 
-    return self::cleanSearchResults($videoIds);
+    return self::cleanSearchResults($results->all());
   }
 
   public static function cleanInfo($info)
@@ -164,23 +164,31 @@ class YouTubeV2 {
     return $return;
   }
 
-  private static function cleanSearchResults($videoIds)
+  private static function cleanSearchResults($response)
   {
     $results = [];
-    foreach($videoIds as $vid)
+    foreach($response as $video)
     {
+      $vid = $video->id->videoId;
       $result = new \stdClass();
       $media = self::findByIndex($vid);
 
       $result->imported = false;
       $result->collected = false;
       $result->vid = $vid;
+      $result->title = $video->snippet->title;
       if($media) {
         $result->imported = true;
         $result->collected = UserMedia::didCollect($media->id);
         $result->id = $media->id;
       }else{
         $result->id = false;
+      }
+
+      if(@$video->snippet->thumbnails->standard->url) {
+        $result->thumbnail = @$video->snippet->thumbnails->standard->url;
+      }else{
+        $result->thumbnail = @$video->snippet->thumbnails->high->url;
       }
 
       $results[] = $result;

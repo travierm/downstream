@@ -146,7 +146,7 @@
       },
       mounted() {
         if(this.hasBadThumbnail == true) {
-          this.media.meta.thumbnail = "https://via.placeholder.com/640x480/000000?text=" + this.getTitle
+          //this.media.meta.thumbnail = "https://via.placeholder.com/640x480/000000?text=" + this.getTitle
         }
 
         let t = setInterval(() => {

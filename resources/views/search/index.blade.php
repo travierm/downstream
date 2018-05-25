@@ -3,14 +3,15 @@
 @section('content')
 <div class="container-fluid pushFromTop">
   <div class="row">
-    <div class="col-12">
+    <div class="col-lg-4 col-md-12 col-sm-12">
       <img height="125" width="125" class="img-fluid" src="{{ asset('images/yt_logo_rgb_light.png')}}"></img>
-      <form style="margin-top: 10px;" class="form-inline" action="/search" method="POST">
-        {{ csrf_field() }}
-
-        <input placeholder="Search..." style="width:30%;" class="form-control" type="text" name="query" value="{{@$query}}" />
-
-        <button class="btn btn-success">Search</button>
+      <form class="mt-2" action="/search" method="GET">
+        <div class="input-group mb-1">
+          <input name="query" value="{{@$query}}" type="text" class="form-control" placeholder="Search..." aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-outline-danger" type="button">Search</button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -19,7 +20,7 @@
     @if(@$videos)
       @foreach($videos as $video)
       <div class="col-lg-3 pushFromTop">
-        <youtube-player-card @if($video->id) media-id="{{$video->id}}" @endif collected="{{$video->collected}}" vid={{$video->vid}} ></youtube-player-card>
+        <video-player-card @if($video->id) media-id="{{$video->id}}" @endif title="{{$video->title}}" collected="{{$video->collected}}" vid={{$video->vid}} thumbnail={{$video->thumbnail}} ></video-player-card>
       </div>
       @endforeach
     @endif

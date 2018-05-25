@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import CollectionPage from './pages/collection';
-import SearchPage from './pages/search';
+//import SearchPage from './pages/search';
 import DiscoverPage from './pages/discover';
 import UserProfile from './pages/user/profile';
 
@@ -24,11 +24,11 @@ const routes = [
   	path: '/collection', 
   	component: CollectionPage 
   },
-  { 
+  /*{ 
   	name:'search',
   	path: '/search', 
   	component: SearchPage 
-  },
+  },*/
   { 
   	name:'userProfile',
   	path: '/user/:hash/profile', 

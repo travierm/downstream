@@ -81,6 +81,13 @@ const actions = {
   indexClear({ commit }) {
     commit(types.INDEX_CLEAR);
   },
+  /*
+    indexShuffle
+  */
+  indexShuffle({ commit }) {
+    console.log("doing shuffle")
+    commit(types.INDEX_SHUFFLE);
+  },
   videoAdd({ commit, dispatch }, { sessionId, videoId, options }) {
     if(isMobile) {
       //@TODO mute player and then start autoplaying somehow
@@ -219,6 +226,9 @@ const mutations = {
   },
   [types.INDEX_ADD](state, sessionId) {
     state.index.push(sessionId);
+  },
+  [types.INDEX_SHUFFLE](state) {
+    state.index = _.shuffle(state.index);
   },
   [types.INDEX_REMOVE](state, sessionId) {
     const index = state.index.indexOf(sessionId);
