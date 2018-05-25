@@ -58,12 +58,26 @@ const actions = {
       }, 500)
     }
   },
+  /*
+    indexRemove
+    splice sessionId from index
+    destroy video from player
+  */
   indexRemove({ commit }, sessionId) {
     commit(types.INDEX_REMOVE, sessionId);
+    videoPlayer.destroyVideo(sessionId);
   },
+  /*
+    indexReplace
+    replace entire sessionId index with a new array
+  */
   indexReplace({ commit }, index) {
     commit(types.INDEX_REPLACE, index);
   },
+  /*
+    indexClear
+    clear index of sessionIds
+  */
   indexClear({ commit }) {
     commit(types.INDEX_CLEAR);
   },
@@ -79,12 +93,20 @@ const actions = {
       dispatch('play', sessionId);
     }
   },
+  reset({ dispatch}, sessionId) {
+    if(!sessionId) {
+      sessionId = state.current;
+    }
+
+    videoPlayer.stopVideo(sessionId);
+  },
   pause({ commit, state, dispatch}, sessionId) {
     if(!sessionId) {
       sessionId = state.current;
     }
 
     //pause video
+    videoPlayer.resetVideo(sessionId);
     videoPlayer.pauseVideo(sessionId);
 
     videoPlayer.registerEvent(sessionId, ['playing'], () => {
@@ -99,7 +121,7 @@ const actions = {
   updateCurrent({ commit, dispatch}, sessionId) {
     if(state.current) {
       //pause previously playing video
-      dispatch('pause', state.current);
+      dispatch('reset', state.current);
     }
 
     commit(types.UPDATE_CURRENT_VIDEO, sessionId);
@@ -168,9 +190,6 @@ const actions = {
     }
 
     const nextId = getNextVideoId(state.index, state.current);
-    console.info("trying to play next")
-    console.log(nextId)
-    console.log(state.index);
     if(nextId) {
       dispatch('play', nextId);
     }

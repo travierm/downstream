@@ -45,6 +45,16 @@ export default class YouTubeVideoPlayer {
 		return this.playing;
 	}
 
+	destroyVideo(sessionId) {
+		let video = this.findVideo(sessionId);
+
+		if(video.player) {
+			this.video.player.destroy();
+		}
+
+		this.removeVideo(sessionId)
+	}
+
 	registerVideo(sessionId, videoId, options) {
 		const newVideo = createVideo(sessionId, videoId, options);
 
@@ -103,6 +113,13 @@ export default class YouTubeVideoPlayer {
 
     	//set player state
     	video.state = "loaded"
+	}
+
+	stopVideo(sessionId) {
+		let video = this.findVideo(sessionId);
+
+		if(video.player) 
+			video.player.stop();
 	}
 
 	pauseVideo(sessionId) {
@@ -168,6 +185,12 @@ export default class YouTubeVideoPlayer {
 	}
 
 	//PRIVATE
+	removeVideo(sessionId) {
+		_.remove(this.videos, {
+			sessionId: sessionId
+		});
+	}
+
 	findVideo(sessionId) {
 		const video = _.find(this.videos, { sessionId: sessionId});
 

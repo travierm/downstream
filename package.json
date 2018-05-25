@@ -30,10 +30,10 @@
     "devDependencies": {
         "@vue/test-utils": "^1.0.0-beta.15",
         "axios": "^0.16.2",
-        "babel-jest": "^22.4.3",
+        "babel-jest": "^22.4.4",
         "bootstrap-vue": "^2.0.0-rc.9",
-        "cross-env": "^5.1.4",
-        "jest": "^22.4.3",
+        "cross-env": "^5.1.6",
+        "jest": "^22.4.4",
         "jest-vue-preprocessor": "^1.4.0",
         "jquery": "^3.3.1",
         "jsdom": "^11.9.0",

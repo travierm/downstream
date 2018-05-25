@@ -2,7 +2,7 @@
   <div :id="cardId" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
 
     <div id="cardToolbar" class="card-block">
-      <div v-if="isAdmin">
+      <div v-if="false">
         <p class="flex">{{ media.id }}</p>
       </div>
 
@@ -210,7 +210,7 @@
 
           this.$store.dispatch('media/registerEvent', {
             sessionId: this.id,
-            eventType: ['ended'],
+            eventType: ['ended', 'unstarted'],
             callback:() => {
               $('#' + this.id).hide();
               this.playing = false;

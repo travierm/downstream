@@ -10,7 +10,7 @@
 
   @if(Auth::guest())
   <div class="row justify-content-md-center">
-    <div class="col-lg-3 col-sm-6">
+    <div class="col-lg-3 col-sm-6 mb-3">
       <a href="/register" class="btn btn-outline-info btn-lg btn-block">Register</a>
     </div>
   </div>
