@@ -45,9 +45,17 @@ const actions = {
     videoPlayer.resetState();
     commit(types.UPDATE_CURRENT_VIDEO, false);
   },
+  /* 
+    Each video component has a unqiue sessionId 
+
+    indexAdd adds a new sessionId to the video index
+    the video index is the maintains the postion of videos from top-bottom
+  */
   indexAdd({ commit, dispatch }, sessionId) {
     commit(types.INDEX_ADD, sessionId);
 
+    //preload logic
+    //disabled for now
     if(!didPreload) {
       if(preloadTimeout) {
         clearTimeout(preloadTimeout);
@@ -59,35 +67,9 @@ const actions = {
     }
   },
   /*
-    indexRemove
-    splice sessionId from index
-    destroy video from player
+    stores sessionId and video params
+    doesn't load videos until needed
   */
-  indexRemove({ commit }, sessionId) {
-    commit(types.INDEX_REMOVE, sessionId);
-    videoPlayer.destroyVideo(sessionId);
-  },
-  /*
-    indexReplace
-    replace entire sessionId index with a new array
-  */
-  indexReplace({ commit }, index) {
-    commit(types.INDEX_REPLACE, index);
-  },
-  /*
-    indexClear
-    clear index of sessionIds
-  */
-  indexClear({ commit }) {
-    commit(types.INDEX_CLEAR);
-  },
-  /*
-    indexShuffle
-  */
-  indexShuffle({ commit }) {
-    console.log("doing shuffle")
-    commit(types.INDEX_SHUFFLE);
-  },
   videoAdd({ commit, dispatch }, { sessionId, videoId, options }) {
     if(isMobile) {
       //@TODO mute player and then start autoplaying somehow
@@ -113,7 +95,6 @@ const actions = {
     }
 
     //pause video
-    videoPlayer.resetVideo(sessionId);
     videoPlayer.pauseVideo(sessionId);
 
     videoPlayer.registerEvent(sessionId, ['playing'], () => {
@@ -161,13 +142,25 @@ const actions = {
     }
 
     videoPlayer.playVideo(sessionId);
+    let videoId = videoPlayer.findVideo(sessionId).videoId;
+    console.log(videoId);
+
+    //update GA
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'Media',
+      eventAction: 'play',
+      eventLabel: videoId
+    });
 
     //play next video once ended
-    videoPlayer.registerEvent(sessionId, ['ended'], () => {
-      consl('playing next');
-      const nextVideoIndex = getNextVideoId(state.index, sessionId);
-      dispatch('play', nextVideoIndex);
-    });
+    Vue.nextTick(() => {
+      videoPlayer.registerEvent(sessionId, ['ended'], () => {
+        consl('playing next');
+        const nextVideoIndex = getNextVideoId(state.index, sessionId);
+        dispatch('play', nextVideoIndex);
+      });
+    })
   },
   updateVolume({ commit, dispatch, state}, volumeLevel) {
     //update state volume
