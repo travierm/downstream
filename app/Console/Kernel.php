@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('spotify:recommendations')
-           ->everyFiveMinutes()
-           ->appendOutputTo(storage_path('logs/recommendation-log'))
-           ->emailOutputTo('moorlagrx@gmail.com');
+           ->everyFiveMinutes();
+           //->appendOutputTo(storage_path('logs/recommendation-log'))
+           //->emailOutputTo('moorlagrx@gmail.com');
     }
 
     /**
