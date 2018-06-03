@@ -3,7 +3,6 @@ import { sync } from 'vuex-router-sync';
 import store from './store/index';
 import router from './router';
 import BootstrapVue from 'bootstrap-vue';
-import VueAnalytics from 'vue-analytics';
 import VueScrollTo from 'vue-scrollto';
 import consl from './services/Consl';
 
@@ -51,11 +50,6 @@ router.beforeEach((to, from, next) => {
 	}
 
   	next();
-});
-
-Vue.use(VueAnalytics, {
-  id: "UA-111656856-1",
-  router
 });
 
 const app = new Vue({

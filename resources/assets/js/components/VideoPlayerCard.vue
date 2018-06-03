@@ -10,8 +10,8 @@
         <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
         <a v-if="reference" :href="'/v/' + reference" class="btn btn-outline-primary">Reference</a>
         <a v-if="media.index" :href="'/v/' + getVid" class="btn btn-outline-success">Link</a>
-        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-info">Collect</button>
-        <button v-if="videoCollected" @click="toss" class="btn btn-info">Collected</button>
+        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-primary">Collect</button>
+        <button v-if="videoCollected" @click="toss" class="btn btn-primary">Collected</button>
       </div>
     </div>
 
@@ -202,6 +202,7 @@
             sessionId: this.id,
             eventType: ['playing'],
             callback:() => {
+              console.log("PLAYING MEDIA");
               $('#' + this.id).show();
               this.playing = true;
               this.showThumbnail = false;
@@ -210,7 +211,7 @@
 
           this.$store.dispatch('media/registerEvent', {
             sessionId: this.id,
-            eventType: ['ended', 'unstarted'],
+            eventType: ['ended'],
             callback:() => {
               $('#' + this.id).hide();
               this.playing = false;
@@ -222,11 +223,13 @@
             sessionId: this.id,
             eventType: ['paused'],
             callback:() => {
+              return;
               this.playing = false;
             }
           })
         },
         play() {
+          console.log("SHOULD BE PLAYING");
           this.playing = true;
           this.showThumbnail = false;
 

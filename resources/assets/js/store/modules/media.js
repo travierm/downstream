@@ -143,14 +143,11 @@ const actions = {
 
     videoPlayer.playVideo(sessionId);
     let videoId = videoPlayer.findVideo(sessionId).videoId;
-    console.log(videoId);
 
     //update GA
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'Media',
-      eventAction: 'play',
-      eventLabel: videoId
+    gtag('event', 'play', {
+      'event_category' : 'Media',
+      'event_label' : videoId
     });
 
     //play next video once ended

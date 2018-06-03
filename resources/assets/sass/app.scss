@@ -1,14 +1,15 @@
+@import "variables";
 
+@import "node_modules/bootstrap/scss/bootstrap.scss";
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto');
 
 // Variables
-@import "variables";
 @import "landing";
 
 // Bootstrap
-// @import "node_modules/bootstrap/scss/bootstrap.scss";
+
 
 
 .padLeft {

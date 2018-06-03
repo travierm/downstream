@@ -46,14 +46,8 @@
       </div>
     @endforeach
   </div>
-  @else
-  <div class="row">
-    <div class="col-lg-4">
-      <h3>Processing recommendations soon...</h3>
-    </div>
-  </div>
-  @endif
 </div>
+@endif
 
 <master-bar></master-bar>
 @endsection

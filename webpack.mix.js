@@ -22,7 +22,7 @@ if (mix.inProduction()) {
 }
 
 mix.options({
-  purifyCss: true
+  purifyCss: false
 });
 
 mix.webpackConfig({

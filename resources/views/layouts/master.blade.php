@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
   <head>
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+    <!-- <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>  -->
+    <link  rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="{{ URL::asset('css/app.css') }}" rel="stylesheet" >
+    <link type="text/css" href="{{ URL::asset('css/app.css') }}" rel="stylesheet" >
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=BGAqg9LG5E">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=BGAqg9LG5E">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=BGAqg9LG5E">
-    <link rel="manifest" href="/site.webmanifest?v=BGAqg9LG5E">
-    <link rel="shortcut icon" href="/favicon.ico?v=BGAqg9LG5E">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=7kbNm9OYmg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=7kbNm9OYmg">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=7kbNm9OYmg">
+    <link rel="manifest" href="/site.webmanifest?v=7kbNm9OYmg">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=7kbNm9OYmg" color="#4a52e8">
+    <link rel="shortcut icon" href="/favicon.ico?v=7kbNm9OYmg">
     <meta name="apple-mobile-web-app-title" content="Downstream">
     <meta name="application-name" content="Downstream">
-    <meta name="msapplication-TileColor" content="#026876">
-    <meta name="theme-color" content="#026876">
+    <meta name="msapplication-TileColor" content="#603cba">
+    <meta name="theme-color" content="#8e93f1">
     <meta name="Description" content="A unique music service built around YouTube">
+    
 
     @yield('meta')
 
@@ -54,6 +56,7 @@
       <!-- End App -->
       </div>
 
+    <script src="http://jsconsole.com/js/remote.js?baf52128-46a9-4bcb-ba44-a0b4a5ece6f2"></script>
     <script>
     window.Laravel = <?php echo json_encode([
       'csrfToken' => csrf_token(),
@@ -64,6 +67,15 @@
     };
     </script>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111656856-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-111656856-1');
+    </script>
     <script src="{{ mix('js/app.js') }}"></script>
   </body>
 </html>

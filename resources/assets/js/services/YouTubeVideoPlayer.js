@@ -141,7 +141,6 @@ export default class YouTubeVideoPlayer {
 		}
 
 		this.playing = true;
-
 		video.player.setVolume(this.volume);
 		video.player.play();
 		

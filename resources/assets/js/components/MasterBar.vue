@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid" style="margin-top: 50px;">
-      <nav class="navbar fixed-bottom bg-faded navbar-light footer" style="">
+      <nav class="navbar fixed-bottom bg-faded navbar-dark footer" style="">
         <div class="container">
             <div class="row form-inline">
               <div class="col-lg-8">
@@ -106,7 +106,7 @@
 }
 
 .footer {
-  background-color:#117F90;
+  background-color: #4a52e8;
   padding:20px;
   left: 0;
   bottom: 0;

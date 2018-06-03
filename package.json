@@ -46,7 +46,6 @@
         "shortid": "^2.2.8",
         "tether": "^1.4.4",
         "vue": "2.5.3",
-        "vue-analytics": "^5.10.4",
         "vue-class-component": "^5.0.2",
         "vue-router": "^3.0.1",
         "vue-scrollto": "^2.11.0",
