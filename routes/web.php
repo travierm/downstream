@@ -17,6 +17,7 @@ Route::get('/hashMe', function() {
 });
 
 Route::middleware(['admin'])->group(function() {
+  Route::get('/admin/test/player', "AdminController@getTestPlayer");
   Route::get('/admin/engine', 'AdminController@getEngineFeed');
   Route::get('/admin/dash', 'AdminController@index');
   Route::post('/admin/dash/settings', 'AdminController@postServerSettings');

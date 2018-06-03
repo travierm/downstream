@@ -31,6 +31,17 @@ class AdminController extends Controller
     ]);
   }
 
+  public function getTestPlayer() 
+  {
+    $index = "XbPhal1xzEI";
+
+    $media = Media::findByType('youtube', $index)->first();
+
+    return view('admin.test.player', [
+      'media' => $media
+    ]);
+  }
+
   public function getEngineClean()
   {
     $badMediaIds = Cache::get('spotifyFailedSearchMediaIds', []);

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import YTPlayer from 'yt-player';
 /*
-	YouTube Video Players
+	YouTube Video Player
 
 	handles:
 	registering videos
@@ -24,7 +24,7 @@ export default class YouTubeVideoPlayer {
 	}
 
 	resetState()  {
-		this.videos = [];
+		//this.videos = [];
 		this.eventBacklog = [];
 		this.playing = false;
 	}
