@@ -13,8 +13,8 @@
               </div>
 
               <div class="col-lg-4">
-                <p style="margin-top:10px;">
-                  <b>Volume {{ volume }}</b> <br /><input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" class="align-middle slider" />
+                <p style="margin-top:10px;" v-if="!isMobile">
+                  <b>Volume {{ volume }}</b> <br /><input v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" class="align-middle slider" />
                 </p>
               </div>
             </div>
