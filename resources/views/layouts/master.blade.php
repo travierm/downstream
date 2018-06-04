@@ -55,8 +55,7 @@
       </div>
       <!-- End App -->
       </div>
-
-    <script src="http://jsconsole.com/js/remote.js?baf52128-46a9-4bcb-ba44-a0b4a5ece6f2"></script>
+      
     <script>
     window.Laravel = <?php echo json_encode([
       'csrfToken' => csrf_token(),
