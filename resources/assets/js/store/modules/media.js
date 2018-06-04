@@ -7,9 +7,9 @@
 
 import _ from 'lodash';
 import * as types from '../mutation-types';
+import cache from '../../services/Cache';
 import YouTubeVideoPlayer from '../../services/YouTubeVideoPlayer';
 
-const initVolume = 100;
 const videoPlayer = new YouTubeVideoPlayer();
 const initPreloadedVideos = 5;
 
@@ -19,7 +19,6 @@ let didPreload = true;
 let preloadTimeout = false;
 const isMobile = window._isMobile;
 
-videoPlayer.setVolume(initVolume);
 
 const state = {
   index: [],
@@ -27,8 +26,11 @@ const state = {
   current: false,
   history: [],
   //0 - 100
-  volume: initVolume
+  volume: cache.get('mediaPlayerVolume', 100)
 };
+
+
+videoPlayer.setVolume(state.volume);
 
 const getters = {
   playerVolumeLevel(state) {
@@ -165,6 +167,8 @@ const actions = {
 
     //sync player service volume
     videoPlayer.setVolume(volumeLevel);
+
+    cache.set('mediaPlayerVolume', volumeLevel);
 
     if(state.current) {
       //update current playing video volume
