@@ -13,7 +13,9 @@
               </div>
 
               <div class="col-lg-4">
-                <input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" style="margin-bottom: -10px;" class="align-middle" />
+                <p style="margin-top:10px;">
+                  <b>Volume {{ volume }}</b> <br /><input v-if="!isMobile" v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" class="align-middle slider" />
+                </p>
               </div>
             </div>
         </div>
