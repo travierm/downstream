@@ -121,7 +121,7 @@
         hasBadThumbnail() {
           const thumbnail = this.getThumbnail;
 
-          return (thumbnail.includes('/default.jpg') || thumbnail.includes('/hqdefault.jpg'));
+          return (thumbnail.includes('/default.jpg'));
         },
         isPlaying(state) {
           return state.playing;
