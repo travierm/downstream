@@ -138,7 +138,6 @@ const actions = {
     });
   },
   play({ commit, state, dispatch }, sessionId) {
-    console.log(sessionId);
     if(!sessionId) {
       sessionId = state.current;
     }else{

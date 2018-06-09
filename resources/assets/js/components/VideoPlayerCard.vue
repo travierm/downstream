@@ -211,7 +211,6 @@
             sessionId: this.id,
             eventType: ['playing'],
             callback:() => {
-              console.log("PLAYING MEDIA");
               $('#' + this.id).show();
               this.playing = true;
               this.showThumbnail = false;

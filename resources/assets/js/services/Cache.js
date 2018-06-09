@@ -8,6 +8,10 @@ class LocalCache {
     }
 
     get(key, defaultValue) {
+        if(!window.localStorage) {
+            return false;
+        }
+
         return window.localStorage[key] || defaultValue;
     }
 }
