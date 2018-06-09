@@ -49,7 +49,7 @@ export default class YouTubeVideoPlayer {
 		let video = this.findVideo(sessionId);
 
 		if(video.player) {
-			this.video.player.destroy();
+			video.player.destroy();
 		}
 
 		this.removeVideo(sessionId)
@@ -89,7 +89,7 @@ export default class YouTubeVideoPlayer {
 		video.options.playsinline = true;
 		video.options.fs = false;
 		
-		if(!video.options.height) 
+		if(!video.options.height && $(`#${video.sessionId}_media`).height() != 0) 
     		video.options.height = $(`#${video.sessionId}_media`).height();
 
     	//create iframe yt player on element
@@ -118,8 +118,9 @@ export default class YouTubeVideoPlayer {
 	stopVideo(sessionId) {
 		let video = this.findVideo(sessionId);
 
-		if(video.player) 
+		if(video.player) {
 			video.player.stop();
+		}
 	}
 
 	pauseVideo(sessionId) {
@@ -129,11 +130,15 @@ export default class YouTubeVideoPlayer {
 			this.playing = false;
 
 			video.player.pause();
+			video.player.seek(0);
 		}
 	}
 
 	playVideo(sessionId) {
 		let video = this.findVideo(sessionId);
+		if(!video) {
+			return false;
+		}
 
 		if(!video.player) { 
 			//preload if not preloaded
@@ -148,6 +153,8 @@ export default class YouTubeVideoPlayer {
 			//video.player.destroy();
 			video.player = false;
 		});
+
+		return true;
 	}
 
 	registerEvent(sessionId, eventType, callback) {

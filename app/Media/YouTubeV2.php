@@ -132,6 +132,8 @@ class YouTubeV2 {
   public static function search($query, $limit = 8)
   {
 
+    $limit +=1; 
+
     $results = YouTubeService::search($query, $limit);
     if(!$results) {
       return false;

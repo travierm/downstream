@@ -2,6 +2,7 @@
   <div :id="cardId" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
 
     <div id="cardToolbar" class="card-block">
+      <!-- ADMIN THINGS -->
       <div v-if="false">
         <p class="flex">{{ media.id }}</p>
       </div>
@@ -9,9 +10,17 @@
       <div class="float-right">
         <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
         <a v-if="reference" :href="'/v/' + reference" class="btn btn-outline-primary">Reference</a>
-        <a v-if="media.index" :href="'/v/' + getVid" class="btn btn-outline-success">Link</a>
-        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-primary">Collect</button>
-        <button v-if="videoCollected" @click="toss" class="btn btn-primary">Collected</button>
+        <div  v-if="media.index" class="btn-group">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Links
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" :href="'/v/' + getVid">Direct Link</a>
+            <a v-if="media.user" class="dropdown-item" :href="media.user.profileLink">User Link</a>
+          </div>
+        </div>
+        <button v-if="!videoCollected" @click="discover" class="btn btn-outline-success">Collect</button>
+        <button v-if="videoCollected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
 
@@ -211,7 +220,7 @@
 
           this.$store.dispatch('media/registerEvent', {
             sessionId: this.id,
-            eventType: ['ended'],
+            eventType: ['ended', 'destroyed'],
             callback:() => {
               $('#' + this.id).hide();
               this.playing = false;
@@ -223,13 +232,13 @@
             sessionId: this.id,
             eventType: ['paused'],
             callback:() => {
-              return;
               this.playing = false;
+               $('#' + this.id).hide();
+               this.showThumbnail = true;
             }
           })
         },
         play() {
-          console.log("SHOULD BE PLAYING");
           this.playing = true;
           this.showThumbnail = false;
 
@@ -270,7 +279,7 @@
     };
 </script>
 
-<style>
+<style scoped>
 .media-icon {
   margin-right: 10px;
 }

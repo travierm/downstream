@@ -19,7 +19,6 @@ let didPreload = true;
 let preloadTimeout = false;
 const isMobile = window._isMobile;
 
-
 const state = {
   index: [],
   player: videoPlayer,
@@ -89,7 +88,7 @@ const actions = {
       sessionId = state.current;
     }
 
-    videoPlayer.stopVideo(sessionId);
+   videoPlayer.pauseVideo(sessionId);
   },
   pause({ commit, state, dispatch}, sessionId) {
     if(!sessionId) {
@@ -108,6 +107,11 @@ const actions = {
       dispatch('play', sessionId);
     });
   },
+  /**
+   * updateCurrent
+   * 
+   * @param sessionId 
+   */
   updateCurrent({ commit, dispatch}, sessionId) {
     if(state.current) {
       //pause previously playing video
@@ -134,6 +138,7 @@ const actions = {
     });
   },
   play({ commit, state, dispatch }, sessionId) {
+    console.log(sessionId);
     if(!sessionId) {
       sessionId = state.current;
     }else{
@@ -143,23 +148,30 @@ const actions = {
       commit(types.MEDIA_HISTORY_ADD, sessionId);
     }
 
-    videoPlayer.playVideo(sessionId);
-    let videoId = videoPlayer.findVideo(sessionId).videoId;
+    const started = videoPlayer.playVideo(sessionId);
 
-    //update GA
-    gtag('event', 'play', {
-      'event_category' : 'Media',
-      'event_label' : videoId
-    });
+    if(!started) {
+      //try to play video again if it failed
+      console.error("Could not play video. Trying again in a sec")
+      setTimeout(() => {
+        videoPlayer.playVideo(sessionId);
+      }, 500)
+    }else{
+      //update GA
+      let videoId = videoPlayer.findVideo(sessionId).videoId;
+
+      gtag('event', 'play', {
+        'event_category' : 'Media',
+        'event_label' : videoId
+      });
+    }
 
     //play next video once ended
-    Vue.nextTick(() => {
       videoPlayer.registerEvent(sessionId, ['ended'], () => {
         consl('playing next');
         const nextVideoIndex = getNextVideoId(state.index, sessionId);
         dispatch('play', nextVideoIndex);
       });
-    })
   },
   updateVolume({ commit, dispatch, state}, volumeLevel) {
     //update state volume
