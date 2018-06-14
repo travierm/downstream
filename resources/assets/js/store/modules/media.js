@@ -88,9 +88,10 @@ const actions = {
       sessionId = state.current;
     }
 
-   videoPlayer.pauseVideo(sessionId);
+   videoPlayer.stopVideo(sessionId);
   },
   pause({ commit, state, dispatch}, sessionId) {
+    console.log("DOING PAUSE");
     if(!sessionId) {
       sessionId = state.current;
     }
@@ -170,6 +171,12 @@ const actions = {
         consl('playing next');
         const nextVideoIndex = getNextVideoId(state.index, sessionId);
         dispatch('play', nextVideoIndex);
+      });
+
+      videoPlayer.registerEvent(sessionId, ['playing'], () => {
+        if(state.current !== sessionId) {
+          dispatch('updateCurrent', sessionId);
+        }
       });
   },
   updateVolume({ commit, dispatch, state}, volumeLevel) {

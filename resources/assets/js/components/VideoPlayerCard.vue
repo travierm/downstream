@@ -232,12 +232,11 @@
             eventType: ['paused'],
             callback:() => {
               this.playing = false;
-               $('#' + this.id).hide();
-               this.showThumbnail = true;
             }
           })
         },
         play() {
+          console.log("playing card");
           this.playing = true;
           this.showThumbnail = false;
 
@@ -247,6 +246,7 @@
           this.$store.dispatch('media/play', this.id);
         },
         pause() {
+          return;
           this.playing = false;
           this.$store.dispatch('media/pause', this.id);
         },

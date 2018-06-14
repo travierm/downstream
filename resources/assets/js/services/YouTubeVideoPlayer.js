@@ -129,8 +129,8 @@ export default class YouTubeVideoPlayer {
 		if(video.player) {
 			this.playing = false;
 
-			video.player.pause();
 			video.player.seek(0);
+			video.player.pause();
 		}
 	}
 
