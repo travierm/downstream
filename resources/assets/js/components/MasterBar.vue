@@ -108,7 +108,8 @@
 }
 
 .footer {
-  background-color: #4a52e8;
+  /*background-color: #4a52e8; */
+  background-color: white;
   padding:20px;
   left: 0;
   bottom: 0;

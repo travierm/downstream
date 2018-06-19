@@ -34,10 +34,10 @@ class FrontPageController extends Controller
   {
     //$videos = YouTubeVideo::all();
     $this->createRow("Landing Page", [
-      'OTW' => 165,
-      'Hurt Me' => 249,
-      "Lucid Dreams" => 229,
-      "HOME BEFORE" => 164
+      'I dont' => 279,
+      "hope" => 284,
+      "Jaclyn" => 281,
+      'look at me' => 283,
     ]);
 
     $toplist = MediaTempItem::where('visible', 1)->limit(8)->get();
