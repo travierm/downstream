@@ -18,7 +18,13 @@ https://downstream.us
 <img src="https://s8.postimg.cc/bnq4ytto5/image.png"/>
 
 ## Setup for Development
-- Have PHP 7.0 >, composer and a recent NodeJS version installed
+### Requirements
+- PHP 7.0 or > with Composer package management
+- MySQL Database
+- NodeJS
+- YouTube API key for search
+- Spotify API key for recommendations and discovery
+
 ```bash
 git clone https://github.com/Travier/downstream downstream
 cd downstream
