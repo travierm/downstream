@@ -23,6 +23,7 @@ https://downstream.us
 - MySQL Database
 - NodeJS
 - YouTube API key for search
+--- Not needed but makes discover page work
 - Spotify API key for recommendations and discovery
 
 ```bash
