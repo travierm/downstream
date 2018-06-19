@@ -7,6 +7,13 @@
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 <a href="https://vuejs.org"><img height="90" width="90" src="https://vuejs.org/images/logo.png"></a>
 
+## Screenshots
+<img src="https://s8.postimg.cc/dr0k6lw2t/image.png"/>
+<img src="https://s8.postimg.cc/f7c2odgvp/image.png"/>
+<img src=|"https://s8.postimg.cc/f7c2ogwc5/image.png"/>
+<img src="https://s8.postimg.cc/l89rllo45/image.png"/>
+<img src="https://s8.postimg.cc/bnq4ytto5/image.png"/>
+
 ## Setup for Development
 - Have PHP 7.0 >, composer and a recent NodeJS version installed
 ```bash
@@ -25,15 +32,8 @@ npm run hot // or 'npm run prod' to make static js,css files with cache busting
 ```
 
 
-## Screenshots
-<img src="https://s8.postimg.cc/dr0k6lw2t/image.png"/>
-<img src="https://s8.postimg.cc/f7c2odgvp/image.png"/>
-<img src=|"https://s8.postimg.cc/f7c2ogwc5/image.png"/>
-<img src="https://s8.postimg.cc/l89rllo45/image.png"/>
-<img src="https://s8.postimg.cc/bnq4ytto5/image.png"/>
-
-## Concepts
-DS => Downstream
+## Design Concepts
+DS refers to Downstream
 
 **Media** DS isn't exclusively music so we refer to individual audios tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
 
