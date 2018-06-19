@@ -22,9 +22,8 @@ https://downstream.us
 - PHP 7.0 or > with Composer package management
 - MySQL Database
 - NodeJS
-- YouTube API key for search
---- Not needed but makes discover page work
-- Spotify API key for recommendations and discovery
+- YouTube API key for search **required**
+- Spotify API key for recommendations and discovery **not required**
 
 ```bash
 git clone https://github.com/Travier/downstream downstream
