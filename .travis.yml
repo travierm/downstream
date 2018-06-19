@@ -10,11 +10,3 @@ matrix:
       script: vendor/bin/phpunit
     - language: node_js
       node_js: "9"
-
-notifications:
-  email:
-    recipients:
-      - moorlagrx@gmail.com
-      - moorlagt@gmail.com
-    on_success: never
-    on_failure: always 
