@@ -6,10 +6,6 @@ https://downstream.us
 
 #### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
 
-<h3>Powered By:</h3>
-<p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
-<a href="https://vuejs.org"><img height="90" width="90" src="https://vuejs.org/images/logo.png"></a>
-
 ## Screenshots
 <img src="https://s8.postimg.cc/dr0k6lw2t/image.png"/>
 <img src="https://s8.postimg.cc/f7c2odgvp/image.png"/>
@@ -51,3 +47,7 @@ DS refers to Downstream
 **Collecting** Users can collect any item available to DS. It will then be displayed in their collection page.
 
 **Tossing** Tossing items remove them from a users collections but will keep the item for others to collect
+
+<h3>Powered By:</h3>
+<p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+<a href="https://vuejs.org"><img height="90" width="90" src="https://vuejs.org/images/logo.png"></a>
