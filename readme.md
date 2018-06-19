@@ -1,7 +1,7 @@
 <h1>Downstream</h1>
 <img src="https://travis-ci.com/Travier/downstream.svg?token=WQrNcAcxWXTGaqEEdVh4&branch=master" />
 
-### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
+#### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
 
 <h3>Powered By:</h3>
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
@@ -37,8 +37,8 @@ DS => Downstream
 
 **Media** DS isn't exclusively music so we refer to individual audios tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
 
-**Discovery** No items exist on downstream until a user "discovers" an item through search. From there DS will recommend other tracks to the user using the Spotify API. These recommended tracks are temporary on DS until a user collects them and they will be processed as an official media item.
+**Discovery** No items exist on DS until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on DS until a user collects them and they will be processed as an official media item.
 
-**Collecting** User can collect any item available to DS. It will then be displayed in their collection page.
+**Collecting** Users can collect any item available to DS. It will then be displayed in their collection page.
 
 **Tossing** Tossing items remove them from a users collections but will keep the item for others to collect
