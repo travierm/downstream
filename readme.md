@@ -8,9 +8,6 @@ https://downstream.us
 
 ## Screenshots
 <img src='https://s15.postimg.cc/u88ciilm3/collection.png' border='0' alt='collection'/>
-
-<img src='https://s15.postimg.cc/tipk6b5or/discover.png' border='0' alt='discover'/>
-
 <img src="https://s8.postimg.cc/f7c2ogwc5/image.png"/>
 <img src="https://s8.postimg.cc/l89rllo45/image.png"/>
 
