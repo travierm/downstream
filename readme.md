@@ -8,6 +8,7 @@ https://downstream.us
 
 ## Screenshots
 <img src='https://s15.postimg.cc/u88ciilm3/collection.png' border='0' alt='collection'/>
+<br />
 <img src="https://s8.postimg.cc/f7c2ogwc5/image.png"/>
 <img src="https://s8.postimg.cc/l89rllo45/image.png"/>
 
@@ -36,15 +37,15 @@ npm run hot // or 'npm run prod' to make static js,css files with cache busting
 
 
 ## Design Concepts
-DS refers to Downstream
+DS => Downstream
 
-**Media** DS isn't exclusively music so we refer to individual audios tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
+**Media** DS isn't exclusively music so we refer to individual audio tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
 
 **Discovery** No items exist on DS until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on DS until a user collects them and they will be processed as an official media item.
 
 **Collecting** Users can collect any item available to DS. It will then be displayed in their collection page.
 
-**Tossing** Tossing items remove them from a users collections but will keep the item for others to collect
+**Tossing** Tossing items remove them from a users collections but will keep the item for others to collect.
 
 <h3>Powered By:</h3>
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
