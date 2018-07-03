@@ -8,11 +8,11 @@ https://downstream.us
 
 ## Screenshots
 <a href='https://postimg.cc/image/ivvr0qcx3/' target='downstream.us'><img src='https://s15.postimg.cc/u88ciilm3/collection.png' border='0' alt='collection'/></a>
+
 <a href='https://postimg.cc/image/bfwhf39tz/' target='downstream.us'><img src='https://s15.postimg.cc/tipk6b5or/discover.png' border='0' alt='discover'/></a>
 
-<img src=|"https://s8.postimg.cc/f7c2ogwc5/image.png"/>
+<img src="https://s8.postimg.cc/f7c2ogwc5/image.png"/>
 <img src="https://s8.postimg.cc/l89rllo45/image.png"/>
-<img src="https://s8.postimg.cc/bnq4ytto5/image.png"/>
 
 ## Setup for Development
 ### Requirements
