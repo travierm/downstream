@@ -24,7 +24,7 @@
       </div>
     @endforeach
     </div>
-  @else
+  @elseif(count($videos) >= 2)
     <div class="row" style="margin-top: 15px;">
     	@foreach($videos as $media)
     	<div class="col-sm-12 col-md-6 col-lg-6">

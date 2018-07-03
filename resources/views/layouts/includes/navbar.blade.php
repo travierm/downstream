@@ -1,4 +1,4 @@
-<nav class="main-navbar navbar-expand-md navbar navbar-dark navbar-deco" style="background-color: black;">
+<nav class="main-navbar navbar-expand-md navbar navbar-dark navbar-deco" style="background-color: #4a52e8;">
     <div class="container-fluid">
         <a id="brand" class="navbar-brand" style="font-size:1.6em;" href="{{ url('/') }}">Downstream</a>
         

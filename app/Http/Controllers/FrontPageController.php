@@ -33,12 +33,12 @@ class FrontPageController extends Controller
   public function getLanding()
   {
     //$videos = YouTubeVideo::all();
-    $this->createRow("Landing Page", [
+    /*$this->createRow("Landing Page", [
       'I dont' => 279,
       "hope" => 284,
       "Jaclyn" => 281,
       'look at me' => 283,
-    ]);
+    ]);*/
 
     $toplist = MediaTempItem::where('visible', 1)->limit(8)->get();
 
@@ -51,7 +51,7 @@ class FrontPageController extends Controller
 
     return view('landing.main', [
       'toplist' => $toplist,
-      'videos' => $this->rowRenderIndex[0]['media']
+      'videos' => []
     ]);
   }
   
