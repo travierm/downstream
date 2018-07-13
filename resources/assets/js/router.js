@@ -6,6 +6,9 @@ import CollectionPage from './pages/collection';
 import DiscoverPage from './pages/discover';
 import UserProfile from './pages/user/profile';
 
+import PlaylistIndex from './pages/playlists/index';
+import PlaylistCreate from './pages/playlists/create';
+
 Vue.use(VueRouter);
 
 /*
@@ -29,6 +32,16 @@ const routes = [
   	path: '/search', 
   	component: SearchPage 
   },*/
+  {
+	name: 'playlistIndex',
+	path: '/playlists',
+	component: PlaylistIndex
+  },
+  {
+	name: 'playlistCreate',
+	path: '/playlists/create',
+	component: PlaylistCreate
+  },
   { 
   	name:'userProfile',
   	path: '/user/:hash/profile', 
