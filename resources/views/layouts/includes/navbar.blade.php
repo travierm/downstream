@@ -26,20 +26,24 @@
                     <a class="nav-link" href="{{ url('/login') }}">Login</a>
                 </li>
                 @else
-                <li class="nav-item">
-                    <router-link class="nav-link" to="/discover">Discover</router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link class="nav-link" to="/collection">Collection</router-link>
-                </li>
-                <!--<li class="nav-item">
-                <a class="nav-link" href="/hash">{{Auth::user()->getNavDisplayName()}}</a>
-              </li>-->
                 @if(Auth::user()->isAdmin())
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/dash">Admin</a>
                 </li>
                 @endif
+
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/collection">Collection</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/discover">Discover</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/playlists">Playlists</router-link>
+                </li>
+                <!--<li class="nav-item">
+                <a class="nav-link" href="/hash">{{Auth::user()->getNavDisplayName()}}</a>
+              </li>-->
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
