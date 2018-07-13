@@ -96,7 +96,7 @@ export default class YouTubeVideoPlayer {
     	video.player = new YTPlayer("#" + video.sessionId, video.options);
     	//load the iframe player
     	video.player.load(video.videoId);
-    	video.player.setVolume(this.volume);
+		video.player.setVolume(this.volume);
 
     	if(video.options.mute) {
     		video.player.mute();
@@ -107,8 +107,6 @@ export default class YouTubeVideoPlayer {
     		_.forEach(videoEvents, (event) => {
     			this.registerEvent(event.sessionId, event.eventType, event.callback);
     		})
-
-    		this.eventBacklog[sessionId] = [];
     	}
 
     	//set player state
@@ -119,7 +117,8 @@ export default class YouTubeVideoPlayer {
 		let video = this.findVideo(sessionId);
 
 		if(video.player) {
-			video.player.stop();
+			video.player.destroy();
+			video.player = false;
 		}
 	}
 
@@ -135,6 +134,7 @@ export default class YouTubeVideoPlayer {
 	}
 
 	playVideo(sessionId) {
+
 		let video = this.findVideo(sessionId);
 		if(!video) {
 			return false;
@@ -142,6 +142,7 @@ export default class YouTubeVideoPlayer {
 
 		if(!video.player) { 
 			//preload if not preloaded
+			console.log("loading video");
 			this.preloadVideo(sessionId);
 		}
 
@@ -149,10 +150,6 @@ export default class YouTubeVideoPlayer {
 		video.player.setVolume(this.volume);
 		video.player.play();
 		
-		this.registerEvent(sessionId, 'ended', () => {
-			//video.player.destroy();
-			video.player = false;
-		});
 
 		return true;
 	}

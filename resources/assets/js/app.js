@@ -29,6 +29,7 @@ Vue.use(VueScrollTo, {
 
 // Components
 Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
+Vue.component('youtube-card', require('./components/YouTubeCard.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
 Vue.component('control-bar', require('./components/ControlBar.vue'));
 // Forms

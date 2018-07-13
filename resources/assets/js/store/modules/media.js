@@ -168,7 +168,7 @@ const actions = {
 
     //play next video once ended
       videoPlayer.registerEvent(sessionId, ['ended'], () => {
-        consl('playing next');
+        console.log('playing next');
         const nextVideoIndex = getNextVideoId(state.index, sessionId);
         dispatch('play', nextVideoIndex);
       });
