@@ -42,3 +42,6 @@ Route::get('/media/remove', 'MediaAPIController@resolve');
 Route::get('/media/toss', 'MediaAPIController@resolve');
 Route::post('/media/add', 'MediaAPIController@resolve');
 Route::post('/media/search', 'MediaAPIController@resolve');
+
+//API
+Route::get('/playlists/collection/preview', 'API\PlaylistController@getCollectionPreview');
