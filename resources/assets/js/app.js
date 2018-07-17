@@ -28,6 +28,7 @@ Vue.use(VueScrollTo, {
 });
 
 // Components
+Vue.component('playlist-media-manager', require('./components/PlaylistMediaManager.vue'));
 Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
 Vue.component('youtube-card', require('./components/YouTubeCard.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
