@@ -2,7 +2,7 @@
     <div class="container-fluid">
       <div class="row">
         <!-- Preview Item -->
-        <div class="col-lg-2 mt-2 " v-for="item in previewItems" :key="item.id">
+        <div class="col-lg-2 mt-2 " v-for="item in items" :key="item.id">
           <div class="card">
             
             <div class="media-container">

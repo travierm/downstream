@@ -38,9 +38,9 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="/discover">Discover</router-link>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <router-link class="nav-link" to="/playlists">Playlists</router-link>
-                </li>
+                </li>-->
                 <!--<li class="nav-item">
                 <a class="nav-link" href="/hash">{{Auth::user()->getNavDisplayName()}}</a>
               </li>-->

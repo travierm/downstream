@@ -24,6 +24,8 @@
         </div>
       </div>
     </div>
+
+    <playlist-media-manager :items="previewItems"></playlist-media-manager>
   </div>
 </template>
 
