@@ -9,6 +9,8 @@ import UserProfile from './pages/user/profile';
 import PlaylistIndex from './pages/playlists/index';
 import PlaylistCreate from './pages/playlists/create';
 
+import MediaEdit from './pages/media/edit';
+
 Vue.use(VueRouter);
 
 /*
@@ -46,7 +48,13 @@ const routes = [
   	name:'userProfile',
   	path: '/user/:hash/profile', 
   	component: UserProfile
-  }
+	},
+	{
+		name:'mediaEdit',
+		path: '/media/edit/:id',
+		component: MediaEdit,
+		props: { id: false }
+	}
 ];
 
 export default new VueRouter({

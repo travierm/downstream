@@ -14,14 +14,15 @@ class CreateTagTables extends Migration
     public function up()
     {
     Schema::create('tags', function (Blueprint $table) {
-        $table->increments("tag_id");
+        $table->increments("id");
         $table->string("name")->distinct();
+        $table->timestamps();
     });
 
     Schema::create('media_tags', function (Blueprint $table) {
         $table->increments("id");
-        $table->foreign("media_id")->references('id')->on('media');
-        $table->foreign("tag_id")->references('tag_id')->on("tags");
+        $table->integer("media_id")->references('id')->on("media");
+        $table->integer("tag_id")->references('id')->on("tags");
     });
     }
 
@@ -32,6 +33,7 @@ class CreateTagTables extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('tags');
+        Schema::dropIfExists('media_tags');
     }
 }
