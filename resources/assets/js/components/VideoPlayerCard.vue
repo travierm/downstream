@@ -7,18 +7,15 @@
         <p class="flex">{{ media.id }}</p>
       </div>
 
+      <div class="float-left">
+      
+      </div>
+
       <div class="float-right">
+        <router-link class="btn btn-warning" :to="'/media/edit/' + media.id">Edit</router-link>
         <!-- <router-link class="d-inline-flex p-2" :to="media.user.profileLink">Discoverer:<span class="text-success">{{media.user.display_name }}</span></router-link> -->
         <a v-if="reference" :href="'/v/' + reference" class="btn btn-outline-primary">Reference</a>
-        <div  v-if="media.index" class="btn-group">
-          <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Links
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" :href="'/v/' + getVid">Direct Link</a>
-            <a v-if="media.user" class="dropdown-item" :href="media.user.profileLink">User Link</a>
-          </div>
-        </div>
+        <a class="btn btn-primary" :href="'/v/' + getVid">Direct Link</a>
         <button v-if="!videoCollected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="videoCollected" @click="toss" class="btn btn-success">Collected</button>
       </div>
@@ -142,7 +139,7 @@
           return window._authed;
         },
         isAdmin() {
-          return false;
+          return this.$store.getters['user/isAdmin'];
         },
         videoCollected() {
           return this.isCollected;

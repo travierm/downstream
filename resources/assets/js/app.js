@@ -33,6 +33,7 @@ Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
 Vue.component('youtube-card', require('./components/YouTubeCard.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
 Vue.component('control-bar', require('./components/ControlBar.vue'));
+Vue.component('raw-data-view', require('./components/RawDataView.vue'));
 // Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 
@@ -53,6 +54,9 @@ router.beforeEach((to, from, next) => {
 
   	next();
 });
+
+//get user info
+store.dispatch('user/getUserInfo');
 
 const app = new Vue({
   router,

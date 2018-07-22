@@ -3,6 +3,7 @@
 namespace App;
 
 use Auth;
+use App\MediaMeta;
 use App\UserMedia;
 use App\MediaRemoteReference;
 use Illuminate\Database\Eloquent\Model;
@@ -95,5 +96,16 @@ class Media extends Model
   public function getMeta()
   {
     return json_decode($this->meta);
+  }
+
+  public function getMetaAttribute($value) 
+  {
+    $meta = MediaMeta::findAndFormat($this->id);
+
+    if($meta) {
+      return $meta;
+    }
+
+    return $value;
   }
 }

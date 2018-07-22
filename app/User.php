@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'hash', 'display_name', 'email', 'password', 'api_token'
+        'hash', 'display_name', 'email', 'password', 'api_token', 'type'
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'api_token'
+        'password', 'remember_token', 'api_token', 'email'
     ];
 
     public function media()

@@ -44,4 +44,12 @@ Route::post('/media/add', 'MediaAPIController@resolve');
 Route::post('/media/search', 'MediaAPIController@resolve');
 
 //API
-Route::get('/playlists/collection/preview', 'API\PlaylistController@getCollectionPreview');
+Route::namespace('API')->group(function () {
+    //playlist
+    Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');
+    //media
+    Route::get('/media/{id}', 'MediaController@getMediaById');
+    //user
+    Route::get('/user/info', 'UserController@getUserInfo');
+});
+
