@@ -1,6 +1,7 @@
 <nav class="main-navbar navbar-expand-md navbar navbar-dark navbar-deco" style="background-color: #4a52e8;">
     <div class="container-fluid">
-        <a id="brand" class="navbar-brand" style="font-size:1.6em;" href="{{ url('/') }}">Downstream</a>
+        <a id="brand" class="navbar-brand" href="{{ url('/') }}">Downstream</a>
+        <a target="_blank" href="https://github.com/travierm/downstream"><img src={{asset("images/GitHub-Mark-Light-64px.png")}} width="32" height="32" alt=""></a>
         
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/all') }}">All</a>
+                    <a class="nav-link" href="{{ url('/all') }}">Front Page</a>
                 </li>
                 @if(!Auth::guest())
                 <li class="nav-item">
@@ -33,7 +34,7 @@
                 @endif
 
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/collection">Collection</router-link>
+                    <router-link class="nav-link text-lg" to="/collection">Collection</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link class="nav-link" to="/discover">Discover</router-link>
