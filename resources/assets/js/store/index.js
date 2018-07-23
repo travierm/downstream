@@ -6,6 +6,7 @@ import * as actions from './actions';
 
 // Modules
 import media from './modules/media';
+import player from './modules/player';
 import collection from './modules/collection';
 import user from './modules/user';
 
@@ -21,6 +22,7 @@ const state = {
 export default new Vuex.Store({
   modules: {
     user,
+    player,
     media,
     collection
   },

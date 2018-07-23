@@ -22,9 +22,9 @@
       </div>
     </div>
 
-    <div v-if="!playing" :id="this.id + '_media'" class="media-container">
+    <div v-if="!playing" :id="this.sessionId + '_media'" class="media-container">
 
-      <img  v-on:click="play" :id="this.id + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
+      <img  v-on:click="$store.dispatch('player/play', sessionId)" :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
       <div class="col">
         <div class="col-sm-12">
           <p style="color:white;">{{ title }}</p>
@@ -32,7 +32,7 @@
       </div>
     </div>
     <!-- YouTube Player -->
-    <div class="video-instance border-success" :id="this.id"></div>
+    <div class="video-instance border-success" :id="this.sessionId"></div>
   </div>
 </template>
 
@@ -55,9 +55,11 @@
 
     let data = () => {
       return {
-         id: SID.generate(),
-         playing: false,
-         player: false
+        sessionId: SID.generate(),
+        playing: false,
+        player: false,
+        showThumbnail: true,
+        showVideo: false
       }
     }
 
@@ -82,20 +84,33 @@
        * @EVENT mounted
        */
       mounted() {
-
+        this.registerWithPlayer();
       },
       methods: {
+        /**
+         * Register With Player
+         * 
+         * passes item info to player to we can do things like play next track
+         */
+        registerWithPlayer() {
+          this.$store.dispatch('player/register', {
+            sessionId: this.sessionId,
+            media: this.getMediaMeta(),
+            callbackHandler: this.parentActionHandler
+          })
+        },
         /**
          * Load Video
          * doing loading of video so it can play
          */
         loadVideo() {
           const options = {
-            height: $(`#${this.id}_media`).height(),
-            width: $(`#${this.id}_media`).width()
+            volume: 5,
+            height: $(`#${this.sessionId}_media`).height(),
+            width: $(`#${this.sessionId}_media`).width()
           };
 
-          let player = new YTPlayer("#" + this.id, options);
+          let player = new YTPlayer("#" + this.sessionId, options);
           player.load(this.videoId);
 
           this.player = player;
@@ -111,6 +126,16 @@
 
           this.player.play();
           this.playing = true;
+
+          this.toggleThumbnail(false);
+          this.toggleVideo(true);
+        },
+        pause() {
+          this.player.pause();
+          this.playing = false;
+
+          this.toggleThumbnail(true);
+          this.toggleVideo(false);
         },
         /**
         * Discover
@@ -145,6 +170,33 @@
           
           this.isCollected = false;
         },
+        getMediaMeta() {
+          return {
+            title: this.title,
+            mediaId: this.mediaId,
+            videoId: this.videoId,
+            thumbnail: this.thumbnail
+          }
+        },
+        parentActionHandler(callback) {
+          let self = this;
+
+          callback(self);
+        },
+        toggleThumbnail(bool) {
+          if(bool) {
+            $("#" + this.sessionId + "_thumbnail").show();
+          }else{
+            $("#" + this.sessionId + "_thumbnail").hide();
+          }
+        },
+        toggleVideo(bool) {
+          if(bool) {
+            $("#" + this.sessionId).show();
+          }else{
+            $("#" + this.sessionId).hide();
+          }
+        }
       }
     }
 </script>

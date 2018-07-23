@@ -54,25 +54,4 @@
 </script>
 
 <style>
-
-.media-container {
-  position: relative;
-} 
-.media-container .media-info {
-  position: absolute; 
-  z-index: 1; 
-  top: 0; 
-  left: 0; 
-  color: white; 
-  margin-top: 10px;
-}
-
-.media-image:hover {
-  -webkit-filter: brightness(25%);
-  -webkit-transition: all 0.1s ease;
-  -moz-transition: all 0.1s ease;
-  -o-transition: all 0.1s ease;
-  -ms-transition: all 5.5s ease;
-  transition: all 0.1s ease;
-}
 </style>
