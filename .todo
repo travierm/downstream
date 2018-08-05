@@ -1,21 +1,4 @@
-☐ Master Playbar & Media Service
-☐ Move to Media playing with type resolution
-☐
-☐
-☐
-☐
+Working On:
 
--Master Playbar
-
--Media Service
-Types:
-YouTube
-Soundcloud
-
-GET	  /nerds	index	nerds.index
-GET	  /nerds/create	create	nerds.create
-POST	/nerds	store	nerds.store
-GET	  /nerds/{id}	show	nerds.show
-GET	  /nerds/{id}/edit	edit	nerds.edit
-PUT/PATCH	/nerds/{id}	update	nerds.update
-DELETE	/nerds/{id}	destroy	nerds.destroy
+Collection 2 and Player Module
+Working on continous play

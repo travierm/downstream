@@ -12,6 +12,7 @@
         "test": "./node_modules/.bin/jest"
     },
     "jest": {
+        "testEnvironment": "node",
         "roots": [
             "<rootDir>/resources/assets/js/"
         ],
@@ -28,7 +29,7 @@
         }
     },
     "devDependencies": {
-        "@vue/test-utils": "^1.0.0-beta.20",
+        "@vue/test-utils": "^1.0.0-beta.24",
         "axios": "^0.16.2",
         "babel-jest": "^22.4.4",
         "bootstrap-vue": "^2.0.0-rc.11",
@@ -36,11 +37,11 @@
         "jest": "^22.4.4",
         "jest-vue-preprocessor": "^1.4.0",
         "jquery": "^3.3.1",
-        "jsdom": "^11.11.0",
+        "jsdom": "^11.12.0",
         "laravel-mix": "^1.7.2",
         "lodash": "^4.17.10",
         "mobile-detect": "^1.4.2",
-        "popper.js": "^1.14.3",
+        "popper.js": "^1.14.4",
         "purify-css": "^1.2.6",
         "purifycss-webpack": "^0.7.0",
         "shortid": "^2.2.8",
@@ -49,7 +50,7 @@
         "vue-class-component": "^5.0.2",
         "vue-router": "^3.0.1",
         "vue-scrollto": "^2.11.0",
-        "vue-server-renderer": "^2.5.16",
+        "vue-server-renderer": "^2.5.17",
         "vue-template-compiler": "2.5.3",
         "vue-test-utils": "^1.0.0-beta.11",
         "vuex": "^3.0.1",

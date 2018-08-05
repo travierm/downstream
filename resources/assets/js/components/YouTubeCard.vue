@@ -96,7 +96,7 @@
           this.$store.dispatch('player/register', {
             sessionId: this.sessionId,
             media: this.getMediaMeta(),
-            callbackHandler: this.parentActionHandler
+            callbackHandler: this.parentCallbackHandler
           })
         },
         /**
@@ -178,7 +178,7 @@
             thumbnail: this.thumbnail
           }
         },
-        parentActionHandler(callback) {
+        parentCallbackHandler(callback) {
           let self = this;
 
           callback(self);

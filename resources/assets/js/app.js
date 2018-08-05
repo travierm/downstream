@@ -34,7 +34,6 @@ Vue.component('youtube-card', require('./components/YouTubeCard.vue'));
 Vue.component('master-bar', require('./components/MasterBar.vue'));
 Vue.component('control-bar', require('./components/ControlBar.vue'));
 Vue.component('raw-data-view', require('./components/RawDataView.vue'));
-Vue.component('seed-finder-view', require('./components/SeedFinderView.vue'));
 // Forms
 Vue.component('import-form', require('./forms/Import.vue'));
 

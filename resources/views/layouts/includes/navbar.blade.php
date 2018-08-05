@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/all') }}">Front Page</a>
+                    <a class="nav-link" href="{{ url('/all') }}">Global</a>
                 </li>
                 @if(!Auth::guest())
                 <li class="nav-item">
