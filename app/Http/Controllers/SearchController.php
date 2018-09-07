@@ -25,7 +25,7 @@ class SearchController extends Controller
   {
     $query = $req->input('query');
 
-    $limit = 8;
+    $limit = 17;
     $results = YouTubeV2::search($query, $limit);
 
 

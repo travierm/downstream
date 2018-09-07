@@ -15,6 +15,9 @@ const actions = {
     register({ commit }, item) {
         commit(types.PLAYER_REGISTER_ITEM, item)
     },
+    deregister({ commit }, item) {
+        
+    },
     updateCurrent({ commit, state }, sessionId) {
         const previousCurrentId = state.currentId;
 
@@ -66,8 +69,6 @@ const actions = {
             dispatch('playCurrent');
             return true;
         }
-
-
     }
 };
 
@@ -101,7 +102,7 @@ function findBySessionId(items, sessionId) {
 
 function arrayNextIndex(array, currentIndex, direction = "+") {
     if(direction !== "+" || direction !== "-") {
-        throw new Error("Direction param must be + for forward or - for backward. Neither is being used.");
+        throw new Error("Direction param must be + for forward or - for backward. Neither is given.");
     }
 
     const arrayLength = array.length;

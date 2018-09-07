@@ -1,16 +1,17 @@
 
 <template>
   <div class="container-fluid" style="margin-top: 15px;">
-    <!--<div class="row">
+    <div class="row">
       <div class="col-lg-6 mb-2">
         <input class="form-control" v-model="searchQuery" type="search" placeholder="Search..." />
       </div>
-    </div>-->
+    </div>
 
     <div class="row">
       <div class="col-lg-3 col-md-12 col-sm-12" v-for="media in filteredVideos" :key="media.id">
         <youtube-card
             :videoId="media.index"
+            :title="media.meta.title"
             :thumbnail="media.meta.thumbnail"
             :collected="media.collected"
         />
@@ -42,8 +43,8 @@
   export default {
     data() {
       return {
-        emptyCollection: false,
-        searchQuery:""
+        searchQuery:"",
+        emptyCollection: false
       };
     },
     created() {

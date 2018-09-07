@@ -1,7 +1,6 @@
 import Utils from './services/Utils.js';
 import MobileDetect from 'mobile-detect';
 window._ = require('lodash');
-window._utils = new Utils;
 
 const md = new MobileDetect(window.navigator.userAgent);
 window._isMobile = md.mobile();
