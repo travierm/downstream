@@ -18,7 +18,7 @@ describe('Global Functions', () => {
         expect(arrayNextIndex(array, "A", "-", 2)).toBe("C");
         expect(arrayNextIndex(array, "B", "+", 3)).toBe("A");
 
-        //test error handling for bad index
+        //test error handling for bad index /force travis ci test
         expect(() => {
             arrayNextIndex(array, "J", "+")
         }).toThrow();
