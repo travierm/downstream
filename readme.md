@@ -21,30 +21,35 @@ https://downstream.us
 - YouTube API key for search **required**
 - Spotify API key for recommendations and discovery **not required**
 
-```bash
+```php
+//clone downstream repo
 git clone https://github.com/Travier/downstream downstream
 cd downstream
+
 // copy new .env for laravel install
 cp .env.example .env
+
+//install PHP deps
 composer install
+
 //setup .env with mysql connection then run migrate to install tables
 php artisn migrate
+
 //start php dev server or use (apache, nginx) to run laravel folder
 php artisan serve
+
 // start javascipt hot reload and babel compiler
 npm run hot // or 'npm run prod' to make static js,css files with cache busting
-// you're good to go!
 ```
 
 
 ## Design Concepts
-DS => Downstream
 
-**Media** DS isn't exclusively music so we refer to individual audio tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
+**Media** Downstream isn't exclusively music so we refer to individual audio tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
 
-**Discovery** No items exist on DS until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on DS until a user collects them and they will be processed as an official media item.
+**Discovery** No items exist on Downstream until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on Downstream until a user collects them and they will be processed as an official media item.
 
-**Collecting** Users can collect any item available to DS. It will then be displayed in their collection page.
+**Collecting** Users can collect any item available to Downstream. It will then be displayed in their collection page.
 
 **Tossing** Tossing items remove them from a users collections but will keep the item for others to collect.
 
