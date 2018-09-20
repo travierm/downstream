@@ -3,9 +3,11 @@
 
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
-      <div v-if="false">
-        <p class="flex">{{ media.id }}</p>
+      <div class="float-left">
+        <p>SessionID=>{{ sessionId }}</p>
       </div>
+
+
 
       <div class="float-right">
         <div v-if="mediaId" class="btn-group">
@@ -17,7 +19,7 @@
             <a  class="dropdown-item" >User Link</a>
           </div>
         </div>
-        <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
+        <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collectx</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
@@ -42,9 +44,11 @@
     import YTPlayer from 'yt-player';
 
     let Utils = window._utils;
+    window.ytp = YTPlayer;
 
     //Component Props
     const props = {
+      sessionId: String,
       mediaId: Number,
       videoId: String,
       title: String,
@@ -55,7 +59,6 @@
 
     let data = () => {
       return {
-        sessionId: SID.generate(),
         playing: false,
         player: false,
         showThumbnail: true,
@@ -84,7 +87,10 @@
        * @EVENT mounted
        */
       mounted() {
-        this.registerWithPlayer();
+        this.playerRegister();
+      },
+      destroyed() {
+        //this.playerDeregister();
       },
       methods: {
         /**
@@ -92,8 +98,15 @@
          * 
          * passes item info to player to we can do things like play next track
          */
-        registerWithPlayer() {
+        playerRegister() {
           this.$store.dispatch('player/register', {
+            sessionId: this.sessionId,
+            media: this.getMediaMeta(),
+            callbackHandler: this.parentCallbackHandler
+          })
+        },
+        playerDeregister() {
+          this.$store.dispatch('player/deregister', {
             sessionId: this.sessionId,
             media: this.getMediaMeta(),
             callbackHandler: this.parentCallbackHandler
@@ -109,6 +122,11 @@
             height: $(`#${this.sessionId}_media`).height(),
             width: $(`#${this.sessionId}_media`).width()
           };
+
+          if(!$('#' + this.sessionId)) {
+            console.log("cant load " + sessionId + " because dom element is not attached");
+            return;
+          }
 
           let player = new YTPlayer("#" + this.sessionId, options);
           player.load(this.videoId);
@@ -126,6 +144,10 @@
 
           this.player.play();
           this.playing = true;
+
+          this.player.on('ended', () => {
+            this.$store.dispatch('player/indexStepForward');
+          })
 
           this.toggleThumbnail(false);
           this.toggleVideo(true);

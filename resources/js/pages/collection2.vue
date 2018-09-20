@@ -8,12 +8,13 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-3 col-md-12 col-sm-12" v-for="media in filteredVideos" :key="media.id">
+      <div class="col-lg-3 col-md-12 col-sm-12" v-for="item in filteredVideos" :key="item.id">
         <youtube-card
-            :videoId="media.index"
-            :title="media.meta.title"
-            :thumbnail="media.meta.thumbnail"
-            :collected="media.collected"
+            :sessionId="item.sessionId"
+            :videoId="item.index"
+            :title="item.meta.title"
+            :thumbnail="item.meta.thumbnail"
+            :collected="item.collected"
         />
       </div>
     </div>
@@ -64,8 +65,8 @@
     },
     watch: {
       'searchQuery':function() {
-        this.$store.dispatch('media/indexClear');
-        this.$store.dispatch('media/indexReplace', _.map(this.filteredVideos, 'sessionId'));
+        console.log(this.filteredVideos);
+        this.$store.dispatch('player/indexReplace', _.map(this.filteredVideos, 'index'));
       }
     },
     computed: {

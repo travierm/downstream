@@ -1,4 +1,5 @@
 /* global _ */
+import SID from 'shortid';
 import * as types from '../mutation-types';
 
 const state = {
@@ -47,6 +48,12 @@ const mutations = {
     state.collectionAccess = status;
   },
   [types.COLLECTION_UPDATE](state, items) {
+    _.map(items, (item) => {
+      item.sessionId = SID.generate();
+
+      return item;
+    });
+
     state.items = items;
   },
   [types.COLLECTION_TOSS](state, mediaId) {

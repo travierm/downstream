@@ -16,7 +16,7 @@ const actions = {
         commit(types.PLAYER_REGISTER_ITEM, item)
     },
     deregister({ commit }, item) {
-        
+        commit(types.PLAYER_DEREGISTER_ITEM, item)
     },
     updateCurrent({ commit, state }, sessionId) {
         const previousCurrentId = state.currentId;
@@ -26,7 +26,12 @@ const actions = {
             let item = findBySessionId(state.items, previousCurrentId);
 
             item.callbackHandler((video) => {
-                video.pause();
+                console.log("updated current pause")
+                try {
+                    video.pause();
+                } catch (error) {
+                    
+                }
             });
         }
 
@@ -57,11 +62,12 @@ const actions = {
     },
     indexStepForward({ state, dispatch }) {
         if(!state.currentId) {
-
             dispatch('updateCurrent', state.index[0]);
             dispatch('playCurrent');
             return true;
         }
+
+        arrayNextIndex(state.index, state.currentId, "+");
     },
     indexStepBackward({ state }) {
         if(!state.currentId) {
@@ -69,6 +75,9 @@ const actions = {
             dispatch('playCurrent');
             return true;
         }
+    },
+    indexReplace({ commit, state }, sessionIndex) {
+        commit(types.PLAYER_INDEX_REPLACE, sessionIndex);
     }
 };
 
@@ -81,8 +90,15 @@ const mutations = {
         state.items.push(item);
         state.index.push(item.sessionId);
     },
+    [types.PLAYER_DEREGISTER_ITEM](state, item) {
+        _.remove(state.items, item);
+        _.remove(state.index, item.sessionId);
+    },
     [types.PLAYER_UPDATE_CURRENT](state, sessionId) {
         state.currentId = sessionId;
+    },
+    [types.PLAYER_INDEX_REPLACE](state, newIndex) {
+        state.index = newIndex;
     }
 };
 
@@ -101,13 +117,11 @@ function findBySessionId(items, sessionId) {
 }
 
 function arrayNextIndex(array, currentIndex, direction = "+") {
-    if(direction !== "+" || direction !== "-") {
+    if(direction !== "+" && direction !== "-") {
         throw new Error("Direction param must be + for forward or - for backward. Neither is given.");
     }
 
     const arrayLength = array.length;
-    for(var i = 0; i <= index.length; i++) {
-
-    }
-
+    const indexPlace = _.findIndex(array, currentIndex);
+    console.log(indexPlace);
 }
