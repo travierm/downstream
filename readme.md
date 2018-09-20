@@ -15,7 +15,8 @@ https://downstream.us
 
 ## Setup for Development
 ### Requirements
-- PHP 7.0 or > with Composer package management
+- PHP 7.0 or greater
+- Composer PHP package manager
 - MySQL Database
 - NodeJS
 - YouTube API key for search **required**
