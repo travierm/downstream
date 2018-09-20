@@ -33,10 +33,10 @@ cp .env.example .env
 //install PHP deps
 composer install
 
-//setup .env with mysql connection then run migrate to install tables
+//setup .env with mysql connection then run migrate to create tables
 php artisan migrate
 
-//start php dev server or use (apache, nginx) to run laravel folder
+//start php dev server
 php artisan serve
 
 // start javascipt hot reload and babel compiler
