@@ -16,7 +16,7 @@
     "jest": {
         "testEnvironment": "node",
         "roots": [
-            "<rootDir>/resources/assets/js/"
+            "<rootDir>/resources/js/"
         ],
         "moduleNameMapper": {
             "^vue$": "vue/dist/vue.common.js"
