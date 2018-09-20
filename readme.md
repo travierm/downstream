@@ -34,7 +34,7 @@ cp .env.example .env
 composer install
 
 //setup .env with mysql connection then run migrate to install tables
-php artisn migrate
+php artisan migrate
 
 //start php dev server or use (apache, nginx) to run laravel folder
 php artisan serve
