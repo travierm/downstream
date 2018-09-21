@@ -65,8 +65,9 @@
     },
     watch: {
       'searchQuery':function() {
-        console.log(this.filteredVideos);
-        this.$store.dispatch('player/indexReplace', _.map(this.filteredVideos, 'index'));
+        //console.log(this.filteredVideos);
+        let indexes =  _.map(this.filteredVideos, 'sessionId');
+        this.$store.dispatch('player/indexReplace', indexes);
       }
     },
     computed: {

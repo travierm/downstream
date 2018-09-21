@@ -35,7 +35,7 @@
     }),
     computed: {
       currentCardId() {
-        return "#" + this.$store.state.media.current + "-card";
+        return "#" + this.$store.state.player.currentId + "_card";
       },
       isPlaying() {
         return this.$store.getters['media/isPlaying'];
@@ -48,13 +48,6 @@
       shuffleIndex() {
         this.$store.dispatch('media/indexShuffle');
       },
-      focusOnCurrent() {
-        let sessionId = this.$store.state.media.current;
-
-        $('html, body').animate({
-        scrollTop: $("#" + sessionId + "-card").offset().top
-        }, 1000);
-      },
       pause() {
         this.playing = false;
         this.$store.dispatch('media/pause');
@@ -65,16 +58,16 @@
         this.$store.dispatch('media/startQueue');
       },
       updateVolume(event) {
-        this.$store.dispatch('media/updateVolume', event.target.value);
+        this.$store.dispatch('player/updateVolume', event.target.value);
       },
       play() {
         this.playing = true;
 
-        if(!this.$store.state.media.current) {
-          return this.startQueue();
+        if(!this.$store.state.player.currentId) {
+          this.$store.dispatch('player/indexStepForward');
         }
         
-        this.$store.dispatch('media/play');
+        this.$store.dispatch('player/playCurrent');
       },
       playPrevious() {
         this.$store.dispatch('player/indexStepForward');

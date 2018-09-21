@@ -1,11 +1,15 @@
 //Media Player Engine
 import _ from 'lodash';
 import * as types from '../mutation-types';
+import cache from '../../services/Cache';
+import { arrayNextIndex } from '../../services/Utils';
 
 const state = {
     index: [],
     items: [],
-    currentId: false
+    currentId: false,
+    volume: cache.get('mediaPlayerVolume', 100),
+    playing: false
 };
 
 const getters = {
@@ -17,6 +21,18 @@ const actions = {
     },
     deregister({ commit }, item) {
         commit(types.PLAYER_DEREGISTER_ITEM, item)
+    },
+    updateVolume({ commit, state }, volume) {
+        //update state
+        commit(types.PLAYER_UPDATE_VOLUME, volume);
+
+        if(state.currentId) {
+            let media = findBySessionId(state.items, state.currentId);
+
+            media.callbackHandler((self) => {
+                self.play(state.volume);
+            })
+        }
     },
     updateCurrent({ commit, state }, sessionId) {
         const previousCurrentId = state.currentId;
@@ -43,7 +59,7 @@ const actions = {
         dispatch('updateCurrent', sessionId);
 
         item.callbackHandler((self) => {
-            self.play();
+            self.play(state.volume);
         })
     },
     playCurrent({ state }) {
@@ -56,9 +72,8 @@ const actions = {
         let media = findBySessionId(state.items, currentId);
 
         media.callbackHandler((self) => {
-            self.play();
+            self.play(state.volume);
         })
-
     },
     indexStepForward({ state, dispatch }) {
         if(!state.currentId) {
@@ -67,7 +82,9 @@ const actions = {
             return true;
         }
 
-        arrayNextIndex(state.index, state.currentId, "+");
+        const nextIndex = arrayNextIndex(state.index, state.currentId, "+");
+        dispatch('updateCurrent', nextIndex);
+        dispatch('playCurrent');
     },
     indexStepBackward({ state }) {
         if(!state.currentId) {
@@ -75,6 +92,10 @@ const actions = {
             dispatch('playCurrent');
             return true;
         }
+
+        const nextIndex = arrayNextIndex(state.index, state.currentId, "-");
+        dispatch('updateCurrent', nextIndex);
+        dispatch('playCurrent');
     },
     indexReplace({ commit, state }, sessionIndex) {
         commit(types.PLAYER_INDEX_REPLACE, sessionIndex);
@@ -97,8 +118,14 @@ const mutations = {
     [types.PLAYER_UPDATE_CURRENT](state, sessionId) {
         state.currentId = sessionId;
     },
+    [types.PLAYER_PLAYING](state, status) {
+        state.playing = status;
+    },
     [types.PLAYER_INDEX_REPLACE](state, newIndex) {
         state.index = newIndex;
+    },
+    [types.PLAYER_UPDATE_VOLUME](state, volume) {
+        state.volume = volume;
     }
 };
 
@@ -114,14 +141,4 @@ function findBySessionId(items, sessionId) {
     return _.find(items, {
         sessionId: sessionId
     });
-}
-
-function arrayNextIndex(array, currentIndex, direction = "+") {
-    if(direction !== "+" && direction !== "-") {
-        throw new Error("Direction param must be + for forward or - for backward. Neither is given.");
-    }
-
-    const arrayLength = array.length;
-    const indexPlace = _.findIndex(array, currentIndex);
-    console.log(indexPlace);
 }

@@ -22,7 +22,11 @@
     <div class="row">
     @foreach($toplist as $item)
       <div class="col-md-4">
-        <video-player-card collected="{{ $item->didCollect }}" spotify-id="{{ $item->source_id }}" vid="{{ $item->index }}" title="{{ $item->title }}" thumbnail="{{ $item->thumbnail }}"></video-player-card>
+        <youtube-card 
+          video-id="{{ $item->index }}"
+          thumbnail="{{ $item->meta['thumbnail'] }}"
+          >
+        </youtube-card>
       </div>
     @endforeach
     </div>
@@ -30,7 +34,13 @@
     <div class="row" style="margin-top: 15px;">
     	@foreach($videos as $media)
     	<div class="col-md-4">
-        <video-player-card :media="{{ $media }}"></video-player-card>
+        <youtube-card 
+          :videoId="item->index"
+          :title="item->meta->title"
+          :thumbnail="item->meta->thumbnail"
+          :collected="item->collected"
+        >
+        </youtube-card>
       </div>
       @endforeach
     </div>

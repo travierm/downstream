@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ card: true , 'border-info': false, 'mx-auto': true }">
+  <div :id="this.sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
 
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
@@ -34,7 +34,7 @@
       </div>
     </div>
     <!-- YouTube Player -->
-    <div class="video-instance border-success" :id="this.sessionId"></div>
+    <div class="video-instance border-success" :id="sessionId"></div>
   </div>
 </template>
 
@@ -42,6 +42,7 @@
     import $ from 'jquery';
     import SID from 'shortid';
     import YTPlayer from 'yt-player';
+    import { generateElementId } from '../services/Utils';
 
     let Utils = window._utils;
     window.ytp = YTPlayer;
@@ -99,6 +100,10 @@
          * passes item info to player to we can do things like play next track
          */
         playerRegister() {
+          if(!this.sessionId) {
+            this.sessionId = generateElementId();
+          }
+
           this.$store.dispatch('player/register', {
             sessionId: this.sessionId,
             media: this.getMediaMeta(),
@@ -117,18 +122,19 @@
          * doing loading of video so it can play
          */
         loadVideo() {
+          const elementId = "#" + this.sessionId.replace(/["\\]/g, '\\$&');
           const options = {
             volume: 5,
             height: $(`#${this.sessionId}_media`).height(),
             width: $(`#${this.sessionId}_media`).width()
           };
 
-          if(!$('#' + this.sessionId)) {
+          /*if(!document.querySelector(elementId)) {
             console.log("cant load " + sessionId + " because dom element is not attached");
             return;
-          }
+          }*/
 
-          let player = new YTPlayer("#" + this.sessionId, options);
+          let player = new YTPlayer($(elementId)[0], options);
           player.load(this.videoId);
 
           this.player = player;
@@ -137,12 +143,14 @@
          * Play
          * triggered by clicking thumbnail
          */
-        play() {
+        play(volume) {
           if(!this.player) {
             this.loadVideo();
           }
-
+          
+          this.player.setVolume(volume);
           this.player.play();
+
           this.playing = true;
 
           this.player.on('ended', () => {

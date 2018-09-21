@@ -1,6 +1,9 @@
 /* global _ */
 import SID from 'shortid';
+import { generateElementId } from '../../services/Utils';
 import * as types from '../mutation-types';
+
+SID.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
 
 const state = {
   collectionAccess: true,
@@ -49,8 +52,7 @@ const mutations = {
   },
   [types.COLLECTION_UPDATE](state, items) {
     _.map(items, (item) => {
-      item.sessionId = SID.generate();
-
+      item.sessionId = generateElementId();
       return item;
     });
 
