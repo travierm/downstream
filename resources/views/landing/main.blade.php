@@ -24,7 +24,9 @@
       <div class="col-md-4">
         <youtube-card 
           video-id="{{ $item->index }}"
-          thumbnail="{{ $item->meta['thumbnail'] }}"
+          :media-id="{{ $item->id }}"
+          thumbnail="{{ $item->thumbnail }}"
+          title="{{ $item->title }}"
           >
         </youtube-card>
       </div>
@@ -47,5 +49,5 @@
   @endif
 </div>
 
-<master-bar></master-bar>
+<control-bar></control-bar>
 @endsection

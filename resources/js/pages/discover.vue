@@ -9,12 +9,12 @@
 		<div class="row" v-if="items.length >= 1">
 
 			<div v-for="item in items" :key="item.id" class="col-lg-3 col-md-6 col-sm-12">
-		        <video-player-card 
+		        <youtube-card 
 		          :spotifyId="item.source_id" 
-		          :vid="item.index" 
+		          :video-id="item.index" 
 		          :title="item.title" 
 		          :thumbnail="item.thumbnail">
-		        </video-player-card>
+		        </youtube-card>
       		</div>
 		</div>
 
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<master-bar></master-bar>
+		<control-bar></control-bar>
 	</div>
 </template>
 

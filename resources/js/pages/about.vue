@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  import { numberWithCommas } from '../services/Utils';
 
   export default {
     data() {
@@ -35,10 +36,10 @@
     },
     computed: {
       itemCountWithCommas() {
-        return window._utils.numberWithCommas(this.itemCount);
+        return numberWithCommas(this.itemCount);
       },
       userCountWithCommas() {
-        return window._utils.numberWithCommas(this.userCount);
+        return numberWithCommas(this.userCount);
       }
     },
     mounted() {

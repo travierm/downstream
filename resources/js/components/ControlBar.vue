@@ -38,24 +38,16 @@
         return "#" + this.$store.state.player.currentId + "_card";
       },
       isPlaying() {
-        return this.$store.getters['media/isPlaying'];
+        return this.$store.getters['player/isPlaying'];
       },
       volume() {
-        return this.$store.getters['media/playerVolumeLevel'];
+        return this.$store.getters['player/getVolume'];
       }
     },
     methods: {
-      shuffleIndex() {
-        this.$store.dispatch('media/indexShuffle');
-      },
       pause() {
         this.playing = false;
-        this.$store.dispatch('media/pause');
-      },
-      startQueue() {
-        this.playing = true;
-        this.startedQueue = true;
-        this.$store.dispatch('media/startQueue');
+        this.$store.dispatch('player/pauseCurrent');
       },
       updateVolume(event) {
         this.$store.dispatch('player/updateVolume', event.target.value);
@@ -70,7 +62,7 @@
         this.$store.dispatch('player/playCurrent');
       },
       playPrevious() {
-        this.$store.dispatch('player/indexStepForward');
+        this.$store.dispatch('player/indexStepBackward');
       },
       playNext() {
         this.$store.dispatch('player/indexStepForward');

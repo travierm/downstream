@@ -7,7 +7,14 @@
   <div class="row">
     @foreach($row['media'] as $media)
     <div class="col-lg-3 col-md-6 col-sm-12">
-      <video-player-card :media="{{ $media }}"></video-player-card>
+      <youtube-card 
+        spotify-id="{{ $media->source_id }}" 
+        video-id="{{ $media->index }}" 
+        title="{{ $media->meta->title }}" 
+        thumbnail="{{ $media->meta->thumbnail }}"
+        @if($media->collected) :collected="{{ $media->collected }}" @endif
+        >
+      </youtube-card>
     </div>
     @endforeach
   </div>
@@ -22,6 +29,6 @@
   </div> 
   @endif
 
-  <master-bar></master-bar>
+  <control-bar></control-bar>
 </div>
 @endsection

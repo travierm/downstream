@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import CollectionPage from './pages/collection';
+//import CollectionPage from './pages/collection';
 import Collection2 from './pages/collection2';
 //import SearchPage from './pages/search';
 import DiscoverPage from './pages/discover';
@@ -28,7 +28,7 @@ const routes = [
   { 
   	name:'collection',
   	path: '/collection', 
-  	component: CollectionPage 
+  	component: Collection2 
   },
   { 
 	name:'collection2',

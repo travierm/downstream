@@ -20,10 +20,19 @@
     @if(@$videos)
       @foreach($videos as $video)
       <div class="col-lg-3 col-md-12 col-sm-12 pushFromTop">
-        <video-player-card @if($video->id) media-id="{{$video->id}}" @endif title="{{$video->title}}" collected="{{$video->collected}}" vid={{$video->vid}} thumbnail={{$video->thumbnail}} :ignore-bad-thumbnail="true" ></video-player-card>
+        <youtube-card 
+          @if($video->id) :media-id="{{$video->id}}" @endif 
+          title="{{$video->title}}"
+          @if($video->collected) :collected="{{$video->collected}}" @endif
+          video-id={{$video->vid}} 
+          thumbnail={{$video->thumbnail}}
+          >
+        </video-player-card>
       </div>
       @endforeach
     @endif
   </div>
+
+  <control-bar></control-bar>
 </div>
 @endsection

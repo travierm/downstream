@@ -10,6 +10,7 @@
     <div class="row">
       <div class="col-lg-3 col-md-12 col-sm-12" v-for="item in filteredVideos" :key="item.id">
         <youtube-card
+            :media-id="item.id"
             :sessionId="item.sessionId"
             :videoId="item.index"
             :title="item.meta.title"

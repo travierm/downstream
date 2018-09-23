@@ -1,9 +1,10 @@
 <template>
-  <div :id="this.sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
+  <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
 
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
-      <div class="float-left">
+      <!-- @DEBUG -->
+      <div v-if="false" class="float-left">
         <p>SessionID=>{{ sessionId }}</p>
       </div>
 
@@ -11,15 +12,11 @@
 
       <div class="float-right">
         <div v-if="mediaId" class="btn-group">
-          <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Links
+          <button v-on:click="directLink" type="button" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
+            Direct Link
           </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" :href="'/v/' + getVid">Direct Link</a>
-            <a  class="dropdown-item" >User Link</a>
-          </div>
         </div>
-        <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collectx</button>
+        <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
       </div>
     </div>
@@ -49,7 +46,11 @@
 
     //Component Props
     const props = {
-      sessionId: String,
+      sessionId: {
+        type: String,
+        default: () => { return generateElementId() }
+      },
+      spotifyId: String,
       mediaId: Number,
       videoId: String,
       title: String,
@@ -101,7 +102,7 @@
          */
         playerRegister() {
           if(!this.sessionId) {
-            this.sessionId = generateElementId();
+            //this.sessionId = generateElementId();
           }
 
           this.$store.dispatch('player/register', {
@@ -175,13 +176,13 @@
         discover() {
           this.$store.dispatch('collection/discover', {
             type: 'youtube',
-            videoId: this.getVid,
+            videoId: this.videoId,
             spotifyId: this.spotifyId
           }).then((err, resp) => {
-            this.isCollected = true;
-            this.$store.dispatch('media/getCollection');
+            this.collected = true;
+            this.$store.dispatch('collection/update');
           }, (err) => {
-            this.isCollected = false;
+            this.collected = false;
             $('#modals').show();
             this.$root.$emit('bv::show::modal','registerModal')
           });
@@ -193,12 +194,12 @@
         toss() {
           this.$store.dispatch('collection/toss', {
             type: 'youtube',
-            mediaId: this.media.id,
+            mediaId: this.mediaId
           }).then((resp) => {
             this.$emit('tossed');
           });
           
-          this.isCollected = false;
+          this.collected = false;
         },
         getMediaMeta() {
           return {
@@ -207,6 +208,10 @@
             videoId: this.videoId,
             thumbnail: this.thumbnail
           }
+        },
+        directLink() {
+          console.log("CALLED");
+          window.location.href = "/v/" + this.videoId;
         },
         parentCallbackHandler(callback) {
           let self = this;

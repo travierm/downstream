@@ -23,7 +23,12 @@
       <meta property="og:description" content="Listen now on Downstream!" />
 	  @endsection
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12" style="margin-top: 15px;">
-      <video-player-card autoplay="true" :media="{{ $media }}"></video-player-card>
+      <youtube-card 
+          spotify-id="{{ $media->source_id }}" 
+          video-id="{{ $media->index }}" 
+          title="{{ $media->title }}" 
+          thumbnail="{{ $media->meta->thumbnail }}">
+        </youtube-card>
     </div>
     @else
     <div class="alert alert-danger col-lg-6" role="alert">
@@ -42,12 +47,17 @@
   <div class="row">
     @foreach($recommendations as $item)
       <div class="col-lg-3 col-md-6 col-sm-12">
-        <video-player-card spotify-id="{{ $item->source_id }}" vid="{{ $item->index }}" title="{{ $item->title }}" thumbnail="{{ $item->thumbnail }}"></video-player-card>
+        <youtube-card 
+          spotify-id="{{ $item->source_id }}" 
+          video-id="{{ $item->index }}" 
+          title="{{ $item->title }}" 
+          thumbnail="{{ $item->thumbnail }}">
+        </youtube-card>
       </div>
     @endforeach
   </div>
 </div>
 @endif
 
-<master-bar></master-bar>
+<control-bar></control-bar>
 @endsection

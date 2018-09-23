@@ -65,7 +65,7 @@ class FrontPageController extends Controller
       ->get();
 
     if(Cache::get('showLatestVideos', 'yes') == 'yes') {
-      $this->createCustomRow("Latest Discoveries on the Network:", $latestVideos);
+      $this->createCustomRow("Latest Discoveries:", $latestVideos);
     }
 
     //hack for now till I can merge temp and media items better

@@ -14,8 +14,11 @@ class LinkController extends Controller
 
  		if($media) {
  			$media = Media::prepareItemMeta($media);
- 		}
+ 		}else{
+			 dd("Bad Media ID");
+		 }
 
+		
  		$recommendations = $media->getReferences();
 
  		return view('link.view-media', [

@@ -13,6 +13,12 @@ const state = {
 };
 
 const getters = {
+    isPlaying(state) {
+        return state.playing;
+    },
+    getVolume(state) {
+        return state.volume;
+    }
 };
 
 const actions = {
@@ -57,12 +63,13 @@ const actions = {
         let item = findBySessionId(state.items, sessionId);
 
         dispatch('updateCurrent', sessionId);
+        commit(types.PLAYER_PLAYING, true);
 
         item.callbackHandler((self) => {
             self.play(state.volume);
         })
     },
-    playCurrent({ state }) {
+    playCurrent({ commit, state }) {
         if(!state.currentId) {
             console.error("Could not play current because currentId is not set");
             return;
@@ -70,9 +77,24 @@ const actions = {
 
         const currentId = state.currentId;
         let media = findBySessionId(state.items, currentId);
+        commit(types.PLAYER_PLAYING, true);
 
         media.callbackHandler((self) => {
             self.play(state.volume);
+        })
+    },
+    pauseCurrent({ commit, state }) {
+        if(!state.currentId) {
+            console.error("Could not pause current because currentId is not set");
+            return;
+        }
+
+        const currentId = state.currentId;
+        let media = findBySessionId(state.items, currentId);
+        commit(types.PLAYER_PLAYING, false);
+
+        media.callbackHandler((self) => {
+            self.pause();
         })
     },
     indexStepForward({ state, dispatch }) {
@@ -86,7 +108,7 @@ const actions = {
         dispatch('updateCurrent', nextIndex);
         dispatch('playCurrent');
     },
-    indexStepBackward({ state }) {
+    indexStepBackward({ state, dispatch }) {
         if(!state.currentId) {
             dispatch('updateCurrent', state.index[state.index.length - 1]);
             dispatch('playCurrent');
