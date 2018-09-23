@@ -12,7 +12,7 @@
 
       <div class="float-right">
         <div v-if="mediaId" class="btn-group">
-          <button v-on:click="directLink" type="button" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
+          <button v-if="mediaId" v-on:click="directLink" type="button" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
             Direct Link
           </button>
         </div>

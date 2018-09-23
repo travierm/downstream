@@ -22,7 +22,11 @@
    	@foreach($items as $item)
    	  	<div class="row">
 			<div class="col-lg-6">
-				<video-player-card title="{{ $item->title }}" vid="{{ $item->index }}" thumbnail={{$item->thumbnail }}></video-player-card>
+				<youtube-card 
+					title="{{ $item->title }}" 
+					videoIdd="{{ $item->index }}" 
+					thumbnail={{ $item->thumbnail }}>
+				</youtube-card>
 			</div>
 
 			<div class="col-lg-6">
