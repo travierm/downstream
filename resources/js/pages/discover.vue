@@ -20,7 +20,7 @@
 
 		<div id="noItemsAlert" class="row" v-if="items.length <= 0" style="margin-top:10px; display: none;">
 			<div class="col">
-				<b-alert show variant="danger">You need to collect songs before we can make recommendations!</b-alert>
+				<b-alert show variant="warning">You need a larger collection before we can discover new music for you!</b-alert>
 			</div>
 		</div>
 
@@ -46,6 +46,8 @@
 					}else{
 						$('#noItemsAlert').show();
 					}
+				}).catch(() => {
+					$('#noItemsAlert').show();
 				})
 			}
 		}

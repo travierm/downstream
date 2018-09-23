@@ -29,9 +29,9 @@ Vue.use(VueScrollTo, {
 
 // Components
 Vue.component('playlist-media-manager', require('./components/PlaylistMediaManager.vue'));
-Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
+//Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));
 Vue.component('youtube-card', require('./components/YouTubeCard.vue'));
-Vue.component('master-bar', require('./components/MasterBar.vue'));
+//Vue.component('master-bar', require('./components/MasterBar.vue'));
 Vue.component('control-bar', require('./components/ControlBar.vue'));
 Vue.component('raw-data-view', require('./components/RawDataView.vue'));
 // Forms
@@ -43,9 +43,6 @@ Vue.component('about-page', require('./pages/about.vue'));
 router.beforeEach((to, from, next) => {
 	//do something before routing
 	//fires on pageload
-	
-	//clear player data
-	store.dispatch('media/resetState');
 
 	//Hide PHP generated html when route name not set
 	if (to.name) { 

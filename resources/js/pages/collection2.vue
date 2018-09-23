@@ -20,17 +20,17 @@
       </div>
     </div>
 
-    <div class="row hide" v-show="emptyCollection">
+    <div class="row" v-show="emptyCollection">
       <div class="col-lg-6 center" >
         <h3>Nothing in collection..</h3>
         <img src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
       </div>
     </div>
 
-    <div class="row mt-2 hide" v-show="emptyCollection">
+    <div class="row mt-2"  v-show="emptyCollection">
       <div class="col-lg-12">
-        <h5>Tools to build your collection...</h5>
-        <router-link class="btn btn-outline-danger" to="/search">Search for Music</router-link>
+        <h5>Some tools to build your collection:</h5>
+        <a class="btn btn-outline-danger" href="/search">Search for Music</a>
         <a href="/all" class="btn btn-outline-info">See what other people are collecting</a>
       </div>
     </div>
@@ -57,9 +57,10 @@
         let self = this;
 
         this.$store.dispatch('collection/update').then(() => {
+          console.log(self.videos.length);
           if(self.videos.length <= 0) {
+            
             self.emptyCollection = true;
-            $(".hide").show();
           }
         });
       }
