@@ -152,6 +152,11 @@
           this.player.setVolume(volume);
           this.player.play();
 
+          gtag('event', 'play', {
+            'event_category' : 'Media',
+            'event_label' : this.videoId
+          });
+
           this.playing = true;
 
           this.player.on('ended', () => {
