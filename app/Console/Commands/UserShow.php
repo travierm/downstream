@@ -19,7 +19,7 @@ class UserShow extends Command
      *
      * @var string
      */
-    protected $description = 'Display info on user by hash';
+    protected $description = 'Display info on user by id';
 
     /**
      * Create a new command instance.
@@ -38,8 +38,8 @@ class UserShow extends Command
      */
     public function handle()
     {
-      $hash = $this->ask('User hash?');
-      $user = User::where('hash', $hash)->first();
+      $id = $this->ask('User ID?');
+      $user = User::where('id', $id)->first();
       $this->info($user);
     }
 }
