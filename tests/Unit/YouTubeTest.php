@@ -17,10 +17,10 @@ class YouTubeTest extends TestCase
     public function testSearch()
     {   
         $limit = 1;
-        $query = "drake";
+        $query = "kid cudi";
 
         $resp = YouTubeService::search($query, $limit);
-
+        
         $vid = $resp[0]->id->videoId;
         
         if($vid) {
