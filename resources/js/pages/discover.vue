@@ -13,7 +13,8 @@
 		          :spotifyId="item.source_id" 
 		          :video-id="item.index" 
 		          :title="item.title" 
-		          :thumbnail="item.thumbnail">
+		          :thumbnail="item.thumbnail"
+				  :collected="item.collected">
 		        </youtube-card>
       		</div>
 		</div>

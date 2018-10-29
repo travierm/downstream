@@ -42,7 +42,8 @@ Vue.component('about-page', require('./pages/about.vue'));
 
 router.beforeEach((to, from, next) => {
 	//do something before routing
-	//fires on pageload
+  //fires on pageload
+  store.dispatch('player/reset');
 
 	//Hide PHP generated html when route name not set
 	if (to.name) { 

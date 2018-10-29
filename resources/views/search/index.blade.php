@@ -9,7 +9,7 @@
         <div class="input-group mb-1">
           <input name="query" value="{{@$query}}" type="text" class="form-control" placeholder="Search..." aria-label="Search">
           <div class="input-group-append">
-            <input class="btn btn-outline-danger" type="submit" value="Search" />
+            <input id="navSearchButton" class="btn btn-outline-danger" type="submit" value="Search" />
           </div>
         </div>
       </form>

@@ -7,17 +7,27 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse w-100" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/all') }}">Global</a>
                 </li>
                 @if(!Auth::guest())
-                <li class="nav-item">
+                <li id="navSearchLink" class="nav-item">
                     <a class="nav-link" href="{{ url('/search') }}">Search</a>
                 </li>
                 @endif
             </ul>
+            <form class="mx-2 my-auto d-inline w-100 d-none d-sm-none d-lg-block" action="/search" method="GET">
+                <div class="input-group">
+                    <input name="query" type="search" class="form-control" placeholder="Search...">
+                    <span class="input-group-append">
+                        <button class="btn btn-default border border-left-0" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
             <ul class="navbar-nav">
                 @if(Auth::guest())
                 <li class="nav-item">
@@ -48,6 +58,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
+
+                
                 @endif
             </ul>
         </div>

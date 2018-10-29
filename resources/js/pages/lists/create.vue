@@ -2,19 +2,19 @@
   <div>
     <div class="container pushFromTop">
       <div class="row">
-        <h1>Create Playlist</h1>
+        <h1>Create List</h1>
       </div>
 
       <div class="row">
         <div class="col-lg-8">
           <div class="form-group">
-            <label for="exampleInputEmail1">Playlist Name</label>
+            <label for="exampleInputEmail1">List Name</label>
             <input type="text" class="form-control" >
           </div>
 
           <div class="form-group">
             <button class="btn btn-outline-primary">Set Private</button>
-            <small>This playlist is currently open to public viewing.</small>
+            <small>This list is currently open to public viewing.</small>
           </div>
 
           <div class="form-group">

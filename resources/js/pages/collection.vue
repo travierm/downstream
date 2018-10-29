@@ -48,7 +48,7 @@
     methods: {
       updateCollection() {
         let self = this;
-
+        
         this.$store.dispatch('collection/update').then(() => {
           if(self.videos.length <= 0) {
             self.emptyCollection = true;

@@ -22,6 +22,9 @@ const getters = {
 };
 
 const actions = {
+    reset({ commit }) {
+        commit(types.PLAYER_RESET);
+    },
     register({ commit }, item) {
         commit(types.PLAYER_REGISTER_ITEM, item)
     },
@@ -64,6 +67,9 @@ const actions = {
 
         dispatch('updateCurrent', sessionId);
         commit(types.PLAYER_PLAYING, true);
+
+        console.log(sessionId);
+        console.log(item);
 
         item.callbackHandler((self) => {
             self.play(state.volume);

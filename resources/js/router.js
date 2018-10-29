@@ -7,8 +7,8 @@ import Collection2 from './pages/collection2';
 import DiscoverPage from './pages/discover';
 import UserProfile from './pages/user/profile';
 
-import PlaylistIndex from './pages/playlists/index';
-import PlaylistCreate from './pages/playlists/create';
+import ListIndex from './pages/lists/index';
+import ListCreate from './pages/lists/create';
 
 import MediaEdit from './pages/media/edit';
 
@@ -41,14 +41,14 @@ const routes = [
   	component: SearchPage 
   },*/
   {
-	name: 'playlistIndex',
-	path: '/playlists',
-	component: PlaylistIndex
+	name: 'listIndex',
+	path: '/lists',
+	component: ListIndex
   },
   {
-	name: 'playlistCreate',
-	path: '/playlists/create',
-	component: PlaylistCreate
+	name: 'listsCreate',
+	path: '/list/create',
+	component: ListCreate
   },
   { 
   	name:'userProfile',
