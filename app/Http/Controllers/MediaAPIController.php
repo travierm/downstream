@@ -94,10 +94,11 @@ class MediaAPIController extends Controller
     ], 200);
   }
 
-  public function collection(Request $request)
+  public function collection(Request $request, $isRandom = false)
   {
+
     $items = [];
-    $items = $this->YouTube->collection();
+    $items = $this->YouTube->collection(false, $isRandom);
 
     return response()->json([
       'items' => $items

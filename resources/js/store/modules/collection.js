@@ -14,8 +14,14 @@ const getters = {
 };
 
 const actions = {
-  update({ commit }) {
-    return axios.get('/api/media/collection').then((resp) => {
+  update({ commit }, randomize) {
+    var randomFlag = "";
+    if(randomize) {
+      randomFlag="/random"
+    }
+
+
+    return axios.get('/api/media/collection' + randomFlag).then((resp) => {
       if (resp.status === 200) {
         // items refers to media items in a users collection
         const { items } = resp.data;

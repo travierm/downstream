@@ -35,16 +35,21 @@ class YouTube {
     dd($res);
   }
 
-  public function collection($customUserId = false)
+  public function collection($customUserId = false, $randomize = false)
   {
     $profileId = $this->userId;
     if($customUserId) {
       $profileId = $customUserId;
     }
+    
+    $query = UserMedia::where('user_id', $profileId);
+    if($randomize) {
+      $query->orderByRaw("RAND()");
+    }else{
+      $query->orderBy('id', 'DESC');
+    }
 
-    $mediaIds = UserMedia::where('user_id', $profileId)
-      ->orderBy('id', 'DESC')
-      ->pluck('media_id');
+    $mediaIds = $query->pluck('media_id');
 
     $collection = [];
     foreach($mediaIds as $id) {

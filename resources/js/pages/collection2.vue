@@ -5,6 +5,11 @@
       <div class="col-lg-6 mb-2">
         <input class="form-control" v-model="searchQuery" type="search" placeholder="Search..." />
       </div>
+
+      <div class="col-lg-1">
+        <a href="/collection/random" v-if="!randomize" class="btn btn-outline-primary">Randomize</a>
+        <a href="/collection" v-if="randomize" class="btn btn-primary">Randomized</a>
+      </div>
     </div>
 
     <div class="row">
@@ -45,6 +50,7 @@
   export default {
     data() {
       return {
+        randomize: false,
         searchQuery:"",
         emptyCollection: false
       };
@@ -56,7 +62,13 @@
       updateCollection() {
         let self = this;
 
-        this.$store.dispatch('collection/update').then(() => {
+        if(this.$store.state.route.params.filter === "random") {
+          this.randomize = true;
+        }else{
+          this.randomize = false;
+        }
+
+        this.$store.dispatch('collection/update', this.randomize).then(() => {
           console.log(self.videos.length);
           if(self.videos.length <= 0) {
             

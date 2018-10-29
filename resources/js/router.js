@@ -27,7 +27,7 @@ const routes = [
   },
   { 
   	name:'collection',
-  	path: '/collection', 
+  	path: '/collection/:filter?', 
   	component: Collection2 
   },
   { 
