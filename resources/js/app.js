@@ -45,6 +45,17 @@ router.beforeEach((to, from, next) => {
   //fires on pageload
   store.dispatch('player/reset');
 
+  if(to.path == "/search") {
+    window.onload = function() {
+      $('#searchInputBar').focus(function(){
+        var that = this;
+        setTimeout(function(){ that.selectionStart = that.selectionEnd = 10000; }, 0);
+      });
+      
+      document.getElementById("searchInputBar").focus();
+    };
+  }
+
 	//Hide PHP generated html when route name not set
 	if (to.name) { 
 		$('#hardContent').remove(); 

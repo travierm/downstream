@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use View;
 use Auth;
 use App\Media\YouTubeV2;
 use Illuminate\Http\Request;
@@ -28,9 +29,9 @@ class SearchController extends Controller
     $limit = 17;
     $results = YouTubeV2::search($query, $limit);
 
+    View::share ('searchQuery', $query);
 
     return view('search.index')->with([
-      'query' => $req->input('query'),
       'videos' => $results,
       'success' => true
     ]);

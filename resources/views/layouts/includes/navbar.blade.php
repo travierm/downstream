@@ -20,7 +20,7 @@
             </ul>
             <form class="mx-2 my-auto d-inline w-100 d-none d-sm-none d-lg-block" action="/search" method="GET">
                 <div class="input-group">
-                    <input name="query" type="search" class="form-control" placeholder="Search...">
+                    <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="query" type="search" class="form-control" placeholder="Search...">
                     <span class="input-group-append">
                         <button class="btn btn-default border border-left-0" type="button">
                             <i class="fa fa-search"></i>
