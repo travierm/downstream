@@ -20,8 +20,7 @@ const actions = {
       randomFlag="/random"
     }
 
-
-    return axios.get('/api/media/collection' + randomFlag).then((resp) => {
+    return axios.get('/api/collection' + randomFlag).then((resp) => {
       if (resp.status === 200) {
         // items refers to media items in a users collection
         const { items } = resp.data;

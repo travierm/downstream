@@ -45,6 +45,12 @@ Route::post('/media/search', 'MediaAPIController@resolve');
 
 //API
 Route::namespace('API')->group(function () {
+    //Collection Routes
+
+    //authed user collection
+    Route::get('/collection/{random?}', "CollectionController@getCollection");
+    Route::get('/user/collection/{random?}', "CollectionController@getUserCollection");
+
     //playlist
     Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');
     //media
