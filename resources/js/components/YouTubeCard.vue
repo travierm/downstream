@@ -31,7 +31,7 @@
       </div>
     </div>
     <!-- YouTube Player -->
-    <div class="video-instance border-success" :id="sessionId"></div>
+    <div class="video-instance embed-responsive" :id="sessionId"></div>
   </div>
 </template>
 
@@ -48,7 +48,9 @@
     const props = {
       sessionId: {
         type: String,
-        default: () => { return generateElementId() }
+        default: () => { 
+          console.log("sessionId not passed")
+          return generateElementId() }
       },
       spotifyId: String,
       mediaId: Number,
@@ -88,7 +90,7 @@
       /**
        * @EVENT mounted
        */
-      mounted() {
+      created() {
         this.playerRegister();
       },
       destroyed() {

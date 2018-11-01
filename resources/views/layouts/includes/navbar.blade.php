@@ -22,11 +22,11 @@
                 <div class="input-group">
                     <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="query" type="search" class="form-control" placeholder="Search...">
                     <span class="input-group-append">
-                        <button class="btn btn-default border border-left-0" type="button">
-                            <i class="fa fa-search"></i>
+                        <button onclick="this.form.submit()" class="btn btn-default border border-left-0" type="button">
+                            <i onclick="this.form.submit()" class="fa fa-search"></i>
                         </button>
                     </span>
-                </div>
+                </div> 
             </form>
             <ul class="navbar-nav">
                 @if(Auth::guest())

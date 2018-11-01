@@ -3,6 +3,7 @@ import _ from 'lodash';
 import * as types from '../mutation-types';
 import cache from '../../services/Cache';
 import { arrayNextIndex } from '../../services/Utils';
+import { isBuffer } from 'util';
 
 const state = {
     index: [],
@@ -23,6 +24,7 @@ const getters = {
 
 const actions = {
     reset({ commit }) {
+        console.log("reset");
         commit(types.PLAYER_RESET);
     },
     register({ commit }, item) {
@@ -50,14 +52,16 @@ const actions = {
             //do something with video player before this
             let item = findBySessionId(state.items, previousCurrentId);
 
-            item.callbackHandler((video) => {
-                console.log("updated current pause")
-                try {
-                    video.pause();
-                } catch (error) {
-                    
-                }
-            });
+            if(item) {
+                item.callbackHandler((video) => {
+                    console.log("updated current pause")
+                    try {
+                        video.pause();
+                    } catch (error) {
+                        
+                    }
+                });
+            }
         }
 
         commit(types.PLAYER_UPDATE_CURRENT, sessionId);
@@ -65,11 +69,13 @@ const actions = {
     play({ commit, state, dispatch }, sessionId) {
         let item = findBySessionId(state.items, sessionId);
 
+        if(!item) {
+            console.error(state.index);
+            throw new Error("Media could not be played:" + sessionId + " is not in state");
+        }
+
         dispatch('updateCurrent', sessionId);
         commit(types.PLAYER_PLAYING, true);
-
-        console.log(sessionId);
-        console.log(item);
 
         item.callbackHandler((self) => {
             self.play(state.volume);

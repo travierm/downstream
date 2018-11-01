@@ -8,8 +8,8 @@
 
       <div class="col-lg-6">
         <div class="float-right">
-          <a href="/collection/random" v-if="!randomize" class="btn btn-outline-primary">Randomize</a>
           <a href="/collection" v-if="randomize" class="btn btn-primary">Randomized</a>
+          <a href="/collection/random" v-if="!randomize" class="btn btn-outline-primary">Randomize</a>
         </div>
       </div>
     </div>
@@ -71,9 +71,7 @@
         }
 
         this.$store.dispatch('collection/update', this.randomize).then(() => {
-          console.log(self.videos.length);
           if(self.videos.length <= 0) {
-            
             self.emptyCollection = true;
           }
         });
