@@ -44,6 +44,7 @@ router.beforeEach((to, from, next) => {
 	//do something before routing
   //fires on pageload
   store.dispatch('player/reset');
+  store.dispatch('collection/update');
 
   if(to.path == "/search") {
     window.onload = function() {

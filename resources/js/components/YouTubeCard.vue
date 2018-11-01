@@ -48,9 +48,7 @@
     const props = {
       sessionId: {
         type: String,
-        default: () => { 
-          console.log("sessionId not passed")
-          return generateElementId() }
+        default: () => { return generateElementId() }
       },
       spotifyId: String,
       mediaId: Number,
@@ -132,11 +130,6 @@
             width: $(`#${this.sessionId}_media`).width()
           };
 
-          /*if(!document.querySelector(elementId)) {
-            console.log("cant load " + sessionId + " because dom element is not attached");
-            return;
-          }*/
-
           let player = new YTPlayer($(elementId)[0], options);
           player.load(this.videoId);
 
@@ -187,7 +180,7 @@
             spotifyId: this.spotifyId
           }).then((err, resp) => {
             this.collected = true;
-            this.$store.dispatch('collection/update');
+            //this.$store.dispatch('collection/update');
           }, (err) => {
             this.collected = false;
             $('#modals').show();
@@ -203,6 +196,7 @@
             type: 'youtube',
             mediaId: this.mediaId
           }).then((resp) => {
+            this.playerDeregister();
             this.$emit('tossed');
           });
           
@@ -217,7 +211,6 @@
           }
         },
         directLink() {
-          console.log("CALLED");
           window.location.href = "/v/" + this.videoId;
         },
         parentCallbackHandler(callback) {

@@ -142,7 +142,6 @@ export default class YouTubeVideoPlayer {
 
 		if(!video.player) { 
 			//preload if not preloaded
-			console.log("loading video");
 			this.preloadVideo(sessionId);
 		}
 

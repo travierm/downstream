@@ -58,7 +58,7 @@
       };
     },
     created() {
-      this.updateCollection();
+      //this.updateCollection();
     },
     methods: {
       updateCollection() {
@@ -79,7 +79,6 @@
     },
     watch: {
       'searchQuery':function() {
-        //console.log(this.filteredVideos);
         let indexes =  _.map(this.filteredVideos, 'sessionId');
         this.$store.dispatch('player/indexReplace', indexes);
       }

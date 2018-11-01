@@ -72,7 +72,6 @@
 
         axios.get('/api/media/profile/' + hash).then((resp) => {
           if(resp.status === 200) {
-            console.log(resp.data);
             self.collection = resp.data.collection.youtube;
             self.user = resp.data.user;
             self.failed = false;

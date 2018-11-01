@@ -233,7 +233,6 @@
           })
         },
         play() {
-          console.log("playing card");
           this.playing = true;
           this.showThumbnail = false;
 

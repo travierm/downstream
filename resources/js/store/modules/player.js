@@ -24,7 +24,6 @@ const getters = {
 
 const actions = {
     reset({ commit }) {
-        console.log("reset");
         commit(types.PLAYER_RESET);
     },
     register({ commit }, item) {
@@ -54,11 +53,10 @@ const actions = {
 
             if(item) {
                 item.callbackHandler((video) => {
-                    console.log("updated current pause")
                     try {
                         video.pause();
                     } catch (error) {
-                        
+                        throw error;
                     }
                 });
             }
@@ -147,7 +145,9 @@ const mutations = {
     },
     [types.PLAYER_DEREGISTER_ITEM](state, item) {
         _.remove(state.items, item);
-        _.remove(state.index, item.sessionId);
+        _.remove(state.index, (n) => {
+            return n == item.sessionId;
+        });
     },
     [types.PLAYER_UPDATE_CURRENT](state, sessionId) {
         state.currentId = sessionId;
