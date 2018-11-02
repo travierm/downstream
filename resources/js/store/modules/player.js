@@ -56,7 +56,7 @@ const actions = {
                     try {
                         video.pause();
                     } catch (error) {
-                        throw error;
+                        //dont throw error because it breaks colleciton search
                     }
                 });
             }

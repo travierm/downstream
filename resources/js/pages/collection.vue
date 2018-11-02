@@ -1,34 +1,48 @@
 
 <template>
   <div class="container-fluid" style="margin-top: 15px;">
-    <!--<div class="row">
+    <div class="row mb-3">
       <div class="col-lg-6 mb-2">
-        <input class="form-control" v-model="searchQuery" type="search" placeholder="Search..." />
+        <input class="form-control" v-model="searchQuery" type="search" placeholder="Search your collection..." />
       </div>
-    </div>-->
 
-    <div class="row">
-      <div class="col-lg-3 col-md-12 col-sm-12" v-for="video in filteredVideos" :key="video.id">
-        <video-player-card v-on:tossed="updateCollection" v-bind:media="video"></video-player-card>
+      <div class="col-lg-6">
+        <div class="float-right">
+          <a href="/collection" v-if="randomize" class="btn btn-primary">Randomized</a>
+          <a href="/collection/random" v-if="!randomize" class="btn btn-outline-primary">Randomize</a>
+        </div>
       </div>
     </div>
 
-    <div class="row hide" v-show="emptyCollection">
+    <div class="row">
+      <div class="col-lg-3 col-md-12 col-sm-12" v-for="item in filteredVideos" :key="item.id">
+        <youtube-card
+            :media-id="item.id"
+            :sessionId="item.sessionId"
+            :videoId="item.index"
+            :title="item.meta.title"
+            :thumbnail="item.meta.thumbnail"
+            :collected="item.collected"
+        />
+      </div>
+    </div>
+
+    <div class="row" v-show="emptyCollection">
       <div class="col-lg-6 center" >
         <h3>Nothing in collection..</h3>
         <img src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
       </div>
     </div>
 
-    <div class="row mt-2 hide" v-show="emptyCollection">
+    <div class="row mt-2"  v-show="emptyCollection">
       <div class="col-lg-12">
-        <h5>Tools to build your collection...</h5>
-        <router-link class="btn btn-outline-danger" to="/search">Search for Music</router-link>
+        <h5>Some tools to build your collection:</h5>
+        <a class="btn btn-outline-danger" href="/search">Search for Music</a>
         <a href="/all" class="btn btn-outline-info">See what other people are collecting</a>
       </div>
     </div>
 
-    <master-bar></master-bar>
+    <control-bar></control-bar>
   </div>
 </template>
 
@@ -38,29 +52,39 @@
   export default {
     data() {
       return {
-        emptyCollection: false,
-        searchQuery:""
+        randomize: false,
+        searchQuery:"",
+        emptyCollection: false
       };
     },
     created() {
-      this.updateCollection();
+      //this.updateCollection();
     },
     methods: {
       updateCollection() {
         let self = this;
-        
-        this.$store.dispatch('collection/update').then(() => {
+
+        if(this.$store.state.route.params.filter === "random") {
+          this.randomize = true;
+        }else{
+          this.randomize = false;
+        }
+
+        this.$store.dispatch('collection/update', this.randomize).then(() => {
           if(self.videos.length <= 0) {
             self.emptyCollection = true;
-            $(".hide").show();
           }
         });
       }
     },
     watch: {
       'searchQuery':function() {
-        this.$store.dispatch('media/indexClear');
-        this.$store.dispatch('media/indexReplace', _.map(this.filteredVideos, 'sessionId'));
+        let indexes =  _.map(this.filteredVideos, 'sessionId');
+        
+        this.$store.dispatch('player/indexReplace', {
+          index: indexes,
+          items: this.filteredVideos
+        });
       }
     },
     computed: {
