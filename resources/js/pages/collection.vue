@@ -80,11 +80,7 @@
     watch: {
       'searchQuery':function() {
         let indexes =  _.map(this.filteredVideos, 'sessionId');
-        
-        this.$store.dispatch('player/indexReplace', {
-          index: indexes,
-          items: this.filteredVideos
-        });
+        this.$store.dispatch('player/indexReplace', indexes);
       }
     },
     computed: {

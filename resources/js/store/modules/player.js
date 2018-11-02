@@ -27,6 +27,14 @@ const actions = {
         commit(types.PLAYER_RESET);
     },
     register({ commit }, item) {
+        let previousItem = findBySessionId(state.items, item.sessionId);
+        if(previousItem) {
+            //YT Card wants to register again but we already have an item
+            //update the callbackHandler so we don't miss dom
+            previousItem.callbackHandler = item.callbackHandler;
+            return;
+        }
+
         commit(types.PLAYER_REGISTER_ITEM, item)
     },
     deregister({ commit }, item) {
@@ -68,7 +76,6 @@ const actions = {
         let item = findBySessionId(state.items, sessionId);
 
         if(!item) {
-            console.error(state.index);
             throw new Error("Media could not be played:" + sessionId + " is not in state");
         }
 

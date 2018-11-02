@@ -42,7 +42,6 @@
     import { generateElementId } from '../services/Utils';
 
     let Utils = window._utils;
-    window.ytp = YTPlayer;
 
     //Component Props
     const props = {
@@ -92,7 +91,9 @@
         this.playerRegister();
       },
       destroyed() {
-        //this.playerDeregister();
+        //clean up player
+        //fixes issue with player not being attached to dom after search update
+        this.player = false;
       },
       methods: {
         /**
@@ -101,10 +102,6 @@
          * passes item info to player to we can do things like play next track
          */
         playerRegister() {
-          if(!this.sessionId) {
-            //this.sessionId = generateElementId();
-          }
-
           this.$store.dispatch('player/register', {
             sessionId: this.sessionId,
             media: this.getMediaMeta(),
@@ -143,7 +140,7 @@
           if(!this.player) {
             this.loadVideo();
           }
-          
+
           this.player.setVolume(volume);
           this.player.play();
 
