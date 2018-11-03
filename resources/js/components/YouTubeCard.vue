@@ -123,6 +123,8 @@
           const elementId = "#" + this.sessionId.replace(/["\\]/g, '\\$&');
           const options = {
             volume: 5,
+            fullscreen: false,
+            playsinline: true,
             height: $(`#${this.sessionId}_media`).height(),
             width: $(`#${this.sessionId}_media`).width()
           };
