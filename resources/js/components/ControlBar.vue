@@ -5,7 +5,7 @@
             <div class="row form-inline">
               <div class="col-lg-8">
                 <!-- <button @click="shuffleIndex" type="button" class="btn btn-warning p-2 my-sm-0">Shuffle</button> -->
-                <button type="button" class="btn btn-dark p-2 my-sm-0" v-scroll-to="currentCardId">Focus</button>
+                <button type="button" class="btn btn-dark p-2 my-sm-0" @click="focusOnCard(currentCardId)">Focus</button>
                 <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
                 <img class="icon" @click="play" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
                 <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
@@ -25,6 +25,7 @@
 
 <script>
   import { mapActions } from 'vuex';
+  import VueScrollTo from 'vue-scrollto';
 
   export default {
     data: () => ({
@@ -35,7 +36,7 @@
     }),
     computed: {
       currentCardId() {
-        return "#" + this.$store.state.player.currentId + "_card";
+        return this.$store.state.player.currentId + "_card";
       },
       isPlaying() {
         return this.$store.getters['player/isPlaying'];
@@ -45,6 +46,11 @@
       }
     },
     methods: {
+      focusOnCard(element) {
+        const query = "[id='" + element + "']";
+
+        VueScrollTo.scrollTo(query);
+      },
       pause() {
         this.playing = false;
         this.$store.dispatch('player/pauseCurrent');
