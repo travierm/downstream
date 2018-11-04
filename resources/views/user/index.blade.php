@@ -45,7 +45,7 @@
                         <small class="text-muted">Time since you create your account.</small>
                     </div>
 
-                    <span>{{ $sinceAccountCreation }}</span>
+                    <span>{{ @$sinceAccountCreation }}</span>
                 </li>
             </ul>
         </div>
