@@ -13,19 +13,39 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <ul class="list-group" style="font-size:1.2em;">
+            <ul class="list-group mb-2">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Hash</h6>
+                        <small class="text-muted">Unique hash given to you on account creation.</small>
+                    </div>
+                <span>{{ $hash }}</span>
+                </li>
 
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Hash
-                    <span class="badge badge-primary badge-pill">{{ $hash }}</span>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Collection Size</h6>
+                        <small class="text-muted">Number of active users.</small>
+                    </div>
+
+                    <span class="text-success">{{ $collectionSize }}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Collection Size
-                    <span class="badge badge-primary badge-pill"> {{ $collectionSize }}</span>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Collection Reach</h6>
+                        <small class="text-muted">Number of your items found in other User's collection.</small>
+                    </div>
+
+                    <span class="text-primary">{{ $collectionSpread }}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Collection Reach
-                    <span class="badge badge-primary badge-pill">{{ $collectionSpread }} items of yours in other User's collection</span>
+
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Account Creation</h6>
+                        <small class="text-muted">Time since you create your account.</small>
+                    </div>
+
+                    <span>{{ $sinceAccountCreation }}</span>
                 </li>
             </ul>
         </div>

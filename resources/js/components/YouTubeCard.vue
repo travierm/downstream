@@ -12,9 +12,9 @@
 
       <div class="float-right">
         <div v-if="mediaId" class="btn-group">
-          <button v-if="mediaId" v-on:click="directLink" type="button" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
+          <a v-if="mediaId" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
             Direct Link
-          </button>
+          </a>
         </div>
         <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
@@ -23,7 +23,7 @@
 
     <div v-if="!playing" :id="this.sessionId + '_media'" class="media-container">
 
-      <img  v-on:click="$store.dispatch('player/play', sessionId)" :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
+      <img style="width:100%; height: 100%" v-on:click="$store.dispatch('player/play', sessionId)" :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
       <div class="col">
         <div class="col-sm-12">
           <p style="color:white;">{{ title }}</p>
@@ -87,8 +87,14 @@
       /**
        * @EVENT mounted
        */
-      created() {
+      mounted() {
         this.playerRegister();
+
+        if(this.shouldPlay) {
+          setTimeout(() => {
+            this.$store.dispatch('player/play', this.sessionId)
+          }, 5000);
+        }
       },
       destroyed() {
         //clean up player
@@ -101,7 +107,7 @@
          * 
          * passes item info to player to we can do things like play next track
          */
-        playerRegister() {
+        playerRegister() {          
           this.$store.dispatch('player/register', {
             sessionId: this.sessionId,
             media: this.getMediaMeta(),
@@ -123,7 +129,7 @@
           const elementId = "#" + this.sessionId.replace(/["\\]/g, '\\$&');
           const options = {
             volume: 5,
-            fullscreen: false,
+            fullscreen: true,
             playsinline: true,
             height: $(`#${this.sessionId}_media`).height(),
             width: $(`#${this.sessionId}_media`).width()
@@ -131,7 +137,7 @@
 
           let player = new YTPlayer($(elementId)[0], options);
           player.load(this.videoId);
-
+          
           this.player = player;
         },
         /**
@@ -236,6 +242,13 @@
 </script>
 
 <style scoped>
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 .media-icon {
   margin-right: 10px;
 }

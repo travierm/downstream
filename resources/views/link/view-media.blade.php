@@ -22,8 +22,9 @@
   	  <meta property="og:image" content="{{$media->meta->thumbnail }}" />
       <meta property="og:description" content="Listen now on Downstream!" />
 	  @endsection
-    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12" style="margin-top: 15px;">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="margin-top: 15px;">
       <youtube-card 
+          :should-play="true"
           spotify-id="{{ $media->source_id }}" 
           video-id="{{ $media->index }}" 
           title="{{ $media->title }}" 
@@ -44,9 +45,10 @@
       <h3>Recommendations:</h3>
     </div>
   </div>
+
   <div class="row">
     @foreach($recommendations as $item)
-      <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="col-lg-12 col-md-6 col-sm-12">
         <youtube-card 
           spotify-id="{{ $item->source_id }}" 
           video-id="{{ $item->index }}" 
@@ -56,8 +58,7 @@
       </div>
     @endforeach
   </div>
+  @endif
 </div>
-@endif
-
 <control-bar></control-bar>
 @endsection
