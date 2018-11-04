@@ -51,7 +51,7 @@ Route::get('/media/{index}', 'LinkController@viewMediaItem');
 Route::get('/import', 'ImportController@getIndex');
 Route::post('/import', 'ImportController@postImportVideo');
 
-Route::get('/hash', 'UserController@getHash');
+Route::get('/user', 'UserController@getIndex');
 Route::get('/test/video', 'MediaAPIController@testVideo');
 
 Auth::routes();

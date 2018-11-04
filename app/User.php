@@ -42,14 +42,7 @@ class User extends Authenticatable
     public function getNavDisplayName()
     {
       $name = $this->display_name;
-      $string = false;
-      if($name) {
-        $string = $name . "(" . $this->shrinkHash() . ")";
-      }else{
-        $string = $this->shrinkHash();
-      }
-
-      return $string;
+      return $name;
     }
 
     public function shrinkHash()
