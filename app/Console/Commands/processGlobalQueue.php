@@ -42,7 +42,7 @@ class processGlobalQueue extends Command
         $maxActiveItems = 6;
         $maxItemAliveDays = 12;
         //expire active items after 3 hours if we have a bigger queue. Item will still rotate in until it hits maxItemAlive days
-        $activeExpireHours = 3;
+        $activeExpireHours = 1;
 
         $activeCount = GlobalQueue::where('active', 1)->count();
         $queueCount = GlobalQueue::all()->count();
@@ -72,7 +72,7 @@ class processGlobalQueue extends Command
             }
         }else{
             //rotate items
-            $expiredActiveItems = GlobalQueue::where('active_at', '<', Carbon::now()->subMinutes(1)->toDateTimeString())
+            $expiredActiveItems = GlobalQueue::where('active_at', '<', Carbon::now()->subHours($activeExpireHours)->toDateTimeString())
                 ->get();
 
             if(count($expiredActiveItems) > 0) {
