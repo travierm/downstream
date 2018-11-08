@@ -38,7 +38,7 @@ class flushGlobalQueue extends Command
      */
     public function handle()
     {
-        $count = count(GlobalQueue::all());
+        $count = GlobalQueue::count();
 
         $this->info("Flushing $count items from Global Queue");
 

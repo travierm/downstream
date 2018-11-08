@@ -61,16 +61,15 @@
     },
     created() {
       //this.updateCollection();
-    },
-    methods: {
-      updateCollection() {
-        let self = this;
-
-        if(this.$store.state.route.params.filter === "random") {
+       if(this.$store.state.route.params.filter === "random") {
           this.randomize = true;
         }else{
           this.randomize = false;
         }
+    },
+    methods: {
+      updateCollection() {
+        let self = this;
 
         this.$store.dispatch('collection/update', this.randomize).then(() => {
           if(self.videos.length <= 0) {
