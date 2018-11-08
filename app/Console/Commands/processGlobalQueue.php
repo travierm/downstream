@@ -72,7 +72,7 @@ class processGlobalQueue extends Command
             }
         }else{
             //rotate items
-            $expiredActiveItems = GlobalQueue::where('active_at', '<', Carbon::now()->subhours($activeExpireHours)->toDateTimeString())
+            $expiredActiveItems = GlobalQueue::where('active_at', '<', Carbon::now()->subHours($activeExpireHours)->toDateTimeString())
                 ->where('active', 1)
                 ->get();
 
