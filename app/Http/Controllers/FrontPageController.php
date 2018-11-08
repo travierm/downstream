@@ -52,7 +52,7 @@ class FrontPageController extends Controller
     }, $items);
 
     return view('landing.main', [
-      'toplist' => $items,
+      'items' => $items,
       'videos' => []
     ]);
   }

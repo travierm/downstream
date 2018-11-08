@@ -18,33 +18,18 @@
   </div>
   @endif
 
-  @if(count($toplist) >= 2)
+  @if($items)
     <div class="row">
-    @foreach($toplist as $item)
+    @foreach($items as $item)
       <div class="col-md-4">
         <youtube-card 
           video-id="{{ $item->index }}"
           thumbnail="{{ $item->meta->thumbnail }}"
           title="{{ $item->meta->title }}"
-          :collected="{{ $item->collected }}"
-          >
+          collected="{{ $item->collected }}">
         </youtube-card>
       </div>
     @endforeach
-    </div>
-  @elseif(count($videos) >= 2)
-    <div class="row" style="margin-top: 15px;">
-    	@foreach($videos as $media)
-    	<div class="col-md-4">
-        <youtube-card 
-          :videoId="item->index"
-          :title="item->meta->title"
-          :thumbnail="item->meta->thumbnail"
-          :collected="item->collected"
-        >
-        </youtube-card>
-      </div>
-      @endforeach
     </div>
   @endif
 </div>
