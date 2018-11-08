@@ -13,6 +13,15 @@ let mix = require('laravel-mix');
 
 mix
   .js('resources/js/app.js', 'public/js/app.js')
+  .options({
+    uglify: {
+        uglifyOptions: {
+            compress: {
+                drop_console: true
+            }
+        }
+    }
+  })
   .sass('resources/sass/app.scss', 'public/css')
 
 if (mix.inProduction()) {
