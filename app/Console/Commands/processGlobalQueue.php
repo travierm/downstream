@@ -72,7 +72,8 @@ class processGlobalQueue extends Command
             }
         }else{
             //rotate items
-            $expiredActiveItems = GlobalQueue::where('active_at', '<', Carbon::now()->subHours($activeExpireHours)->toDateTimeString())
+            $expiredActiveItems = GlobalQueue::where('active_at', '<', Carbon::now()->subMinutes($activeExpireHours)->toDateTimeString())
+                ->where('active', 1)
                 ->get();
 
             if(count($expiredActiveItems) > 0) {
@@ -82,8 +83,10 @@ class processGlobalQueue extends Command
                     $item->active = 0;
                     $item->save();
                 }
-    
-                $leastFreshItems = GlobalQueue::orderBy('active_at', "ASC")->limit($maxActiveItems)->get();
+
+                $neededItemsCount = $maxActiveItems - GlobalQueue::where('active', 1)->count();
+
+                $leastFreshItems = GlobalQueue::orderBy('active_at', "ASC")->limit($neededItemsCount)->get();
     
                 $this->info(count($leastFreshItems) . " being added to queue for freshness");
                 foreach($leastFreshItems as $item) {

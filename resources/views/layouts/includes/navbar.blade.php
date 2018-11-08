@@ -54,10 +54,10 @@
                     <router-link class="nav-link" to="/playlists">Playlists</router-link>
                 </li>-->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
+                    <a class="nav-link" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="/user">Profile</a>
-                    <a class="dropdown-item" href="/logout">Logout</a>
+                        <a class="dropdown-item" href="/user">Profile</a>
+                        <a class="dropdown-item" href="/logout">Logout</a>
                     </div>
                 </li>
                 @endif

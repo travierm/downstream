@@ -34,6 +34,8 @@ class GlobalQueue extends Model
             ->whereIn('id', $ids)
             ->get();
         
+        $mediaItems = $mediaItems->shuffle();
+        
         return $mediaItems;   
     }
 

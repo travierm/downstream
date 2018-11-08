@@ -12,7 +12,7 @@
 
       <div class="float-right">
         <button v-if="globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
-        <button v-if="!globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i>Global Queue</button>
+        <button v-if="!globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
 
         <div v-if="mediaId" class="btn-group">
           <a v-if="mediaId" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
