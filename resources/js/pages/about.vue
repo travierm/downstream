@@ -18,6 +18,14 @@
               </div>
               <span class="text-primary">{{ itemCountWithCommas }}</span>
             </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Queue Size</h6>
+                <small class="text-muted">Number of items in Global Queue (deletes items after 6 days).</small>
+              </div>
+              <span class="text-primary">{{ queueCountWithCommas }}</span>
+            </li>
           </ul>
       </div>
     </div>
@@ -31,7 +39,8 @@
     data() {
       return {
         itemCount: 0,
-        userCount: 0
+        userCount: 0,
+        queueCount: 0,
       }
     },
     computed: {
@@ -40,6 +49,9 @@
       },
       userCountWithCommas() {
         return numberWithCommas(this.userCount);
+      },
+      queueCountWithCommas() {
+        return numberWithCommas(this.queueCount);
       }
     },
     mounted() {
@@ -50,6 +62,10 @@
 
       axios.get('/api/stat/user/count').then((resp) => {
         self.userCount = resp.data.count;
+      });
+
+      axios.get('/api/stat/queue/count').then((resp) => {
+        self.queueCount = resp.data.count;
       });
     }
   };

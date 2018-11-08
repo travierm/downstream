@@ -31,6 +31,7 @@ Route::get('/media/collection/{random?}', 'MediaAPIController@collection');
 Route::get('/media/profile/{hash}', 'MediaAPIController@profile');
 Route::get('/stat/library/size', 'StatAPIController@getLibrarySize');
 Route::get('/stat/user/count', 'StatAPIController@getUserCount');
+Route::get('/stat/queue/count', 'StatAPIController@getGlobalQueueCount');
 
 Route::post('/media/discover', 'MediaAPIController@discover');
 Route::post('/media/discoverables', 'MediaAPIController@getUserDiscoverables');
