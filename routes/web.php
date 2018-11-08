@@ -40,6 +40,7 @@ Route::get('/search', 'SearchController@getIndex');
 
 Route::get('/', 'FrontPageController@getLanding');
 Route::get('/all', 'FrontPageController@index');
+Route::get('/global', 'FrontPageController@getGlobalPage');
 
 //Link Sharing
 //View a media item

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use DateTime;
 use App\Media;
 use App\UserMedia;
 use App\MediaRemoteReference;
@@ -19,12 +20,19 @@ class UserController extends Controller
     $collectionSpread = UserMedia::where("user_id","!=", Auth::user()->id)
       ->whereIn('media_id', UserMedia::pluckMediaIds())
       ->count();
+    
+    $datetime1 = new DateTime(Auth::user()->created_at);
+    $datetime2 = new DateTime(date("Y-m-d H:i:s"));
+    $interval = $datetime1->diff($datetime2);
+
+    $daysSince = $interval->format('%a');
 
     return view('user.index', [
       'hash' => $hash,
       'displayName' => $displayName,
       'collectionSize' => $collectionSize,
-      'collectionSpread' => $collectionSpread
+      'collectionSpread' => $collectionSpread,
+      'sinceAccountCreation' => date("F j, Y, g:i a", strtotime(Auth::user()->created_at)) . " <==> $daysSince days ago "
     ]);
   }
 

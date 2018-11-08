@@ -45,6 +45,9 @@ Route::post('/media/search', 'MediaAPIController@resolve');
 
 //API
 Route::namespace('API')->group(function () {
+    //Global
+    Route::post('/global/push', 'GlobalController@postQueue');
+
     //Collection Routes
 
     //authed user collection

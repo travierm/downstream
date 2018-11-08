@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Auth;
 use App\Media;
 use App\UserMedia;
+use App\GlobalQueue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -44,6 +45,7 @@ class CollectionController extends Controller
                 $media->meta = $media->getMeta();
                 //collected will always be true
                 $media->collected = true;
+                $media->globalQueued = GlobalQueue::mediaIsQueued($id);
             }
 
             $collection[] = $media;

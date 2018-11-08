@@ -17,6 +17,8 @@
     <div class="row">
       <div class="col-lg-3 col-md-6 col-sm-12" v-for="item in filteredVideos" :key="item.id">
         <youtube-card
+            :showGlobalQueue="true"
+            :globalQueued="item.globalQueued"
             :media-id="item.id"
             :sessionId="item.sessionId"
             :videoId="item.index"

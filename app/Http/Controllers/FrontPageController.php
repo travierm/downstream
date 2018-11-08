@@ -10,6 +10,7 @@ use App\MediaTempItem;
 use App\Media;
 use App\UserMedia;
 
+use App\GlobalQueue;
 use Illuminate\Http\Request;
 
 
@@ -40,18 +41,36 @@ class FrontPageController extends Controller
       'look at me' => 283,
     ]);*/
 
-    $toplist = MediaTempItem::where('visible', 1)->limit(8)->get();
+    $items = GlobalQueue::getActiveMedia();
 
-    foreach($toplist as &$item) {
-      if(Auth::check()) {
-        $userId = Auth::user()->id;
-        $item->didCollect = $item->collected($userId);
-      }
+    if(Auth::check()) {
+      Media::addUserCollectedProp($items);
     }
 
+    $items->map(function(&$item) {
+      $item->meta = json_decode($item->meta);
+    }, $items);
+
     return view('landing.main', [
-      'toplist' => $toplist,
+      'toplist' => $items,
       'videos' => []
+    ]);
+  }
+
+  public function getGlobalPage()
+  {
+    $activeMedia = GlobalQueue::getAllMedia();
+
+    foreach($activeMedia as $media) {
+      $media = $media->prepareItemMeta($media);
+    }
+    
+    if(Cache::get('showLatestVideos', 'yes') == 'no') { 
+      $activeMedia = [];
+    }
+
+    return view("frontpage.global", [
+      'activeItems' => $activeMedia
     ]);
   }
   
@@ -65,7 +84,7 @@ class FrontPageController extends Controller
       ->get();
 
     if(Cache::get('showLatestVideos', 'yes') == 'yes') {
-      $this->createCustomRow("Latest Discoveries:", $latestVideos);
+      $this->createCustomRow("Most Recent User Collected Items:", $latestVideos);
     }
 
     //hack for now till I can merge temp and media items better
@@ -74,7 +93,7 @@ class FrontPageController extends Controller
     }
 
     return view('frontpage.index', [
-      'toplist' => $toplist,
+      'toplist' => [],
       'rows' => $this->rowRenderIndex
     ]);
   }

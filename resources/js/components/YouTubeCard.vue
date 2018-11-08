@@ -11,6 +11,9 @@
 
 
       <div class="float-right">
+        <button v-if="globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
+        <button v-if="!globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i>Global Queue</button>
+
         <div v-if="mediaId" class="btn-group">
           <a v-if="mediaId" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
             Direct Link
@@ -55,7 +58,15 @@
       title: String,
       shouldPlay: Boolean,
       collected: Boolean,
-      thumbnail: String
+      thumbnail: String,
+      globalQueued: {
+        type: Boolean,
+        default: false,
+      },
+      showGlobalQueue: {
+        type: Boolean,
+        default: false
+      }
     };
 
     let data = () => {
@@ -214,6 +225,15 @@
             videoId: this.videoId,
             thumbnail: this.thumbnail
           }
+        },
+        pushGlobalQueue() {
+          const data = {
+            mediaId:this.mediaId
+          };
+          axios.post('/api/global/push', data).then((response) => {
+            this.showGlobalQueue = true;
+            this.globalQueued = true;
+          });
         },
         directLink() {
           window.location.href = "/v/" + this.videoId;

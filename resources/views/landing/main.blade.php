@@ -24,8 +24,9 @@
       <div class="col-md-4">
         <youtube-card 
           video-id="{{ $item->index }}"
-          thumbnail="{{ $item->thumbnail }}"
-          title="{{ $item->title }}"
+          thumbnail="{{ $item->meta->thumbnail }}"
+          title="{{ $item->meta->title }}"
+          :collected="{{ $item->collected }}"
           >
         </youtube-card>
       </div>
