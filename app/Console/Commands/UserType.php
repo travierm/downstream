@@ -42,6 +42,7 @@ class UserType extends Command
 
       $user = User::where('hash', $hash)->first();
       $this->info($user->email . "[$user->type] is on file for given hash.");
+      
       if ($this->confirm('Is this the correct user?')) {
         $type = $this->choice('New user type?', ['basic', 'admin']);
         $user->type = $type;

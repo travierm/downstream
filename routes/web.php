@@ -42,6 +42,9 @@ Route::get('/', 'FrontPageController@getLanding');
 Route::get('/all', 'FrontPageController@index');
 Route::get('/global', 'FrontPageController@getGlobalPage');
 
+//Artist
+Route::get('/artists', "ArtistController@getIndex");
+
 //Link Sharing
 //View a media item
 Route::get('/v/{index}', 'LinkController@viewMediaItem');
