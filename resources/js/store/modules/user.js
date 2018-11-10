@@ -4,6 +4,7 @@ import _ from 'lodash';
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 
 const state = {
+  id: false,
   name: "",
   type: 'basic',
   private: false,
@@ -25,6 +26,7 @@ const actions = {
 
 const mutations = {
   [UPDATE_USER_INFO](state, data) {
+    state.id = data.id;
     state.name = data.display_name;
     state.type = data.type;
     state.private = data.private;

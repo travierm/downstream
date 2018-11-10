@@ -7,7 +7,7 @@
   </div>
 
   <div class="row">
-    <h2 class="mb-0">Influencers</h2>
+  
   </div>
 </div>
 @endsection

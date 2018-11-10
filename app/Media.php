@@ -13,9 +13,9 @@ class Media extends Model
 {
   use SoftDeletes;
   
-  protected $fillable = ['id', 'origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
+  protected $fillable = ['id', 'type', 'index', 'subtype', 'meta', 'user_id'];
 
-  protected $hidden = ['user_id'];
+  protected $hidden = ['origin', 'created_at'];
 
   /**
    * Adds collected prop and decodes meta json

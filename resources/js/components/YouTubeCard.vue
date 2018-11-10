@@ -11,6 +11,7 @@
 
 
       <div class="float-right">
+        <router-link v-if="ownerId && ownerId == userId" class="btn btn-outline-primary" :to="'/media/edit/' + this.mediaId">Edit</router-link>
         <button v-if="globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
         <button v-if="!globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
 
@@ -53,6 +54,7 @@
         default: () => { return generateElementId() }
       },
       spotifyId: String,
+      ownerId: Number,
       mediaId: Number,
       videoId: String,
       title: String,
@@ -79,6 +81,9 @@
     }
 
     const computed = {
+      userId() {
+        return this.$store.state.user.id;
+      },
       formatThumbnail() {
         if(this.hasBadThumbnail == true) {
           return "https://via.placeholder.com/640x480/000000?text=" + this.title;

@@ -86,7 +86,10 @@ class processGlobalQueue extends Command
 
                 $neededItemsCount = $maxActiveItems - GlobalQueue::where('active', 1)->count();
 
-                $leastFreshItems = GlobalQueue::orderBy('active_at', "ASC")->limit($neededItemsCount)->get();
+                $leastFreshItems = GlobalQueue::orderBy('active_at', "ASC")
+                    ->orderBy('id', 'DESC')
+                    ->limit($neededItemsCount)
+                    ->get();
     
                 $this->info(count($leastFreshItems) . " being added to queue for freshness");
                 foreach($leastFreshItems as $item) {

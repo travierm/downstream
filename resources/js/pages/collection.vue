@@ -24,6 +24,7 @@
             :videoId="item.index"
             :title="item.meta.title"
             :thumbnail="item.meta.thumbnail"
+            :owner-id="item.user_id"
             :collected="item.collected"
         />
       </div>

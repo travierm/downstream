@@ -59,6 +59,7 @@ Route::namespace('API')->group(function () {
     Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');
     //media
     Route::get('/media/{id}', 'MediaController@getMediaById');
+    Route::post('/media/update', 'MediaController@postUpdate');
     //user
     Route::get('/user/info', 'UserController@getUserInfo');
 });
