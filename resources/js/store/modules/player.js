@@ -40,6 +40,9 @@ const actions = {
     deregister({ commit }, item) {
         commit(types.PLAYER_DEREGISTER_ITEM, item)
     },
+    updatePlayingState({ commit }, boolean) {
+        commit(types.PLAYER_PLAYING, boolean);
+    },
     updateVolume({ commit, state }, volume) {
         //update state
         commit(types.PLAYER_UPDATE_VOLUME, volume);

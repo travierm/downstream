@@ -1,4 +1,11 @@
 import _ from "lodash";
+import MobileDetect from 'mobile-detect';
+
+let detect = new MobileDetect(window.navigator.userAgent);
+
+export function clientOnMobile() {
+  return detect.mobile();
+}
 
 export function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

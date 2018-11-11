@@ -7,20 +7,13 @@
         <h3 class="alert-heading">Welcome <span style="color:black;">{{$displayName}}</span>!</h3>
         
         <p>We've generated a unique hash for you..</p>
-        <a href="" class="alert-link">{{$hash}}</a>
+        <span class="alert-link" style=" word-wrap: break-word;">{{ $hash }}</span>
         <p class="mb-0">This hash will be used to identify you on the network. Your display name is used to help friends find your account!</p>
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12 col-sm-12">
             <ul class="list-group mb-2">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Hash</h6>
-                        <small class="text-muted">Unique hash given to you on account creation.</small>
-                    </div>
-                <span>{{ $hash }}</span>
-                </li>
 
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>

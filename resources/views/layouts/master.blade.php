@@ -54,7 +54,8 @@
       </div>
       <!-- End App -->
       </div>
-      
+    
+    <script src="http://192.168.1.9:8080/target/target-script-min.js#iphone"></script>
     <script>
     window.Laravel = <?php echo json_encode([
       'csrfToken' => csrf_token(),

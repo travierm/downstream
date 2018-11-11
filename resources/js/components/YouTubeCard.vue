@@ -11,9 +11,9 @@
 
 
       <div class="float-right">
-       
-        <button v-if="globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
-        <button v-if="!globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
+        
+        <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
+        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
 
         <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
@@ -50,9 +50,7 @@
     import $ from 'jquery';
     import SID from 'shortid';
     import YTPlayer from 'yt-player';
-    import { generateElementId } from '../services/Utils';
-
-    let Utils = window._utils;
+    import { generateElementId, clientOnMobile } from '../services/Utils';
 
     //Component Props
     const props = {
@@ -88,6 +86,9 @@
     }
 
     const computed = {
+      clientOnMobile() {
+        return clientOnMobile();
+      },
       userIsAdmin() {
         return this.$store.getters['user/isAdmin'];
       },
@@ -188,6 +189,14 @@
           });
 
           this.playing = true;
+          
+          this.player.on('unplayable', (err) => {
+           console.error(this.videoId + " is unplayable")
+          })
+
+          this.player.on('unstarted', (err) => {
+            this.$store.dispatch('player/updatePlayingState', false);
+          })
 
           this.player.on('ended', () => {
             this.$store.dispatch('player/indexStepForward');
