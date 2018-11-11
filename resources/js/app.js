@@ -44,10 +44,11 @@ router.beforeEach((to, from, next) => {
 	//do something before routing
   //fires on pageload
   store.dispatch('player/reset');
-  store.dispatch('collection/update');
 
   if(to.path == "/search") {
     window.onload = function() {
+
+      //logic for moving cursor after search submit
       $('#searchInputBar').focus(function(){
         var that = this;
         setTimeout(function(){ that.selectionStart = that.selectionEnd = 10000; }, 0);
@@ -67,6 +68,7 @@ router.beforeEach((to, from, next) => {
 
 //get user info
 store.dispatch('user/getUserInfo');
+store.dispatch('collection/update');
 
 const app = new Vue({
   router,

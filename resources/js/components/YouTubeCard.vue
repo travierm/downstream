@@ -11,7 +11,7 @@
 
 
       <div class="float-right">
-        <router-link v-if="ownerId && ownerId == userId" class="btn btn-outline-primary" :to="'/media/edit/' + this.mediaId">Edit</router-link>
+        <router-link v-if="ownerId && ((ownerId == userId) || userIsAdmin)" class="btn btn-outline-danger" :to="'/media/edit/' + this.mediaId">Edit</router-link>
         <button v-if="globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
         <button v-if="!globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
 
@@ -27,7 +27,7 @@
 
     <div v-if="!playing" :id="this.sessionId + '_media'" class="media-container">
 
-      <img style="width:100%; height: 100%" v-on:click="$store.dispatch('player/play', sessionId)" :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
+      <img style="width:100%; height: 100%" @click="parentPlay" :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
       <div class="col">
         <div class="col-sm-12">
           <p style="color:white;">{{ title }}</p>
@@ -81,6 +81,9 @@
     }
 
     const computed = {
+      userIsAdmin() {
+        return this.$store.getters['user/isAdmin'];
+      },
       userId() {
         return this.$store.state.user.id;
       },
@@ -109,7 +112,7 @@
         if(this.shouldPlay) {
           setTimeout(() => {
             this.$store.dispatch('player/play', this.sessionId)
-          }, 5000);
+          }, 3000);
         }
       },
       destroyed() {
@@ -118,6 +121,10 @@
         this.player = false;
       },
       methods: {
+        parentPlay() {
+          this.$store.dispatch('player/play', this.sessionId)
+        },
+
         /**
          * Register With Player
          * 

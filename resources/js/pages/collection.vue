@@ -20,7 +20,7 @@
             :showGlobalQueue="true"
             :globalQueued="item.globalQueued"
             :media-id="item.id"
-            :sessionId="item.sessionId"
+            :session-id="item.sessionId"
             :videoId="item.index"
             :title="item.meta.title"
             :thumbnail="item.meta.thumbnail"
@@ -70,6 +70,8 @@
     },
     methods: {
       updateCollection() {
+        return;
+        
         let self = this;
 
         this.$store.dispatch('collection/update', this.randomize).then(() => {
@@ -95,7 +97,7 @@
         return window._isMobile;
       },
       videos() {
-        return this.$store.state.collection.items
+        return this.$store.getters['collection/getItems'];
       },
     },
   };

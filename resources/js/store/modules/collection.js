@@ -11,6 +11,9 @@ const state = {
 };
 
 const getters = {
+  getItems(state) {
+    return state.items;
+  }
 };
 
 const actions = {
