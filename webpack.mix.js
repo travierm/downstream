@@ -35,7 +35,11 @@ if (mix.inProduction()) {
 }
 
 mix.options({
-  uglify:{ 
+  uglify: {
+    uglifyOptions: {
+      parallel: 4,
+      keep_fnames: true
+    }
   }
 });
 
