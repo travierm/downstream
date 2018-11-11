@@ -8,10 +8,8 @@ https://downstream.us
 #### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
 
 ## Screenshots
-<a href="https:downstream.us" target="_blank"><img src="https://i.postimg.cc/0rJh77cR/collection.png" alt="collection"/></a><br/><br/>
-<a href="https:downstream.us" target="_blank"><img src="https://i.postimg.cc/hfLw5gk2/index.png" alt="index"/></a><br/><br/>
-<a href="https:downstream.us" target="_blank"><img src="https://i.postimg.cc/7f8d9bWC/profile.png" alt="profile"/></a><br/><br/>
-<a href="https:downstream.us" target="_blank"><img src="https://i.postimg.cc/WdSys8br/search.png" alt="search"/></a><br/><br/>
+[![image.png](https://i.postimg.cc/8cfZYNWL/image.png)](https://downstream.us)
+[![image.png](https://i.postimg.cc/X7cP6Nmg/image.png)](https://downstream.us)
 
 
 ## Setup for Development
