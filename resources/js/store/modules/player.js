@@ -143,7 +143,7 @@ const actions = {
         dispatch('updateCurrent', nextIndex);
         dispatch('playCurrent');
     },
-    indexReplace({ commit, state }, sessionIndex) {
+    indexReplace({ commit }, sessionIndex) {
         commit(types.PLAYER_INDEX_REPLACE, sessionIndex);
     }
 };

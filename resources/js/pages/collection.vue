@@ -2,7 +2,7 @@
 <template>
   <div class="container-fluid" style="margin-top: 15px;">
     <div class="row mb-3">
-      <div class="col-lg-6 mb-2">
+      <div v-if="!isMobile" class="col-lg-6 mb-2">
         <input class="form-control" v-model="searchQuery" type="search" placeholder="Search your collection..." />
       </div>
 

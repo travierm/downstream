@@ -1,5 +1,16 @@
 let mix = require('laravel-mix');
 
+const vendors = [
+  'vue',
+  'vue-router',
+  'vuex',
+  'bootstrap',
+  'tether',
+  'popper.js',
+  'jquery',
+  'lodash'
+];
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,6 +24,7 @@ let mix = require('laravel-mix');
 
 mix
   .js('resources/js/app.js', 'public/js/app.js')
+  .extract(vendors)
   .sass('resources/sass/app.scss', 'public/css');
 
 if (mix.inProduction()) {
@@ -22,10 +34,12 @@ if (mix.inProduction()) {
 }
 
 mix.options({
-  uglify: false
 });
 
 mix.webpackConfig({
+  plugins: [
+    //new BundleAnalyzerPlugin()
+  ],
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000

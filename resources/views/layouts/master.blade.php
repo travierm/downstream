@@ -55,7 +55,6 @@
       <!-- End App -->
       </div>
     
-    <script src="http://192.168.1.9:8080/target/target-script-min.js#iphone"></script>
     <script>
     window.Laravel = <?php echo json_encode([
       'csrfToken' => csrf_token(),
@@ -65,6 +64,9 @@
       APP_LINK_URL: "<?php echo env('APP_LINK_URL'); ?>"
     };
     </script>
+    <script src="{{ mix('js/manifest.js') }}"></script>
+    <script src="{{ mix('js/vendor.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111656856-1"></script>
@@ -75,6 +77,5 @@
 
       gtag('config', 'UA-111656856-1');
     </script>
-    <script src="{{ mix('js/app.js') }}"></script>
   </body>
 </html>
