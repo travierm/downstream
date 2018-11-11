@@ -10,8 +10,14 @@ https://downstream.us
 ## Screenshots
 ### Landing Page
 [![image.png](https://i.postimg.cc/8cfZYNWL/image.png)](https://downstream.us)
+### Global Queue
+[![image.png](https://i.postimg.cc/zGvF2Jrv/image.png)](https://postimg.cc/bZXnsfdf)
+### User Profile
+[![image.png](https://i.postimg.cc/MTmBK4Sg/image.png)](https://postimg.cc/DJm0xxmc)
 ### Collection Page
 [![image.png](https://i.postimg.cc/X7cP6Nmg/image.png)](https://downstream.us)
+### Edit Media Item
+[![image.png](https://i.postimg.cc/DyjqXtXT/image.png)](https://postimg.cc/N5X9hCDJ)
 
 
 ## Setup for Development
