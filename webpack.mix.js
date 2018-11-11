@@ -8,7 +8,8 @@ const vendors = [
   'tether',
   'popper.js',
   'jquery',
-  'lodash'
+  'lodash',
+  'axios'
 ];
 
 /*
@@ -34,12 +35,11 @@ if (mix.inProduction()) {
 }
 
 mix.options({
+  uglify:{ 
+  }
 });
 
 mix.webpackConfig({
-  plugins: [
-    //new BundleAnalyzerPlugin()
-  ],
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
