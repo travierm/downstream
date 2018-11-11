@@ -8,7 +8,9 @@ https://downstream.us
 #### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
 
 ## Screenshots
+### Landing Page
 [![image.png](https://i.postimg.cc/8cfZYNWL/image.png)](https://downstream.us)
+### Collection Page
 [![image.png](https://i.postimg.cc/X7cP6Nmg/image.png)](https://downstream.us)
 
 
