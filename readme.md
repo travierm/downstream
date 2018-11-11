@@ -11,13 +11,13 @@ https://downstream.us
 ### Landing Page
 [![image.png](https://i.postimg.cc/8cfZYNWL/image.png)](https://downstream.us)
 ### Global Queue
-[![image.png](https://i.postimg.cc/zGvF2Jrv/image.png)](https://postimg.cc/bZXnsfdf)
+[![image.png](https://i.postimg.cc/zGvF2Jrv/image.png)](https://downstream.us)
 ### User Profile
-[![image.png](https://i.postimg.cc/MTmBK4Sg/image.png)](https://postimg.cc/DJm0xxmc)
+[![image.png](https://i.postimg.cc/MTmBK4Sg/image.png)](https://downstream.us)
 ### Collection Page
 [![image.png](https://i.postimg.cc/X7cP6Nmg/image.png)](https://downstream.us)
 ### Edit Media Item
-[![image.png](https://i.postimg.cc/DyjqXtXT/image.png)](https://postimg.cc/N5X9hCDJ)
+[![image.png](https://i.postimg.cc/DyjqXtXT/image.png)](https://downstream.us)
 
 
 ## Setup for Development
