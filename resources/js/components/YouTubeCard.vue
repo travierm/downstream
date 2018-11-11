@@ -11,17 +11,24 @@
 
 
       <div class="float-right">
-        <router-link v-if="ownerId && ((ownerId == userId) || userIsAdmin)" class="btn btn-outline-danger" :to="'/media/edit/' + this.mediaId">Edit</router-link>
+       
         <button v-if="globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
         <button v-if="!globalQueued && showGlobalQueue"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
 
-        <div v-if="mediaId" class="btn-group">
-          <a v-if="mediaId" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">
-            Direct Link
-          </a>
-        </div>
         <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
+
+        <div v-if="ownerId || mediaId" class="btn-group">
+          <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
+            <i class="fa fa-bars" aria-hidden="true"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <router-link v-if="ownerId && ((ownerId == userId) || userIsAdmin)" class="dropdown-item" :to="'/media/edit/' + this.mediaId">Edit</router-link>
+            <a v-if="mediaId" :href="/v/ + videoId" class="dropdown-item" aria-haspopup="true" aria-expanded="false">
+              Direct Link
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
