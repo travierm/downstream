@@ -11,7 +11,25 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    private function getSpotifyConnectLink()
+    {
+      $session = new SpotifyWebAPI\Session(
+        env('SPOTIFY_CLIENT_ID'),
+        env('SPOTIFY_CLIENT_SECRET'),
+        "https://downstream.us/connect/spotify"
+      );
 
+      $options = [
+          'scope' => [
+              'playlist-read-private',
+              'playlist-modify-private',
+              'user-read-private',
+          ],
+      ];
+
+      return $session->getAuthorizeUrl($options);
+    }
+  
   public function getIndex() {
 
     $hash = Auth::user()->hash;
