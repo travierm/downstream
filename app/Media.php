@@ -13,9 +13,9 @@ class Media extends Model
 {
   use SoftDeletes;
   
-  protected $fillable = ['id', 'type', 'index', 'subtype', 'meta', 'user_id'];
+  protected $fillable = ['id', 'origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
 
-  protected $hidden = ['origin', 'created_at'];
+  protected $hidden = ['created_at'];
 
   /**
    * Adds collected prop and decodes meta json
@@ -62,6 +62,7 @@ class Media extends Model
   public static function firstOrCreate($data)
   {
     $media = self::findByType($data['type'], $data['index'])->first();
+
     if(!$media) {
       $media = new static($data);
       $media->save();
