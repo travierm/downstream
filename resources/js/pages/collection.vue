@@ -39,9 +39,9 @@
 
     <div class="row mt-2"  v-show="emptyCollection">
       <div class="col-lg-12">
-        <h5>Some tools to build your collection:</h5>
-        <a class="btn btn-outline-danger" href="/search">Search for Music</a>
+        <h5>Some tools to build your collection..</h5>
         <a href="/all" class="btn btn-outline-info">See what other people are collecting</a>
+        <a href="/global" class="btn btn-outline-success">Check the Global Queue</a>
       </div>
     </div>
 
@@ -52,6 +52,8 @@
 <script>
   import _ from "lodash";
 
+  let firstHit = true;
+
   export default {
     data() {
       return {
@@ -60,7 +62,11 @@
         emptyCollection: false
       };
     },
+    mounted() {
+    },
     created() {
+
+
       //this.updateCollection();
        if(this.$store.state.route.params.filter === "random") {
           this.randomize = true;
@@ -73,7 +79,6 @@
         return;
         
         let self = this;
-
         this.$store.dispatch('collection/update', this.randomize).then(() => {
           if(self.videos.length <= 0) {
             self.emptyCollection = true;
@@ -97,7 +102,15 @@
         return window._isMobile;
       },
       videos() {
-        return this.$store.getters['collection/getItems'];
+        let videos = this.$store.getters['collection/getItems'];
+
+        if(videos.length <= 0 && firstHit == false) {
+          this.emptyCollection = true;
+        }else{
+          firstHit = false;
+        }
+
+        return videos;
       },
     },
   };

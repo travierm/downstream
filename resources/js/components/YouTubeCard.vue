@@ -34,7 +34,7 @@
 
     <div v-if="!playing" :id="this.sessionId + '_media'" class="media-container">
 
-      <img style="width:100%; height: 100%" @click="parentPlay" :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
+      <lazy-background :blur="30" style="width:100%; height: 100%" @click="parentPlay" :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
       <div class="col">
         <div class="col-sm-12">
           <p style="color:white;">{{ title }}</p>
@@ -218,13 +218,14 @@
         * add to users collection
         */
         discover() {
+          this.collected = true;
+
           this.$store.dispatch('collection/discover', {
             type: 'youtube',
             videoId: this.videoId,
             spotifyId: this.spotifyId
           }).then((err, resp) => {
-            this.collected = true;
-            //this.$store.dispatch('collection/update');
+            this.$store.dispatch('collection/update');
           }, (err) => {
             this.collected = false;
             $('#modals').show();

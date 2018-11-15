@@ -61,6 +61,7 @@
         "yt-player": "github:travierm/yt-player"
     },
     "dependencies": {
-        "objectmodel": "^3.7.6"
+        "objectmodel": "^3.7.6",
+        "vue-lazy-image-loading": "^1.1.2"
     }
 }
