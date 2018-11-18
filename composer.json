@@ -11,7 +11,8 @@
         "jwilsson/spotify-web-api-php": "^2.2",
         "laravel/framework": "5.7.7",
         "laravel/tinker": "~1.0",
-        "madcoda/php-youtube-api": "^1.2"
+        "madcoda/php-youtube-api": "^1.2",
+        "webklex/laravel-git-hook": "1.0.1.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
