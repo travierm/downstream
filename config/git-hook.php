@@ -54,7 +54,7 @@ return [
     | No trailing slash
     |
     */
-    'repo_path' => '',
+    'repo_path' => '/var/www/html/downstream',
 
 
     /*
@@ -139,7 +139,7 @@ return [
     |          It will be transformed into: https://your-domain.tld/another-git-hook
     |
     */
-    'url' => 'https://github.com/travierm/downstream',
+    'url' => 'autodeploy',
 
 
     /*
