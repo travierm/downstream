@@ -126,9 +126,6 @@ const actions = {
 
         const nextIndex = arrayNextIndex(state.index, state.currentId, "+");
 
-        //@debug
-        console.info("indexStepForward: " + state.currentId + " => " + nextIndex);
-
         dispatch('updateCurrent', nextIndex);
         dispatch('playCurrent');
     },

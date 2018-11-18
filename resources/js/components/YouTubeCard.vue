@@ -201,7 +201,14 @@
           })
 
           this.player.on('ended', () => {
-            this.$store.dispatch('player/indexStepForward');
+
+  
+            let stepForward = _.debounce(() => {
+              console.log(this.sessionId + " telling player to indexStepForward");
+              this.$store.dispatch('player/indexStepForward');
+            }, 300);
+
+            stepForward();
           })
 
           this.toggleThumbnail(false);
