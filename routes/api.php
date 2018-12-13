@@ -36,6 +36,7 @@ Route::get('/stat/queue/count', 'StatAPIController@getGlobalQueueCount');
 Route::post('/media/discover', 'MediaAPIController@discover');
 Route::post('/media/discoverables', 'MediaAPIController@getUserDiscoverables');
 
+
 //Auto Resolved Media Actions
 Route::post('/theater/{mediaId}', 'TheaterController@queueFromMediaId');
 Route::get('/media/collect', 'MediaAPIController@resolve');
@@ -62,5 +63,8 @@ Route::namespace('API')->group(function () {
     Route::post('/media/update', 'MediaController@postUpdate');
     //user
     Route::get('/user/info', 'UserController@getUserInfo');
+
+    //Radio
+    Route::get('/radio/seed', 'RadioController@getSeedResults');
 });
 

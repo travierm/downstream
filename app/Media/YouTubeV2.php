@@ -89,6 +89,13 @@ class YouTubeV2 {
     return false;
   }
 
+  /**
+   * Discover action made by user, import a video into the main media table
+   * 
+   * @param integer $userId
+   * @param string $videoId
+   * @param array $meta
+   */
   public static function discover($userId, $videoId, $meta = [])
   {
     $video = YouTubeService::getVideoInfo($videoId);
@@ -129,12 +136,43 @@ class YouTubeV2 {
     return true;
   }
 
+  /** 
+   * Search YouTube using API service
+   * @param string $query 
+   * @param integer $limit
+  */
   public static function search($query, $limit = 8)
   {
 
     $limit +=1; 
 
     $results = YouTubeService::search($query, $limit);
+    if(!$results) {
+      return false;
+    }
+
+    $results = collect($results);
+    $results = $results->filter(function($row) {
+      return (!@is_null($row->id->videoId));
+    });
+
+    /*$videoIds = array_map(function($row) {
+      return $row->id->videoId;
+    }, $results->all());*/
+
+    return self::cleanSearchResults($results->all());
+  }
+
+  /**
+   * Search YouTube for video using query, Uses searchVideo instead of search api method
+   * @param string $query 
+   * @param integer $limit
+   */
+  public static function searchVideos($query, $limit)
+  {
+    $limit += 1;
+
+    $results = YouTubeService::searchVideos($query, $limit);
     if(!$results) {
       return false;
     }

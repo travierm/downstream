@@ -5,6 +5,7 @@ import Collection from './pages/collection';
 //import SearchPage from './pages/search';
 import DiscoverPage from './pages/discover';
 import UserProfile from './pages/user/profile';
+import RadioPage from './pages/radio';
 
 import ListIndex from './pages/lists/index';
 import ListCreate from './pages/lists/create';
@@ -48,7 +49,12 @@ const routes = [
 	name: 'listsCreate',
 	path: '/list/create',
 	component: ListCreate
-  },
+	},
+	{
+		name: 'radioIndex',
+		path: '/radio',
+		component: RadioPage
+		},
   { 
   	name:'userProfile',
   	path: '/user/:hash/profile', 
