@@ -7,6 +7,8 @@ import VueScrollTo from 'vue-scrollto';
 import consl from './services/Consl';
 import VueLazyImageLoading from 'vue-lazy-image-loading'
 
+
+
 window.Vue = require('vue');
 window.consl = consl;
 

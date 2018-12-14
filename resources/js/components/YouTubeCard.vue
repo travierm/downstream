@@ -196,17 +196,21 @@
            console.error(this.videoId + " is unplayable")
           })
 
+          this.player.on('timeupdate', (seconds) => {
+            console.log(seconds + " of " + this.player.getDuration());
+          })
+
           this.player.on('unstarted', (err) => {
             this.$store.dispatch('player/updatePlayingState', false);
           })
 
           this.player.on('ended', () => {
 
-  
+            console.log("CALLED ENDED");
             let stepForward = _.debounce(() => {
               console.log(this.sessionId + " telling player to indexStepForward");
               this.$store.dispatch('player/indexStepForward');
-            }, 900);
+            }, 1500);
 
             stepForward();
           })

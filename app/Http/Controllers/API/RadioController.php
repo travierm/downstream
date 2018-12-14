@@ -18,7 +18,7 @@ class RadioController extends Controller
     {
         $query = $request->input('query');
 
-        $results = YouTubeV2::searchVideos($query, 30);
+        $results = YouTubeV2::searchVideos($query, 10);
 
         return $results;
     }
