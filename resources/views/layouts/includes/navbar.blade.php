@@ -55,9 +55,9 @@
                     <a class="nav-link" href="{{ url('/global') }}">Global</a>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <router-link class="nav-link text-lg" to="/radio">Radio</router-link>
-                </li>
+                </li>-->
                 <!--<li class="nav-item">
                     <router-link class="nav-link" to="/playlists">Playlists</router-link>
                 </li>-->

@@ -43,6 +43,8 @@ class FrontPageController extends Controller
 
     $items = GlobalQueue::getActiveMedia();
 
+    $items = $items->take(3);
+
     if(Auth::check()) {
       Media::addUserCollectedProp($items);
     }

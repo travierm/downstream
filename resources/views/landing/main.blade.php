@@ -4,8 +4,8 @@
   <section class="jumbotron text-center mb-4">
     <div class="row justify-content-md-center">
       <div class="col-lg-12">
-        <h1 class="jumbotron-heading" style="text-align: center;" >Discover <img src="/open-iconic-master/svg/chevron-right.svg"> Collect <img src="/open-iconic-master/svg/chevron-right.svg"> Play</h1>
-        <p style="text-align: center; font-size: 1.2rem;">A music service designed to help you discover and collect whatever type of music you enjoy listening to.</p>
+        <h1 class="jumbotron-heading" style="text-align: center;" >Collect <img src="/open-iconic-master/svg/chevron-right.svg"> Discover <img src="/open-iconic-master/svg/chevron-right.svg"> Play</h1>
+        <p style="text-align: center; font-size: 1.2rem;">A music service designed to help you collect and discover whatever type of music you enjoy listening to.</p>
       </div>
     </div>
   </section>
@@ -13,7 +13,7 @@
   @if(Auth::guest())
   <div class="row justify-content-md-center">
     <div class="col-lg-3 col-sm-6 mb-3">
-      <a href="/register" class="btn btn-outline-info btn-lg btn-block">Register</a>
+      <a href="/register" class="btn btn-outline-success btn-lg btn-block">Join Today</a>
     </div>
   </div>
   @endif
@@ -32,7 +32,39 @@
     @endforeach
     </div>
   @endif
+
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="mt-3 mb-3"><i class="fas fa-box mr-2"></i>Features</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Collection</h2>
+      <p>Start your collection by searching for songs you already love. Will save them for replay and make sure you don't lose the song even if the original video gets removed.</p>
+    </div>
+
+    <div class="col-md-4">
+      <h2>Discovery</h2>
+      <p>There are two great ways to discover: <br /> First we make it easy to see what other users are collecting. Secondly will start finding related music to what you've collected and begin populating your Discover page.</p>
+    </div>
+
+    <div class="col-md-4">
+      <h2>Share with Friends</h2>
+      <p>You'll be able to share your favorite music with friends easily with our direct linking tool.</p>
+      <p>The ability to follow friends will soon be introduced!</p>
+    </div>
+  </div>
 </div>
+
+@if(Auth::guest())
+  <div class="row justify-content-md-center">
+    <div class="col-lg-3 col-sm-6 mb-3 mt-3">
+      <a href="/register" class="btn btn-outline-success btn-lg btn-block">Join Today</a>
+    </div>
+  </div>
+  @endif
 
 <control-bar></control-bar>
 @endsection
