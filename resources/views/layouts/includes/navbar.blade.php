@@ -1,6 +1,6 @@
 <nav class="main-navbar navbar-expand-md navbar navbar-dark navbar-deco" style="background-color: #4a52e8;">
     <div class="container-fluid">
-        <a id="brand" class="navbar-brand" href="{{ url('/') }}">Downstream2</a>
+        <a id="brand" class="navbar-brand" href="{{ url('/') }}">Downstream</a>
         <a target="_blank" href="https://github.com/travierm/downstream"><img src={{asset("images/GitHub-Mark-Light-64px.png")}} width="32" height="32" alt=""></a>
         
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
