@@ -40,20 +40,27 @@
   </div>
 
   <div class="row">
+
+    <div class="col-md-4">
+      <h2>Unlimited Music</h2>
+      <p>Using our search tool you'll have access to nearly every musical piece on the internet.</p>
+    </div>
+
     <div class="col-md-4">
       <h2>Collection</h2>
-      <p>Start your collection by searching for songs you already love. Will save them for replay and make sure you don't lose the song even if the original video gets removed.</p>
+      <p>Collect any items you find while using search or discover pages. Will save them for replay and make sure you never lose an item even if the original video is removed.</p>
     </div>
 
     <div class="col-md-4">
       <h2>Discovery</h2>
       <p>There are two great ways to discover: <br /> First we make it easy to see what other users are collecting. Secondly will start finding related music to what you've collected and begin populating your Discover page.</p>
     </div>
+  </div>
 
-    <div class="col-md-4">
-      <h2>Share with Friends</h2>
-      <p>You'll be able to share your favorite music with friends easily with our direct linking tool.</p>
-      <p>The ability to follow friends will soon be introduced!</p>
+  <div class="row justify-content-md-center">
+    <div class="col-md-4 mt-3">
+      <h2>Sharing</h2>
+      <p>You'll be able to share your favorite music with friends easily using our direct linking tool.</p>
     </div>
   </div>
 </div>
