@@ -197,11 +197,13 @@
           })
 
           this.player.on('timeupdate', (seconds) => {
-            console.log(seconds + " of " + this.player.getDuration());
+            //console.log(seconds + " of " + this.player.getDuration());
           })
 
           this.player.on('unstarted', (err) => {
-            this.$store.dispatch('player/updatePlayingState', false);
+            if(this.clientOnMobile) {
+              this.$store.dispatch('player/updatePlayingState', false);
+            }
           })
 
           this.player.on('ended', () => {
