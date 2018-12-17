@@ -28,6 +28,8 @@ Route::middleware(['admin'])->group(function() {
   Route::get('/admin/filter/title', 'FilterController@getTitle');
   Route::post('/admin/filter/title', 'FilterController@postTitle');
 
+  Route::get('/user/list', 'UserController@getUserList');
+
   Route::get('/admin/toplist', 'Admin\ToplistController@getIndex');
   Route::get('/admin/toplist/update', 'Admin\ToplistController@getUpdate');
   Route::get('/admin/toplist/clear', 'Admin\ToplistController@getClear');

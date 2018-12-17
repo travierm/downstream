@@ -27,9 +27,15 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-12" v-for="video in userCollection" :key="video.id">
-          <video-player-card v-bind:media="video"></video-player-card>
+      <div class="row mt-4">
+        <div class="col-lg-3 col-md-6 col-sm-12" v-for="item in userCollection" :key="item.id">
+           <youtube-card 
+		          :spotifyId="item.source_id" 
+		          :video-id="item.index" 
+		          :title="item.meta.title" 
+		          :thumbnail="item.meta.thumbnail"
+				      :collected="item.collected">
+		        </youtube-card>
         </div>
       </div>
     </div>
@@ -43,11 +49,12 @@
         userHash:this.$route.params.hash,
         collection:false,
         user:{},
-        authed:window._authed
+        authed:this.$store.state.user.type
       };
     },
     mounted() {
-      this.$store.dispatch('video/unregisterAll');
+      console.log(this.$store.state.user.id);
+      //this.$store.dispatch('video/unregisterAll');
 
       this.fetchUserProfile(this.userHash);
     },

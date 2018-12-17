@@ -13,7 +13,7 @@
           video-id={{$video->vid}} 
           thumbnail={{$video->thumbnail}}
           >
-        </video-player-card>
+        </youtube-player-card>
       </div>
       @endforeach
     @endif

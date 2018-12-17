@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use DateTime;
+use App\User;
 use App\Media;
 use App\UserMedia;
 use App\MediaRemoteReference;
@@ -51,6 +52,34 @@ class UserController extends Controller
       'collectionSize' => $collectionSize,
       'collectionSpread' => $collectionSpread,
       'sinceAccountCreation' => date("F j, Y, g:i a", strtotime(Auth::user()->created_at)) . " <==> $daysSince days ago "
+    ]);
+  }
+
+  public function getUserList()
+  {
+
+    $users = User::orderBy("created_at", "DESC")->get();
+
+    //build custom view user struct
+    foreach($users as &$user) {
+      $user->collectionSize = UserMedia::where('user_id', $user->id)->count();
+      $latestMediaItemID = UserMedia::where('user_id', $user->id)
+        ->orderBy("created_at", "DESC")
+        ->limit(1)
+        ->pluck('media_id');
+
+      $user->thumbnail = false;
+      if($latestMediaItemID) {
+        $media = Media::find($latestMediaItemID)->first();
+        
+        if(@$media) {
+          $user->thumbnail = $media->getMeta()->thumbnail;
+        }
+      }
+    }
+
+    return view('user.list', [
+      'users' => $users
     ]);
   }
 

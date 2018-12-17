@@ -10,15 +10,16 @@
       <h4>Links:</h4>
 
       <ul>
-        <li><a href="/admin/toplist">Manage Toplist</a></li>
+        <!-- <li><a href="/admin/toplist">Manage Toplist</a></li> -->
+        <li><a href="/user/list">User List</a></li>
         <li><a href="/admin/filter/title">Create Title Filters</a></li>
-        <li><a href="/admin/engine/clean">Bad Media Items</a></li>  
+        <!-- <li><a href="/admin/engine/clean">Bad Media Items</a></li>  -->
         <li><a href="/admin/engine">Recommendation Engine Feed</a></li>        
       </ul>
     </div>
   </div>
 
-  <h4>Service Settings:</h4>
+  <!-- <h4>Service Settings:</h4>
   <div class="row">
   	<form action="/admin/dash/settings" method="POST">
   		{{ csrf_field() }}
@@ -36,10 +37,10 @@
 
   </div>
 
-  <button class="btn btn-info">Save</button>
+  <button class="btn btn-info">Save</button>-->
 
   <div class="row">
-  	<div class="col-lg-8" style="margin-top: 25px;">
+  	<div class="col-lg-8 mt-2">
   		<about-page></about-page>
   	</div>
   </div>

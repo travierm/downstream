@@ -7,17 +7,15 @@
 
   <div class="row">
   	@foreach($items as $item)
-      <div class="col-lg-3 col-md-6 col-sm-12">
-
-        <video-player-card 
-          spotifyId="{{ $item->source_id }}" 
-          reference="{{ $item->media_vid}}" 
-          vid="{{ $item->index }}" 
-          title="{{ $item->title }}" 
-          thumbnail="{{ $item->thumbnail }}">
-        </video-player-card>
-
-      </div>
+    <div class="col-lg-3 col-md-12 col-sm-12 pushFromTop">
+        <youtube-card 
+          @if($item->id) :media-id="{{$item->id}}" @endif 
+          title="{{$item->title}}"
+          @if($item->collected) :collected="{{$item->collected}}" @endif
+          item-id={{$item->vid}} 
+          thumbnail={{$item->thumbnail}}
+          >
+        </youtube-card>
     @endforeach
   </div>
 </div>
