@@ -3,21 +3,29 @@
 We want to thank you for being with us on our launch year.
 <br /><br />
 
+
+@component('mail::panel')
+## Year in Review
+
 @if($collectionSize)
-You collected **{{ $collectionSize }}** items this past year @if(false) and other users collected your items **{{ $collectionReach }}** times @endif!
+You collected **{{ $collectionSize }}** items so far @if($collectionReach) and other users collected your items **{{ $collectionReach }}** times @endif!
 @else
 You joined but didn't collect any items! That's okay, we hope you visit us again soon and collect your first item!
 @endif
 
 <br />
 
-User's collected **{{ $network->size }}** items since launch and the discovery system found **{{ $network->related }}** related items.
+Our total collection size is **{{ $network->size }}** items since launch and the discovery system found **{{ $network->related }}** related items.
 
 <br />
+@endcomponent
+
 We'll keep adding new features and providing you the best free music platform we can.
 
+
 <br />
 
+@component('mail::panel')
 ## New Features we launched this year
 - Discover page - A page populated with music or videos related to items in your collection.
 - Global Queue - You can now push your favorite music to the frontpage from your collection.
@@ -29,6 +37,7 @@ We'll keep adding new features and providing you the best free music platform we
 - Artist accounts and tools for original content to be uploaded
 - Better user curated content pages
 - Improvements to Mobile Experience
+@endcomponent
 
 @component('mail::button', ['url' => 'https://downstream.us'])
 Visit Downstream
