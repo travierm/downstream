@@ -52,8 +52,18 @@ class SendAnniversaryEmail extends Command
             ->where(DB::raw("MONTH(created_at)"), $currentMonth)
             ->where(DB::raw("YEAR(created_at)"), "<=", $lastYear)
             ->get();
+
+        if($users) {
+            $this->info("Sending out " . count($users) . " anniversary emails for today " . date("Y-m-d"));
+        }else{
+            $this->info("No user anniversary emails for today " . date("Y-m-d"));
+            exit;
+        }
         
+
         foreach($users as $user) {
+            $this->info("Sending anniversary email for " . $user->email);
+
             Mail::to($user)->send(new JoinDateAnniversary($user));
         }
 
