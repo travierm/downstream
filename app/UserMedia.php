@@ -20,10 +20,14 @@ class UserMedia extends Model
       ->where('user_id', $userId);
   }
 
-  public static function pluckMediaIds()
+  public static function pluckMediaIds($userId = false)
   {
-    return self::where('user_id', Auth::user()->id)
-    ->pluck('media_id');
+    if(!$userId) {
+      $userId = Auth::user()->id;
+    }
+
+    return self::where('user_id', $userId)
+      ->pluck('media_id');
   }
 
   public static function collection($type = false)

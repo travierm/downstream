@@ -31,6 +31,10 @@ class Kernel extends ConsoleKernel
         
         $schedule->command('globalq:process')
             ->everyMinute();
+
+        $schedule->command('cron:anniversary')
+            ->dailyAt('08:00')
+            ->appendOutputTo(storage_path('logs/anniversary'));
     }
 
     /**
