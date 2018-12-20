@@ -1,6 +1,6 @@
 @component('mail::message')
 # {{ ucfirst($displayName) }} it's been a whole year since you joined!
-We want to thank you for being with us on our launch year.
+We want to thank you for being with us in our launch year.
 <br /><br />
 
 
