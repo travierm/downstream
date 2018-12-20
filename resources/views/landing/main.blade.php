@@ -73,5 +73,5 @@
   </div>
   @endif
 
-<control-bar></control-bar>
+<!-- <control-bar></control-bar> -->
 @endsection

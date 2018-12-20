@@ -41,7 +41,7 @@ class FrontPageController extends Controller
       'look at me' => 283,
     ]);*/
 
-    $items = GlobalQueue::getAllMedia();
+    $items = GlobalQueue::getActiveMedia();
 
     $items = $items->take(3);
 
