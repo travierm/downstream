@@ -24,7 +24,7 @@ https://downstream.us
 ### Requirements
 - PHP 7.0 or greater
 - Composer PHP package manager
-- RDBMS Database (Sqlite, Postgres, MySQL, MSSQL)
+- Database (Sqlite, Postgres, MySQL, MSSQL)
 - NodeJS
 - YouTube API key for search **required**
 - Spotify API key for recommendations and discovery **not required**
