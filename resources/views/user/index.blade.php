@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('fixed-footer', 'fixed-bottom')
+
 @section('content')
 <div class="container pushFromTop">
     <h2>User Information:</h2>
