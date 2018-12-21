@@ -60,6 +60,24 @@ Route::post('/import', 'ImportController@postImportVideo');
 Route::get('/user', 'UserController@getIndex');
 Route::get('/test/video', 'MediaAPIController@testVideo');
 
+
+//Privacy
+Route::get('/privacy', function() {
+  return View::make("privacy");
+});
+
+//Privacy
+Route::get('/tos', function() {
+  return View::make("tos");
+});
+
+//Privacy
+Route::get('/contact', function() {
+  return View::make("contact");
+});
+
+
+
 Auth::routes();
 
 Route::get('/logout', 'UserController@logout');

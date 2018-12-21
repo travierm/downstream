@@ -54,6 +54,18 @@
       </div>
       <!-- End App -->
       </div>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <a href="https://youtube.com"><img class="img-fluid rounded" width="300" src="https://developers.google.com/youtube/images/developed-with-youtube-sentence-case-dark.png"/></a>
+        <p class="mb-1">&copy; 2018 Downstream. All rights reserved.</p>       
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="/privacy">Privacy</a></li>
+          <li class="list-inline-item"><a href="/tos">Terms</a></li>
+          <li class="list-inline-item"><a href="/contact">Contact Us</a></li>
+          <li class="list-inline-item"><a target="_blank" href="https://www.facebook.com/DownstreamSocial/"><i style="color: #3b5998;" class="fab fa-facebook fa-3x mt-3"></i></a></li>
+        </ul>
+      
+      </footer>
     
     <script>
     window.Laravel = <?php echo json_encode([
@@ -64,6 +76,18 @@
       APP_LINK_URL: "<?php echo env('APP_LINK_URL'); ?>"
     };
     </script>
+    <style>
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}
+
+    </style>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
@@ -78,4 +102,6 @@
       gtag('config', 'UA-111656856-1');
     </script>
   </body>
+  
+  
 </html>
