@@ -1,23 +1,9 @@
 <h1>Downstream</h1>
+<img src="https://travis-ci.com/Travier/downstream.svg?token=WQrNcAcxWXTGaqEEdVh4&branch=master" />
 
 https://downstream.us
 
-<img src="https://travis-ci.com/Travier/downstream.svg?token=WQrNcAcxWXTGaqEEdVh4&branch=master" />
-
 #### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
-
-## Screenshots
-### Landing Page
-[![image.png](https://i.postimg.cc/8cfZYNWL/image.png)](https://downstream.us)
-### Global Queue
-[![image.png](https://i.postimg.cc/zGvF2Jrv/image.png)](https://downstream.us)
-### User Profile
-[![image.png](https://i.postimg.cc/MTmBK4Sg/image.png)](https://downstream.us)
-### Collection Page
-[![image.png](https://i.postimg.cc/X7cP6Nmg/image.png)](https://downstream.us)
-### Edit Media Item
-[![image.png](https://i.postimg.cc/DyjqXtXT/image.png)](https://downstream.us)
-
 
 ## Setup for Development
 ### Requirements
@@ -39,7 +25,10 @@ cp .env.example .env
 //install PHP deps
 composer install
 
-//setup .env with mysql connection then run migrate to create tables
+//setup database, add your api keys
+vim .env
+
+//run migrations against database
 php artisan migrate
 
 //start php dev server
@@ -49,16 +38,15 @@ php artisan serve
 npm run hot // or 'npm run prod' to make static js,css files with cache busting
 ```
 
-
 ## Design Concepts
 
 **Media** Downstream isn't exclusively music so we refer to individual audio tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
 
-**Discovery** No items exist on Downstream until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on Downstream until a user collects them and they will be processed as an official media item.
-
 **Collecting** Users can collect any item available to Downstream. It will then be displayed in their collection page.
 
 **Tossing** Tossing items remove them from a users collections but will keep the item for others to collect.
+
+**Discovery** No items exist on Downstream until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on Downstream until a user collects them and they will be processed as an official media item.
 
 <h3>Powered By:</h3>
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
