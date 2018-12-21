@@ -2,7 +2,7 @@
 
 https://downstream.us
 
-<p>Master: <img src="https://travis-ci.com/Travier/downstream.svg?token=WQrNcAcxWXTGaqEEdVh4&branch=master" /></p>
+<img src="https://travis-ci.com/Travier/downstream.svg?token=WQrNcAcxWXTGaqEEdVh4&branch=master" />
 
 #### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
 
