@@ -59,18 +59,18 @@
         <div class="container">
           <div class="row">
               <div class="col-lg-6">
-                  <a href="https://youtube.com"><img class="img-fluid rounded" width="300" src="https://developers.google.com/youtube/images/developed-with-youtube-sentence-case-dark.png"/></a>
+                  <ul class="list-inline">
+                      <li class="list-inline-item"><a href="/privacy">Privacy</a></li>
+                      <li class="list-inline-item"><a href="/tos">Terms</a></li>
+                      <li class="list-inline-item"><a href="/contact">Contact Us</a></li>
+                      <li class="list-inline-item"><a target="_blank" href="https://www.facebook.com/DownstreamSocial/"><i style="color: #3b5998;" class="fab fa-facebook fa-2x mt-3"></i></a></li>
+                    </ul>
+              </div>
+              <div class="col-lg-6">
+                  <a href="https://youtube.com"><img class="img-fluid" width="300" src="https://developers.google.com/youtube/images/developed-with-youtube-sentence-case-dark.png"/></a>
                   <p class="mb-1">&copy; 2018 Downstream. All rights reserved.</p>       
                   <p class="text-muted">Season 1</p>
               </div>
-            <div class="col-lg-6">
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="/privacy">Privacy</a></li>
-                    <li class="list-inline-item"><a href="/tos">Terms</a></li>
-                    <li class="list-inline-item"><a href="/contact">Contact Us</a></li>
-                    <li class="list-inline-item"><a target="_blank" href="https://www.facebook.com/DownstreamSocial/"><i style="color: #3b5998;" class="fab fa-facebook fa-3x mt-3"></i></a></li>
-                  </ul>
-            </div>
           </div>
         </div>
 
