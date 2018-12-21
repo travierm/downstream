@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-@section('fixed-footer', 'fixed-bottom')
-
 @section('content')
 <div class="container pushFromTop">
   <section class="jumbotron text-center mb-4">
