@@ -49,10 +49,14 @@
 </template>
 
 <script>
+    
     import $ from 'jquery';
     import SID from 'shortid';
+    import MobileDetect from 'mobile-detect';
     import YTPlayer from 'yt-player';
     import { generateElementId, clientOnMobile } from '../services/Utils';
+
+    let detect = new MobileDetect(window.navigator.userAgent);
 
     //Component Props
     const props = {
@@ -89,7 +93,7 @@
 
     const computed = {
       clientOnMobile() {
-        return clientOnMobile();
+        return detect.mobile();
       },
       userIsAdmin() {
         return this.$store.getters['user/isAdmin'];
