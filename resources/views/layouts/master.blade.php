@@ -61,6 +61,7 @@
               <div class="col-lg-6">
                   <a href="https://youtube.com"><img class="img-fluid rounded" width="300" src="https://developers.google.com/youtube/images/developed-with-youtube-sentence-case-dark.png"/></a>
                   <p class="mb-1">&copy; 2018 Downstream. All rights reserved.</p>       
+                  <p class="text-muted">Season 1</p>
               </div>
             <div class="col-lg-6">
                 <ul class="list-inline">
@@ -87,18 +88,6 @@
       APP_LINK_URL: "<?php echo env('APP_LINK_URL'); ?>"
     };
     </script>
-    <style>
-
-footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-footer p {
-  margin-bottom: .25rem;
-}
-
-    </style>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
