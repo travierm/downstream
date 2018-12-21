@@ -1,7 +1,10 @@
 import _ from "lodash";
 import MobileDetect from 'mobile-detect';
 
-let detect = new MobileDetect(window.navigator.userAgent);
+if(window) {
+  let detect = new MobileDetect(window.navigator.userAgent);
+}
+
 
 export function clientOnMobile() {
   return detect.mobile();
