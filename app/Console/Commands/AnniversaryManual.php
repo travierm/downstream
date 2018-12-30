@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Mail;
 use App\User;
 use Illuminate\Console\Command;
 
