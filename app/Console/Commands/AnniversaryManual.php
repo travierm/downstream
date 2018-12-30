@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Mail;
 use App\User;
+use App\Mail\JoinDateAnniversary;
 use Illuminate\Console\Command;
 
 class AnniversaryManual extends Command
