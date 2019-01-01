@@ -31,7 +31,7 @@
             axios.get("/api/spotify/url").then((response) => {
                 if(response.data) {
                     this.openInNewTab(response.data);
-                    location.reload();
+                    window.close();
                 }
             });
         }
