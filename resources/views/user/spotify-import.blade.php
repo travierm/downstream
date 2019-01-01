@@ -9,7 +9,7 @@
 
     <div class="row mt-3">
         <div class="col-lg-3">
-            @if($success)
+            @if(@$success)
             <div class="alert alert-success" role="alert">
                 Your Spotify Account is connected with Downstream!
             </div>
