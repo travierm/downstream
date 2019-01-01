@@ -26,4 +26,22 @@ class SpotifyController extends Controller
     public function getAuthorizeUrl() {
         return SpotifyAPI::getAuthorizeUrl();
     }
+
+    public function disableAccess() {
+        $userId = Auth::user()->id;
+
+        if(!$userId) {
+            return response()->json([
+                'code' => 400,
+                'message' => "Bad user_id"
+            ]);
+        }
+
+        UserSpotifyToken::where("user_id", $userId)->delete();
+
+        return response()->json([
+            'code' => 200,
+            'message' => "Successfully disabled access to Spotify"
+        ]);
+    }
 }

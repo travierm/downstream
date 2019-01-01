@@ -54,7 +54,13 @@ class UserController extends Controller
 
     public function getSpotifyImportPage() 
     {
-      return view("user.spotify-import");
+      $userId = Auth::user()->id;
+
+      $authorized = UserSpotifyToken::where("user_id", $userId)->exists();
+
+      return view("user.spotify-import", [
+        'success' => $authorized
+      ]);
     }
 
     public function getSpotifyConnectLink()
