@@ -36,7 +36,7 @@ class UserController extends Controller
         $token = UserSpotifyToken::where('user_id', $userId)->delete();
       }
 
-      $token = new UserSpotifyToken;
+      $token = new UserSpotifyToken();
       $token->access_token = $accessToken;
       $token->refresh_token = $refreshToken;
       $token->user_id = $userId;
