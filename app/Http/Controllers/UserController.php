@@ -30,7 +30,12 @@ class UserController extends Controller
 
       $userId = Auth::user()->id;
 
-      $token = new UserSpotifyToken();
+      $token = UserSpotifyToken::where('user_id', $userId);
+      if($token) {
+        //delete existing tokens
+        $token = UserSpotifyToken::where('user_id', $userId)->delete();
+      }
+
       $token->access_token = $accessToken;
       $token->refresh_token = $refreshToken;
       $token->user_id = $userId;
@@ -43,7 +48,7 @@ class UserController extends Controller
       }
 
       return view('user.spotify-import', [
-        'authorized' => $success
+        'success' => $success
       ]);
     }
 

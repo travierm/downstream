@@ -15,7 +15,7 @@
             </div>
             @endif
 
-            <spotify-authorize-btn @if(@$authorized) authorized="true" @endif></spotify-authorize-btn>
+            <spotify-authorize-btn @if(@$success) authorized="true" @endif></spotify-authorize-btn>
         </div>
     </div>
 </div>
