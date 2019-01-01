@@ -23,8 +23,8 @@ class UserController extends Controller
       $code = $request->input('code');
 
       $session = SpotifyAPI::getSession();
-      $session->requestAccessToken($code);
 
+      $session->requestAccessToken($code);
       $accessToken = $session->getAccessToken();
       $refreshToken = $session->getRefreshToken();
 

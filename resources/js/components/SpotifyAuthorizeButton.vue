@@ -1,7 +1,7 @@
 <template>
     <div>
         <button v-if="isAuthorized" class="btn btn-success disabled">Connected Accounts</button>
-        <button v-if="isAuthorized" class="btn btn-outline-danger">Disable Access</button>
+        <button v-if="isAuthorized" @click="disableAccess" class="btn btn-outline-danger">Disable Access</button>
 
         <button v-if="!isAuthorized" @click="getUrl" class="btn btn-outline-danger">Connect with Spotify</button>
     </div>
