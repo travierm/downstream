@@ -24,13 +24,14 @@
         },
         disableAccess() {
             axios.get('/api/spotify/disable').then((response) => {
-                window.reload();
+                location.reload();
             });
         },
         getUrl() {
             axios.get("/api/spotify/url").then((response) => {
                 if(response.data) {
                     this.openInNewTab(response.data);
+                    location.reload();
                 }
             });
         }
