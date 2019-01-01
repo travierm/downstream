@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use DateTime;
 use App\User;
+use App\UserSpotifyToken;
 use App\Services\SpotifyAPI;
 use App\Media;
 use App\UserMedia;
@@ -50,7 +51,7 @@ class UserController extends Controller
     {
       return view("user.spotify-import");
     }
-    
+
     public function getSpotifyConnectLink()
     {
       $session = new SpotifyWebAPI\Session(
