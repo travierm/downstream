@@ -45,11 +45,5 @@
             </ul>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-lg-3">
-            <spotify-authorize-btn></spotify-authorize-btn>
-        </div>
-    </div>
 </div>
 @endsection

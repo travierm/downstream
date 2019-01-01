@@ -62,6 +62,7 @@ Route::get('/test/video', 'MediaAPIController@testVideo');
 
 //User
 Route::get('/spotify/connect', 'UserController@getConnect');
+Route::get('/spotify/import', 'UserController@getSpotifyImportPage');
 
 
 //Privacy

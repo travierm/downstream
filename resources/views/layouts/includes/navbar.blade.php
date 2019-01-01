@@ -65,6 +65,7 @@
                     <a class="nav-link dropdown-toggle " href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="/user">Profile</a>
+                        <a class="dropdown-item" href="/spotify/import">Spotify Import</a>
                         <a class="dropdown-item" href="/logout">Logout</a>
                     </div>
                 </li>

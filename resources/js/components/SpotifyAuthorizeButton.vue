@@ -5,13 +5,11 @@
 <script>
   
   export default {
+    props:["authorized"],
     data() {
       return {
+          isAuthorized: this.authorized
       }
-    },
-    computed: {
-    },
-    mounted() {
     },
     methods: {
         openInNewTab(url) {

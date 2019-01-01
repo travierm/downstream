@@ -9,6 +9,40 @@ class SpotifyAPI {
 	private static $api = false;
 	private static $session = false;
 
+	private static $scopes = [
+        'user-top-read',
+        'user-read-private',
+        'playlist-read-private',
+        'playlist-modify-private',
+        'playlist-modify-public'
+	];
+
+	public static function getAuthorizeUrl() {
+        $session = self::getSession();
+
+        $options = ['scope' => self::$scopes];
+
+        return $session->getAuthorizeUrl($options);
+    }
+
+	public static function getSession() {
+		if(!self::$booted) {
+			self::boot();
+		}
+
+		return self::$session;
+	}
+
+	public static function getInstance() 
+	{
+		if(!self::$booted) {
+			self::boot();
+		}
+
+		return self::$api;
+	}
+
+
 	private static function boot() 
 	{
 		$clientId = env('SPOTIFY_CLIENT_ID');
@@ -39,22 +73,5 @@ class SpotifyAPI {
 		}
 
         return true;
-	}
-
-	public static function getSession() {
-		if(!self::$booted) {
-			self::boot();
-		}
-
-		return self::$session;
-	}
-
-	public static function getInstance() 
-	{
-		if(!self::$booted) {
-			self::boot();
-		}
-
-		return self::$api;
 	}
 }

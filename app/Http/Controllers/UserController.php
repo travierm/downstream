@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use DateTime;
 use App\User;
+use App\Services\SpotifyAPI;
 use App\Media;
 use App\UserMedia;
 use App\MediaRemoteReference;
@@ -12,7 +13,45 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    private function getSpotifyConnectLink()
+  /**
+   * Process successfully authorization from Spotify
+   * Save tokens to the database
+   */
+  public function getConnect(Request $request)
+  {
+      $code = $request->input('code');
+
+      $session = SpotifyAPI::getSession();
+      $session->requestAccessToken($code);
+
+      $accessToken = $session->getAccessToken();
+      $refreshToken = $session->getRefreshToken();
+
+      $userId = Auth::user()->id;
+
+      $token = new UserSpotifyToken();
+      $token->access_token = $accessToken;
+      $token->refresh_token = $refreshToken;
+      $token->user_id = $userId;
+      $token->save();
+
+      if($token) {
+        $success = true;
+      }else{
+        $success = false;
+      }
+
+      return view('user.spotify-import', [
+        'authorized' => $success
+      ]);
+    }
+
+    public function getSpotifyImportPage() 
+    {
+      return view("user.spotify-import");
+    }
+    
+    public function getSpotifyConnectLink()
     {
       $session = new SpotifyWebAPI\Session(
         env('SPOTIFY_CLIENT_ID'),
@@ -93,36 +132,6 @@ class UserController extends Controller
       'displayName' => $displayName
     ]);
   }
-
-  public function getDiscover()
-  {
-  }
-
-    /**
-   * Process successfully authorization from Spotify
-   * Save tokens to the database
-   */
-  public function getConnect(Request $request)
-  {
-      $code = $request->input('code');
-
-      $session = SpotifyAPI::getSession();
-      $session->requestAccessToken($code);
-
-      $accessToken = $session->getAccessToken();
-      $refreshToken = $session->getRefreshToken();
-
-      $userId = Auth::user()->id;
-
-      $token = new UserSpotifyToken();
-      $token->access_token = $accessToken;
-      $token->refresh_token = $refreshToken;
-      $token->user_id = $userId;
-      $token->save();
-
-      return view('');
-  }
-
 
   public function logout()
   {

@@ -11,8 +11,11 @@ use App\Http\Controllers\Controller;
 class SpotifyController extends Controller
 {
     public $scopes = [
+        'user-top-read',
+        'user-read-private',
         'playlist-read-private',
-        'user-read-private'
+        'playlist-modify-private',
+        'playlist-modify-public'
     ];
 
     function __construct() 
@@ -21,10 +24,6 @@ class SpotifyController extends Controller
     }
 
     public function getAuthorizeUrl() {
-        $session = SpotifyAPI::getSession();
-
-        $options = ['scope' => $this->scopes];
-
-        return $session->getAuthorizeUrl($options);
+        return SpotifyAPI::getAuthorizeUrl();
     }
 }
