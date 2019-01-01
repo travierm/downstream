@@ -55,7 +55,7 @@
       <!-- End App -->
       </div>
 
-      <footer class="my-5 pt-5 text-muted text-center text-small @yield('fixed-footer') ">
+      <footer class="my-5 pt-5 text-muted text-center text-small ">
         <div class="container">
           <div class="row">
               <div class="col-lg-6">

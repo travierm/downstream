@@ -98,6 +98,32 @@ class UserController extends Controller
   {
   }
 
+    /**
+   * Process successfully authorization from Spotify
+   * Save tokens to the database
+   */
+  public function getConnect(Request $request)
+  {
+      $code = $request->input('code');
+
+      $session = SpotifyAPI::getSession();
+      $session->requestAccessToken($code);
+
+      $accessToken = $session->getAccessToken();
+      $refreshToken = $session->getRefreshToken();
+
+      $userId = Auth::user()->id;
+
+      $token = new UserSpotifyToken();
+      $token->access_token = $accessToken;
+      $token->refresh_token = $refreshToken;
+      $token->user_id = $userId;
+      $token->save();
+
+      return view('');
+  }
+
+
   public function logout()
   {
     Auth::logout();

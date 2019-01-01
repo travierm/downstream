@@ -66,5 +66,8 @@ Route::namespace('API')->group(function () {
 
     //Radio
     Route::get('/radio/seed', 'RadioController@getSeedResults');
+
+    //Spotify
+    Route::get('/spotify/url', 'SpotifyController@getAuthorizeUrl');
 });
 

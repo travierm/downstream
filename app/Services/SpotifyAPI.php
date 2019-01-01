@@ -4,6 +4,8 @@ namespace App\Services;
 use SpotifyWebAPI;
 
 class SpotifyAPI {
+
+	private static $booted = false;
 	private static $api = false;
 	private static $session = false;
 
@@ -19,7 +21,8 @@ class SpotifyAPI {
 
 		$session = new SpotifyWebAPI\Session(
             env('SPOTIFY_CLIENT_ID'),
-            env('SPOTIFY_CLIENT_SECRET')
+			env('SPOTIFY_CLIENT_SECRET'),
+			'https://downstream.us/spotify/connect'
         );
 
         $session->requestCredentialsToken();
@@ -29,14 +32,26 @@ class SpotifyAPI {
         $api->setAccessToken($accessToken);
 
         self::$api = $api;
-        self::$session = $session;
+		self::$session = $session;
+		
+		if($api && $session) {
+			self::$booted = true;
+		}
 
         return true;
 	}
 
+	public static function getSession() {
+		if(!self::$booted) {
+			self::boot();
+		}
+
+		return self::$session;
+	}
+
 	public static function getInstance() 
 	{
-		if(!self::$api) {
+		if(!self::$booted) {
 			self::boot();
 		}
 
