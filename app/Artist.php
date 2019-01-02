@@ -9,9 +9,14 @@ class Artist extends Model
     public static function findOrCreate($name) {
         trim($name);
 
-        $obj = static::where('name', $name)->get();
+        $obj = Artist::where('name', $name)->first();
+    
+        if(!$obj) {
+            $obj = new Artist();
+            $obj->name = $name;
+            $obj->save();
+        }
 
-        $obj = static::find($obj->id);
-        return $obj ?: new static;
+        return $obj;
     }
 }

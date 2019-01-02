@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use DB;
+use App\Artist;
 use App\Media;
 use App\MediaMeta;
 use App\Media\YouTubeV2;
@@ -148,6 +149,8 @@ class spotifyTest extends Command
         if(@$video->snippet->tags) {
           $meta['tags'] = $video->snippet->tags;
         }
+
+        $metaArray = $meta;
         $meta = json_encode($meta);
     
         $media = Media::firstOrCreate([
@@ -164,14 +167,13 @@ class spotifyTest extends Command
           'user_id' => $userId
         ]);
 
-
         //do media_meta check
         $row = MediaMeta::where('media_id', $media->id)->first();
         if(!$row) {
-
             //create or find artist
             $artist = Artist::findOrCreate($trackArtist);
 
+            $meta = $metaArray;
             $row = new MediaMeta();
             $row->title = $meta['title'];
             $row->artist_id = $artist->id;
