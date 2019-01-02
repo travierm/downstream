@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\UserSpotifyToken;
 use SpotifyWebAPI;
 
 class SpotifyAPI {
@@ -33,6 +34,18 @@ class SpotifyAPI {
 		return self::$session;
 	}
 
+	public static function getInstanceWithToken(UserSpotifyToken $token) {
+
+		$api = new SpotifyWebAPI\SpotifyWebAPI();
+		$session = self::getSession();
+
+		$accessToken = self::refreshAccessToken($token->refresh_token);
+		// Fetch the saved access token from somewhere. A database for example.
+		$api->setAccessToken($accessToken);	
+	
+		return $api;
+	}
+
 	public static function getInstance() 
 	{
 		if(!self::$booted) {
@@ -40,6 +53,20 @@ class SpotifyAPI {
 		}
 
 		return self::$api;
+	}
+
+	public static function refreshAccessToken($refreshToken)
+	{
+		$session = self::getSession();
+
+		$session->refreshAccessToken($refreshToken);
+		$accessToken = $session->getAccessToken();
+
+		if(!$accessToken) {
+			return false;
+		}
+
+		return $accessToken;
 	}
 
 

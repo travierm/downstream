@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Artist extends Model
 {
     public static function findOrCreate($name) {
+        trim($name);
+
         $obj = static::where('name', $name)->get();
 
         $obj = static::find($obj->id);
