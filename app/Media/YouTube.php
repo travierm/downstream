@@ -46,7 +46,7 @@ class YouTube {
 
     $videos = [];
     foreach($results as $info) {
-      if($info->id->videoId) {
+      if(@$info->id->videoId) {
         $video = $this->getById($info->id->videoId);  
 
         $videos[] = $video;
