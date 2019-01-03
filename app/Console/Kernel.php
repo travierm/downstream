@@ -23,9 +23,11 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
-        $schedule->command('spotify:recommendations')
-           ->everyTenMinutes();
+    {   
+        //MAYBE TURN ON ANOTHER TIME
+        //Turn on to allow discovery page to populate
+        //$schedule->command('spotify:recommendations')
+           //->everyTenMinutes();
            //->appendOutputTo(storage_path('logs/recommendation-log'))
            //->emailOutputTo('moorlagrx@gmail.com');
         
