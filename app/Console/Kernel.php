@@ -40,7 +40,8 @@ class Kernel extends ConsoleKernel
             ->everyMinute();
 
         $schedule->command('cron:anniversary')
-            ->dailyAt('08:00')
+            //makes up for server time
+            ->dailyAt('014:00')
             ->appendOutputTo(storage_path('logs/anniversary'));
     }
 
