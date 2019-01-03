@@ -15,6 +15,7 @@
         "webklex/laravel-git-hook": "1.0.1.7"
     },
     "require-dev": {
+        "ajthinking/tinx": "^2.1",
         "barryvdh/laravel-debugbar": "^3.1",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",

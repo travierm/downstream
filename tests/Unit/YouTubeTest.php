@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Media\YouTube;
 use YouTubeService;
 
 use Tests\TestCase;
@@ -30,5 +31,16 @@ class YouTubeTest extends TestCase
         }
         
         $this->assertTrue($test);
+    }
+
+    public function testGetVideoInfo()
+    {
+        $api = new YouTube();
+
+        //Drake - In my feelings
+        $video = $api->getById("DRS_PpOrUZ4");
+
+        //video should have all info filled or the api has most likely changed
+        $this->assertTrue($video->allKeysFilled());
     }
 }
