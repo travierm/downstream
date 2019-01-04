@@ -50,17 +50,18 @@ class userPassword extends Command
 
         $this->info("Changing passsword for $user->display_name");
         $confirmedPassword = false;
-        while(!$confirmedPassword) {
+        do {
 
             $password = $this->secret('New password?');
             $confirmPassword = $this->secret('Confirm new password?');
     
             if($confirmPassword === $password) {
+                $this->info("Password matched!");
                 $confirmedPassword = true;
-            }
-
-            $this->error("Passwords do not match!");
-        }
+            }else{
+                $this->error("Passwords do not match!");
+            }            
+        } while($confirmedPassword == false);
 
         if($this->confirm("Are you sure you want to change $user->display_name password?")) {
             $user->password = Hash::make($password);
