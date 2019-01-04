@@ -74,7 +74,8 @@ class YouTube {
     $video->title = $info->snippet->title;
     $video->categoryId = $info->snippet->categoryId;
 
-    if($video->tags)
+
+    if($info->snippet->tags)
       $video->tags = $info->snippet->tags;
 
     if(@$info->snippet->thumbnails->standard->url) {
