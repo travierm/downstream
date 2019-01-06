@@ -1,5 +1,7 @@
 @extends('layouts.master')
 @section('content')
+
+<title>Downstream | Privacy</title>
 <div class="container">
 <h1 class="pt-5">Privacy Policy of Downstream</h1>
 

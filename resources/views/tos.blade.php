@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('content')
+<title>Downstream | Terms Of Service</title>
 <div class="container">
+
 <h3 class="mt-5">TERMS OF SERVICE</h3>
 
 OVERVIEW
