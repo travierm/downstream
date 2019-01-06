@@ -22,7 +22,7 @@
           <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
             <i class="fa fa-bars" aria-hidden="true"></i>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <router-link v-if="ownerId && ((ownerId == userId) || userIsAdmin)" class="dropdown-item" :to="'/media/edit/' + this.mediaId">Edit</router-link>
             <a v-if="mediaId" :href="/v/ + videoId" class="dropdown-item" aria-haspopup="true" aria-expanded="false">
               Direct Link

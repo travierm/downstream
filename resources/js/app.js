@@ -76,6 +76,11 @@ router.beforeEach((to, from, next) => {
 store.dispatch('user/getUserInfo');
 store.dispatch('collection/update');
 
+//fix bootstrap mobilenavbar issue
+$('.navbar-nav>li>a').on('click', function(){
+  $('.navbar-collapse').collapse('hide');
+});
+
 const app = new Vue({
   router,
   store

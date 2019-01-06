@@ -1,7 +1,7 @@
 <div class="container-fluid pushFromTop">
     <div class="row">
             @foreach($data['themes'] as $theme)
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-sm-12">
                 <div class="card mt-4">
                     <div class="card-header text-center">
                             <h5>{{ $theme['name']}}</h5>
