@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+  public function getGuidePage()
+  {
+    return view('user.guide');
+  }
+
   /**
    * Process successfully authorization from Spotify
    * Save tokens to the database
