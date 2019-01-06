@@ -10,7 +10,7 @@
                 </select>
                 <small id="passwordHelpInline" class="text-muted">
                     Yes to let other users follow and see your collection, No and your account will not show anywhere.
-                    <br />
+                    <br /><br />
                     Your data such as email and session history is not shared publicly or with 3rd parties.
                 </small>
             </div>
