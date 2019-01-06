@@ -4,7 +4,7 @@
 <div class="container pushFromTop">
     <div class="row">
         <div class="col-lg-12">
-            <h2>User Guide</h2>
+            <h1>User Guide</h1>
         </div>
     </div>
 
