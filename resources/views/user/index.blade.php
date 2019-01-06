@@ -5,7 +5,7 @@
 @section('content')
 <div class="container pushFromTop">
     <h2>User Information:</h2>
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-success" role="alert">
         <h3 class="alert-heading">Welcome <span style="color:black;">{{$displayName}}</span>!</h3>
         
         <p>We've generated a unique hash for you..</p>

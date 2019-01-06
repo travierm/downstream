@@ -1,4 +1,4 @@
-<nav class="main-navbar navbar-expand-md navbar navbar-dark navbar-deco" style="background-color: #4a52e8;">
+<nav id="navbar" class="main-navbar navbar-expand-md navbar navbar-{{ @Auth::user() ?  @Auth::user()->themeOption('style_type') : 'dark'}} navbar-deco">
     <div class="container-fluid">
         <a id="brand" class="navbar-brand" href="{{ url('/') }}">Downstream</a>
         <a target="_blank" href="https://github.com/travierm/downstream"><img src={{asset("images/GitHub-Mark-Light-64px.png")}} width="32" height="32" alt=""></a>
@@ -65,7 +65,7 @@
                     <a class="nav-link" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="/user">Profile</a>
-                        <a class="dropdown-item" href="/spotify/import">Spotify Import</a>
+                        <a class="dropdown-item" href="/settings">Settings</a>
                         <a class="dropdown-item" href="/logout">Logout</a>
                     </div>
                 </li>

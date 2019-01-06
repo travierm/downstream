@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Hash;
+use App\Theme;
 use App\UserLike;
 use App\YouTubeVideo;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +19,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'hash', 'display_name', 'email', 'password', 'api_token', 'type'
+        'hash', 'display_name', 'email', 'password', 'api_token', 'type', 'settings'
+    ];
+
+    private $defaultSettings = [
+      'theme' => 'downstream_default'
     ];
 
     /**
@@ -57,5 +63,50 @@ class User extends Authenticatable
         ->pluck('index');
 
       return YouTubeVideo::whereIn('id', $videoIndexes)->get();
+    }
+
+    public function themeOption($key, $default = "")
+    {
+      $themeValue = $this->getSettings()->theme[$key];
+
+      if(!$themeValue) {
+        return $default;
+      }
+
+      return $themeValue;
+    }
+
+    public function setSetting($key, $value) {
+      $settings = $this->getSettings();
+      $settings->{$key} = $value;
+
+      $this->settings = json_encode($settings);
+      $this->save();
+    }
+
+    public function getSettings()
+    {
+      
+      if(!$this->settings) {
+        $this->setDefaultSettings();
+      }
+
+      $settings = json_decode($this->settings);
+      $settings->theme = Theme::getById($settings->theme);
+
+      return $settings;
+    }
+
+    public function updatePassword($newPassword)
+    {
+      $this->password = Hash::make($newPassword);
+
+      return $this->save();
+    }
+
+    private function setDefaultSettings()
+    {
+      $this->settings = json_encode($this->defaultSettings);
+      $this->save();
     }
 }

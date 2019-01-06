@@ -20,5 +20,5 @@
   };
 </script>
 
-<style scroped>
+<style scoped>
 </style>

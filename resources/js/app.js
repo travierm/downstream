@@ -32,6 +32,7 @@ Vue.use(VueScrollTo, {
 });
 
 // Components
+Vue.component('theme-btn', require("./components/ThemeButton.vue"));
 Vue.component('spotify-authorize-btn', require("./components/SpotifyAuthorizeButton.vue"));
 Vue.component('playlist-media-manager', require('./components/PlaylistMediaManager.vue'));
 //Vue.component('video-player-card', require('./components/VideoPlayerCard.vue'));

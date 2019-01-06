@@ -27,9 +27,48 @@
     @endif
 
     <title>Downstream</title>
+
+    <style>
+      .main-navbar {
+        background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+      }
+
+      .btn-primary {
+        border-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+        background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+      }
+
+      .btn-outline-primary {
+          color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+          background-color: transparent;
+          background-image: none;
+          border-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+      }
+
+      .btn-outline-primary:hover {
+          color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
+          background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;;
+          border-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
+      }
+
+      .footer {
+        border-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
+        background-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
+      }
+
+      .list-group-item.active {
+        border-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+        background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+      }
+
+      .theme-primary-text {
+        color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
+      }
+    </style>
   </head>
 
   <body>
+    
     <div id="app">
         @include('layouts.includes.navbar')
 
@@ -60,10 +99,10 @@
           <div class="row">
               <div class="col-lg-6">
                   <ul class="list-inline">
-                      <li class="list-inline-item"><a href="/privacy">Privacy</a></li>
-                      <li class="list-inline-item"><a href="/tos">Terms</a></li>
-                      <li class="list-inline-item"><a href="/contact">Contact Us</a></li>
-                      <li class="list-inline-item"><a target="_blank" href="https://www.facebook.com/DownstreamSocial/"><i style="color: #3b5998;" class="fab fa-facebook fa-2x mt-3"></i></a></li>
+                      <li class="list-inline-item"><a class="theme-primary-text" href="/privacy">Privacy</a></li>
+                      <li class="list-inline-item"><a class="theme-primary-text" href="/tos">Terms</a></li>
+                      <li class="list-inline-item"><a class="theme-primary-text" href="/contact">Contact Us</a></li>
+                      <li class="list-inline-item"><a class="theme-primary-text" target="_blank" href="https://www.facebook.com/DownstreamSocial/"><i style="color: #3b5998;" class="fab fa-facebook fa-2x mt-3"></i></a></li>
                     </ul>
               </div>
               <div class="col-lg-6">

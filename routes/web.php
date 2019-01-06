@@ -61,6 +61,8 @@ Route::get('/user', 'UserController@getIndex');
 Route::get('/test/video', 'MediaAPIController@testVideo');
 
 //User
+Route::get('/settings', 'UserSettingController@getSettingsPage');
+Route::post('/settings', 'UserSettingController@postSettings');
 Route::get('/spotify/connect', 'UserController@getConnect');
 Route::get('/spotify/import', 'UserController@getSpotifyImportPage');
 

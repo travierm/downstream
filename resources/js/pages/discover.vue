@@ -1,12 +1,12 @@
 <template>
 	<div class="container-fluid">
 		<div class="row" style="margin-top:10px;" v-if="items.length >= 1">
-			<div class="col-lg-6">
+			<!-- <div class="col-lg-6">
 				<b-alert show variant="primary"><button class="btn btn-primary" onclick="location.reload()">Refresh</button> We found some music you may like based on your collection. Click refresh to shuffle.</b-alert>
-			</div>
+			</div> -->
 		</div>
 
-		<div class="row" v-if="items.length >= 1">
+		<div class="row mt-2" v-if="items.length >= 1">
 
 			<div v-for="item in items" :key="item.id" class="col-lg-3 col-md-6 col-sm-12">
 		        <youtube-card 
