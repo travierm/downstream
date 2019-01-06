@@ -28,7 +28,7 @@ mix
   .extract(vendors)
   .sass('resources/sass/app.scss', 'public/css');
 
-if (mix.inProduction()) {
+if (mix.config.production) {
   mix.version();
 }else{
   mix.sourceMaps();
