@@ -1,5 +1,5 @@
 <template>
-    <button @click.prevent="handleClick()" class="btn btn-primary">Use Theme</button>
+    <button @click.prevent="handleClick()" class="btn btn-outline-dark">Use Theme</button>
 </template>
 
 <script>
