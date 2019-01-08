@@ -68,7 +68,7 @@
         color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
       }
 
-      @if(Auth::user()->themeOption('id') == 'night_mode') 
+      @if((@Auth::user() && Auth::user()->themeOption('id') == 'night_mode'))
 
       body {
         color: #FFFFFF;
