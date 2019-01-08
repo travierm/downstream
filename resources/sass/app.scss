@@ -101,6 +101,10 @@ footer p {
   .navbar .collapse.in, .navbar .collapsing  {
       clear:both;
   }
+
+  #control-bar-volume-container {
+    display: none;
+  }
 }
 
 #navSearchBar {
@@ -109,54 +113,4 @@ footer p {
 
 #navSearchButton {
   display: none;
-}
-
-@include media-breakpoint-up(xs) { 
-  #navSearchLink {
-    display: none;
-  }
-  #control-bar-volume-container {
-    display: none;
-  }
-
-  #navSearchBar {
-    display: none
-  }
-}
-
-@include media-breakpoint-up(sm) { 
-  #navSearchLink {
-    display: none;
-  }
-  #control-bar-volume-container {
-    display: none;
-  }
-
-  #navSearchBar {
-    display: none
-  }
-}
-@include media-breakpoint-up(md) {
-  #navSearchBar {
-    display: none
-  }
-
-  #navSearchButton {
-    display: inline-block;
-  }
-}
-@include media-breakpoint-up(lg) {
-
-  #navSearchButton {
-    display: inline-block;
-  }
-
-  #navSearchLink {
-    display: none
-  }
-
-  #themeHeader {
-    white-space: normal !important;
-    display: block;
-  }
 }

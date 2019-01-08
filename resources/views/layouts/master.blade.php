@@ -34,8 +34,6 @@
         background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
       }
 
-
-
       .btn-primary {
         border-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
         background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;

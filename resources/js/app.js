@@ -16,8 +16,9 @@ const unsync = sync(store, router);
 
 Vue.use(VueLazyImageLoading);
 Vue.use(BootstrapVue);
+
 Vue.use(VueScrollTo, {
-	container: "body",
+  container: "body",
     duration: 500,
     easing: "ease",
     offset: -200,
