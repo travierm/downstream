@@ -12,7 +12,7 @@
                 <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
               </div>
 
-              <div class="col-lg-4">
+              <div id="control-bar-volume-container" class="col-lg-4">
                 <p style="margin-top:10px;" v-if="!isMobile">
                   <b>Volume {{ volume }}</b> <br /><input v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" class="align-middle slider" />
                 </p>

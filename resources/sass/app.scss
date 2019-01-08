@@ -111,7 +111,27 @@ footer p {
   display: none;
 }
 
+@include media-breakpoint-up(xs) { 
+  #navSearchLink {
+    display: none;
+  }
+  #control-bar-volume-container {
+    display: none;
+  }
+
+  #navSearchBar {
+    display: none
+  }
+}
+
 @include media-breakpoint-up(sm) { 
+  #navSearchLink {
+    display: none;
+  }
+  #control-bar-volume-container {
+    display: none;
+  }
+
   #navSearchBar {
     display: none
   }

@@ -7,8 +7,6 @@ import VueScrollTo from 'vue-scrollto';
 import consl from './services/Consl';
 import VueLazyImageLoading from 'vue-lazy-image-loading'
 
-
-
 window.Vue = require('vue');
 window.consl = consl;
 
@@ -47,6 +45,7 @@ Vue.component('import-form', require('./forms/Import.vue'));
 Vue.component('about-page', require('./pages/about.vue'));
 
 router.beforeEach((to, from, next) => {
+  $('.navbar-collapse').collapse('hide');
 	//do something before routing
   //fires on pageload
   store.dispatch('player/reset');
@@ -77,8 +76,9 @@ store.dispatch('user/getUserInfo');
 store.dispatch('collection/update');
 
 //fix bootstrap mobilenavbar issue
-$('.navbar-nav>li>a').on('click', function(){
-  $('.navbar-collapse').collapse('hide');
+$('.nav-link').on('click', function(){
+  console.log("CLICK CALLED!");
+  
 });
 
 const app = new Vue({
