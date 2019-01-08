@@ -65,12 +65,12 @@ class User extends Authenticatable
       return YouTubeVideo::whereIn('id', $videoIndexes)->get();
     }
 
-    public function themeOption($key, $default = "")
+    public function themeOption($key)
     {
-      $themeValue = $this->getSettings()->theme[$key];
+      $themeValue = @$this->getSettings()->theme[$key];
 
       if(!$themeValue) {
-        return $default;
+        return false;
       }
 
       return $themeValue;
