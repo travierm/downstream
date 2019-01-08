@@ -88,7 +88,6 @@ footer p {
   font-size: 1.3em;
 }
 
-
 /* stack navbar vertically on small screens */
 @media(max-width:768px) {
   .navbar .navbar-nav>.nav-item {
@@ -105,12 +104,10 @@ footer p {
   #control-bar-volume-container {
     display: none;
   }
+
+  #navSearchLink {
+    display: none;
+  }
+  
 }
 
-#navSearchBar {
-  display: none;
-}
-
-#navSearchButton {
-  display: none;
-}
