@@ -4,6 +4,7 @@ import * as types from '../mutation-types';
 import cache from '../../services/Cache';
 import { arrayNextIndex } from '../../services/Utils';
 import { isBuffer } from 'util';
+import VueScrollTo from 'vue-scrollto';
 
 const state = {
     index: [],
@@ -99,6 +100,10 @@ const actions = {
         let media = findBySessionId(state.items, currentId);
         commit(types.PLAYER_PLAYING, true);
 
+        focusOnCard(currentId);
+
+
+
         media.callbackHandler((self) => {
             self.play(state.volume);
         })
@@ -186,4 +191,11 @@ function findBySessionId(items, sessionId) {
     return _.find(items, {
         sessionId: sessionId
     });
+}
+
+function focusOnCard(sessionId)
+{
+    const query = "[id='" + sessionId + "']";
+
+    VueScrollTo.scrollTo(query);
 }
