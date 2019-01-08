@@ -75,7 +75,7 @@
         background-color: {{  Auth::user()->themeOption('background_color') }};
       }
 
-      .main-navbar {
+      .main-navbar {  
           background-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
       }
 
