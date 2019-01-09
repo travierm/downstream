@@ -1,10 +1,11 @@
 <template>
-  <div class="container-fluid" style="margin-top: 50px;">
+  <div class="container" style="margin-top: 50px;">
       <nav class="navbar fixed-bottom bg-faded navbar-dark footer" style="">
         <div class="container">
             <div class="row form-inline">
-              <div class="col-lg-8">
+              <div class="col-lg-9">
                 <!-- <button @click="shuffleIndex" type="button" class="btn btn-warning p-2 my-sm-0">Shuffle</button> -->
+                <button id="miniPlayerBtn" type="button" class="btn btn-dark p-2 my-sm-0" @click="spawnMiniPlayer()"><i class="fas fa-tv"></i> Mini-Player</button>
                 <button type="button" class="btn btn-dark p-2 my-sm-0" @click="focusOnCard(currentCardId)">Focus</button>
                 <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
                 <img class="icon" @click="play" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
@@ -12,7 +13,7 @@
                 <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
               </div>
 
-              <div id="control-bar-volume-container" class="col-lg-4">
+              <div id="control-bar-volume-container" class="col-lg-3">
                 <p style="margin-top:10px;" v-if="!isMobile">
                   <b>Volume {{ volume }}</b> <br /><input v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" class="align-middle slider" />
                 </p>
@@ -46,6 +47,11 @@
       }
     },
     methods: {
+      spawnMiniPlayer() {
+        window.open("https://downstream.us/collection", "Downstream", "width=500, height=1050");  // Opens a new window
+        window.resizeTo(800, 600);
+        window.focus();
+      },
       focusOnCard(element) {
         const query = "[id='" + element + "']";
 

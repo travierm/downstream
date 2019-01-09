@@ -108,6 +108,16 @@ footer p {
   #navSearchLink {
     display: none;
   }
+
+  #miniPlayerBtn {
+    display: none;
+  }
   
+}
+
+@media(max-width:995px) {
+  #miniPlayerBtn {
+    display: none;
+  }
 }
 
