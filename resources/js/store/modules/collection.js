@@ -45,7 +45,7 @@ const actions = {
   toss({ commit }, { type, mediaId }) {
     const self = this;
     
-    return axios.get(`/api/media/toss?type=${type}&mediaId=${mediaId}`).then((resp) => {
+    return axios.get(`/api/collection/remove/${mediaId}`).then((resp) => {
       if (resp.status === 200) {
         commit(types.COLLECTION_TOSS, mediaId);
       }else if(resp.status === 401) {

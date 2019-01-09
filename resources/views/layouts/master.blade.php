@@ -17,7 +17,7 @@
     <meta name="application-name" content="Downstream">
     <meta name="msapplication-TileColor" content="#603cba">
     <meta name="theme-color" content="#8e93f1">
-    <meta name="Description" content="A unique music service built around YouTube">
+    <meta name="description" content="A free music collection and discovery service.">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">    
 
     @yield('meta')
@@ -129,7 +129,7 @@
               </div>
               <div class="col-lg-6">
                   <a href="https://youtube.com"><img class="img-fluid" width="300" src="https://developers.google.com/youtube/images/developed-with-youtube-sentence-case-dark.png"/></a>
-                  <p class="mb-1">&copy; 2018 Downstream. All rights reserved.</p>       
+                  <p class="mb-1">&copy; {{ date('Y') }} Downstream. All rights reserved.</p>       
                   <p class="text-muted">Season 1</p>
               </div>
           </div>

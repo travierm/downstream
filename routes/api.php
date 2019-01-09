@@ -54,6 +54,7 @@ Route::namespace('API')->group(function () {
 
     //authed user collection
     Route::get('/collection/{random?}', "CollectionController@getCollection");
+    Route::get('/collection/remove/{mediaId}', "CollectionController@removeItem");
     Route::get('/user/collection/{random?}', "CollectionController@getUserCollection");
 
     //playlist
