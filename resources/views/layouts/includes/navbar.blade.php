@@ -8,13 +8,6 @@
         </button>
 
         <div class="collapse navbar-collapse w-100" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
-                @if(!Auth::guest())
-                <li id="navSearchLink" class="nav-item">
-                    <a class="nav-link" href="{{ url('/search') }}">Search</a>
-                </li>
-                @endif
-            </ul>
             <form class="mx-2 my-auto d-inline w-75 d-none d-sm-none d-lg-block" action="/search" method="GET">
                 <div class="input-group w-75">
                     <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="query" type="search" class="form-control" placeholder="Search...">
