@@ -211,7 +211,10 @@
           })
 
           this.player.on('ended', () => {
-
+            //reset video
+            this.player.seek(0);
+            this.player.pause();
+            
             console.log("CALLED ENDED");
             let stepForward = _.debounce(() => {
               console.log(this.sessionId + " telling player to indexStepForward");

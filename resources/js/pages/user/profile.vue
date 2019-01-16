@@ -8,7 +8,7 @@
     <div v-if="authed">
       <div class="row" v-if="!isMobile">
         <div class="col-lg-2">
-          <master-bar></master-bar>
+          <control-bar></control-bar>
         </div>
       </div>
 

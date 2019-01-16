@@ -3,7 +3,6 @@ import _ from 'lodash';
 import * as types from '../mutation-types';
 import cache from '../../services/Cache';
 import { arrayNextIndex } from '../../services/Utils';
-import { isBuffer } from 'util';
 import VueScrollTo from 'vue-scrollto';
 
 const state = {
@@ -101,8 +100,6 @@ const actions = {
         commit(types.PLAYER_PLAYING, true);
 
         focusOnCard(currentId);
-
-
 
         media.callbackHandler((self) => {
             self.play(state.volume);
