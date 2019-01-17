@@ -1,4 +1,5 @@
 import _ from "lodash";
+import VueScrollTo from 'vue-scrollto';
 
 export function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -42,4 +43,12 @@ export function arrayNextIndex(array, currentIndex, direction = "+", steps = 1) 
   }
 
 	return array[nextIndex];
+}
+
+export function focusOnElement(elementId) {
+  const query = "[id='" + elementId + "']";
+  
+  console.log("query:" + query);
+
+  return VueScrollTo.scrollTo(query);
 }

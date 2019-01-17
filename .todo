@@ -1,4 +1,8 @@
-Working On:
 
-Collection 2 and Player Module
-Working on continous play
+Playlist Feature Todo
+
+☐ Make modal that can create or update a playlist from the collection
+☐ Make a playlist index page
+☐ Add a top 5 playlist to top of users collection
+☐ Easy way to remove items from playlist
+☐ Setting to allow a playlist's items to be hidden from collection page

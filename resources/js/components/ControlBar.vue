@@ -6,7 +6,7 @@
               <div class="col-lg-9">
                 <!-- <button @click="shuffleIndex" type="button" class="btn btn-warning p-2 my-sm-0">Shuffle</button> -->
                 <button id="miniPlayerBtn" type="button" class="btn btn-dark p-2 my-sm-0" @click="spawnMiniPlayer()"><i class="fas fa-tv"></i> Mini-Player</button>
-                <button type="button" class="btn btn-dark p-2 my-sm-0" @click="focusOnCard(currentCardId)">Focus</button>
+                <button type="button" class="btn btn-dark p-2 my-sm-0" @click="focusOnElement(currentCardId)">Focus</button>
                 <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
                 <img class="icon" @click="play" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
                 <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
@@ -26,7 +26,7 @@
 
 <script>
   import { mapActions } from 'vuex';
-  import VueScrollTo from 'vue-scrollto';
+  import { focusOnElement } from '../services/Utils';
 
   export default {
     data: () => ({
@@ -47,15 +47,11 @@
       }
     },
     methods: {
+      focusOnElement:focusOnElement,
       spawnMiniPlayer() {
         window.open("https://downstream.us/collection", "Downstream", "width=500, height=1050");  // Opens a new window
         window.resizeTo(800, 600);
         window.focus();
-      },
-      focusOnCard(element) {
-        const query = "[id='" + element + "']";
-
-        VueScrollTo.scrollTo(query);
       },
       pause() {
         this.playing = false;

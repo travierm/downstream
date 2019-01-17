@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import * as types from '../mutation-types';
 import cache from '../../services/Cache';
-import { arrayNextIndex } from '../../services/Utils';
+import { arrayNextIndex, focusOnElement } from '../../services/Utils';
 import VueScrollTo from 'vue-scrollto';
 
 const state = {
@@ -73,6 +73,8 @@ const actions = {
             }
         }
 
+        focusOnElement(sessionId + "_card");
+
         commit(types.PLAYER_UPDATE_CURRENT, sessionId);
     },
     play({ commit, state, dispatch }, sessionId) {
@@ -98,8 +100,6 @@ const actions = {
         const currentId = state.currentId;
         let media = findBySessionId(state.items, currentId);
         commit(types.PLAYER_PLAYING, true);
-
-        focusOnCard(currentId);
 
         media.callbackHandler((self) => {
             self.play(state.volume);
@@ -188,11 +188,4 @@ function findBySessionId(items, sessionId) {
     return _.find(items, {
         sessionId: sessionId
     });
-}
-
-function focusOnCard(sessionId)
-{
-    const query = "[id='" + sessionId + "']";
-
-    VueScrollTo.scrollTo(query);
 }
