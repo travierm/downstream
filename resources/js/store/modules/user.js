@@ -1,27 +1,24 @@
-import _ from 'lodash';
-
-//CONSTANTS
-export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
 const state = {
   id: false,
-  name: "",
+  name: '',
   type: 'basic',
   private: false,
 };
 
 const getters = {
-	isAdmin(state) {
-		return (state.type === "admin");
-	}
+  isAdmin(state) {
+    return (state.type === 'admin');
+  },
 };
 
 const actions = {
   getUserInfo({ commit }) {
     axios.get('/api/user/info').then((resp) => {
-        commit(UPDATE_USER_INFO, resp.data);
-    })
-  }
+      commit(UPDATE_USER_INFO, resp.data);
+    });
+  },
 };
 
 const mutations = {

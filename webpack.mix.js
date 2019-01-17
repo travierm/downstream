@@ -28,9 +28,21 @@ mix
   .extract(vendors)
   .sass('resources/sass/app.scss', 'public/css');
 
+var webpackConfig = {};
 if (mix.config.production) {
   mix.version();
 }else{
+  webpackConfig = {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/
+      }
+    ]
+  };
+
   mix.sourceMaps();
 }
 
@@ -47,5 +59,6 @@ mix.webpackConfig({
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
-  }
+  },
+  module: webpackConfig
 });

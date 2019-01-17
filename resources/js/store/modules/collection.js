@@ -7,26 +7,26 @@ SID.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@
 
 const state = {
   collectionAccess: true,
-  items:[]
+  items: [],
 };
 
 const getters = {
   getItems(state) {
     return state.items;
-  }
+  },
 };
 
 const actions = {
   shuffle({ commit }) {
     commit(types.COLLECTION_SHUFFLE);
   },
-  update({ commit, rootState}) {
+  update({ commit, rootState }) {
     return axios.get('/api/collection').then((resp) => {
       if (resp.status === 200) {
         // items refers to media items in a users collection
         const { items } = resp.data;
         commit(types.COLLECTION_UPDATE, items);
-        if(rootState.route.params.filter === "random") {
+        if (rootState.route.params.filter === 'random') {
           commit(types.COLLECTION_SHUFFLE);
         }
       }
@@ -34,22 +34,20 @@ const actions = {
       if (error) throw error;
     });
   },
+  // eslint-disable-next-line no-use-before-define
   discover({ commit }, { type, videoId, spotifyId }) {
-    const self = this;
     return axios.post('/api/media/discover', {
       type,
       videoId,
-      spotifyId
+      spotifyId,
     });
   },
-  toss({ commit }, { type, mediaId }) {
-    const self = this;
-    
+  toss({ commit }, { mediaId }) {
     return axios.get(`/api/collection/remove/${mediaId}`).then((resp) => {
       if (resp.status === 200) {
         commit(types.COLLECTION_TOSS, mediaId);
-      }else if(resp.status === 401) {
-        commit(types.COLLECTION_ACCESS, false)
+      } else if (resp.status === 401) {
+        commit(types.COLLECTION_ACCESS, false);
       }
     });
   },

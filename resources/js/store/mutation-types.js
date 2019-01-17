@@ -2,19 +2,19 @@ export const FRONTPAGE_UPDATE = 'FRONTPAGE_UPDATE';
 export const FRONTPAGE_REMOVE = 'FRONTPAGE_REMOVE';
 
 export const UNREGISTER_ALL = 'UNREGISTER_ALL';
-//register a video properties
+// register a video properties
 export const REGISTER_VIDEO = 'REGISTER_VIDEO';
-//render video
+// render video
 export const RENDER_VIDEO = 'LOAD_VIDEO';
 
-//play current video
+// play current video
 export const PLAY_CURRENT_VIDEO = 'PLAY_VIDEO';
 export const UNMUTE_CURRENT_VIDEO = 'UNMUTE_PLAY_VIDEO';
 export const UPDATE_CURRENT_VIDEO = 'UPDATE_CURRENT_VIDEO';
-//pause current video
+// pause current video
 export const PAUSE_CURRENT_VIDEO = 'PAUSE_CURRENT_VIDEO';
 export const LOAD_VIDEO = 'LOAD_VIDEO';
-//destroy
+// destroy
 export const DESTROY_VIDEO = 'DESTROY_VIDEO';
 
 export const UPDATE_VOLUME_LEVEL = 'UPDATE_VOLUME_LEVEL';
