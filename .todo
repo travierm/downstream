@@ -1,6 +1,12 @@
 
-Playlist Feature Todo
+Experiments
+☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat
 
+Bugs
+☐ Player will not properly focus on cards when switching
+☐ indexForward will skip multiple songs ahead
+
+Playlist Feature Todo
 ☐ Make modal that can create or update a playlist from the collection
 ☐ Make a playlist index page
 ☐ Add a top 5 playlist to top of users collection
