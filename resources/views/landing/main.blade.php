@@ -27,7 +27,7 @@
           video-id="{{ $item->index }}"
           thumbnail="{{ $item->meta->thumbnail }}"
           title="{{ $item->meta->title }}"
-          collected="{{ $item->collected }}">
+          :collected="{!!  json_encode($item->collected) !!}">
         </youtube-card>
       </div>
     @endforeach
