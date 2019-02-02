@@ -8,6 +8,15 @@
         </button>
 
         <div class="collapse navbar-collapse w-100" id="navbarNavDropdown">
+            @if(Auth::guest())
+                <div class="collapse navbar-collapse ml-3" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                        <a class="nav-link" href="/demo">Try Demo <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            @else
             <form class="mx-2 my-auto d-inline w-75 d-none d-sm-none d-lg-block" action="/search" method="GET">
                 <div class="input-group w-75">
                     <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="query" type="search" class="form-control" placeholder="Search...">
@@ -18,7 +27,8 @@
                     </span>
                 </div> 
             </form>
-            <ul class="navbar-nav mr-auto">
+            @endif
+            <ul class="navbar-nav ml-auto float-right">
                 @if(Auth::guest())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/register') }}">Register</a>
@@ -55,7 +65,7 @@
                     <router-link class="nav-link" to="/playlists">Playlists</router-link>
                 </li>-->
                 <li class="nav-item dropdown ">
-                    <a class="nav-link" href="/user" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
+                    <a class="nav-link" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="/user">Profile</a>
                         <a class="dropdown-item" href="/settings">Settings</a>

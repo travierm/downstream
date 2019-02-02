@@ -71,5 +71,8 @@ Route::namespace('API')->group(function () {
     //Spotify
     Route::get('/spotify/url', 'SpotifyController@getAuthorizeUrl');
     Route::get('/spotify/disable', 'SpotifyController@disableAccess');
+
+    //Demo
+    Route::get('/demo/search', 'DemoController@searchQuery');
 });
 

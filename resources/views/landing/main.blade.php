@@ -14,7 +14,11 @@
   @if(Auth::guest())
   <div class="row justify-content-md-center">
     <div class="col-lg-3 col-sm-6 mb-3">
-      <a href="/register" class="btn btn-outline-success btn-lg btn-block">Join Today</a>
+      <a href="/register" class="btn btn-success btn-lg btn-block">Register</a>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 mb-3">
+      <a href="/demo" class="btn btn-primary btn-lg btn-block">Try Demo</a>
     </div>
   </div>
   @endif
@@ -62,7 +66,7 @@
 @if(Auth::guest())
   <div class="row justify-content-md-center">
     <div class="col-lg-3 col-sm-6 mb-3 mt-3">
-      <a href="/register" class="btn btn-outline-success btn-lg btn-block">Join Today</a>
+      <a href="/register" class="btn btn-outline-success btn-lg btn-block">Register</a>
     </div>
   </div>
   @endif

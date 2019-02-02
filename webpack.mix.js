@@ -9,7 +9,7 @@ const vendors = [
   'popper.js',
   'jquery',
   'lodash',
-  'axios'
+  'axios',
 ];
 
 /*
@@ -32,7 +32,7 @@ var webpackConfig = {};
 if (mix.config.production) {
   mix.version();
 }else{
-  webpackConfig = {
+  /*webpackConfig = {
     rules: [
       {
         enforce: 'pre',
@@ -41,7 +41,7 @@ if (mix.config.production) {
         exclude: /node_modules/
       }
     ]
-  };
+  };*/
 
   mix.sourceMaps();
 }

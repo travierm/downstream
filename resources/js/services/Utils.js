@@ -1,5 +1,15 @@
 import VueScrollTo from 'vue-scrollto';
 
+export function delay(secs, callback) {
+  secs *= 1000;
+
+  setTimeout(() => {
+    callback();
+  }, secs);
+
+  return true;
+}
+
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }

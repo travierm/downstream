@@ -16,7 +16,7 @@
                 <hr>
             </h3>
 
-            <p class="guide-text">Use the search bar above to find items for your Collection. We use youtube to search for and then play any items you find.</p>
+            <p class="guide-text">Use the search bar above to find items for your Collection.</p>
             <p class="guide-text">After you find an item you like, you may play it directly or click the <button class="btn btn-outline-success">Collect</button> on the top of right of the card.  </p>
         </div>
     </div>

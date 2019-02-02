@@ -39,8 +39,8 @@ class processGlobalQueue extends Command
      */
     public function handle()
     {
-        $maxActiveItems = 6;
-        $maxItemAliveDays = 12;
+        $maxActiveItems = 8;
+        $maxItemAliveDays = 24;
         //expire active items after 3 hours if we have a bigger queue. Item will still rotate in until it hits maxItemAlive days
         $activeExpireHours = 1;
 
