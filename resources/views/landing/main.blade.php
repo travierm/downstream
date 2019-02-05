@@ -47,7 +47,7 @@
   <div class="row">
 
     <div class="col-md-4">
-      <h2>Unlimited Music</h2>
+      <h2>Limitless Music</h2>
       <p>Using our search tool you'll have access to nearly every musical piece on the internet.</p>
     </div>
 

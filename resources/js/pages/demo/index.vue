@@ -98,18 +98,18 @@
             .options({
               speed:40
             })
-            .type("Thanks for checking out this Demo!")
+            .type("The demo is starting...")
             .pause(1500)
             .delete()
             .type("Downstream is all about finding and playing content!")
-            .break()
-            .break()
             .pause(1000)
+            .break()
             .type("Let's start by finding a song you know.")
             .pause(1000)
-            .delete()
             .pause(500)
-            .type("Search for a song or artist you like using the searchbar below")
+            .break()
+            .break()
+            .type("Search for a song or artist you like using the SearchBar below")
             .go();
         })
       },
@@ -126,12 +126,8 @@
             .type("You did great!")
             .pause(1500)
             .delete()
-            .type("Register with Downstream to collect items permanently.")
+            .type("Register with Downstream to collect items permanently and use our discovery feature.")
             .break()
-            .pause(1000)
-            .type("We are a free service and have a quick registration process!")
-            .break()
-            .pause(1000)
             .type("<a href='/register' class='btn btn-primary'>Register</a>")
             .go();
         });
@@ -148,7 +144,7 @@
             .type("Great job!")
             .pause(1500)
             .delete()
-            .type("Play content by clicking images or clicking the play button below")
+            .type("Play content by clicking the cards image.")
             .go();
       }
     }
