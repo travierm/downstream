@@ -89,6 +89,10 @@
         this.startDemo();
       },
       startDemo() {
+        gtag('event', 'startDemo', {
+            'event_category' : 'Demo',
+        });
+
         delay(1, () => {
           new TypeIt('#writer', {
             afterComplete: (() => {
@@ -114,9 +118,17 @@
         })
       },
       afterSearch() {
+        gtag('event', 'didSearch', {
+            'event_category' : 'Demo',
+            'event_label' : this.query
+        });
+
         this.$store.watch(() => this.$store.getters['player/isPlaying'], () => {
           new TypeIt('#writer', {
             afterComplete: (() => {
+              gtag('event', 'playedCard', {
+                'event_category' : 'Demo',
+              });
             })
           })
             .options({
