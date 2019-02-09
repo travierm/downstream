@@ -2,11 +2,11 @@
 <template>
   <div class="container-fluid" style="margin-top: 15px;">
     <div class="row mb-3">
-      <div v-if="!isMobile" class="col-lg-6 mb-2">
+      <div v-if="!isMobile && videos.length >= 1" class="col-lg-6 mb-2">
         <input class="form-control" v-model="searchQuery" type="search" placeholder="Search your collection..." />
       </div>
 
-      <div class="col-lg-6">
+      <div v-if="videos.length >= 1" class="col-lg-6">
         <div class="float-right">
           <a href="/collection" v-if="randomize" class="btn btn-primary">Randomized</a>
           <a href="/collection/random" v-if="!randomize" class="btn btn-outline-primary">Randomize</a>
@@ -30,16 +30,19 @@
       </div>
     </div>
 
-    <div class="row" v-show="emptyCollection">
-      <div class="col-lg-6 center" >
-        <h3>Nothing in collection..</h3>
-        <img src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
+    <div class="row" v-if="videos.length <= 0">
+      <div class="col-lg-3" >
+        <div class="alert alert-warning" role="alert">
+          <strong>Your collection is empty!</strong> Use the search bar to find music to collect.
+        </div>
+        <img style="width:100%" src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
       </div>
     </div>
 
-    <div class="row mt-2"  v-show="emptyCollection">
+    <div class="row mt-2"  v-if="videos.length <= 0">
       <div class="col-lg-12">
-        <h5>Some tools to build your collection..</h5>
+        <br />
+        <h5>Some tools to build your collection...</h5>
         <a href="/all" class="btn btn-outline-info">See what other people are collecting</a>
         <a href="/global" class="btn btn-outline-success">Check the Global Queue</a>
       </div>
@@ -62,11 +65,7 @@
         emptyCollection: false
       };
     },
-    mounted() {
-    },
     created() {
-
-
       //this.updateCollection();
        if(this.$store.state.route.params.filter === "random") {
           this.randomize = true;
@@ -76,6 +75,7 @@
     },
     methods: {
       updateCollection() {
+        //BIG
         return;
         
         let self = this;
