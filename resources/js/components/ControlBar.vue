@@ -12,7 +12,7 @@
                 <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
                 <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
 
-                <span v-if="currentItem" class="control-bar-title mt-2 ml-3 float-right">{{ currentItem.media.title }}</span>
+                <span v-if="currentItem && !isMobile" class="control-bar-title mt-2 ml-3 float-right">{{ currentItem.media.title }}</span>
                 <!-- Thumbnail -->
                 <div class="float-right">
                   <div v-if="currentItem" class="mt-2 ml-5">
