@@ -3,7 +3,7 @@
       <nav class="navbar fixed-bottom bg-faded navbar-dark footer" style="">
         <div class="container">
             <div class="row form-inline">
-              <div class="col-lg-9">
+              <div class="col-lg-12">
                 <!-- <button @click="shuffleIndex" type="button" class="btn btn-warning p-2 my-sm-0">Shuffle</button> -->
                 <button id="miniPlayerBtn" type="button" class="btn btn-dark p-2 my-sm-0" @click="spawnMiniPlayer()"><i class="fas fa-tv"></i> Mini-Player</button>
                 <button type="button" class="btn btn-dark p-2 my-sm-0" @click="focusOnElement(currentCardId)">Focus</button>
@@ -11,12 +11,18 @@
                 <img class="icon" @click="play" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
                 <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
                 <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
-              </div>
 
-              <div id="control-bar-volume-container" class="col-lg-3">
-                <p style="margin-top:10px;" v-if="!isMobile">
-                  <b>Volume {{ volume }}</b> <br /><input v-on:change="updateVolume" :value="volume" type="range" min="0" max="100" step="1" class="align-middle slider" />
-                </p>
+                <span v-if="currentItem" class="control-bar-title mt-2 ml-3 float-right">{{ currentItem.media.title }}</span>
+                <!-- Thumbnail -->
+                <div class="float-right">
+                  <div v-if="currentItem" class="mt-2 ml-5">
+                    <div>
+                      <img class="control-bar-thumbnail rounded" :src="currentItem.media.thumbnail" >
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
         </div>
@@ -36,6 +42,9 @@
       popOutPlayer:false
     }),
     computed: {
+      currentItem() {
+        return this.$store.getters['player/currentItem'];
+      },
       currentCardId() {
         return this.$store.state.player.currentId + "_card";
       },

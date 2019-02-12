@@ -19,6 +19,13 @@ const state = {
 };
 
 const getters = {
+  currentItem(state) {
+    if (!state.currentId) {
+      return false;
+    }
+
+    return findBySessionId(state.items, state.currentId);
+  },
   isPlaying(state) {
     return state.playing;
   },
