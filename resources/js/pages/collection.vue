@@ -30,21 +30,18 @@
       </div>
     </div>
 
-    <div class="row" v-if="videos.length <= 0">
-      <div class="col-lg-3" >
+    <div class="row" v-if="videos.length <= 0 && !emptyCollection">
+       <div class="col-lg-12">
+        <h1 class="text-center">Loading Collection...</h1>
+      </div>
+    </div>
+
+    <div class="row mt-2 d-flex justify-content-center"  v-if="emptyCollection">
+       <div class="col-lg-3" >
         <div class="alert alert-warning" role="alert">
           <strong>Your collection is empty!</strong> Use the search bar to find music to collect.
         </div>
         <img style="width:100%" src="https://media.giphy.com/media/hEc4k5pN17GZq/giphy.gif" />
-      </div>
-    </div>
-
-    <div class="row mt-2"  v-if="videos.length <= 0">
-      <div class="col-lg-12">
-        <br />
-        <h5>Some tools to build your collection...</h5>
-        <a href="/all" class="btn btn-outline-info">See what other people are collecting</a>
-        <a href="/global" class="btn btn-outline-success">Check the Global Queue</a>
       </div>
     </div>
 
