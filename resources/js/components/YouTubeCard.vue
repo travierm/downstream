@@ -35,7 +35,7 @@
     <div v-if="!playing" :id="this.sessionId + '_media'" class="media-container">
 
       <div @click="parentPlay">
-        <lazy-background :blur="30" style="width:100%; height: 100%"  :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
+        <img style="width:100%; height: 100%"  :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
       </div>
       <div class="col">
         <div class="col-sm-12">

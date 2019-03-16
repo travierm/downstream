@@ -5,7 +5,6 @@ import router from './router';
 import BootstrapVue from 'bootstrap-vue';
 import VueScrollTo from 'vue-scrollto';
 import consl from './services/Consl';
-import VueLazyImageLoading from 'vue-lazy-image-loading'
 
 window.Vue = require('vue');
 window.consl = consl;
@@ -14,7 +13,6 @@ require('./bootstrap');
 
 const unsync = sync(store, router);
 
-Vue.use(VueLazyImageLoading);
 Vue.use(BootstrapVue);
 
 Vue.use(VueScrollTo, {
