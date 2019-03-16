@@ -1,6 +1,5 @@
 
 General
-☐ Create an sh file for installing all eslint deps
 
 Experiments
 ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat

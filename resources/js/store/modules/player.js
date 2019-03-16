@@ -85,7 +85,9 @@ const actions = {
       }
     }
 
-    focusOnElement(`${sessionId}_card`);
+    /* @TODO redo this so it works properly
+    //Disable focusing on element for now
+    focusOnElement(`${sessionId}_card`); */
 
     commit(types.PLAYER_UPDATE_CURRENT, sessionId);
   },
