@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use DB;
 use Auth;
 use App\Media;
 use App\UserMedia;
@@ -28,24 +29,35 @@ class CollectionController extends Controller
         }
 
         //get mediaId's from users collection (user_media)
-        $builder = UserMedia::where('user_id', $userId);
+        /*$builder = UserMedia::where('user_id', $userId);
         if($randomize) {
             $builder->orderByRaw("RAND()");
         }else{
             $builder->orderBy('id', 'DESC');
         }
-        $mediaIds = $builder->pluck('media_id');
+        $mediaIds = $builder->pluck('media_id');*/
+
+        $queryBuilder = DB::table('media')
+            ->join('user_media', 'user_media.media_id', '=', 'media.id')
+            ->where('user_media.user_id', $userId);
+        
+        
+        if($randomize) {
+            $queryBuilder->orderByRaw("RAND()");
+        }else{
+            $queryBuilder->orderBy('user_media.id', 'DESC');
+        }
+        $items = $queryBuilder->get();
 
         //build media collection list
         $collection = [];
-        foreach($mediaIds as $id) {
-            $media = Media::find($id);
+        foreach($items as $media) {
 
             if($media->meta) {
-                $media->meta = $media->getMeta();
+                $media->meta = json_decode($media->meta);
                 //collected will always be true
                 $media->collected = true;
-                $media->globalQueued = GlobalQueue::mediaIsQueued($id);
+                $media->globalQueued = GlobalQueue::mediaIsQueued($media->id);
             }
 
             $collection[] = $media;
