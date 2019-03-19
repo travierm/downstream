@@ -1,9 +1,9 @@
 <h1>Downstream</h1>
-<img src="https://travis-ci.org/travierm/downstream.svg?branch=master" />
 
 https://downstream.us
 
-#### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
+<img src="https://travis-ci.org/travierm/downstream.svg?branch=master" />
+
 
 ## Development Setup
 ### Requirements
