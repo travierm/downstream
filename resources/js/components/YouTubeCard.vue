@@ -4,31 +4,20 @@
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
       <!-- @DEBUG -->
-      <div v-if="false" class="float-left">
-        <p>SessionID=>{{ sessionId }}</p>
+      <div v-if="mediaId" class="float-left">
+          <a target="_blank" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">Direct Link</a>
       </div>
 
 
 
       <div class="float-right">
         
-        <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-primary"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
-        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-primary"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
+        <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
+        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
 
         <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
-
-        <div v-if="ownerId || mediaId" class="btn-group">
-          <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
-            <i class="fa fa-bars" aria-hidden="true"></i>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-            <router-link v-if="ownerId && ((ownerId == userId) || userIsAdmin)" class="dropdown-item" :to="'/media/edit/' + this.mediaId">Edit</router-link>
-            <a v-if="mediaId" :href="/v/ + videoId" class="dropdown-item" aria-haspopup="true" aria-expanded="false">
-              Direct Link
-            </a>
-          </div>
-        </div>
+      
       </div>
     </div>
 
@@ -309,6 +298,19 @@
         }
       }
     }
+
+    /* 
+            <div v-if="ownerId || mediaId" class="btn-group">
+          <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
+            <i class="fa fa-bars" aria-hidden="true"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <router-link v-if="ownerId && ((ownerId == userId) || userIsAdmin)" class="dropdown-item" :to="'/media/edit/' + this.mediaId">Edit</router-link>
+            <a v-if="mediaId" :href="/v/ + videoId" class="dropdown-item" aria-haspopup="true" aria-expanded="false">
+              Direct Link
+            </a>
+          </div>
+        </div>*/
 </script>
 
 <style scoped>
