@@ -1,8 +1,9 @@
 <h1>Downstream</h1>
+<img src="https://travis-ci.org/travierm/downstream.svg?branch=master" />
 
 https://downstream.us
 
-<img src="https://travis-ci.org/travierm/downstream.svg?branch=master" />
+
 
 
 ## Development Setup
