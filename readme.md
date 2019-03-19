@@ -1,5 +1,5 @@
 <h1>Downstream</h1>
-<img src="https://travis-ci.com/Travier/downstream.svg?token=WQrNcAcxWXTGaqEEdVh4&branch=master" />
+<img src="https://travis-ci.org/travierm/downstream.svg?branch=master" />
 
 https://downstream.us
 
