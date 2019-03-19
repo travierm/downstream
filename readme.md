@@ -5,12 +5,11 @@ https://downstream.us
 
 #### A music discovery and collection service built ontop of the worlds largest media services (YouTube, Spotify)
 
-## Setup for Development
+## Development Setup
 ### Requirements
-- PHP 7.0 or greater
-- Composer PHP package manager
-- Database, Options: Sqlite, Postgres, MySQL, MSSQL
-- NodeJS
+- PHP 7.0 or greater & Composer package manager
+- Database: MySQL, Sqlite, Postgres, MariaDB (choose one) 
+- Latest NodeJS & npm (Yarn currently not compatible)
 - YouTube API key for search **required**
 - Spotify API key for recommendations and discovery **not required**
 
@@ -38,7 +37,7 @@ php artisan serve
 npm run hot // or 'npm run prod' to make static js,css files with cache busting
 ```
 
-## Design Concepts
+## References
 
 **Media** Downstream isn't exclusively music so we refer to individual audio tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
 
