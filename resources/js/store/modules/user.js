@@ -14,9 +14,15 @@ const getters = {
 };
 
 const actions = {
-  getUserInfo({ commit }) {
+  getUserInfo({ commit, rootState }) {
     axios.get('/api/user/info').then((resp) => {
       commit(UPDATE_USER_INFO, resp.data);
+    }).catch(() => {
+      if(rootState.route.fullPath == "/collection") {
+        //redirect to login if user/info call fails while on /collection page
+        window.location.href = "/login";
+      }
+      
     });
   },
 };
