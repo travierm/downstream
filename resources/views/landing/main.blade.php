@@ -47,18 +47,19 @@
   <div class="row">
 
     <div class="col-md-4">
-      <h2>Limitless Music</h2>
-      <p>Using our search tool you'll have access to nearly every musical piece on the internet.</p>
+      <h2>Unlimited Music</h2>
+      <p>You'll have access to literally billions of song. We use YouTube to power our content delivery and this lets you build the best collection possible.</p>
     </div>
 
     <div class="col-md-4">
       <h2>Collection</h2>
-      <p>Collect any items you find while using search or discover pages. Will save them for replay and make sure you never lose an item even if the original video is removed.</p>
+      <p>Collect any items you find on Downstream!</p>
+      <p>We'll keep your collection data safe even if source videos are removed. Our automated systems with fix any broken links quickly.</p>
     </div>
 
     <div class="col-md-4">
       <h2>Discovery</h2>
-      <p>There are two great ways to discover: <br /> First we make it easy to see what other users are collecting. Secondly will start finding related music to what you've collected and begin populating your Discover page.</p>
+      <p>We're building a top-notch discovery service based on items you collect. We also have some social features coming soon such as following users.</p>
     </div>
   </div>
 </div>
