@@ -18,7 +18,7 @@
                 </div>
             @else
             <form class="mx-2 my-auto d-inline w-75 d-none d-sm-none d-lg-block" action="/search" method="GET">
-                <div class="input-group w-75">
+                <div class="input-group w-100">
                     <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="query" type="search" class="form-control" placeholder="Search...">
                     <span class="input-group-append">
                         <button onclick="this.form.submit()" class="btn btn-default border border-left-0" type="button">
@@ -28,7 +28,7 @@
                 </div> 
             </form>
             @endif
-            <ul class="navbar-nav ml-auto float-right">
+            <ul class="navbar-nav ml-auto">
                 @if(Auth::guest())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/register') }}">Register</a>
