@@ -39,7 +39,8 @@ class CollectionController extends Controller
 
         $queryBuilder = DB::table('media')
             ->join('user_media', 'user_media.media_id', '=', 'media.id')
-            ->where('user_media.user_id', $userId);
+            ->where('user_media.user_id', $userId)
+            ->whereNull('user_media.deleted_at');
         
         
         if($randomize) {
