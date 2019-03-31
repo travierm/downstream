@@ -1,7 +1,10 @@
 
 Active:
     ✔ Fix Collection loading forever when not logged in @done(19-03-19 20:04)
-    ☐ Attempt to classify media to general categories
+    ✔ Fix toss collection bug @done(19-03-31 12:22)
+    ✔ Remove user_guide for now @done(19-03-31 12:22)
+    ☐ Fix empty collection issues
+    ☐ Add ability to follow users
 
 Experiments:
     ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat

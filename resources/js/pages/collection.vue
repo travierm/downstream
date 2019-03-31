@@ -19,7 +19,7 @@
         <youtube-card
             :showGlobalQueue="true"
             :globalQueued="item.globalQueued"
-            :media-id="item.id"
+            :media-id="item.media_id"
             :session-id="item.sessionId"
             :videoId="item.index"
             :title="item.meta.title"
