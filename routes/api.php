@@ -57,6 +57,11 @@ Route::namespace('API')->group(function () {
     Route::get('/collection/remove/{mediaId}', "CollectionController@removeItem");
     Route::get('/user/collection/{random?}', "CollectionController@getUserCollection");
 
+    //Following API
+    Route::get('/follow/{follow_id}', "FollowerController@follow");
+    Route::get('/unfollow/{follow_id}', "FollowerController@unfollow");
+    Route::get('/followers', "FollowerController@getFollowers");
+
     //playlist
     Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');
     //media

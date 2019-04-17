@@ -35,6 +35,7 @@
   import { focusOnElement } from '../services/Utils';
 
   export default {
+    name: "control-bar",
     data: () => ({
       playing:false,
       isMobile: window._isMobile,

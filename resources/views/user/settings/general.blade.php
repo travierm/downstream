@@ -3,7 +3,7 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label>Display Name</label>
-                <input class="form-control" type="text" name="user.display_name" placeholder="Display Name" value="{{ Auth::user()->display_name }}" />
+                <input class="form-control" type="text" name="user.display_name" placeholder="Display Name" value="{{ @Auth::user()->display_name }}" />
             </div>
 
             <div class="form-group">

@@ -80,6 +80,8 @@ class spotifyImport extends Command
                 exit();
             }
 
+            $this->updatePlaylistImage($api, $syncList);
+
             $tracks = $api->getPlaylistTracks($syncList->id);
 
             if(count($tracks->items) <= 0) {
@@ -100,6 +102,27 @@ class spotifyImport extends Command
         $this->info("-----------------------");
         
         $this->call("spotify:import-clean");
+    }
+
+    public function updatePlaylistImage($api, $playlist)
+    {
+        $spotifyUser = $api->me();
+        $spotifyUserId = $spotifyUser->id;
+
+        if(!$playlist->images) {
+            $imageData = base64_encode(file_get_contents(public_path("android-chrome-192x192.png")));
+
+            try {
+                $success = $api->updatePlaylistImage($playlist->uri, $imageData);
+                dd($success);
+            } catch (Exception $e) {
+                echo 'Spotify API Error: ' . $e->getCode(); // Will be 404
+            }
+
+            $this->info("Updated user playlist image");
+        }else{
+            dd($playlist);
+        }
     }
 
     public function syncTrack($userId, $track)

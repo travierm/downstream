@@ -11,11 +11,11 @@ class SpotifyAPI {
 	private static $session = false;
 
 	private static $scopes = [
-        'user-top-read',
-        'user-read-private',
+		'user-top-read',
+		'user-read-private',
         'playlist-read-private',
         'playlist-modify-private',
-        'playlist-modify-public'
+		'playlist-modify-public',
 	];
 
 	public static function getAuthorizeUrl() {

@@ -169,7 +169,7 @@ class PrivacyTab extends Tab {
 
     public function getData($user)
     {
-        $this->data['account_open'] = ($user->private ? "no" : "yes");
+        $this->data['account_open'] = (@$user->private ? "no" : "yes");
 
         return $this->data;
     }

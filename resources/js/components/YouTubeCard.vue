@@ -103,6 +103,7 @@
     }
 
     export default {
+      name:"youtube-card",
       computed: computed,
       props: props,
       data: data,

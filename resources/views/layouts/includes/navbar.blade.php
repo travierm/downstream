@@ -46,6 +46,9 @@
                 <!--<li class="nav-item">
                     <a class="nav-link" href="{{ url('/artists') }}">Artists</a>
                 </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/user/list') }}">Follow</a>
+                </li>
 
                 <li class="nav-item">
                     <router-link class="nav-link text-lg" to="/collection">Collection</router-link>

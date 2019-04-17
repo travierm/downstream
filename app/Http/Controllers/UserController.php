@@ -114,12 +114,21 @@ class UserController extends Controller
 
   public function getUserList()
   {
-
-    $users = User::orderBy("created_at", "DESC")->get();
+    $users = User::where('private', false)->orderBy("created_at", "DESC")->get();
 
     //build custom view user struct
+
+    $displayUsers = collect();
     foreach($users as &$user) {
+      
+      $user->following = @Auth::user()->isFollowing($user->id);
+
       $user->collectionSize = UserMedia::where('user_id', $user->id)->count();
+
+      if($user->collectionSize == 0) {
+        continue;
+      }
+
       $latestMediaItemID = UserMedia::where('user_id', $user->id)
         ->orderBy("created_at", "DESC")
         ->limit(1)
@@ -133,10 +142,12 @@ class UserController extends Controller
           $user->thumbnail = $media->getMeta()->thumbnail;
         }
       }
+
+      $displayUsers->push($user);
     }
 
     return view('user.list', [
-      'users' => $users
+      'users' => $displayUsers->sortByDesc("collectionSize")->all()
     ]);
   }
 

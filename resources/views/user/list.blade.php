@@ -3,25 +3,41 @@
 @section('content')
 <div class="container pushFromTop">
   <div class="row">
-    @foreach($users as $user)
-    <div class="col-lg-3 mr-4 mb-4">
-        <!-- Card -->
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                @if ($user->thumbnail)
-                    <img class="card-img-top" src="{{ $user->thumbnail }}"/>
-                @else
-                    <img class="card-img-top" src="https://via.placeholder.com/640x480/000000?text=No Items"/>
-                @endif
+    <div class="col-lg-12">
+        <h3>Top Users</h3>
+        <p>A list of our most active users with public accounts.</p>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Recent Art</th>
+                    <th>Display Name</th>
+                    <th>Collection Size</th>
+                    <th>Follow</th>
+                    <th>View</th>
+                </tr>
+            </thead>
 
-                
-                <h5 class="card-title">{{ $user->display_name }}</h5>
-                <p class="card-text">Collection Size: {{ $user->collectionSize }}</p>
-                <a href="/user/{{ $user->hash }}/profile" class=" btn btn-outline-primary">See collection</a>
-            </div>
-        </div>
+            <tbody>
+                @foreach($users as $user)
+                <tr>
+                <td class="text-center">
+                        @if ($user->thumbnail)
+                            <img width="180" class="img-fluid" src="{{ $user->thumbnail }}"/>
+                        @else
+                            <img height="300" width="300" class="img-fluid" src="https://via.placeholder.com/640x480/000000?text=No Items"/>
+                        @endif
+                    </td>
+                    <td>{{ $user->display_name }}</td>
+                    <td>{{ $user->collectionSize }}</td>
+                <td><follow-button following="{{ $user->following }}" :user="{{ $user->id }}" ></follow-button></td>
+                    <td><a href="/user/{{ $user->hash }}/profile" class="btn btn-outline-success">View collection</a></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        
     </div>
-    @endforeach
+    
   </div>
 </div>
 @endsection

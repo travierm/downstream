@@ -3,6 +3,7 @@
 namespace App;
 
 use Hash;
+use App\Follow;
 use App\Theme;
 use App\UserLike;
 use App\YouTubeVideo;
@@ -34,6 +35,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'api_token', 'email'
     ];
+
+    // This function allows us to get a list of users following us
+    public function followers()
+    {
+        return $this->belongsToMany('App\User', 'followers', 'follow_id', 'user_id')->withTimestamps();
+    }
+
+    // Get all users we are following
+    public function following()
+    {
+        return $this->belongsToMany('App\User', 'followers', 'user_id', 'follow_id')->withTimestamps();
+    }
+
+    public function isFollowing($followId)
+    {
+      return Follow::where('user_id', $this->id)
+        ->where('follow_id', $followId)
+        ->exists();
+    }
 
     public function media()
     {
