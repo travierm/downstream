@@ -67,6 +67,8 @@ Route::post('/settings', 'UserSettingController@postSettings');
 Route::get('/spotify/connect', 'UserController@getConnect');
 Route::get('/spotify/import', 'UserController@getSpotifyImportPage');
 
+//Feed
+Route::get('/feed', 'FeedController@index');
 
 //Privacy
 Route::get('/privacy', function() {
@@ -82,8 +84,6 @@ Route::get('/tos', function() {
 Route::get('/contact', function() {
   return View::make("contact");
 });
-
-
 
 Auth::routes();
 

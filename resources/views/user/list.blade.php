@@ -22,7 +22,7 @@
                 <tr>
                 <td class="text-center">
                         @if ($user->thumbnail)
-                            <img width="180" class="img-fluid" src="{{ $user->thumbnail }}"/>
+                            <img width="80" class="img-fluid" src="{{ $user->thumbnail }}"/>
                         @else
                             <img height="300" width="300" class="img-fluid" src="https://via.placeholder.com/640x480/000000?text=No Items"/>
                         @endif

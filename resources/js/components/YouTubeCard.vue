@@ -5,7 +5,7 @@
       <!-- ADMIN THINGS -->
       <!-- @DEBUG -->
       <div v-if="mediaId" class="float-left">
-          <a target="_blank" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">Direct Link</a>
+        <a target="_blank" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">Direct Link</a>
       </div>
 
 
@@ -14,7 +14,6 @@
         
         <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
         <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
-
         <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
         <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
       
@@ -31,6 +30,15 @@
           <p style="color:white;">{{ title }}</p>
         </div>
       </div>
+    </div>
+
+    <div v-if="displayName" class="card-footer">
+      <span>Collected by <a href="/user">@{{ displayName }}</a></span> 
+      <span class="float-right">
+        <i class="far fa-clock"></i> {{ createdAt }} days ago  
+      </span>
+      
+      
     </div>
     <!-- YouTube Player -->
     <div class="video-instance embed-responsive" :id="sessionId"></div>
@@ -53,6 +61,8 @@
         type: String,
         default: () => { return generateElementId() }
       },
+      createdAt: String,
+      displayName: String,
       spotifyId: String,
       ownerId: Number,
       mediaId: Number,

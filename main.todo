@@ -3,8 +3,12 @@ Active:
     ✔ Fix Collection loading forever when not logged in @done(19-03-19 20:04)
     ✔ Fix toss collection bug @done(19-03-31 12:22)
     ✔ Remove user_guide for now @done(19-03-31 12:22)
-    ☐ Fix empty collection issues
-    ☐ Add ability to follow users
+    ✔ Fix empty collection issues @done(19-04-18 22:27)
+    ✔ Add ability to follow users @done(19-04-18 22:27)
+    ☐ Show badge on navbar for new feed items
+    ☐ Track last vist to feed
+    ☐ Possibly add settings for feed days since number or to page itself
+    ☐ cleanup navbar move admin/ off or somewhere else
 
 Experiments:
     ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat
