@@ -18,8 +18,8 @@ class UpdateActivityCount
      */
     public function handle($request, Closure $next)
     {   
-        $userId = $request->user()->id;
-        if($userId) {
+        $userId = @$request->user()->id;
+        if(@$userId) {
             $lastCheck = Cache::get($userId . "_activity_last_check", false);
 
             $count = $request->user()->getActivityFeedCount($lastCheck);
