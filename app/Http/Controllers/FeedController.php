@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class FeedController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $followingUserIds = Auth::user()->following()->pluck('follow_id');
