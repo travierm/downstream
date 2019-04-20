@@ -1,6 +1,4 @@
 <?php
-use Auth;
-use DB;
 use App\User;
 use App\Media;
 

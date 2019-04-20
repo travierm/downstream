@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
 use Carbon\Carbon;
 use DB;
 use Auth;
@@ -40,8 +41,12 @@ class FeedController extends Controller
             $items[] = $media;
         }
 
+        //update activity feed last check
+        Cache::forever(Auth::user()->id . "_activity_last_check", date("Y-m-d H:i:s"));
+
         return view('user.feed', [
-            'items' => $items
+            'items' => $items,
+            'followingCount' => count($followingUserIds)
         ]);
     }
 }

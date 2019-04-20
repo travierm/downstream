@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Auth;
+use DB;
+use Carbon\Carbon;
 use Hash;
 use App\Follow;
 use App\Theme;
@@ -74,6 +77,25 @@ class User extends Authenticatable
     public function shrinkHash()
     {
       return substr($this->hash, 0, 8);
+    }
+
+    public function getActivityFeedCount($lastCheck = false)
+    {
+       $followingUserIds = Auth::user()->following()->pluck('follow_id');
+
+        if($lastCheck) {
+          $date = $lastCheck;
+        }else{
+          $date = \Carbon\Carbon::today()->subDays(14);
+        }
+        
+        $followingMediaCount = DB::table('user_media')
+            ->whereIn('user_id', $followingUserIds)
+            ->where('created_at', '>=', $date)
+            ->orderBy('created_at', 'DESC')
+            ->count();
+
+        return $followingMediaCount;
     }
 
     public static function likedYouTubeVideos()

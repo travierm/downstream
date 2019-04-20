@@ -5,6 +5,7 @@
   <div class="row">
       <div class="col-lg-12">
           <h2>Your Follower Feed</h2>
+          <a class="nav-link" href="{{ url('/user/list') }}">Find users to follow</a>
       </div>
   </div>
 
@@ -24,6 +25,14 @@
       </div>
     @endforeach
     </div>
+  @elseif($followingCount == 0)
+  <div class="alert alert-primary" role="alert">
+    You're not following any users...
+  </div>
+  @elseif(count($items) <= 0)
+  <div class="alert alert-primary" role="alert">
+    No recent activity from users you follow...
+  </div>
   @endif
 </div>
 
