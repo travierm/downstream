@@ -79,8 +79,9 @@ class spotifyImport extends Command
                 
                 exit();
             }
-
-            $this->updatePlaylistImage($api, $syncList);
+            
+            //not working properly
+            //$this->updatePlaylistImage($api, $syncList);
 
             $tracks = $api->getPlaylistTracks($syncList->id);
 
