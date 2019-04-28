@@ -13,7 +13,6 @@
                     <th>Display Name</th>
                     <th>Collection Size</th>
                     <th>Follow</th>
-                    <th>View</th>
                 </tr>
             </thead>
 
@@ -30,7 +29,7 @@
                     <td>{{ $user->display_name }}</td>
                     <td>{{ $user->collectionSize }}</td>
                 <td><follow-button following="{{ $user->following }}" :user="{{ $user->id }}" ></follow-button></td>
-                    <td><a href="/user/{{ $user->hash }}/profile" class="btn btn-outline-success">View collection</a></td>
+                    <!-- <td><a href="/user/{{ $user->hash }}/profile" class="btn btn-outline-success">View collection</a></td> -->
                 </tr>
                 @endforeach
             </tbody>

@@ -32,6 +32,9 @@
       </div>
     </div>
 
+    <!-- YouTube Player -->
+    <div class="video-instance embed-responsive" :id="sessionId"></div>
+
     <div v-if="displayName" class="card-footer">
       <span>Collected by <a href="/user">@{{ displayName }}</a></span> 
       <span class="float-right">
@@ -40,8 +43,6 @@
       
       
     </div>
-    <!-- YouTube Player -->
-    <div class="video-instance embed-responsive" :id="sessionId"></div>
   </div>
 </template>
 
