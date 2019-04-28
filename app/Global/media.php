@@ -7,7 +7,7 @@ $_user_display_names = [];
 function getUserDisplayName($userId) {
     global $_user_display_names;
 
-    if($_user_display_names[$userId]) {
+    if(@$_user_display_names[$userId]) {
         return $_user_display_names[$userId];
     }
 
