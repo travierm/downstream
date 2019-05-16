@@ -17,7 +17,7 @@
                     </ul>
                 </div>
             @else
-            <form class="mx-2 my-auto d-inline w-75 d-none d-sm-none d-lg-block" action="/search" method="GET">
+            <form class="mx-2 my-auto d-inline w-50 d-none d-sm-none d-lg-block" action="/search" method="GET">
                 <div class="input-group w-100">
                     <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="query" type="search" class="form-control" placeholder="Search...">
                     <span class="input-group-append">
@@ -39,7 +39,7 @@
                 @else
 
                 <li class="nav-item">
-                <a class="nav-link" href="{{ url('/feed') }}">Activity <span class="badge badge-{{ @Auth::user() ?  @Auth::user()->themeOption('style_type') : 'dark'}}">{{ $activity_feed_count}}</span></a>
+                    <a class="nav-link" href="{{ url('/feed') }}">Activity <span class="badge badge-{{ @Auth::user() ?  @Auth::user()->themeOption('style_type') : 'dark'}}">{{ $activity_feed_count}}</span></a>
                 </li>
 
                 <li class="nav-item">
@@ -50,7 +50,7 @@
                 </li>
 
                 <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/global') }}">Global</a>
+                    <a class="nav-link" href="">Global</a>
                 </li> -->
 
                 <!-- <li class="nav-item">
