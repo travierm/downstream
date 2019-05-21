@@ -1,6 +1,7 @@
 
 Active:
     ☐ Add settings for feed days since number or to page itself
+    ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
 
 Experiments:
     ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat
