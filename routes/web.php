@@ -1,5 +1,5 @@
 <?php
-
+use Spatie\Honeypot\ProtectAgainstSpam;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
+
+Route::middleware([ProtectAgainstSpam::class])->group(function() {
+  Auth::routes();
+});
 
 Route::get('/hashMe', function() {
   return genUniqueHash(20);
