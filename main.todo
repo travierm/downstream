@@ -5,6 +5,8 @@ Active:
         ☐  Service to match Youtube videos with Spotify Track IDS
     ☐ Playlist feature
     ☐ No Refresh: Make sure the app from login to logout can work without a refresh
+    ☐ Update media to use new video source (limit to users with 100+ tracks in collection)
+    ☐ 
 
 Bugs:
     ☐ Player will not properly focus on cards when switching
