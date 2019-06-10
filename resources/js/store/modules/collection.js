@@ -69,7 +69,7 @@ const mutations = {
     state.items = items;
   },
   [types.COLLECTION_TOSS](state, mediaId) {
-    const index = _.findIndex(state.items, video => video.id === mediaId);
+    const index = _.findIndex(state.items, video => video.media_id === mediaId);
 
     state.items.splice(index, 1);
   },

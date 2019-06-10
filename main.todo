@@ -1,10 +1,10 @@
 
 Active:
     ☐ Add settings for feed days since number or to page itself
-    ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
-
-Experiments:
-    ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat
+    ☐ Sync collection back to Spotify on button click or interval
+        ☐  Service to match Youtube videos with Spotify Track IDS
+    ☐ Playlist feature
+    ☐ No Refresh: Make sure the app from login to logout can work without a refresh
 
 Bugs:
     ☐ Player will not properly focus on cards when switching
@@ -16,6 +16,10 @@ Playlist Feature Todo:
     ☐ Add a top 5 playlist to top of users collection
     ☐ Easy way to remove items from playlist
     ☐ Setting to allow a playlist's items to be hidden from collection page
+
+Experiments:
+    ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat
+    ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
 
 Archive:  
   ✔ cleanup navbar move admin/ off or somewhere else @done(19-04-20 14:16) @project(Active)
