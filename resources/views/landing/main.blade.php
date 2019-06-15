@@ -48,18 +48,18 @@
 
     <div class="col-md-4">
       <h2>Unlimited Music</h2>
-      <p>You'll have access to literally billions of song. We use YouTube to power our content delivery and this lets you build the best collection possible.</p>
+      <p>You'll have access to literally billions of songs. We use YouTube to power our content delivery and this lets you build the best collection possible.</p>
     </div>
 
     <div class="col-md-4">
       <h2>Collection</h2>
       <p>Collect any items you find on Downstream!</p>
-      <p>We'll keep your collection data safe even if source videos are removed. Our automated systems with fix any broken links quickly.</p>
+      <p>We'll keep your collection data safe even if source videos are removed. Our automated systems will fix any broken links quickly.</p>
     </div>
 
     <div class="col-md-4">
       <h2>Discovery</h2>
-      <p>We're building a top-notch discovery service based on items you collect. We also have some social features coming soon such as following users.</p>
+      <p>We're building a top-notch discovery service based on items you collect. You can also follow your friends account and see what they collect!</p>
     </div>
   </div>
 </div>

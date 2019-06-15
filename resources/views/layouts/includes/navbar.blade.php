@@ -65,7 +65,7 @@
                         @if(Auth::user()->isAdmin())
                             <a class="dropdown-item" href="/admin/dash">Admin</a>
                         @endif
-                        <a class="dropdown-item" href="/user">Profile</a>
+                        <!-- <a class="dropdown-item" href="/user">Profile</a> -->
                         <a class="dropdown-item" href="/settings">Settings</a>
                         <a class="dropdown-item" href="/guide">Guide</a>
                         <a class="dropdown-item" href="/logout">Logout</a>

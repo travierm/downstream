@@ -5,6 +5,7 @@
 <div class="container">
 <h1 class="pt-5">Privacy Policy of Downstream</h1>
 
+<p class="font-weight-bold">Downstream is not a legal entity and the use of the name refers to the owner of the domain.</p>
 <p>Downstream operates the https://downstream.us website, which provides a music collection service to its users.</p>
 
 <p>This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service, the Downstream website.</p>
