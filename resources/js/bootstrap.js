@@ -25,6 +25,7 @@ try {
   window.Tether = require('tether');
   window.Popper = require('popper.js');
   require('bootstrap');
+  require('jquery-ui-bundle');
 } catch (e) {
   throw e;
 }
@@ -67,7 +68,6 @@ if (token) {
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
-
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

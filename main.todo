@@ -1,4 +1,10 @@
 
+Features to be complete:
+    ☐ Add vertical volumne silder
+    ☐ Remove honeypot and add laravel captca
+    ☐ Finish Reverse Spotify sync
+    ☐ Attempt Picture in Picture
+
 Active:
     ☐ Add settings for feed days since number or to page itself
     ☐ Sync collection back to Spotify on button click or interval
