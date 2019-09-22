@@ -4,19 +4,15 @@
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
       <!-- @DEBUG -->
-      <div v-if="mediaId" class="float-left">
+      <!--<div v-if="mediaId" class="float-left">
         <a target="_blank" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">Direct Link</a>
-      </div>
-
-
+      </div>-->
 
       <div class="float-right">
-        
-        <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
-        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
-        <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect</button>
-        <button v-if="collected" @click="toss" class="btn btn-success">Collected</button>
-      
+        <!-- <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
+        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button> -->
+        <button v-if="!collected" @click="discover" class="btn btn-outline-success">Collect <i class="fas fa-plus-circle"></i></button>
+        <button v-if="collected" @click="toss" class="btn btn-outline-primary">Toss <i class="fas fa-minus-circle"></i></button>
       </div>
     </div>
 
@@ -25,8 +21,9 @@
       <div @click="parentPlay">
         <img style="width:100%; height: 100%"  :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
       </div>
+
       <div class="col">
-        <div class="col-sm-12">
+        <div class="col-sm-12 text-truncate">
           <p style="color:white;">{{ title }}</p>
         </div>
       </div>
