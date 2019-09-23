@@ -126,8 +126,8 @@ footer p {
 
 //playing background animations
 .card-glow {
-  background: linear-gradient(270deg, #4a52e8, #39cccc, #c51f5d, #0047ab, #85144b, #ff748c);
-  background-size: 1200% 1200%;
+  background: linear-gradient(305deg, #4a52e8, #c51f5d, #0047ab, #85144b, #ff748c);
+  background-size: 1000% 1000%;
 
   -webkit-animation: AnimationName 28s ease infinite;
   -moz-animation: AnimationName 28s ease infinite;
@@ -135,43 +135,43 @@ footer p {
 
   @-webkit-keyframes AnimationName {
     0% {
-      background-position: 0% 50%
+      background-position: 0% 10%
     }
 
     50% {
-      background-position: 100% 50%
+      background-position: 100% 91%
     }
 
     100% {
-      background-position: 0% 50%
+      background-position: 0% 10%
     }
   }
 
   @-moz-keyframes AnimationName {
     0% {
-      background-position: 0% 50%
+      background-position: 0% 10%
     }
 
     50% {
-      background-position: 100% 50%
+      background-position: 100% 91%
     }
 
     100% {
-      background-position: 0% 50%
+      background-position: 0% 10%
     }
   }
 
   @keyframes AnimationName {
     0% {
-      background-position: 0% 50%
+      background-position: 0% 10%
     }
 
     50% {
-      background-position: 100% 50%
+      background-position: 100% 91%
     }
 
     100% {
-      background-position: 0% 50%
+      background-position: 0% 10%
     }
   }
 }
