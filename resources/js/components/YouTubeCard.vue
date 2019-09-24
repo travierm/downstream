@@ -1,6 +1,6 @@
 <template>
-  <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true, 'card-glow': playing }">
-
+  
+  <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true, 'card-glow': true }">
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
       <!-- @DEBUG -->
@@ -19,7 +19,7 @@
     <div v-if="!playing" :id="this.sessionId + '_media'" class="media-container">
 
       <div @click="parentPlay">
-        <img style="width:100%; height: 100%"  :id="this.sessionId + '_thumbnail'" class="img-fluid" :src="formatThumbnail" />
+        <img style="width:100%; height: 100%"  :id="this.sessionId + '_thumbnail'" class="img-fluid img" :src="formatThumbnail" />
       </div>
 
       <div class="col">
@@ -46,9 +46,11 @@
 <script>
     
     import $ from 'jquery';
+    import ColorThief from 'colorthief';
     import SID from 'shortid';
     import MobileDetect from 'mobile-detect';
     import YTPlayer from 'yt-player';
+    import CardGlow from '../services/CardGlow';
     import { generateElementId, clientOnMobile } from '../services/Utils';
 
     let detect = new MobileDetect(window.navigator.userAgent);
@@ -81,6 +83,7 @@
 
     let data = () => {
       return {
+        colorString: false,
         playing: false,
         player: false,
         showThumbnail: true,
@@ -119,6 +122,9 @@
        * @EVENT mounted
        */
       mounted() {
+        /**
+          MOUNTED EVENT
+         */
         this.playerRegister();
 
         if(this.shouldPlay) {
@@ -126,6 +132,8 @@
             this.$store.dispatch('player/play', this.sessionId)
           }, 3000);
         }
+
+        //color thief
       },
       destroyed() {
         //clean up player
@@ -193,7 +201,12 @@
           });
 
           this.playing = true;
-          
+          var glow = new CardGlow()
+          glow.getPalette(this.thumbnail, (palette) => {
+            this.colorString = glow.getColorString(palette);
+            glow.enableElementGlow("#" + (this.sessionId + '_card'), palette);
+          });
+
           this.player.on('unplayable', (err) => {
            console.error(this.videoId + " is unplayable")
           })
@@ -205,13 +218,16 @@
           this.player.on('unstarted', (err) => {
             if(this.clientOnMobile) {
               this.$store.dispatch('player/updatePlayingState', false);
+              glow.disableElementGlow("#" + (this.sessionId + '_card'));
             }
           })
 
           this.player.on('ended', () => {
+            glow.disableElementGlow("#" + (this.sessionId + '_card'));
             //reset video
             this.player.seek(0);
             this.player.pause();
+
             
             let stepForward = _.debounce(() => {
               console.log(this.sessionId + " telling player to indexStepForward");
@@ -334,7 +350,7 @@
   margin-right: 10px;
 }
 .card {
-  margin-bottom: 20px;
+  margin-bottom: 120px;
 }
 #cardToolbar {
   margin: 15px 15px 15px 15px;
