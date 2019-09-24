@@ -40,52 +40,17 @@ export default class CardGlow {
     {       
         var colorString = this.getColorString(palette);
 
-        $(elementQuery).attr('style', `background: linear-gradient(305deg, ${colorString});
-        background-size: 1000% 1000%;
-        webkit-animation: AnimationName 28 s ease infinite;
-        moz-animation: AnimationName 28 s ease infinite;
-        animation: AnimationName 28 s ease infinite;
-        @-webkit-keyframes AnimationName {
-            0 % {
-                background - position: 0 % 10 %
-            }
+        $(elementQuery).attr('style', `
+            background: linear-gradient(305deg, ${colorString});
+            background-size: 1000% 1000%;
+            -webkit-animation: AnimationName 28s ease infinite;
+            -moz-animation: AnimationName 28s ease infinite;
+            animation: AnimationName 28s ease infinite;
+        `)
 
-            50 % {
-                background - position: 100 % 91 %
-            }
-
-            100 % {
-                background - position: 0 % 10 %
-            }
-        }
-
-        @-moz-keyframes AnimationName {
-            0 % {
-                background - position: 0 % 10 %
-            }
-
-            50 % {
-                background - position: 100 % 91 %
-            }
-
-            100 % {
-                background - position: 0 % 10 %
-            }
-        }
-
-        @keyframes AnimationName {
-            0 % {
-                background - position: 0 % 10 %
-            }
-
-            50 % {
-                background - position: 100 % 91 %
-            }
-
-            100 % {
-                background - position: 0 % 10 %
-            }
-        }`)
+        $(elementQuery).animate({
+            
+        })
     }
 
     disableElementGlow(elementQuery)

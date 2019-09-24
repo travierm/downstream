@@ -1,6 +1,6 @@
 <template>
   
-  <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true, 'card-glow': true }">
+  <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
       <!-- @DEBUG -->
@@ -310,6 +310,7 @@
         toggleThumbnail(bool) {
           if(bool) {
             $("#" + this.sessionId + "_thumbnail").show();
+            $("#" + (this.sessionId + '_card')).attr('style', '');
           }else{
             $("#" + this.sessionId + "_thumbnail").hide();
           }
