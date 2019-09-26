@@ -15,7 +15,7 @@ class SearchController extends Controller
   }
 
   public function getIndex(Request $req) {
-    if($req->input('query')) {
+    if($req->input('ds_query')) {
       return $this->getSearchYouTube($req);
     }
 
@@ -24,12 +24,12 @@ class SearchController extends Controller
 
   public function getSearchYouTube(Request $req)
   {
-    $query = $req->input('query');
+    $query = $req->input('ds_query');
 
     $limit = 17;
     $results = YouTubeV2::search($query, $limit);
 
-    View::share ('searchQuery', $query);
+    View::share('searchQuery', $query);
 
     return view('search.index')->with([
       'videos' => $results,
