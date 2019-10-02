@@ -1,6 +1,5 @@
 <template>
-  
-  <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': true }">
+  <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': false, 'mb-4': true }">
     <div id="cardToolbar" class="card-block">
       <!-- ADMIN THINGS -->
       <!-- @DEBUG -->
@@ -350,9 +349,7 @@
 .media-icon {
   margin-right: 10px;
 }
-.card {
-  margin-bottom: 120px;
-}
+
 #cardToolbar {
   margin: 15px 15px 15px 15px;
 }
