@@ -35,7 +35,7 @@ class AdminController extends Controller
   {
     $index = "XbPhal1xzEI";
 
-    $media = Media::findByType('youtube', $index)->first();
+    $media = Media::findByType('youtube', $index)->orderBy('created_at', 'DESC')->first();
 
     return view('admin.test.player', [
       'media' => $media

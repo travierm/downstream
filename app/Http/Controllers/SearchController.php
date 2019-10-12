@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use View;
 use Auth;
+use App\Services\FilterMedia;
 use App\Media\YouTubeV2;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,10 @@ class SearchController extends Controller
 
     $limit = 17;
     $results = YouTubeV2::search($query, $limit);
+
+    foreach($results as &$result) {
+      $result->title = FilterMedia::title($result->title);
+    }
 
     View::share('searchQuery', $query);
 
