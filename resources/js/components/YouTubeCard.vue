@@ -36,8 +36,6 @@
       <span class="float-right">
         <i class="far fa-clock"></i> {{ createdAt }} days ago  
       </span>
-      
-      
     </div>
   </div>
 </template>
@@ -199,6 +197,10 @@
             'event_label' : this.videoId
           });
 
+          if(this.mediaId) {
+            $analytics.recordMediaPlay(this.mediaId);
+          }
+        
           this.playing = true;
           var glow = new CardGlow()
           glow.getPalette(this.thumbnail, (palette) => {

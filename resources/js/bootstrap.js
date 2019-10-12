@@ -1,8 +1,10 @@
 import Utils from './services/Utils.js';
 import MobileDetect from 'mobile-detect';
+import DownstreamAnalytics from './services/DownstreamAnalytics';
 window._ = require('lodash');
 
 const md = new MobileDetect(window.navigator.userAgent);
+window.$analytics = new DownstreamAnalytics();
 window._isMobile = md.mobile();
 window._authed = false;
 /**

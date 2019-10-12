@@ -47,6 +47,9 @@ Route::post('/media/search', 'MediaAPIController@resolve');
 
 //API
 Route::namespace('API')->group(function () {
+    //Analytics
+    Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
+
     //Global
     Route::post('/global/push', 'GlobalController@postQueue');
 
