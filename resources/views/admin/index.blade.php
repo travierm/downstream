@@ -13,10 +13,11 @@
 
       <ul>
         <!-- <li><a href="/admin/toplist">Manage Toplist</a></li> -->
+        <li><a href="/admin/globalqueue">Manage Global Queue</a></li>
         <li><a href="/user/list">User List</a></li>
         <li><a href="/admin/filter/title">Create Title Filters</a></li>
         <!-- <li><a href="/admin/engine/clean">Bad Media Items</a></li>  -->
-        <li><a href="/admin/engine">Recommendation Engine Feed</a></li>        
+        <!-- <li><a href="/admin/engine">Recommendation Engine Feed</a></li> -->
       </ul>
     </div>
   </div>

@@ -8,8 +8,8 @@
       </div>-->
 
       <div class="float-right">
-        <!-- <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
-        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button> -->
+        <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
+        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
         <button v-if="!collected" @click="discover" class="btn btn-success">Collect <i class="fas fa-plus-circle"></i></button>
         <button v-if="collected" @click="toss" class="btn btn-primary">Toss <i class="fas fa-minus-circle"></i></button>
       </div>
