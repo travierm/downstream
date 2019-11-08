@@ -135,6 +135,9 @@ class spotifyImport extends Command
         $trackSearchQuery = $trackArtist . " " . $trackName;
 
         $this->info("Attempting to import:" . $trackSearchQuery);
+        if(!$trackId) {
+            $this->error('Error: Spotify track id is null');
+        }
 
         //check if this spotify_track exists on Downstream
         $media = DB::table('media_meta')
