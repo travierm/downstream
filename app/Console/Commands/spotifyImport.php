@@ -193,9 +193,7 @@ class spotifyImport extends Command
         $row = MediaMeta::where('media_id', $media->id)->first();
         if(!$row) {
             //create or find artist
-            $artist = Artist::findOrCreate([
-                'name' => $trackArtist
-            ]);
+            $artist = Artist::findOrCreate($trackArtist);
 
             $row = new MediaMeta();
             $row->title = $meta['title'];
