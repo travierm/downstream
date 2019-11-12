@@ -38,6 +38,9 @@ php artisan serve
 npm run hot // or 'npm run prod' to make static js,css files with cache busting
 ```
 
+### Check the Wiki for fixes to common setup issues
+https://github.com/travierm/downstream/wiki/Common-Setup-Issues
+
 ## References
 
 **Media** Downstream isn't exclusively music so we refer to individual audio tracks or music video as media items. You'll see the word media a lot in the codebase it will always refer to a specific item with a media_id.
