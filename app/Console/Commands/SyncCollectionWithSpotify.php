@@ -89,7 +89,7 @@ class SyncCollectionWithSpotify extends Command
         ]);
         
 
-        //find playlist named "DS Import"
+        //find playlist named "DS Collection"
         $syncList = false;
         foreach($playlists->items as $playlist) {
             if(trim($playlist->name) == "DS Collection") {

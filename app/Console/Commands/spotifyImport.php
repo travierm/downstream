@@ -132,6 +132,7 @@ class spotifyImport extends Command
         $trackId = $track->track->id;
         $trackName = $track->track->name;
         $trackArtist = $track->track->artists[0]->name;
+        $trackArtistId = $track->track->artists[0]->id;
         $trackSearchQuery = $trackArtist . " " . $trackName;
 
         $this->info("Attempting to import:" . $trackSearchQuery);
@@ -192,7 +193,9 @@ class spotifyImport extends Command
         $row = MediaMeta::where('media_id', $media->id)->first();
         if(!$row) {
             //create or find artist
-            $artist = Artist::findOrCreate($trackArtist);
+            $artist = Artist::findOrCreate([
+                'name' => $trackArtist
+            ]);
 
             $row = new MediaMeta();
             $row->title = $meta['title'];
