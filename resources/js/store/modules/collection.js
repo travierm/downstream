@@ -21,7 +21,20 @@ const actions = {
     commit(types.COLLECTION_SHUFFLE);
   },
   update({ commit, rootState }) {
-    return axios.get('/api/collection').then((resp) => {
+    let params = {};
+    
+    if(window._isMobile) {
+       params = {
+         randomized: false,
+         limit: 32
+       };
+    }else{
+       params = {
+         randomized: false
+       };
+    }
+
+    return axios.post('/api/collection', params).then((resp) => {
       if (resp.status === 200) {
         // items refers to media items in a users collection
         const { items } = resp.data;

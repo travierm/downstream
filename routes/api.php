@@ -56,7 +56,7 @@ Route::namespace('API')->group(function () {
     //Collection Routes
 
     //authed user collection
-    Route::get('/collection/{random?}', "CollectionController@getCollection");
+    Route::post('/collection', "CollectionController@getCollection");
     Route::get('/collection/remove/{mediaId}', "CollectionController@removeItem");
     Route::get('/user/collection/{random?}', "CollectionController@getUserCollection");
 
