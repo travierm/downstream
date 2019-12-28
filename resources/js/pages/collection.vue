@@ -27,13 +27,14 @@
             :videoId="item.index"
             :title="item.meta.title"
             :thumbnail="item.meta.thumbnail"
+            :thumbnail-colors="item.meta.thumbnailColors"
             :owner-id="item.user_id"
             :collected="item.collected"
         />
       </div>
     </div>
 
-    <div class="row" v-if="videos.length <= 0 && !emptyCollection">
+    <div class="row mt-2" v-if="videos.length <= 0 && !emptyCollection">
        <div class="col-lg-12">
         <h1 class="text-center">Loading Collection...</h1>
       </div>

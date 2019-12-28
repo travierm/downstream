@@ -21,7 +21,7 @@ class CreateArtistGenresTable extends Migration
 
         
         Schema::table('artists', function (Blueprint $table) {
-            $table->string('spotify_id')->after('name');
+            $table->string('spotify_id')->nullable()->after('name');
         });
 
     }

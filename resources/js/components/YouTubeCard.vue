@@ -68,6 +68,7 @@
       shouldPlay: Boolean,
       collected: Boolean,
       thumbnail: String,
+      thumbnailColors: String,
       globalQueued: {
         type: Boolean,
         default: false,
@@ -203,10 +204,11 @@
         
           this.playing = true;
           var glow = new CardGlow()
-          glow.getPalette(this.thumbnail, (palette) => {
-            this.colorString = glow.getColorString(palette);
-            glow.enableElementGlow("#" + (this.sessionId + '_card'), palette);
-          });
+
+          console.log("HERE!");
+          console.log(this.thumbnailColors);
+
+          glow.enableElementGlow("#" + (this.sessionId + '_card'), this.thumbnailColors);
 
           this.player.on('unplayable', (err) => {
            console.error(this.videoId + " is unplayable")

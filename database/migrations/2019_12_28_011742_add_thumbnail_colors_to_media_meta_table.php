@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSpotifyIDColumn extends Migration
+class AddThumbnailColorsToMediaMetaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class AddSpotifyIDColumn extends Migration
      */
     public function up()
     {
-        if(!Schema::hasColumn('media_meta', 'spotify_id')) {
-            Schema::table('media_meta', function (Blueprint $table) {
-                $table->string('spotify_id')->nullable()->after("raw");
-            });
-        }
+        Schema::table('media_meta', function (Blueprint $table) {
+            $table->string('thumbnail_colors')->nullable()->after('thumbnail');
+        });
     }
 
     /**
@@ -28,7 +26,7 @@ class AddSpotifyIDColumn extends Migration
     public function down()
     {
         Schema::table('media_meta', function (Blueprint $table) {
-            $table->dropColumn('spotify_id');
+            $table->dropColumn('thumbnail_colors');
         });
     }
 }

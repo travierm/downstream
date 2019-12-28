@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use DB;
 use Auth;
 use App\Media;
+use App\MediaMeta;
 use App\UserMedia;
 use App\GlobalQueue;
 use Illuminate\Http\Request;
@@ -60,6 +61,13 @@ class CollectionController extends Controller
 
             if($media->meta) {
                 $media->meta = json_decode($media->meta);
+
+                $mediaMeta = MediaMeta::where('media_id', $media->media_id)->first();
+                
+                if(@$mediaMeta->thumbnail_colors) {
+                    $media->meta->thumbnailColors = $mediaMeta->thumbnail_colors;
+                }
+
                 //collected will always be true
                 $media->collected = true;
                 $media->globalQueued = GlobalQueue::mediaIsQueued($media->id);
