@@ -128,8 +128,8 @@
                   <ul class="list-inline">
                       <li class="list-inline-item"><a class="theme-primary-text" href="/privacy">Privacy</a></li>
                       <li class="list-inline-item"><a class="theme-primary-text" href="/tos">Terms</a></li>
+                      <li class="list-inline-item"><a class="theme-primary-text" href="https://www.youtube.com/t/terms">YouTube's Terms of Service</a></li>
                       <li class="list-inline-item"><a class="theme-primary-text" href="/contact">Contact Us</a></li>
-                      <li class="list-inline-item"><a class="theme-primary-text" target="_blank" href="https://www.facebook.com/DownstreamSocial/"><i style="color: #3b5998;" class="fab fa-facebook fa-2x mt-3"></i></a></li>
                     </ul>
               </div>
               <div class="col-lg-6">
@@ -138,11 +138,7 @@
                   <p class="text-muted">Season 1</p>
               </div>
           </div>
-        </div>
-
-      
-
-      
+        </div>    
       </footer>
     
     <script>

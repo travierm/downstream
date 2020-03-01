@@ -2,7 +2,9 @@
 @section('content')
 <div class="container">
 
+
 <h3 class="mt-5">TERMS OF SERVICE</h3>
+<p class="font-weight-bold">By using Downstream you're also bound to YouTube's Terms of Service which can be found <a href="https://www.youtube.com/t/terms">here</a></p>
 
 OVERVIEW
 

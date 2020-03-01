@@ -1,7 +1,7 @@
 
 <template>
   <div class="container-fluid" style="margin-top: 15px;">
-
+  
     <div class="row">
       <div v-if="videos.length >= 1" class="col-lg-12">
         <nav class="footer navbar navbar-light bg-light mb-2">
@@ -13,8 +13,14 @@
                 <a href="/collection" v-if="randomize" class="btn btn-primary">Randomized</a>
                 <a href="/collection/random" v-if="!randomize" class="btn btn-outline-primary">Randomize</a>
               </div>
-             
         </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <img style="height: 2em;" src="http://downstream.us/images/yt_logo_rgb_light.png" />
+        <p class="mt-2">All videos are sourced from YouTube. You can read their Term of Service <a href="https://www.youtube.com/t/terms">here</a></p>
       </div>
     </div>
 
