@@ -9,18 +9,15 @@
 
                 <button id="miniPlayerBtn" type="button" class="btn btn-dark p-2 my-sm-0" @click="spawnMiniPlayer()"><i class="fas fa-tv"></i> Mini-Player</button>
                 <button type="button" class="btn btn-dark p-2 my-sm-0" @click="focusOnElement(currentCardId)">Focus</button>
-                <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
+                <!-- <img class="icon" @click="playPrevious" height="35" width="35" src="/open-iconic-master/svg/media-step-backward.svg" />
                 <img class="icon" @click="play" v-if="!isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-play.svg" />
                 <img class="icon" @click="pause" v-if="isPlaying" height="35" width="35" src="/open-iconic-master/svg/media-pause.svg" />
-                <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" />
+                <img class="icon" @click="playNext" height="35" width="35" src="/open-iconic-master/svg/media-step-forward.svg" /> -->
                 
-                <img v-show="!isMobile" id="volume-slider" @click="toggleVolumeSlider" class="icon ml-5" height="35" width="35" src="/open-iconic-master/svg/volume-high.svg" />
-                <div v-show="showVolumeSlider" id="slider-vertical" style="height:200px;">
-                  
-                </div>
+                <!-- <img v-show="!isMobile" id="volume-slider" @click="toggleVolumeSlider" class="icon ml-5" height="35" width="35" src="/open-iconic-master/svg/volume-high.svg" />
+                <div v-show="showVolumeSlider" id="slider-vertical" style="height:200px;">  
+                </div> -->
                 
-                
-
                 <span v-if="currentItem && !isMobile" class="control-bar-title mt-2 ml-3 float-right">{{ currentItem.media.title }}</span>
                 <!-- Thumbnail -->
                 <div class="float-right">
