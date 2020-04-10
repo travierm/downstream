@@ -14,7 +14,6 @@
         "laravel/tinker": "~1.0",
         "madcoda/php-youtube-api": "^1.2",
         "spatie/laravel-honeypot": "^1.3",
-        "travierm/maverick": "^1.0",
         "webklex/laravel-git-hook": "1.0.1.7"
     },
     "require-dev": {
