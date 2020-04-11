@@ -1,32 +1,80 @@
-import YTPlayer from 'yt-player';
 import $ from 'jquery';
+import YTPlayer from 'yt-player';
+
+
+import { registerCardPlayer, playNextCard, playEvent } from '../includes/YouTubePlayerManager';
 
 export default class YouTubeCardPlayer {
-    constructor(videoID, elementId) {
-        this.videoID = videoID;
-        this.elementId = elementId;
+    constructor(videoId, cardId) {
+
+        this.videoId = videoId;
+        this.cardId = cardId;
 
         this._player = false;
+
+        this.onPlayCallbacks = [];
+        this.eventCallbacks = [];
+
+        registerCardPlayer(this);
+    }
+
+    applyEventCallbacks() {
+        this.eventCallbacks.forEach((event) => {
+            this._player.on(event.eventType, event.callback);
+        })
+    }
+
+    registerEventCallback(eventType, callback) {
+        if(eventType == 'play') {
+            this.onPlayCallbacks.push(callback);
+            return
+        }
+
+        if(this._player) {
+            this._player.on(eventType, callback);
+        }else{
+            this.eventCallbacks.push({
+                eventType,
+                callback
+            });
+        }
+    }
+
+    handlePlayerEvents() {
+        this._player.on('ended', () => {
+            this._player.seek(0);
+            this._player.pause();
+
+            playNextCard()
+        })
     }
 
     loadVideo() {
-        const elementId = "#" + this.elementId;
+        const cardId = "#" + this.cardId;
         const options = {
             volume: 5,
             fullscreen: true,
             playsinline: true,
-            height: $(`#${this.elementId}_media`).height(),
-            width: $(`#${this.elementId}_media`).width()
+            height: $(`${cardId}_media`).height(),
+            width: $(`${cardId}_media`).width()
         };
 
-        this._player = new YTPlayer(elementId, options);
-        this._player.load(this.videoID);
+        this._player = new YTPlayer(cardId, options);
+        this._player.load(this.videoId);
+
+        this.applyEventCallbacks();
+        this.handlePlayerEvents()
     }
 
     play() {
         if (!this._player) {
             this.loadVideo();
         }
+
+        playEvent(this.cardId)
+        this.onPlayCallbacks.forEach((callback) => {
+            callback();
+        });
 
         this._player.setVolume(100);
         this._player.play();

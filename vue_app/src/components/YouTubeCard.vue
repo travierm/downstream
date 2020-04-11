@@ -14,42 +14,61 @@
     </v-card-actions>
 
     <v-img
-        :id="this.playerElementID + '_media'"
+        :id="this.cardId + '_media'"
         :src="thumbnailURL"
         height="435px"
         v-show="showThumbnail"
         @click="handleThumbnailClick"
     ></v-img>
 
-    <div class="video-instance embed-responsive" :id="playerElementID"></div>
+    <div class="video-instance embed-responsive" :id="cardId"></div>
   </v-card>
 </template>
 
 <script>
     import YouTubeCardPlayer from '../includes/YouTubeCardPlayer';
-
-    function generateElementId() {
-        return Math.random().toString(36).substr(2, 9);
-    }
+    import { generateElementId } from '../includes/GlobalFunctions';
+    import $ from 'jquery';
 
     export default {
         name: 'YouTubeCard',
         props: {
-            videoID: String,
+            videoId: String,
             thumbnailURL: String
         },
         data() {
             return {
-                playerElementID: generateElementId(),
+                cardId: generateElementId(),
                 showThumbnail: true
             };
         },
         mounted() {
-            this.youtubePlayer = new YouTubeCardPlayer(this.videoID, this.playerElementID)
+            this.cardPlayer = new YouTubeCardPlayer(this.videoId, this.cardId)
+
+            this.cardPlayer.registerEventCallback('play', () => {
+                console.log("playing");
+                this.showThumbnail = false;
+
+                $("#" + this.cardId).show();
+            });
+
+            // Reset video once it stops
+            this.cardPlayer.registerEventCallback('ended', () => {
+                console.log("ended");
+                this.showThumbnail = true;
+
+                $("#" + this.cardId).hide();
+            });
+
+            // When an error happens show the thumbnauk
+            this.cardPlayer.registerEventCallback('unplayable', () => {
+                console.log("unplayable");
+                this.showThumbnail = true;
+            });
         },
         methods: {
             handleThumbnailClick() {
-                this.youtubePlayer.play();
+                this.cardPlayer.play();
 
                 this.showThumbnail = false;
             }

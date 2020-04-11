@@ -2,7 +2,7 @@
     <v-container fluid>
       <v-row>
         <v-col cols="12" sm="3" v-for="video in videos" :key="video.id">
-          <youtube-card :videoID="video.videoID" :thumbnailURL="video.thumbnailURL"></youtube-card>
+          <youtube-card :videoId="video.videoId" :thumbnailURL="video.thumbnailURL"></youtube-card>
         </v-col>
       </v-row>
     </v-container>
@@ -21,22 +21,22 @@ export default {
       videos:[
         {
           id:'test',
-          videoID: '6m1YYAMA1kM',
+          videoId: '6m1YYAMA1kM',
           thumbnailURL: "https://i.ytimg.com/vi/6m1YYAMA1kM/sddefault.jpg"
         },
         {
           id:'test2',
-          videoID: 'n7Uc5IscsC8',
+          videoId: 'n7Uc5IscsC8',
           thumbnailURL: "https://i.ytimg.com/vi/iqurYVWg7-g/hqdefault.jpg"
         },
         {
           id:'test3',
-          videoID: 'Jm5DjptGtJo',
+          videoId: 'Jm5DjptGtJo',
           thumbnailURL: "https://i.ytimg.com/vi/Jm5DjptGtJo/sddefault.jpg"
         },
         {
           id: 'test4',
-          videoID: 'ygTZZpVkmKg',
+          videoId: 'ygTZZpVkmKg',
           thumbnailURL: "https://i.ytimg.com/vi/ygTZZpVkmKg/sddefault.jpg"
         },
       ]
