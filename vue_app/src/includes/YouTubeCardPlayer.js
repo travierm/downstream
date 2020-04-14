@@ -66,12 +66,21 @@ export default class YouTubeCardPlayer {
         this.handlePlayerEvents()
     }
 
-    play() {
+    stop() {
+        this._player.pause();
+        this._player.seek(0);
+    }
+
+    play(triggerEvent = false) {
         if (!this._player) {
             this.loadVideo();
         }
 
-        playEvent(this.cardId)
+        if(triggerEvent) {
+            // Let the player know we started playing
+            playEvent(this.cardId)
+        }
+        
         this.onPlayCallbacks.forEach((callback) => {
             callback();
         });

@@ -15,7 +15,7 @@ function getNextCard(currentCardId) {
     let currentIndex = findCardIndexById(currentCardId)
     let nextIndex = (currentIndex >= (registeredCards.length - 1) ? 0 : currentIndex + 1);
 
-    return registeredCards[nextIndex];
+    return registeredCards[nextIndex]
 }
 
 function findCardIndexById(cardId) {
@@ -23,30 +23,43 @@ function findCardIndexById(cardId) {
         return card.cardId == cardId
     })
 
-    return (index ? index : false);
+    return index
 }
 
 function findCardById(cardId) {
     const index = findCardIndexById(cardId);
 
-   return (index ? registeredCards[index] : false);
+   return registeredCards[index]
+}
+
+function stopPlayingCard(cardId) {
+    let playingCard = findCardById(cardId);
+
+    if(playingCard) {
+        playingCard.stop();
+    }
 }
 
 export function registerCardPlayer(player) {
     registeredCards.push(player);
 
-    dd("Registered player from cardId " + player.cardId + " for videoId " + player.videoId);
+    dd("Registered player from cardId " + player.cardId + " for videoId " + player.videoId)
 }
 
 
 export function playNextCard() {
     let nextCard = getNextCard(playingCardId);
 
-    nextCard.play();
+    nextCard.play()
 }
 
 export function playEvent(cardId) {
-    playingCardId = cardId;
+    if(playingCardId) {
+        // Stop playing previous card because a new one would like to play
+        stopPlayingCard(playingCardId)
+    }
+
+    playingCardId = cardId
 }
 
 export function pauseEvent(cardId) {

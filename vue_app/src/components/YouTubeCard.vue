@@ -26,9 +26,9 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import YouTubeCardPlayer from '../includes/YouTubeCardPlayer';
     import { generateElementId } from '../includes/GlobalFunctions';
-    import $ from 'jquery';
 
     export default {
         name: 'YouTubeCard',
@@ -46,29 +46,37 @@
             this.cardPlayer = new YouTubeCardPlayer(this.videoId, this.cardId)
 
             this.cardPlayer.registerEventCallback('play', () => {
-                console.log("playing");
-                this.showThumbnail = false;
-
-                $("#" + this.cardId).show();
+                this.handleVideoPlay()
             });
 
             // Reset video once it stops
             this.cardPlayer.registerEventCallback('ended', () => {
-                console.log("ended");
-                this.showThumbnail = true;
+                this.handleVideoStop()
+            });
 
-                $("#" + this.cardId).hide();
+            this.cardPlayer.registerEventCallback('paused', () => {
+                this.handleVideoStop()
             });
 
             // When an error happens show the thumbnauk
             this.cardPlayer.registerEventCallback('unplayable', () => {
-                console.log("unplayable");
-                this.showThumbnail = true;
+
+                this.handleVideoStop()
             });
         },
         methods: {
+            handleVideoPlay() {
+                this.showThumbnail = false;
+
+                $("#" + this.cardId).show();
+            },
+            handleVideoStop() {
+                this.showThumbnail = true;
+
+                $("#" + this.cardId).hide();
+            },
             handleThumbnailClick() {
-                this.cardPlayer.play();
+                this.cardPlayer.play(true);
 
                 this.showThumbnail = false;
             }
