@@ -29,6 +29,7 @@
     import $ from 'jquery';
     import YouTubeCardPlayer from '../includes/YouTubeCardPlayer';
     import { generateElementId } from '../includes/GlobalFunctions';
+    import { getPlayingCardId } from '../includes/YouTubePlayerManager';
 
     export default {
         name: 'YouTubeCard',
@@ -54,13 +55,23 @@
                 this.handleVideoStop()
             });
 
+            this.cardPlayer.registerEventCallback('stopped_by_manager', () => {
+                this.handleVideoStop();
+            });
+
             this.cardPlayer.registerEventCallback('paused', () => {
-                this.handleVideoStop()
+                console.log('pause!');
+
+                if(getPlayingCardId(this.cardId)) {
+                    // Do nothing if this is the current playing card
+                    return true;
+                }
+
+                // this.handleVideoStop()
             });
 
             // When an error happens show the thumbnauk
             this.cardPlayer.registerEventCallback('unplayable', () => {
-
                 this.handleVideoStop()
             });
         },

@@ -45,6 +45,8 @@ export default class YouTubeCardPlayer {
             this._player.seek(0);
             this._player.pause();
 
+            console.log("ENDED EVENT!");
+
             playNextCard()
         })
     }
@@ -69,6 +71,8 @@ export default class YouTubeCardPlayer {
     stop() {
         this._player.pause();
         this._player.seek(0);
+
+        this._player.emit('stopped_by_manager');
     }
 
     play(triggerEvent = false) {

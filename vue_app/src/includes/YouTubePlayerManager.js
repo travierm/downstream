@@ -40,6 +40,10 @@ function stopPlayingCard(cardId) {
     }
 }
 
+export function getPlayingCardId() {
+    return playingCardId;
+}
+
 export function registerCardPlayer(player) {
     registeredCards.push(player);
 
@@ -50,16 +54,21 @@ export function registerCardPlayer(player) {
 export function playNextCard() {
     let nextCard = getNextCard(playingCardId);
 
-    nextCard.play()
+    nextCard.play(true)
 }
 
 export function playEvent(cardId) {
-    if(playingCardId) {
+    const previousPlayingCardId = _.clone(playingCardId);
+
+    console.log("PLAY EVENT: Previous Playing Card:" + previousPlayingCardId);
+    if (previousPlayingCardId) {
+        
         // Stop playing previous card because a new one would like to play
-        stopPlayingCard(playingCardId)
+        stopPlayingCard(previousPlayingCardId)
     }
 
-    playingCardId = cardId
+    // Update current playing card id
+    playingCardId = cardId   
 }
 
 export function pauseEvent(cardId) {
