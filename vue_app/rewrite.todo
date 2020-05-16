@@ -1,7 +1,7 @@
 
 
 Working on Today:
-    ☐ Clicking play on a new card should stop the old card
+    ✔ Clicking play on a new card should stop the old card @done(20-05-12 21:15)
 
 Basic Features:
     ☐ YouTube Card
@@ -13,8 +13,8 @@ Basic Features:
 System Improvements:
     ☐ Cache thumbnails locally
     ☐ Limit cards on page with infinite loader
-    ☐ Chunk through youtube video fixing
-    ☐ Chunk through spotify importing
+    ☐ Chunk through Youtube video fixing
+    ☐ Chunk through Spotify importing
 
 
 Player System Needs:

@@ -28,7 +28,7 @@ class spotifyImport extends Command
      *
      * @var string
      */
-    protected $description = 'Test Spotify User Commands';
+    protected $description = 'Import Spotify Tracks from users DS Import playlist';
 
     /**
      * Create a new command instance.

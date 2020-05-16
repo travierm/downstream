@@ -19,7 +19,7 @@
             @else
             <form class="mx-2 my-auto d-inline w-50 d-none d-sm-none d-lg-block" action="/search" method="GET">
                 <div class="input-group w-100">
-                    <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="ds_query" type="search" class="form-control" placeholder="Search...">
+                    <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="ds_query" type="search" class="form-control" placeholder="Search YouTube for new Music to Collect!">
                     <span class="input-group-append">
                         <button onclick="this.form.submit()" class="btn btn-default border border-left-0" type="button">
                             <i onclick="this.form.submit()" class="fa fa-search"></i>

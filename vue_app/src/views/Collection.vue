@@ -42,10 +42,10 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.$store.dispatch('fetchCollection')
+  },
   methods:{
-    fetchCollection() {
-      
-    }
   }
 }
 </script>
