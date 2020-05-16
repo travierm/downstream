@@ -12,7 +12,6 @@ Active:
     ☐ Playlist feature
     ☐ No Refresh: Make sure the app from login to logout can work without a refresh
     ☐ Update media to use new video source (limit to users with 100+ tracks in collection)
-    ☐ 
 
 Bugs:
     ☐ Player will not properly focus on cards when switching
@@ -24,6 +23,12 @@ Playlist Feature Todo:
     ☐ Add a top 5 playlist to top of users collection
     ☐ Easy way to remove items from playlist
     ☐ Setting to allow a playlist's items to be hidden from collection page
+
+Streaming Feature:
+    ☐ Allow 100+ video connections
+    ☐ Queue Songs to be Played
+    ☐ Song Player
+    ☐ Search Bar
 
 Experiments:
     ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat
