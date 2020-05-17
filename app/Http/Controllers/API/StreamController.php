@@ -18,7 +18,7 @@ class StreamController extends Controller
     {
         $query = $request->input('query');
 
-        $results = YouTubeV2::searchWithDuration($query, 2);
+        $results = YouTubeV2::searchWithDuration($query, 8);
 
         return $results;
     }

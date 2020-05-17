@@ -9,12 +9,12 @@
     <!-- Main Row -->
     <div class="row">
         <!-- Video Player -->
-        <div class="col">
+        <div class="col-lg-4 mb-3">
 
         </div>
 
         <!-- Search & Player -->
-        <div class="col">
+        <div class="col-lg-4 mb-3">
             <b-form-input id="exampleInput1"
                 v-on:keyup="searchByQuery"
                 type="text"
@@ -40,8 +40,16 @@
         </div>
 
         <!-- Video Connections -->
-        <div class="col">
-
+        <div class="col-lg-4 mb-3">
+          <div v-if="show && video.vid">
+            <youtube-card
+              :shouldPlay="true"
+              :shouldPlayNext="false"
+              :videoId="video.vid"
+              :title="video.title"
+              :thumbnail="video.thumbnail"
+            />
+          </div>
         </div>
     </div>
   </div>
@@ -51,18 +59,31 @@
     import io from 'socket.io-client';
     import { numberWithCommas } from '../../services/Utils';
 
-    const socketClient = io.connect("http://localhost:4444");
+    const socketClient = io.connect("http://192.168.1.11:4444");
 
     export default {
         data() {
-            return {
+          return {
+            firstStart: true,
+            show: true,
             searchQuery: "",
-            searchResults: []
-            }
+            searchResults: [],
+            video: false
+          }
         },
         computed: {
         },
         mounted() {
+          socketClient.on('start_video', (video) => {
+            console.log("queue wants to start video " + video.vid);
+            this.video = video;
+
+            if(!this.firstStart) {
+              this.refreshYouTubeCard()  
+            }else{
+              this.firstStart = false
+            }
+          });
         },
         watch: {
             searchQuery: (val) => {
@@ -72,6 +93,16 @@
             }
         },
         methods: {
+            refreshYouTubeCard(){
+                this.show = false
+                this.$nextTick(() => {
+                    this.show = true
+                    console.log('re-render start')
+                    this.$nextTick(() => {
+                        console.log('re-render end')
+                    })
+                })
+            },
             queueVideoId(videoId) {
                 socketClient.emit('queue_video', videoId);
             },
@@ -89,10 +120,12 @@
                     query: this.searchQuery
                 };
 
-                const response  = await axios.post('/api/stream/search', params);
-                if(response.data) {
+                axios.post('/api/stream/search', params).then((response) => {
+                  if(response.data) {
                     this.searchResults = response.data;
-                }
+                  }
+                });
+                
             }
         }
   };

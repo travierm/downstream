@@ -66,6 +66,10 @@
       videoId: String,
       title: String,
       shouldPlay: Boolean,
+      shouldPlayNext: {
+        type: Boolean,
+        default: true
+      },
       collected: Boolean,
       thumbnail: String,
       thumbnailColors: String,
@@ -90,6 +94,9 @@
     }
 
     const computed = {
+      getVideoId() {
+        return this.videoId
+      },
       clientOnMobile() {
         return detect.mobile();
       },
@@ -205,9 +212,6 @@
           this.playing = true;
           var glow = new CardGlow()
 
-          console.log("HERE!");
-          console.log(this.thumbnailColors);
-
           glow.enableElementGlow("#" + (this.sessionId + '_card'), this.thumbnailColors);
 
           this.player.on('unplayable', (err) => {
@@ -237,10 +241,13 @@
               this.$store.dispatch('player/indexStepForward');
             }, 1500);
 
-            stepForward();
+            if(this.shouldPlayNext) {
+              stepForward();
+            }
+            
           })
 
-          this.toggleThumbnail(false);
+          //this.toggleThumbnail(false);
           this.toggleVideo(true);
         },
         pause() {

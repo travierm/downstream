@@ -1,12 +1,12 @@
 const io = require("socket.io")
 const crypto = require("crypto");
-const videoQueue = require('./services/video-queue');
+const VideoQueue = require('./services/video-queue');
 const server = io.listen(4444);
 
 let connectedClients = new Map();
 
 console.log("Started Streaming Server!");
-let queue = new videoQueue();
+let queue = new VideoQueue(server);
 
 // event fired every time a new client connects:
 server.on("connection", (socket) => {
