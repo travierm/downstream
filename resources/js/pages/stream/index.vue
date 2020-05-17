@@ -8,7 +8,7 @@
 
     <!-- Main Row -->
     <div class="row">
-        <!-- Video Connections -->
+        <!-- Video Player -->
         <div class="col">
 
         </div>
@@ -23,17 +23,23 @@
                 placeholder="Search for music to Queue for everyone..">
             </b-form-input>
             <!-- Search Results -->
-            <ul class="list-unstyled">
-                <li class="media" v-for="video in searchResults" :key="video.vid">
+
+            <table class="table" v-if="searchResults.length >= 1">
+              <tbody>
+                <tr v-for="video in searchResults" :key="video.vid">
+                  <td>
                     <img height="64" width="64" :src="video.thumbnail" class="mr-3 img-fluid">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">{{ video.title }}</h5>
-                    </div>
-                </li>
-            </ul>
+                  </td>
+                  <td>{{ video.title.substring(0, 60) }}</td>
+                  <td>
+                    <button class="btn btn-primary" @click="queueVideoId(video)">Queue</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
         </div>
 
-        <!-- Play Queue -->
+        <!-- Video Connections -->
         <div class="col">
 
         </div>
@@ -42,38 +48,53 @@
 </template>
 
 <script>
-  import { numberWithCommas } from '../../services/Utils';
+    import io from 'socket.io-client';
+    import { numberWithCommas } from '../../services/Utils';
 
-  export default {
-    data() {
-      return {
-        searchQuery: "",
-        searchResults: []
-      }
-    },
-    computed: {
-    },
-    mounted() {
-    },
-    methods: {
-        async searchByQuery() {
-            this.searchResults = [];
-            if(this.searchQuery.length <= 3) {
-                
-                // Only do searcg query when at least 3 chars have been typed in
-                return;
+    const socketClient = io.connect("http://localhost:4444");
+
+    export default {
+        data() {
+            return {
+            searchQuery: "",
+            searchResults: []
             }
+        },
+        computed: {
+        },
+        mounted() {
+        },
+        watch: {
+            searchQuery: (val) => {
+                if(val == "") {
+                    this.searchResults = []
+                }
+            }
+        },
+        methods: {
+            queueVideoId(videoId) {
+                socketClient.emit('queue_video', videoId);
+            },
+            async searchByQuery() {
+                if(this.searchQuery == "") {
+                    this.searchResults = [];
+                }
 
-            const params = {
-                query: this.searchQuery
-            };
+                if(this.searchQuery.length <= 3) {
+                    // Only do search query when at least 3 chars have been typed in
+                    return;
+                }
 
-            const response  = await axios.post('/api/stream/search', params);
-            if(response.data) {
-                this.searchResults = response.data;
+                const params = {
+                    query: this.searchQuery
+                };
+
+                const response  = await axios.post('/api/stream/search', params);
+                if(response.data) {
+                    this.searchResults = response.data;
+                }
             }
         }
-    }
   };
 </script>
 

@@ -2,6 +2,8 @@
 namespace App\Media;
 
 use Cache;
+use DateTime;
+use DateInterval;
 use App\Media;
 use App\UserMedia;
 use YouTubeService;
@@ -163,6 +165,26 @@ class YouTubeV2 {
     return self::cleanSearchResults($results->all());
   }
 
+  public static function searchWithDuration($query, $limit = 8) {
+    $limit +=1; 
+
+    $results = YouTubeService::search($query, $limit);
+    if(!$results) {
+      return false;
+    }
+
+    $results = collect($results);
+    $results = $results->filter(function($row) {
+      return (!@is_null($row->id->videoId));
+    });
+
+    /*$videoIds = array_map(function($row) {
+      return $row->id->videoId;
+    }, $results->all());*/
+
+    return self::cleanSearchResults($results->all(), true);
+  }
+
   /**
    * Search YouTube for video using query, Uses searchVideo instead of search api method
    * @param string $query 
@@ -204,7 +226,7 @@ class YouTubeV2 {
     return $return;
   }
 
-  private static function cleanSearchResults($response)
+  private static function cleanSearchResults($response, $includeDuration = false)
   {
     $results = [];
     foreach($response as $video)
@@ -213,10 +235,18 @@ class YouTubeV2 {
       $result = new \stdClass();
       $media = self::findByIndex($vid);
 
+      if($includeDuration) {
+        $info = YouTubeService::getVideoInfo($vid);
+
+        if($info->contentDetails->duration) {
+          $result->duration = self::convertDuration($info->contentDetails->duration);
+        }
+      }
+
       $result->imported = false;
       $result->collected = false;
       $result->vid = $vid;
-      $result->title = $video->snippet->title;
+      $result->title = html_entity_decode(htmlspecialchars_decode($video->snippet->title));
       if($media) {
         $result->imported = true;
         $result->collected = UserMedia::didCollect($media->id);
@@ -235,6 +265,14 @@ class YouTubeV2 {
     }
 
     return $results;
+  }
+
+  private static function convertDuration($duration) 
+  {
+    $start = new DateTime('@0'); // Unix epoch
+    $start->add(new DateInterval($duration));
+
+    return $start->format('U');
   }
 
   private static function findByIndex($index)
