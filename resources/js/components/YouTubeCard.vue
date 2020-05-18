@@ -65,6 +65,10 @@
       mediaId: Number,
       videoId: String,
       title: String,
+      startAtTimestamp: {
+        type: Number,
+        default: 0
+      },
       shouldPlay: Boolean,
       shouldPlayNext: {
         type: Boolean,
@@ -94,9 +98,6 @@
     }
 
     const computed = {
-      getVideoId() {
-        return this.videoId
-      },
       clientOnMobile() {
         return detect.mobile();
       },
@@ -198,6 +199,10 @@
           }
 
           this.player.setVolume(volume);
+          if(this.startAtTimestamp) {
+            this.player.seek(this.startAtTimestamp);
+          }
+          
           this.player.play();
 
           gtag('event', 'play', {
@@ -247,7 +252,7 @@
             
           })
 
-          //this.toggleThumbnail(false);
+          this.toggleThumbnail(false);
           this.toggleVideo(true);
         },
         pause() {

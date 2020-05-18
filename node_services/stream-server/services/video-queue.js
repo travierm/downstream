@@ -1,7 +1,6 @@
 const crypto = require("crypto");
 
 let timer = require("./timer");
-let queueTimer = new timer();
 
 module.exports = class VideoQueue {
     constructor(socketServer) {
@@ -9,6 +8,7 @@ module.exports = class VideoQueue {
         this.socketServer = socketServer
 
         this.queue = []
+        this.queueTimer = new timer();
         this.state = {
             running: false,
             playingVideo: false
@@ -44,12 +44,12 @@ module.exports = class VideoQueue {
         this.socketServer.emit('start_video', video)
         console.log(this.state.playingVideo.vid + " has started playing with a duration of " + this.state.playingVideo.duration);
 
-        queueTimer.clear();
+        this.queueTimer.clear();
 
         setTimeout(() => {
             // Wait a few secs for the video to load before starting duration count
-            queueTimer.start(video.duration);
-            queueTimer.registerEndCallback(() => {
+            this.queueTimer.start(video.duration);
+            this.queueTimer.registerEndCallback(() => {
                 // video stopped playing
                 console.log(this.state.playingVideo.vid + " has reached its duration");
 
@@ -68,6 +68,7 @@ module.exports = class VideoQueue {
 
         this.queue.push(queueItem)
 
+        this.socketServer.emit('receive_video_queue', this.queue);
         
         this.handleStartingQueue();
     }

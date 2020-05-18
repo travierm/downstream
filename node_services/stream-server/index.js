@@ -15,6 +15,15 @@ server.on("connection", (socket) => {
     // initialize this client's sequence number
     connectedClients.set(sessionId, socket);
 
+    socket.emit('receive_video_queue', queue.queue);
+
+    if(queue.state.running == true) {
+        const playingVideo = queue.state.playingVideo;
+
+        playingVideo.currentTimestamp = queue.queueTimer.seconds();
+        socket.emit('start_video_at_secs', playingVideo)
+    }
+
     socket.on('queue_video', (video) => {
         console.info(video.vid + ' has been added to the queue');
         queue.pushVideo(video)
