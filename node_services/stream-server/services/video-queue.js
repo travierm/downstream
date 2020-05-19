@@ -28,7 +28,9 @@ module.exports = class VideoQueue {
 
     nextVideo() {
         console.log('nextVideo Triggered')
-       
+        
+        // Update the queue before shifting next song of queue
+        this.socketServer.emit('receive_video_queue', this.queue);
         const video = this.queue.shift()
 
         if(!video) {
