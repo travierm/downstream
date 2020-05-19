@@ -66,7 +66,7 @@
     import { numberWithCommas } from '../../services/Utils';
 
     var globalKeyPressTimeout = null;  
-    const socketClient = io.connect("http://downstream.us:4444");
+    const socketClient = io.connect("https://downstream.us:4444");
     var fireOnce = false;
 
     export default {
