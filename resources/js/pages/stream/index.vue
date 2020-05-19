@@ -64,9 +64,9 @@
 <script>
     import io from 'socket.io-client';
     import { numberWithCommas } from '../../services/Utils';
-    
+
     var globalKeyPressTimeout = null;  
-    const socketClient = io.connect("http://192.168.1.11:4444");
+    const socketClient = io.connect("https://downstream.us:4444");
     var fireOnce = false;
 
     export default {
