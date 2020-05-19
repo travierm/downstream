@@ -53,6 +53,9 @@ Route::namespace('API')->group(function () {
     //Global
     Route::post('/global/push', 'GlobalController@postQueue');
 
+    // Streaming Routes
+    Route::post('/stream/search', 'StreamController@postSearchResults');
+
     //Collection Routes
 
     //authed user collection

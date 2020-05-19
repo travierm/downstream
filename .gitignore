@@ -15,3 +15,5 @@ yarn-error.log
 /public/mix-manifest.json
 /public/js/app.js.map
 public/css/app\.css\.map
+
+node_services/*/node_modules
