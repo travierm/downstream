@@ -64,8 +64,7 @@
 <script>
     import io from 'socket.io-client';
     import { numberWithCommas } from '../../services/Utils';
-    import { startVideoCalling, receiveVideoCalling } from '../../services/PeerVideoChat';
-
+    
     var globalKeyPressTimeout = null;  
     const socketClient = io.connect("http://192.168.1.11:4444");
     var fireOnce = false;
