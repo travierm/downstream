@@ -1,4 +1,4 @@
-import { arrayNextIndex }  from '../services/Utils';
+import { arrayNextIndex }  from '../services/Utils.js';
 
 describe('Global Functions', () => {
 	it('arrayNextIndex', () => {

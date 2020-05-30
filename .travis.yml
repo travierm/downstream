@@ -9,4 +9,4 @@ matrix:
         - php artisan key:generate
       script: vendor/bin/phpunit
     - language: node_js
-      node_js: "9"
+      node_js: "13"
