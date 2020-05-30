@@ -61,11 +61,8 @@ export default class YouTubeVideoPlayer {
 		this.videos.push(newVideo);
 
 		if(options.preload) {
-			consl('doing preload');
 			this.preloadVideo(sessionId);
 		}
-
-		//consl("registered new video " + sessionId);
 	}
 
 	preloadVideo(sessionId) {
@@ -73,7 +70,6 @@ export default class YouTubeVideoPlayer {
 		let video = this.findVideo(sessionId);
 
 		if(!video) {
-			consl("Could not preload video " + sessionId);
 			return false; 	
 		}
 

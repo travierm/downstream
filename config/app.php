@@ -180,9 +180,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SpotifyServiceProvider::class,
-        Webklex\GitHook\Providers\LaravelServiceProvider::class,
-        Ajthinking\Tinx\TinxServiceProvider::class,
-
     ],
 
     /*

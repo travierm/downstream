@@ -41,7 +41,6 @@
 </template>
 
 <script>
-    
     import $ from 'jquery';
     import ColorThief from 'colorthief';
     import SID from 'shortid';

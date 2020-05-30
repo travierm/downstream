@@ -11,24 +11,20 @@ import ListCreate from './pages/lists/create';
 import MediaEdit from './pages/media/edit';
 import DemoIndex from './pages/demo/index';
 
-import StreamIndex from './pages/stream/index';
+// Disabled for now
+// import StreamIndex from './pages/stream/index';
 
 Vue.use(VueRouter);
 
 /*
   Single Page Router
-  each route must be named to seperate laravel paths from vue-router paths
+  each route must be named to separate Laravel paths from vue-router paths
 */
 const routes = [
   {
     name: 'discover',
     path: '/discover',
     component: DiscoverPage,
-  },
-  {
-    name: 'stream',
-    path: '/stream',
-    component: StreamIndex
   },
   {
     name: 'demo-index',
@@ -38,11 +34,6 @@ const routes = [
   {
     name: 'collection',
     path: '/collection/:filter?',
-    component: Collection,
-  },
-  {
-    name: 'collection2',
-    path: '/collection2',
     component: Collection,
   },
   {
