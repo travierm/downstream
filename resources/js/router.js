@@ -11,6 +11,8 @@ import ListCreate from './pages/lists/create';
 import MediaEdit from './pages/media/edit';
 import DemoIndex from './pages/demo/index';
 
+import StreamIndex from './pages/stream/index';
+
 Vue.use(VueRouter);
 
 /*
@@ -22,6 +24,11 @@ const routes = [
     name: 'discover',
     path: '/discover',
     component: DiscoverPage,
+  },
+  {
+    name: 'stream',
+    path: '/stream',
+    component: StreamIndex
   },
   {
     name: 'demo-index',

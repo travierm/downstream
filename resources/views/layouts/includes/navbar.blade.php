@@ -45,8 +45,13 @@
                 <li class="nav-item">
                     <router-link class="nav-link text-lg" to="/collection">Collection</router-link>
                 </li>
+
                 <li class="nav-item">
                     <router-link class="nav-link" to="/discover">Discover</router-link>
+                </li>
+
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/stream">Stream</router-link>
                 </li>
 
                 <!-- <li class="nav-item">

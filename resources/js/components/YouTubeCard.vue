@@ -65,7 +65,15 @@
       mediaId: Number,
       videoId: String,
       title: String,
+      startAtTimestamp: {
+        type: Number,
+        default: 0
+      },
       shouldPlay: Boolean,
+      shouldPlayNext: {
+        type: Boolean,
+        default: true
+      },
       collected: Boolean,
       thumbnail: String,
       thumbnailColors: String,
@@ -191,6 +199,10 @@
           }
 
           this.player.setVolume(volume);
+          if(this.startAtTimestamp) {
+            this.player.seek(this.startAtTimestamp);
+          }
+          
           this.player.play();
 
           gtag('event', 'play', {
@@ -204,9 +216,6 @@
         
           this.playing = true;
           var glow = new CardGlow()
-
-          console.log("HERE!");
-          console.log(this.thumbnailColors);
 
           glow.enableElementGlow("#" + (this.sessionId + '_card'), this.thumbnailColors);
 
@@ -237,7 +246,10 @@
               this.$store.dispatch('player/indexStepForward');
             }, 1500);
 
-            stepForward();
+            if(this.shouldPlayNext) {
+              stepForward();
+            }
+            
           })
 
           this.toggleThumbnail(false);
