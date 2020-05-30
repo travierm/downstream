@@ -150,10 +150,6 @@
       APP_LINK_URL: "<?php echo env('APP_LINK_URL'); ?>"
     };
     </script>
-    
-    <script src="//instant.page/1.0.0" type="module" integrity="sha384-6w2SekMzCkuMQ9sEbq0cLviD/yR2HfA/+ekmKiBnFlsoSvb/VmQFSi/umVShadQI"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typeit@6.0.2/dist/typeit.min.js" integrity="sha256-9Gb80T3fTOUMBQUR8mMP/s4n3eDnc5W25l7PLA39LvM=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>

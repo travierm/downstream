@@ -4,10 +4,8 @@ import store from './store/index';
 import router from './router';
 import BootstrapVue from 'bootstrap-vue';
 import VueScrollTo from 'vue-scrollto';
-import consl from './services/Consl';
 
 window.Vue = require('vue');
-window.consl = consl;
 
 require('./bootstrap');
 
@@ -74,12 +72,6 @@ router.beforeEach((to, from, next) => {
 //get user info
 store.dispatch('user/getUserInfo');
 store.dispatch('collection/update');
-
-//fix bootstrap mobilenavbar issue
-$('.nav-link').on('click', function(){
-  console.log("CLICK CALLED!");
-  
-});
 
 const app = new Vue({
   router,

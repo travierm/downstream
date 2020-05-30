@@ -65,7 +65,6 @@
       processResults(data) {
         if(data) {
           //clear existing results
-          consl("here");
           this.results = [];
         }
 
@@ -82,8 +81,6 @@
 
           this.results.push(media);
         }
-
-        consl(this.results);
       }
     },
     computed: {

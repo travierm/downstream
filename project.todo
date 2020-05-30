@@ -1,21 +1,25 @@
 
-Features to be complete:
-    ☐ Add vertical volumne silder
-    ☐ Remove honeypot and add laravel captca
-    ☐ Finish Reverse Spotify sync
-    ☐ Attempt Picture in Picture
+
+-- Project TODO --
 
 Active:
-    ☐ Add settings for feed days since number or to page itself
     ☐ Sync collection back to Spotify on button click or interval
         ☐  Service to match Youtube videos with Spotify Track IDS
-    ☐ Playlist feature
     ☐ No Refresh: Make sure the app from login to logout can work without a refresh
     ☐ Update media to use new video source (limit to users with 100+ tracks in collection)
 
 Bugs:
     ☐ Player will not properly focus on cards when switching
     ☐ indexForward will skip multiple songs ahead
+
+Planned:
+    ☐ Improved Search
+        ☐ Search collection and Youtube with autocomplete
+    ☐ Improved Follower Feed
+        ☐ Add settings for follower feed days
+    ☐ Playlist Feature
+
+-- Ideas only beyond this --
 
 Playlist Feature Todo:
     ☐ Make modal that can create or update a playlist from the collection
