@@ -20,6 +20,10 @@ Route::get('/hashMe', function() {
 });
 
 Route::middleware(['admin'])->group(function() {
+
+  // Log Viewer
+  Route::get('/admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
   //GlobalQueue
   Route::get('/admin/globalqueue', 'Admin\GlobalQueueController@getLatestMedia');
 
