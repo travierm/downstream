@@ -4,6 +4,7 @@
 php artisan down
 
 # update source code
+whoami
 git pull origin master
 
 # update PHP dependencies
