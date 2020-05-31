@@ -4,7 +4,6 @@
 php artisan down
 
 # update source code
-whoami
 git pull origin master
 
 # update PHP dependencies
@@ -33,6 +32,8 @@ php artisan migrate --force
 	# --force		Required to run when in production.
 
 # update frontend
+yarn -v
+node -v
 yarn run prod
 
 # stop maintenance mode
