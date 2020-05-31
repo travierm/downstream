@@ -32,9 +32,7 @@ php artisan migrate --force
 	# --force		Required to run when in production.
 
 # update frontend
-yarn -v
-node -v
-yarn run prod
+# yarn run prod
 
 # stop maintenance mode
 php artisan up
