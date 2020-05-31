@@ -45,6 +45,9 @@ Route::get('/media/toss', 'MediaAPIController@resolve');
 Route::post('/media/add', 'MediaAPIController@resolve');
 Route::post('/media/search', 'MediaAPIController@resolve');
 
+//Git Webhook Deployment
+Route::post('/deploy', 'DeployController@deploy');
+
 //API
 Route::namespace('API')->group(function () {
     //Analytics
@@ -85,8 +88,5 @@ Route::namespace('API')->group(function () {
 
     //Demo
     Route::get('/demo/search', 'DemoController@searchQuery');
-
-    //Git Webhook Deployment
-    Route::post('/deploy', 'DeployController@deploy');
 });
 
