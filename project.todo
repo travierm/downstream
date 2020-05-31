@@ -3,6 +3,7 @@
 -- Project TODO --
 
 Active:
+    ☐ Chunking through data and running processes against them
     ☐ Sync collection back to Spotify on button click or interval
         ☐  Service to match Youtube videos with Spotify Track IDS
     ☐ No Refresh: Make sure the app from login to logout can work without a refresh
