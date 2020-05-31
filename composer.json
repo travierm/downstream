@@ -13,7 +13,8 @@
         "laravel/framework": "~6.0",
         "laravel/helpers": "^1.2",
         "laravel/tinker": "~1.0",
-        "madcoda/php-youtube-api": "^1.2"
+        "madcoda/php-youtube-api": "^1.2",
+        "rap2hpoutre/laravel-log-viewer": "^1.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

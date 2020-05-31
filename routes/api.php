@@ -85,5 +85,8 @@ Route::namespace('API')->group(function () {
 
     //Demo
     Route::get('/demo/search', 'DemoController@searchQuery');
+
+    //Git Webhook Deployment
+    Route::post('/deploy', 'DeployController@deploy');
 });
 

@@ -126,6 +126,9 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    // Git Webhook Deploy Secret
+    'deploy_secret' => env('APP_DEPLOY_SECRET'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -180,6 +183,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SpotifyServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class
     ],
 
     /*
