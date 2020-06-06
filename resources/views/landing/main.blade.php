@@ -16,10 +16,6 @@
     <div class="col-lg-3 col-sm-6 mb-3">
       <a href="/register" class="btn btn-success btn-lg btn-block">Register</a>
     </div>
-
-    <div class="col-lg-3 col-sm-6 mb-3">
-      <a href="/demo" class="btn btn-primary btn-lg btn-block">Try Demo</a>
-    </div>
   </div>
   @endif
 
