@@ -12,7 +12,7 @@
                 <div class="collapse navbar-collapse ml-3" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                        <a class="nav-link" href="/demo">Try Demo <span class="sr-only">(current)</span></a>
+                            <!-- a class="nav-link" href="/demo">Try Demo <span class="sr-only">(current)</span></a> -->
                         </li>
                     </ul>
                 </div>
