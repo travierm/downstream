@@ -64,7 +64,6 @@ class spotifyImport extends Command
             $syncList = false;
             foreach($playlists->items as $playlist) {
                 if(trim($playlist->name) == "DS Import") {
-                    $this->info("Found DS_Import playlist");
                     $syncList = $playlist;
                 }
             }
@@ -86,7 +85,6 @@ class spotifyImport extends Command
             $tracks = $api->getPlaylistTracks($syncList->id);
 
             if(count($tracks->items) <= 0) {
-                $this->info("No items in users DS Import playlist");
                 continue;
             }else{
                 $this->info("Syncing " . count($tracks->items) . " tracks from playlist for user:$token->user_id");
@@ -96,11 +94,7 @@ class spotifyImport extends Command
             foreach($tracks->items as $track) {
                 $this->syncTrack($token->user_id, $track);
             } 
-        } 
-
-        $this->info("-----------------------");
-        $this->info("Running import cleaner");
-        $this->info("-----------------------");
+        }
         
         $this->call("spotify:import-clean");
     }

@@ -56,25 +56,25 @@ class spotifyImportClean extends Command
             $importPlaylist = false;
             foreach($playlists->items as $playlist) {
                 if(trim($playlist->name) == "DS Import") {
-                    $this->info("Found DS_Import playlist");
+                    // $this->info("Found DS_Import playlist");
                     $importPlaylist = $playlist;
                 }
             }
 
             if(!$importPlaylist) {
-                $this->info("Could not find DS Import playlist for user:" . $token->user_id);
+                // $this->info("Could not find DS Import playlist for user:" . $token->user_id);
                 continue;
             }
 
             $track = $api->getPlaylistTracks($importPlaylist->id);
 
             if(!$track) {
-                $this->info("No tracks to clean");
+                // $this->info("No tracks to clean");
                 continue;
             }
     
 
-            $this->info("Cleaning " . count($track->items) . " tracks");
+            // $this->info("Cleaning " . count($track->items) . " tracks");
 
             $tracksForTrash = $this->cleanTracks($token->user_id, $track->items);
 
@@ -83,7 +83,10 @@ class spotifyImportClean extends Command
             ];
             
 
-            $this->info("Deleting " . count($tracksForTrash) . " from users playlist");
+            if(count($tracksForTrash) >= 1) {
+                $this->info("Deleting " . count($tracksForTrash) . " from users playlist");
+            }
+            
             $api->deletePlaylistTracks($importPlaylist->id, $tracks);
         }
     }
