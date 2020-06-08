@@ -22,8 +22,12 @@
   @if($items)
     <div class="row">
     @foreach($items as $item)
+
       <div class="col-md-4">
         <youtube-card 
+          @if($loop->iteration == 1)
+          :should-play="true"
+          @endif
           video-id="{{ $item->index }}"
           thumbnail="{{ $item->meta->thumbnail }}"
           title="{{ $item->meta->title }}"
@@ -36,27 +40,21 @@
 
   <div class="row">
     <div class="col-md-4">
-      <h2 class="mt-3 mb-3"><i class="fas fa-box mr-2"></i>Features</h2>
-    </div>
-  </div>
-
-  <div class="row">
-
-    <div class="col-md-4">
-      <h2>Unlimited Music</h2>
-      <p>You'll have access to literally billions of songs. We use YouTube to power our content delivery and this lets you build the best collection possible.</p>
+      <h2><i class="fas fa-compact-disc"></i> Collect anything</h2>
+      <p>Collect any items you search or discover!</p>
+      <p>Any item collected on Downstream is kept forever. You never have to worry about losing music again!</p>
     </div>
 
     <div class="col-md-4">
-      <h2>Collection</h2>
-      <p>Collect any items you find on Downstream!</p>
-      <p>We'll keep your collection data safe even if source videos are removed. Our automated systems will fix any broken links quickly.</p>
+      <h2><i class="fas fa-search"></i> Discover</h2>
+      <p>Discover new music from related items or from music your friends are collecting!</p>
+      <p>We're building a top notch Discovery service. Finding new music will never be a probem again!</p>
     </div>
 
     <div class="col-md-4">
-      <h2>Discovery</h2>
-      <p>We're building a top-notch discovery service based on items you collect. You can also follow your friends account and see what they collect!</p>
-    </div>
+      <h2><i class="far fa-play-circle"></i> Play </h2>
+      <p>We use YouTube to power our media player. <br /> <br /> This lets you search and play millions of songs at anytime!</p>
+    </div> 
   </div>
 </div>
 

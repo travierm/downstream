@@ -135,7 +135,7 @@
         if(this.shouldPlay) {
           setTimeout(() => {
             this.$store.dispatch('player/play', this.sessionId)
-          }, 3000);
+          }, 2000);
         }
 
         //color thief
