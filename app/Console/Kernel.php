@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         //Turn on to allow discovery page to populate
         $schedule->command('spotify:recommendations')
            ->everyTenMinutes()
-           ->appendOutputTo(storage_path('logs/recommendation-log'));
+           ->appendOutputTo(storage_path('logs/discovery.log'));
         
         $schedule->command('spotify:import')
            ->everyMinute()
