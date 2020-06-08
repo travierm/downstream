@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-lg-6">
         <img style="height: 2em;" src="http://downstream.us/images/yt_logo_rgb_light.png" />
-        <p class="mt-2">All videos are sourced from YouTube. You can read their Terms of Service<a href="https://www.youtube.com/t/terms">here</a></p>
+        <p class="mt-2">All videos are sourced from YouTube. You can read their Terms of Service <a href="https://www.youtube.com/t/terms">here</a></p>
       </div>
     </div>
 

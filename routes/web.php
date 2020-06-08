@@ -11,7 +11,7 @@ use Spatie\Honeypot\ProtectAgainstSpam;
 |
 */
 
-Route::middleware([ProtectAgainstSpam::class])->group(function() {
+Route::middleware(ProtectAgainstSpam::class)->group(function() {
   Auth::routes();
 });
 
