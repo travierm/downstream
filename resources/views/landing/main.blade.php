@@ -40,7 +40,7 @@
 
   <div class="row">
     <div class="col-md-4">
-      <h2><i class="fas fa-compact-disc"></i> Collect anything</h2>
+      <h2><i class="fas fa-compact-disc"></i> Collect</h2>
       <p>Collect any items you search or discover!</p>
       <p>Any item collected on Downstream is kept forever. You never have to worry about losing music again!</p>
     </div>
