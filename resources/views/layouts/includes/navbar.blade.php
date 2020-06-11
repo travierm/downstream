@@ -47,7 +47,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/discover">Discover</router-link>
+                    <router-link class="nav-link" to="/discover">Discover <span class="badge badge-{{ @Auth::user() ?  @Auth::user()->themeOption('style_type') : 'dark'}}">{{ $discovered_items_count}}</span></router-link>
                 </li>
 
                 <!-- <li class="nav-item">

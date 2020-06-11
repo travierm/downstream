@@ -79,6 +79,17 @@ class User extends Authenticatable
       return substr($this->hash, 0, 8);
     }
 
+    public function getRecentDiscoveredItemsCount() {
+
+      $date = \Carbon\Carbon::today()->subDays(14);
+
+      return DB::table('user_media')
+          ->join('media_remote_references', 'user_media.media_id', '=', 'media_remote_references.media_id')
+          ->where('user_id', Auth::user()->id)
+          ->where('user_media.created_at', '>=', $date)
+          ->count();
+    }
+
     public function getActivityFeedCount($lastCheck = false)
     {
        $followingUserIds = Auth::user()->following()->pluck('follow_id');

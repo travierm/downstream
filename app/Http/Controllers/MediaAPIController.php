@@ -6,6 +6,7 @@ use Auth;
 use Route;
 use DB;
 use App\User;
+use App\Media;
 use App\UserMedia;
 use App\Media\YouTube;
 use App\MediaRemoteReference;
@@ -38,8 +39,6 @@ class MediaAPIController extends Controller
 
           return $next($request);
     });
-
-
   }
 
   public function testVideo() {
@@ -50,19 +49,29 @@ class MediaAPIController extends Controller
   {
     $userId = Auth::user()->id;
 
-    $collectionIds = UserMedia::where('user_id', $userId)->pluck('media_id');
+    $collectionIds = UserMedia::where('user_id', $userId)
+      ->orderBy('created_at', 'DESC')
+      ->take(20)
+      ->pluck('media_id');
 
-    $itemIds = MediaRemoteReference::whereIn('media_id', $collectionIds)->pluck('id');
+    
+    $discoveredResults = [];
+    foreach($collectionIds as $recentCollectedItemId) {
+      $discoveredItems = MediaRemoteReference::where('media_id', $recentCollectedItemId)->get();
 
-    $itemIds = $itemIds->shuffle()->take(28);
+      if(count($discoveredItems) <= 0) {
+        continue;
+      }
 
-    $shuffledIds = implode(',' ,$itemIds->all());
-    $items = MediaRemoteReference::whereIn('id', $itemIds)
-      ->orderByRaw(DB::raw("FIELD(id, $shuffledIds)"))
-      ->get();
+      $discoveredResults[] = [
+        'media_id' => $recentCollectedItemId,
+        'media_item' => Media::find($recentCollectedItemId),
+        'items' => $discoveredItems
+      ];
+    }
 
     return response()->json([
-      'items' => $items
+      'items' => $discoveredResults
     ], 200);
   }
 

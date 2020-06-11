@@ -24,6 +24,7 @@ class UpdateActivityCount
 
             $count = $request->user()->getActivityFeedCount($lastCheck);
 
+            View::share('discovered_items_count', $request->user()->getRecentDiscoveredItemsCount());
             View::share('activity_feed_count', $count);
         }
 

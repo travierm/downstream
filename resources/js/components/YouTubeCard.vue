@@ -1,17 +1,14 @@
 <template>
   <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': false, 'mb-4': true }">
     <div id="cardToolbar" class="card-block">
-      <!-- ADMIN THINGS -->
-      <!-- @DEBUG -->
-      <!--<div v-if="mediaId" class="float-left">
-        <a target="_blank" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false">Direct Link</a>
-      </div>-->
-
+      
+      <!-- Card Buttons -->
       <div class="float-right">
+        <a v-if="mediaId" target="_blank" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false"><i class="fas fa-link"></i> Direct Link</a>
         <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
         <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
         <button v-if="!collected" @click="discover" class="btn btn-success">Collect <i class="fas fa-plus-circle"></i></button>
-        <button v-if="collected" @click="toss" class="btn btn-primary">Toss <i class="fas fa-minus-circle"></i></button>
+        <button v-if="collected" @click="toss" class="btn btn-primary">Toss <i class="fas fa-minus-circle"></i></button>  
       </div>
     </div>
 
