@@ -32,7 +32,7 @@
     <div class="video-instance embed-responsive" :id="sessionId"></div>
 
     <div v-if="displayName" class="card-footer">
-      <span>Collected by <a href="/user">@{{ displayName }}</a></span> 
+      <span>Collected by <a>@{{ displayName }}</a></span> 
       <span class="float-right">
         <i class="far fa-clock"></i> {{ createdAt }} days ago  
       </span>

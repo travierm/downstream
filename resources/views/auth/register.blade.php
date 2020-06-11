@@ -8,14 +8,14 @@
                 <div class="card-header">Register</div>
 
                 <div class="card-body">
-                    <a href="/login">Need to login?</a>
+                    <a class="mb-2" href="/login">Need to login?</a>
                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
                         @honeypot
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            <label for="email" class="mt-2 col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>

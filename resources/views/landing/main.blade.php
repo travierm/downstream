@@ -21,20 +21,16 @@
 
   @if($items)
     <div class="row">
-    @foreach($items as $item)
-
+      @foreach($items as $item)
       <div class="col-md-4">
         <youtube-card 
-          @if($loop->iteration == 1)
-          :should-play="true"
-          @endif
           video-id="{{ $item->index }}"
           thumbnail="{{ $item->meta->thumbnail }}"
           title="{{ $item->meta->title }}"
           :collected="{!!  json_encode($item->collected) !!}">
         </youtube-card>
       </div>
-    @endforeach
+      @endforeach
     </div>
   @endif
 
@@ -58,13 +54,4 @@
   </div>
 </div>
 
-@if(Auth::guest())
-  <div class="row justify-content-md-center">
-    <div class="col-lg-3 col-sm-6 mb-3 mt-3">
-      <a href="/register" class="btn btn-outline-success btn-lg btn-block">Register</a>
-    </div>
-  </div>
-  @endif
-
-<!-- <control-bar></control-bar> -->
 @endsection

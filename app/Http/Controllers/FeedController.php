@@ -22,7 +22,7 @@ class FeedController extends Controller
     {
         $followingUserIds = Auth::user()->following()->pluck('follow_id');
 
-        $date = \Carbon\Carbon::today()->subDays(14);
+        $date = \Carbon\Carbon::today()->subDays(30);
         $followingMedia = DB::table('user_media')
             ->whereIn('user_id', $followingUserIds)
             ->where('created_at', '>=', $date)
