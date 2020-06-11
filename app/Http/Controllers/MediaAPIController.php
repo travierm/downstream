@@ -63,6 +63,13 @@ class MediaAPIController extends Controller
         continue;
       }
 
+      foreach($discoveredItems as &$discoveredItem) {
+        $discoveredItem->collected = DB::table('user_media')
+          ->join('media', 'user_media.media_id', '=', 'media.id')
+          ->where('media.index', $discoveredItem->index)
+          ->exists();
+      }
+
       $discoveredResults[] = [
         'media_id' => $recentCollectedItemId,
         'media_item' => Media::find($recentCollectedItemId),
