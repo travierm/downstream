@@ -18,7 +18,7 @@
 				<div class="row mt-2">
 					<div class="col-lg-12">
 						<div class="alert alert-warning" role="alert">
-  							Items discovered by collecting <a target="_blank" :href="'/v/' + result.media_item.index">{{ result.media_item.meta.title }}</a>
+  							Items discovered by collecting <a target="_blank" :href="'/v/' + result.media_item.index">{{ getMeta(result.media_item).title }}</a>
 						</div>
 					</div>
 				</div>
@@ -57,6 +57,13 @@
 			this.getDiscoverables();
 		},
 		methods: {
+			getMeta(mediaItem) {
+				if(!mediaItem.meta.title) {
+					return JSON.parse(mediaItem.meta)
+				}
+
+				return mediaItem.meta
+			},
 			getDiscoverables() {
 				axios.post('/api/media/discoverables').then((resp) => {
 					if(resp.data.items.length >= 1) {
