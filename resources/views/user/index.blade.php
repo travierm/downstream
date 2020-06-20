@@ -20,7 +20,7 @@
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
                         <h6 class="my-0">Collection Size</h6>
-                        <small class="text-muted">Number of active users.</small>
+                        <small class="text-muted">Number of items you've collected.</small>
                     </div>
 
                     <span class="text-success">{{ $collectionSize }}</span>

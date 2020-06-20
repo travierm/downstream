@@ -74,9 +74,8 @@
                     <a class="nav-link" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
                         
-                        <!-- <a class="dropdown-item" href="/user">Profile</a> -->
+                        <a class="dropdown-item" href="/user">Profile</a>
                         <a class="dropdown-item" href="/settings">Settings</a>
-                        <a class="dropdown-item" href="/guide">Guide</a>
                         <a class="dropdown-item" href="/logout">Logout</a>
                     </div>
                 </li>

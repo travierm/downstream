@@ -113,7 +113,7 @@ class UserController extends Controller
       'displayName' => $displayName,
       'collectionSize' => $collectionSize,
       'collectionSpread' => $collectionSpread,
-      'sinceAccountCreation' => date("F j, Y, g:i a", strtotime(Auth::user()->created_at)) . " <==> $daysSince days ago "
+      'sinceAccountCreation' => "$daysSince days ago on " . date("F j, Y, g:i a", strtotime(Auth::user()->created_at))
     ]);
   }
 
