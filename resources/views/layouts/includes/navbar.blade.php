@@ -42,6 +42,12 @@
                     <a class="nav-link" href="{{ url('/feed') }}">Activity <span class="badge badge-{{ @Auth::user() ?  @Auth::user()->themeOption('style_type') : 'dark'}}">{{ $activity_feed_count}}</span></a>
                 </li>
 
+                @if(Auth::user()->isAdmin())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/admin/dash') }}">Admin</a>
+                </li>
+                @endif
+
                 <li class="nav-item">
                     <router-link class="nav-link text-lg" to="/collection">Collection</router-link>
                 </li>
@@ -67,9 +73,7 @@
                 <li class="nav-item dropdown ">
                     <a class="nav-link" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
-                        @if(Auth::user()->isAdmin())
-                            <a class="dropdown-item" href="/admin/dash">Admin</a>
-                        @endif
+                        
                         <!-- <a class="dropdown-item" href="/user">Profile</a> -->
                         <a class="dropdown-item" href="/settings">Settings</a>
                         <a class="dropdown-item" href="/guide">Guide</a>
