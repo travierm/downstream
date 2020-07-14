@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Collection from '../views/Collection.vue';
+import Collection from '@/components/Pages/Collection.vue';
 
 Vue.use(VueRouter)
 

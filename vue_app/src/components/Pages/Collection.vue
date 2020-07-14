@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import YouTubeCard from '../components/YouTubeCard';
+import YouTubeCard from '@/components/YouTubeCard';
 
 export default {
   name: 'Collection',
@@ -43,6 +43,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('auth/initCSRF')
     this.$store.dispatch('fetchCollection')
   },
   methods:{
