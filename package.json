@@ -11,7 +11,8 @@
         "lint": "eslint --ext .js,.vue src",
         "test": "./node_modules/.bin/jest",
         "ez-dev": "php artisan serve ; npm run hot",
-        "ez-stop": "killall -9 php7.2 ; killall -9 node"
+        "ez-stop": "killall -9 php7.2 ; killall -9 node",
+        "vue:serve": "cd vue_app/ && npm run serve"
     },
     "jest": {
         "testEnvironment": "node",

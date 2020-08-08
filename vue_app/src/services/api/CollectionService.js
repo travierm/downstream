@@ -1,7 +1,7 @@
-import axios from "axios";
+import API from './Client'
 
 const apiLink = "http://localhost:8000";
 
 export async function fetchUserCollection() {
-    return axios.post(apiLink + '/api/collection');
+    return API.post("/api/collection");
 }

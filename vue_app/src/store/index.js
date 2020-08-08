@@ -1,14 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import authModule from './modules/auth';
-import { fetchUserCollection }  from '../services/collection-service';
+import * as auth from './modules/auth';
+import { fetchUserCollection }  from '../services/api/CollectionService';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    auth: {},
     collection: []
   },
   mutations: {
@@ -20,6 +19,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    auth: authModule
+    auth
   }
 })

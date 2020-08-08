@@ -43,7 +43,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('auth/initCSRF')
     this.$store.dispatch('fetchCollection')
   },
   methods:{
