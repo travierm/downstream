@@ -1,0 +1,48 @@
+
+
+Working on Today:
+    ✔ Clicking play on a new card should stop the old card @done(20-05-12 21:15)
+
+Basic Features:
+    ☐ YouTube Card
+        ☐ Load with Thumbnail
+        ☐ Click to play video
+    ☐ Player System
+        ☐ Card can play its neibhor to the right
+
+System Improvements:
+    ☐ Cache thumbnails locally
+    ☐ Limit cards on page with infinite loader
+    ☐ Chunk through Youtube video fixing
+    ☐ Chunk through Spotify importing
+
+
+Player System Needs:
+    ☐ After a video finishes (or a few secs before) an event system needs to know which card to play next
+    ☐ Moving from one page to another should not stop a video from playing
+
+
+YouTubeCard:
+    Handles rendinger a card and acting on user events
+
+    Logic:
+        ☐ Update UI based on YouTubeCardPlayer event hooks
+    Events:
+        ☐ Thumbnail Image Click
+        ☐ Collect Button click
+        ☐ Share Link click
+
+YouTubeCardPlayer:
+    Handles playing a card's youtube instance and watching for player events
+
+    Logic:
+        ☐ Card can hook into events
+        ☐ Can Load, Play and Stop a video
+        ☐ Registers with Manager
+
+YouTubePlayerManager:
+    Manages all Players on the screen
+
+    Logic:
+        ☐ playNextVideo so the loop can continue
+        ☐ Stop other playing videos if a new video tries to play
