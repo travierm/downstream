@@ -111,10 +111,12 @@
           <div id="modals" style="display: none;">
             <!-- Modals -->
             <b-modal :visible=false id="registerModal" :lazy=true :hide-header=true :hide-footer=true title="Register" title="Bootstrap-Vue">
-              <h4>Please Register</h4>
-              <p class="my-4">To collect items you must register first.</p>
-              <p class="my-4">Your data is stored securely and never shared with 3rd parties.</p>
-               <a href="/register" class="btn btn-info btn-lg btn-block">Register</a> 
+              <h5 class="font-weight-bold">Registration Required</h5>
+              <hr />
+
+              <p class="my-4 lead">To start collecting items you must first register.</p>
+
+              <a href="/register" class="btn btn-info btn-lg btn-block">Register</a> 
             </b-modal>
           </div>
       </div>

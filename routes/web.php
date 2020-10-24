@@ -97,8 +97,6 @@ Route::get('/contact', function() {
   return View::make("contact");
 });
 
-Auth::routes();
-
 Route::get('/logout', 'UserController@logout');
 
 Route::get('/{vue_capture?}', function () {
