@@ -33,14 +33,6 @@ class FrontPageController extends Controller
 
   public function getLanding()
   {
-    //$videos = YouTubeVideo::all();
-    /*$this->createRow("Landing Page", [
-      'I dont' => 279,
-      "hope" => 284,
-      "Jaclyn" => 281,
-      'look at me' => 283,
-    ]);*/
-
     $items = GlobalQueue::getActiveMedia();
 
     $items = $items->take(6);

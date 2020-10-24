@@ -63,10 +63,10 @@ class RegisterController extends Controller
     {
         return User::create([
             'hash' => genUniqueHash(20),
-            'display_name' => $data['display_name'],
             'email' => $data['email'],
-            'api_token' =>  str_random(60),
             'password' => bcrypt($data['password']),
+            'api_token' =>  str_random(60),
+            'display_name' => $data['display_name']
         ]);
     }
 }

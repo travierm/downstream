@@ -8,12 +8,21 @@
                 <div class="card-header">Register</div>
 
                 <div class="card-body">
-                    <a class="mb-2" href="/login">Need to login?</a>
                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
                         @honeypot
 
+                        <!-- Display Name -->
+                        <div class="form-group{{ $errors->has('display_name') ? ' has-error' : '' }}">
+                            <label for="display_name" class="col-md-4 control-label">Display Name</label>
+
+                            <div class="col-md-6">
+                                <input id="display_name" type="text" class="form-control" name="display_name" value="{{ old('display_name') }}">
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="mt-2 col-md-4 control-label">E-Mail Address</label>
 
@@ -28,14 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('display_name') ? ' has-error' : '' }}">
-                            <label for="display_name" class="col-md-4 control-label">Display Name</label>
-
-                            <div class="col-md-6">
-                                <input id="display_name" type="text" class="form-control" name="display_name" value="{{ old('display_name') }}">
-                            </div>
-                        </div>
-
+                        <!-- Password -->
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -50,6 +52,7 @@
                             </div>
                         </div>
 
+                        <!-- Confirm Password -->
                         <div class="form-group">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
@@ -58,11 +61,14 @@
                             </div>
                         </div>
 
+                        <!-- Register Button -->
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
+
+                                <a class="ml-2" href="/login">Already have an account?</a>
                             </div>
                         </div>
                     </form>
