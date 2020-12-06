@@ -21,7 +21,7 @@
                 <div class="input-group w-100">
                     <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="ds_query" type="search" class="form-control" placeholder="Search...">
                     <span class="input-group-append">
-                        <button onclick="this.form.submit()" class="btn btn-default border border-left-0" type="button">
+                        <button onclick="this.form.submit()" class="btn btn-warning" type="button">
                             <i onclick="this.form.submit()" class="fa fa-search"></i>
                         </button>
                     </span>
