@@ -57,6 +57,8 @@ class YouTubeAutofixQueue extends Command
             }
         }
 
+        $currentMediaId = 67;
+
         $currentMedia = Media::find($currentMediaId);
         $mediaIsAvailable = YouTubeService::getVideoInfo($currentMedia->index);
 
@@ -71,13 +73,8 @@ class YouTubeAutofixQueue extends Command
 
                 $success = YouTubeV2::updateMedia($currentMedia->id, $response->vid);
                 if($success) {
-                    $logMessage = "Fixed broken media with id: " . $currentMedia->id;
-
-                    dd($updatedMediaInfo);
-                    $this->info($logMessage, [
-                        'oldTitle' => $currentMediaTitle,
-                        'newTitle' => $updatedMediaInfo->snippet->title
-                    ]);
+                    $this->info("Fixed broken media with id: " . $currentMedia->id);
+                    $this->info($currentMedia->id . " updated title from [" . $currentMediaTitle . "] to [" . $updatedMediaInfo->snippet->title . "]");
 
                     Cache::increment('youtubeAutofix.fixedMediaItems');
                 }else{
