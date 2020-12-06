@@ -61,17 +61,19 @@ class YouTubeAutofixQueue extends Command
         $mediaIsAvailable = YouTubeService::getVideoInfo($currentMedia->index);
 
         if(!$mediaIsAvailable) {
-            $response = YouTubeV2::searchFirst($video['title']);
+            $currentMediaTitle = $currentMedia->getMeta()->title;
+
+            $response = YouTubeV2::searchFirst($currentMediaTitle);
             $updatedMediaInfo = YouTubeV2::getInfo($response->vid);
 
             if($updatedMediaInfo) {
                 // Found replacement video
 
-                $success = YouTubeV2::updateMedia($video['id'], $result->vid);
+                $success = YouTubeV2::updateMedia($currentMedia->id, $result->vid);
                 if($success) {
                     $logMessage = "Fixed broken media with id: " . $currentMedia->id;
                     $this->info($logMessage, [
-                        'oldTitle' => $currentMedia->title,
+                        'oldTitle' => $currentMediaTitle,
                         'newTitle' => $updatedMediaInfo->snippet->title
                     ]);
 
