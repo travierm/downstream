@@ -6,26 +6,23 @@ import router from './router';
 import BootstrapVue from 'bootstrap-vue';
 import VueScrollTo from 'vue-scrollto';
 
-// Page Components
-//@TODO remove and replace
-import About from './pages/about';
 // Components
+import About from './pages/about';
 import ControlBar from './components/ControlBar'
-import YouTubeCard from './components/YouTubeCard'
 import ThemeButton from './components/ThemeButton'
-import FollowButton from './components/FollowButton'
 import RawDataView from './components/RawDataView'
+import FollowButton from './components/FollowButton'
+import YouTubeCard from './components/YouTubeCard/Card'
 import SpotifyAuthorizeButton from './components/SpotifyAuthorizeButton'
 
 // Forms
 import ImportForm from './forms/Import';
 
-
 window.Vue = Vue
 
 require('./bootstrap');
 
-const unsync = sync(store, router);
+sync(store, router);
 
 Vue.use(BootstrapVue);
 

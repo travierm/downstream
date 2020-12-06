@@ -23,6 +23,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {   
+        // Continuously loop through media collection and autofix videos
+        $schedule->command('youtube:autofix-queue')
+           ->everyMinute()
+           ->appendOutputTo(storage_path('logs/autofix.log'));
+
         // Discover new items for users based on media they already collected
         $schedule->command('spotify:recommendations')
            ->everyTenMinutes()
@@ -32,11 +37,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('spotify:import')
            ->everyMinute()
            ->appendOutputTo(storage_path('logs/spotify-import.log'));
-
-        // Continuously loop through media collection and autofix videos
-        $schedule->command('youtube:autofix-queue')
-           ->everyFiveMinutes()
-           ->appendOutputTo(storage_path('logs/autofix.log'));
     }
 
     /**
