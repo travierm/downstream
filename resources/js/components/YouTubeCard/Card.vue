@@ -1,14 +1,25 @@
 <template>
   <div :id="sessionId + '_card'" :class="{ card: true , 'border-info': false, 'mx-auto': false, 'mb-4': true }">
-    <div id="cardToolbar" class="card-block">
-      
+    <div id="cardToolbar" class="">
+    
       <!-- Card Buttons -->
+      <div class="float-left">
+        <a v-if="mediaId" target="_blank" :href="'https://www.youtube.com/watch?v=' + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false"><i class="fas fa-link"></i> Direct Link</a>
+
+        <div class="btn-group">
+          <PlaylistButton />
+        </div>
+      </div>
       <div class="float-right">
-        <a v-if="mediaId" target="_blank" :href="/v/ + videoId" class="btn btn-outline-primary" aria-haspopup="true" aria-expanded="false"><i class="fas fa-link"></i> Direct Link</a>
-        <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
-        <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>
-        <button v-if="!collected" @click="discover" class="btn btn-success">Collect <i class="fas fa-plus-circle"></i></button>
-        <button v-if="collected" @click="toss" class="btn btn-primary">Toss <i class="fas fa-minus-circle"></i></button>  
+        <div class="btn-group">
+          <button v-if="globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-info pl-2"><i class="fa fa-share" aria-hidden="true"></i> Queued </button>
+          <button v-if="!globalQueued && showGlobalQueue && !clientOnMobile"  @click="pushGlobalQueue" class="btn btn-outline-info"><i class="fa fa-share" aria-hidden="true"></i> Global Queue</button>  
+        </div>
+        
+        <div class="btn-group">
+          <button v-if="!collected" @click="discover" class="btn btn-success">Collect <i class="fas fa-plus-circle "></i></button>
+          <button v-if="collected" @click="toss" class="btn btn-primary">Toss <i class="fas fa-minus-circle"></i></button>  
+        </div>
       </div>
     </div>
 
@@ -38,6 +49,7 @@
 </template>
 
 <script>
+    
     import $ from 'jquery';
     import SID from 'shortid';
     import YTPlayer from 'yt-player';
@@ -45,6 +57,9 @@
     import MobileDetect from 'mobile-detect';
     import CardGlow from '../../services/CardGlow';
     import { generateElementId, clientOnMobile } from '../../services/Utils';
+
+    // Components
+    import PlaylistButton from './PlaylistButton'
 
     let detect = new MobileDetect(window.navigator.userAgent);
 
@@ -117,6 +132,9 @@
 
     export default {
       name:"youtube-card",
+      components: {
+          PlaylistButton
+      },
       computed: computed,
       props: props,
       data: data,

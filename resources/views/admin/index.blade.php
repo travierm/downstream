@@ -62,5 +62,11 @@
   </div>
 
   <button class="btn btn-info">Save</button>-->
+
+  <div class="row">
+  	<div class="col-lg-8 mt-2">
+  		<about-page></about-page>
+  	</div>
+  </div>
 </div>
 @endsection

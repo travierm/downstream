@@ -29,19 +29,11 @@ class CollectionController extends Controller
               ], 401);
         }
 
-        //get mediaId's from users collection (user_media)
-        /*$builder = UserMedia::where('user_id', $userId);
-        if($randomize) {
-            $builder->orderByRaw("RAND()");
-        }else{
-            $builder->orderBy('id', 'DESC');
-        }
-        $mediaIds = $builder->pluck('media_id');*/
-
         $queryBuilder = DB::table('media')
             ->join('user_media', 'user_media.media_id', '=', 'media.id')
             ->where('user_media.user_id', $userId)
-            ->whereNull('user_media.deleted_at');
+            ->whereNull('user_media.deleted_at')
+            ->limit(50);
 
         // Add limit if needed for mobile
         if($request->limit) {
