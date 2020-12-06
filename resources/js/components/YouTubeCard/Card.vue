@@ -39,12 +39,12 @@
 
 <script>
     import $ from 'jquery';
-    import ColorThief from 'colorthief';
     import SID from 'shortid';
-    import MobileDetect from 'mobile-detect';
     import YTPlayer from 'yt-player';
-    import CardGlow from '../services/CardGlow';
-    import { generateElementId, clientOnMobile } from '../services/Utils';
+    import ColorThief from 'colorthief';
+    import MobileDetect from 'mobile-detect';
+    import CardGlow from '../../services/CardGlow';
+    import { generateElementId, clientOnMobile } from '../../services/Utils';
 
     let detect = new MobileDetect(window.navigator.userAgent);
 
@@ -85,11 +85,11 @@
 
     let data = () => {
       return {
-        colorString: false,
-        playing: false,
         player: false,
-        showThumbnail: true,
-        showVideo: false
+        playing: false,
+        showVideo: false,
+        colorString: false,
+        showThumbnail: true
       }
     }
 
