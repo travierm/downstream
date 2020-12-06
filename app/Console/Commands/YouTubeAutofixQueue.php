@@ -57,8 +57,6 @@ class YouTubeAutofixQueue extends Command
             }
         }
 
-        $currentMediaId = 67;
-
         $currentMedia = Media::find($currentMediaId);
         $mediaIsAvailable = YouTubeService::getVideoInfo($currentMedia->index);
 
