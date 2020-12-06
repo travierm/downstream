@@ -37,7 +37,7 @@
             )->count()
           }}
         </li>
-        <li class="list-group-item list-group-item-primary">Autofix.lastMediaId: {{ Cache::get('youtubeAutofix.lastMediaId') }}</li>
+        <li class="list-group-item list-group-item-primary">Autofix.lastMediaId: {{ Cache::get('youtubeAutofix.lastMediaId') }} / {{ App\Media::count() }}</li>
         <li class="list-group-item list-group-item-primary">Autofix.fixedMediaItems: {{ Cache::get('youtubeAutofix.fixedMediaItems') }}</li>
       </ul>
     </div>

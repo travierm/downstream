@@ -71,11 +71,8 @@ class YouTubeAutofixQueue extends Command
 
                 $success = YouTubeV2::updateMedia($currentMedia->id, $response->vid);
                 if($success) {
-                    $logMessage = "Fixed broken media with id: " . $currentMedia->id;
-                    $this->info($logMessage, [
-                        'oldTitle' => $currentMediaTitle,
-                        'newTitle' => $updatedMediaInfo->snippet->title
-                    ]);
+                    $this->info("Fixed broken media with id: " . $currentMedia->id);
+                    $this->info($currentMedia->id . " updated title from [" . $currentMediaTitle . "] to [" . $updatedMediaInfo->snippet->title . "]");
 
                     Cache::increment('youtubeAutofix.fixedMediaItems');
                 }else{

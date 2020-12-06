@@ -8,6 +8,10 @@
 @import "landing";
 @import "controlbar";
 
+#searchInputBar {
+  z-index: 0 !important;
+}
+
 // Bootstrap
 .color-preview {
   height: 50px;
