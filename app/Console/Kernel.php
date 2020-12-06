@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-    ];
+    protected $commands = [];
 
     /**
      * Define the application's command schedule.
@@ -24,28 +23,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {   
-        //Turn on to allow discovery page to populate
+        // Discover new items for users based on media they already collected
         $schedule->command('spotify:recommendations')
            ->everyTenMinutes()
            ->appendOutputTo(storage_path('logs/discovery.log'));
         
+        // Import new tracks found in a user's DS Import playlist on Spotify
         $schedule->command('spotify:import')
            ->everyMinute()
            ->appendOutputTo(storage_path('logs/spotify-import.log'));
 
+        // Continuously loop through media collection and autofix videos
         $schedule->command('youtube:autofix-queue')
            ->everyFiveMinutes()
            ->appendOutputTo(storage_path('logs/autofix.log'));
-
-           //->emailOutputTo('moorlagrx@gmail.com');
-        
-        /*$schedule->command('globalq:process')
-            ->everyMinute();*/
-
-        /*$schedule->command('cron:anniversary')
-            //makes up for server time
-            ->dailyAt('014:00')
-            ->appendOutputTo(storage_path('logs/anniversary'));*/
     }
 
     /**
