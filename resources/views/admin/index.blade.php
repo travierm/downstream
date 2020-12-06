@@ -9,7 +9,7 @@
 
   <div class="row">
     <div class="col-lg-6">
-      <h4>Links:</h4>
+      <h5>Links:</h5>
 
       <ul>
         <!-- <li><a href="/admin/toplist">Manage Toplist</a></li> -->
@@ -20,6 +20,25 @@
         <li><a href="/admin/logs">System Logs</a></li>
         <!-- <li><a href="/admin/engine/clean">Bad Media Items</a></li>  -->
         <!-- <li><a href="/admin/engine">Recommendation Engine Feed</a></li> -->
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-warning">Total Users: {{ App\User::count() }}</li>
+        <li class="list-group-item list-group-item-warning">Total Media Items: {{ App\Media::count() }}</li>
+        <li class="list-group-item list-group-item-warning">
+          Media created this week: 
+          {{ 
+            App\Media::whereBetween('created_at', 
+              [Carbon\Carbon::now()->startOfWeek(), Carbon\Carbon::now()->endOfWeek()]
+            )->count()
+          }}
+        </li>
+        <li class="list-group-item list-group-item-primary">Autofix.lastMediaId: {{ Cache::get('youtubeAutofix.lastMediaId') }}</li>
+        <li class="list-group-item list-group-item-primary">Autofix.fixedMediaItems: {{ Cache::get('youtubeAutofix.fixedMediaItems') }}</li>
       </ul>
     </div>
   </div>
@@ -43,11 +62,5 @@
   </div>
 
   <button class="btn btn-info">Save</button>-->
-
-  <div class="row">
-  	<div class="col-lg-8 mt-2">
-  		<about-page></about-page>
-  	</div>
-  </div>
 </div>
 @endsection

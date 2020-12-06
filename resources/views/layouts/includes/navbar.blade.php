@@ -1,6 +1,6 @@
 <nav id="navbar" class="main-navbar navbar-expand-md navbar navbar-{{ @Auth::user() ?  @Auth::user()->themeOption('style_type') : 'dark'}} navbar-deco">
     <div class="container-fluid">
-        <a id="brand" class="navbar-brand" href="{{ url('/') }}">Downstream</a>
+        <a id="brand" class="navbar-brand" href="{{ url('/') }}">downstream</a>
         <a target="_blank" href="https://github.com/travierm/downstream"><img src={{asset("images/GitHub-Mark-Light-64px.png")}} width="32" height="32" alt=""></a>
         
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,11 +17,11 @@
                     </ul>
                 </div>
             @else
-            <form class="mx-2 my-auto d-inline w-50 d-none d-sm-none d-lg-block" action="/search" method="GET">
+            <form class="ml-3 mx-2 my-auto d-inline w-25 d-none d-sm-none d-lg-block" action="/search" method="GET">
                 <div class="input-group w-100">
                     <input autofocus id="searchInputBar" value="{{@$searchQuery}}" name="ds_query" type="search" class="form-control" placeholder="Search...">
                     <span class="input-group-append">
-                        <button onclick="this.form.submit()" class="btn btn-default border border-left-0" type="button">
+                        <button onclick="this.form.submit()" class="btn btn-warning" type="button">
                             <i onclick="this.form.submit()" class="fa fa-search"></i>
                         </button>
                     </span>

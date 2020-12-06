@@ -18,80 +18,19 @@
     <meta name="msapplication-TileColor" content="#603cba">
     <meta name="theme-color" content="#8e93f1">
     <meta name="description" content="A free music collection and discovery service.">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     @yield('meta')
 
     @if(!Auth::guest())
-    <meta name="xyz-token" content="{{ auth()->user()->api_token }}">
+      <meta name="xyz-token" content="{{ auth()->user()->api_token }}">
     @endif
 
     <title>Downstream</title>
 
-    <style>
-
-      .main-navbar {
-        background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-      }
-
-      .btn-primary {
-        border-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-        background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-      }
-
-      .btn-outline-primary {
-          color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-          background-color: transparent;
-          background-image: none;
-          border-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-      }
-
-      .btn-outline-primary:hover {
-          color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
-          background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-          border-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
-      }
-
-      .footer {
-        border-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
-        background-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
-      }
-
-      .list-group-item.active {
-        border-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-        background-color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-      }
-
-      .theme-primary-text {
-        color: {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }} !important;
-      }
-
-      .card-header-playing {
-        background: linear-gradient(123deg, {{ @Auth::user() ? Auth::user()->themeOption('primary') : '#4a52e8' }}, {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }});
-      }
-
-      @if((@Auth::user() && Auth::user()->themeOption('id') == 'night_mode'))
-
-      body {
-        color: #FFFFFF;
-        background-color: {{  Auth::user()->themeOption('background_color') }};
-      }
-
-      .main-navbar {  
-          background-color: {{ @Auth::user() ? Auth::user()->themeOption('secondary') : '#4a52e8' }} !important;
-      }
-
-      .card {
-        background-color: {{  Auth::user()->themeOption('secondary') }};
-      }
-
-      .jumbotron {
-        display: none;
-      }
-
-      @endif
-    </style>
+    @include('layouts.includes.theme-css')
   </head>
 
   <body>
