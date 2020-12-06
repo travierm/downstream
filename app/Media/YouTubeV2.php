@@ -41,8 +41,8 @@ class YouTubeV2 {
 
   public static function updateMedia($mediaId, $videoId)
   {
-    $video = YouTubeService::getVideoInfo($videoId);
     $media = Media::find($mediaId);
+    $video = YouTubeService::getVideoInfo($videoId);
 
     if(!$video or !$media) {
       return false;

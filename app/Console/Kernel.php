@@ -32,6 +32,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('spotify:import')
            ->everyMinute()
            ->appendOutputTo(storage_path('logs/spotify-import.log'));
+
+        $schedule->command('youtube:autofix-queue')
+           ->everyFiveMinutes()
+           ->appendOutputTo(storage_path('logs/autofix.log'));
+
            //->emailOutputTo('moorlagrx@gmail.com');
         
         /*$schedule->command('globalq:process')

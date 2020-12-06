@@ -35,6 +35,13 @@ return [
     */
 
     'channels' => [
+        // Custom Logs
+        'autofix' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/autofix.log'),
+            'level' => 'debug',
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
