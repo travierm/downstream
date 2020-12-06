@@ -10,6 +10,14 @@
   margin-bottom: 0;
   background-color: #fff;
 }
+
+@media all and (max-width:550px) {
+    .desktop-br {display: none;}
+    .mobile-br {
+      display: inline;
+    }
+}
+
 @media (min-width: 768px) {
   .jumbotron {
     padding-top: calc(var(--jumbotron-padding-y) * 2);
@@ -23,4 +31,14 @@
 
 .jumbotron-heading {
   font-weight: 300;
+}
+
+.feature-col {
+  font-size: 1.7em !important;
+  display: inline;
+}
+
+.service-tagline {
+  text-align: center; 
+  font-size: 1.1rem;
 }
