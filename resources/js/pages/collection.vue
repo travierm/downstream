@@ -11,9 +11,8 @@
 
     <div class="row">
       <div v-if="videos.length >= 1" class="col-lg-12">
-        <nav class="navbar navbar-dark bg-white mb-2 pl-0">
-  
-                <!-- Collection Search Bar -->
+        <nav class="navbar navbar-dark bg-white mb-2 pl-0 pt-0">
+              <!-- Collection Search Bar -->
               <input class="form-control w-50" v-model="searchQuery" type="search" placeholder="Search your collection..." />
 
               <div class="ml-2 float-left">
