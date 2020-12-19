@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from "lodash";
 
 const _DEBUG = true;
 
@@ -6,36 +6,37 @@ let playingCardId = false;
 let registeredCards = [];
 
 function dd(data) {
-    if(_DEBUG) {
+    if (_DEBUG) {
         console.log(data);
     }
 }
 
 function getNextCard(currentCardId) {
-    let currentIndex = findCardIndexById(currentCardId)
-    let nextIndex = (currentIndex >= (registeredCards.length - 1) ? 0 : currentIndex + 1);
+    let currentIndex = findCardIndexById(currentCardId);
+    let nextIndex =
+        currentIndex >= registeredCards.length - 1 ? 0 : currentIndex + 1;
 
-    return registeredCards[nextIndex]
+    return registeredCards[nextIndex];
 }
 
 function findCardIndexById(cardId) {
     let index = _.findIndex(registeredCards, (card) => {
-        return card.cardId == cardId
-    })
+        return card.cardId == cardId;
+    });
 
-    return index
+    return index;
 }
 
 function findCardById(cardId) {
     const index = findCardIndexById(cardId);
 
-   return registeredCards[index]
+    return registeredCards[index];
 }
 
 function stopPlayingCard(cardId) {
     let playingCard = findCardById(cardId);
 
-    if(playingCard) {
+    if (playingCard) {
         playingCard.stop();
     }
 }
@@ -47,34 +48,33 @@ export function getPlayingCardId() {
 export function registerCardPlayer(player) {
     registeredCards.push(player);
 
-    dd("Registered player from cardId " + player.cardId + " for videoId " + player.videoId)
+    dd(
+        "Registered player from cardId " +
+            player.cardId +
+            " for videoId " +
+            player.videoId
+    );
 }
-
 
 export function playNextCard() {
     let nextCard = getNextCard(playingCardId);
 
-    nextCard.play(true)
+    nextCard.play(true);
 }
 
 export function playEvent(cardId) {
     const previousPlayingCardId = _.clone(playingCardId);
 
-    console.log("PLAY EVENT: Previous Playing Card:" + previousPlayingCardId);
+    dd("PLAY EVENT: Previous Playing Card:" + previousPlayingCardId);
     if (previousPlayingCardId) {
-        
         // Stop playing previous card because a new one would like to play
-        stopPlayingCard(previousPlayingCardId)
+        stopPlayingCard(previousPlayingCardId);
     }
 
     // Update current playing card id
-    playingCardId = cardId   
+    playingCardId = cardId;
 }
 
-export function pauseEvent(cardId) {
+export function pauseEvent(cardId) {}
 
-}
-
-export function stopEvent(cardId) {
-
-}
+export function stopEvent(cardId) {}

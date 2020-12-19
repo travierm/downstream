@@ -27,9 +27,9 @@
 
 <script>
     import $ from 'jquery';
-    import YouTubeCardPlayer from '../includes/YouTubeCardPlayer';
-    import { generateElementId } from '../includes/GlobalFunctions';
-    import { getPlayingCardId } from '../includes/YouTubePlayerManager';
+    import { generateElementId } from '../services/GlobalFunctions';
+    import YouTubeCardPlayer from '../services/youtube/YouTubeCardPlayer';
+    import { getPlayingCardId } from '../services/youtube/YouTubePlayerManager';
 
     export default {
         name: 'YouTubeCard',
@@ -60,8 +60,6 @@
             });
 
             this.cardPlayer.registerEventCallback('paused', () => {
-                console.log('pause!');
-
                 if(getPlayingCardId(this.cardId)) {
                     // Do nothing if this is the current playing card
                     return true;
