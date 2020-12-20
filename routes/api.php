@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +14,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/auth/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::post("/youtube/collect", "YouTubeAPIController@collect");
+
+
+// OLD ROUTES
+
+/*Route::post("/youtube/collect", "YouTubeAPIController@collect");
 Route::post("/youtube/toss", "YouTubeAPIController@toss");
 
 Route::post("/test", "YouTubeAPIController@test");
@@ -47,9 +49,17 @@ Route::post('/media/search', 'MediaAPIController@resolve');
 
 //Git Webhook Deployment
 Route::post('/deploy', 'DeployController@deploy');
+*/
 
 //API
 Route::namespace('API')->group(function () {
+    Route::post('/auth/login', 'Auth\LoginController@postLogin');
+
+    Route::middleware('auth:api')->get('/auth/user', function (Request $request) {
+        return $request->user();
+    });
+
+    /*
     //Analytics
     Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
 
@@ -88,5 +98,6 @@ Route::namespace('API')->group(function () {
 
     //Demo
     Route::get('/demo/search', 'DemoController@searchQuery');
+    */
 });
 
