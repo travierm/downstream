@@ -3,23 +3,25 @@
     class="mx-auto"
     max-width="580"
   >
-    <v-card-actions>
-      <v-btn text>Share</v-btn>
+    <v-card-actions v-if="share || collect">
+      <v-btn v-if="share" text>Share</v-btn>
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon class="mr-1">mdi-heart</v-icon>
+      <v-btn v-if="collect" icon>
+        <v-icon>mdi-heart</v-icon>
       </v-btn>
     </v-card-actions>
 
     <v-img
         :id="this.cardId + '_media'"
         :src="thumbnailURL"
-        height="435px"
+        :height="dense ? '250px' : '435px'"
         v-show="showThumbnail"
         @click="handleThumbnailClick"
-    ></v-img>
+    >
+        <div style="width: 90%;" class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate">{{ item.meta.title }}</div>
+    </v-img>
 
     <div class="video-instance embed-responsive" :id="cardId"></div>
   </v-card>
@@ -27,15 +29,33 @@
 
 <script>
     import $ from 'jquery';
-    import { generateElementId } from '../services/GlobalFunctions';
-    import YouTubeCardPlayer from '../services/youtube/YouTubeCardPlayer';
-    import { getPlayingCardId } from '../services/youtube/YouTubePlayerManager';
+    import YouTubeCardPlayer from '../includes/YouTubeCardPlayer';
+    import { generateElementId } from '../includes/GlobalFunctions';
+    import { getPlayingCardId } from '../includes/YouTubePlayerManager';
 
     export default {
         name: 'YouTubeCard',
         props: {
             videoId: String,
-            thumbnailURL: String
+            thumbnailURL: String,
+            item: {
+                type: Object,
+                default: {
+                    meta: {}
+                }
+            },
+            share: {
+                type: Boolean,
+                default: true
+            },
+            collect: {
+                type: Boolean,
+                default: true
+            },
+            dense: {
+                type: Boolean,
+                default: false
+            }
         },
         data() {
             return {
@@ -60,6 +80,8 @@
             });
 
             this.cardPlayer.registerEventCallback('paused', () => {
+                console.log('pause!');
+
                 if(getPlayingCardId(this.cardId)) {
                     // Do nothing if this is the current playing card
                     return true;

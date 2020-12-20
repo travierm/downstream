@@ -2,7 +2,7 @@
     <v-container fluid>
       <v-row>
         <v-col cols="12" sm="3" v-for="video in videos" :key="video.id">
-          <youtube-card :videoId="video.videoId" :thumbnailURL="video.thumbnailURL"></youtube-card>
+          <youtube-card :videoId="video.videoId" :thumbnailURL="video.thumbnailURL" dense></youtube-card>
         </v-col>
       </v-row>
     </v-container>
@@ -41,11 +41,6 @@ export default {
         },
       ]
     }
-  },
-  mounted() {
-    this.$store.dispatch('fetchCollection')
-  },
-  methods:{
   }
 }
 </script>

@@ -6,6 +6,7 @@ module.exports = {
     "vuetify"
   ],
   configureWebpack: {
+    devtool: 'source-map',
     resolve: {
       alias: {
         "@": path.resolve(__dirname, 'src/')

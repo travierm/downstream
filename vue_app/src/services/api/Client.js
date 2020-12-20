@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store/index";
 
 let apiClient = axios.create({
-    baseURL: 'http://localhost:8000/api',
+    baseURL: 'http://localhost:8001/api',
     withCredentials: true
 });
 

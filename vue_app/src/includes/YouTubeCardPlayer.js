@@ -1,13 +1,10 @@
-import $ from "jquery";
-import YTPlayer from "yt-player";
-import {
-    registerCardPlayer,
-    playNextCard,
-    playEvent,
-} from "./YouTubePlayerManager";
+import $ from 'jquery';
+import YTPlayer from 'yt-player';
+import { registerCardPlayer, playNextCard, playEvent } from '../includes/YouTubePlayerManager';
 
 export default class YouTubeCardPlayer {
     constructor(videoId, cardId) {
+
         this.videoId = videoId;
         this.cardId = cardId;
 
@@ -22,32 +19,34 @@ export default class YouTubeCardPlayer {
     applyEventCallbacks() {
         this.eventCallbacks.forEach((event) => {
             this._player.on(event.eventType, event.callback);
-        });
+        })
     }
 
     registerEventCallback(eventType, callback) {
-        if (eventType == "play") {
+        if(eventType == 'play') {
             this.onPlayCallbacks.push(callback);
-            return;
+            return
         }
 
-        if (this._player) {
+        if(this._player) {
             this._player.on(eventType, callback);
-        } else {
+        }else{
             this.eventCallbacks.push({
                 eventType,
-                callback,
+                callback
             });
         }
     }
 
     handlePlayerEvents() {
-        this._player.on("ended", () => {
+        this._player.on('ended', () => {
             this._player.seek(0);
             this._player.pause();
 
-            playNextCard();
-        });
+            console.log("ENDED EVENT!");
+
+            playNextCard()
+        })
     }
 
     loadVideo() {
@@ -57,21 +56,21 @@ export default class YouTubeCardPlayer {
             fullscreen: true,
             playsinline: true,
             height: $(`${cardId}_media`).height(),
-            width: $(`${cardId}_media`).width(),
+            width: $(`${cardId}_media`).width()
         };
 
         this._player = new YTPlayer(cardId, options);
         this._player.load(this.videoId);
 
         this.applyEventCallbacks();
-        this.handlePlayerEvents();
+        this.handlePlayerEvents()
     }
 
     stop() {
         this._player.pause();
         this._player.seek(0);
 
-        this._player.emit("stopped_by_manager");
+        this._player.emit('stopped_by_manager');
     }
 
     play(triggerEvent = false) {
@@ -79,11 +78,11 @@ export default class YouTubeCardPlayer {
             this.loadVideo();
         }
 
-        if (triggerEvent) {
+        if(triggerEvent) {
             // Let the player know we started playing
-            playEvent(this.cardId);
+            playEvent(this.cardId)
         }
-
+        
         this.onPlayCallbacks.forEach((callback) => {
             callback();
         });
