@@ -29,9 +29,9 @@
 
 <script>
     import $ from 'jquery';
-    import YouTubeCardPlayer from '../includes/YouTubeCardPlayer';
-    import { generateElementId } from '../includes/GlobalFunctions';
-    import { getPlayingCardId } from '../includes/YouTubePlayerManager';
+    import YouTubeCardPlayer from '../services/YouTubeCardPlayer';
+    import { generateElementId } from '../services/GlobalFunctions';
+    import { getPlayingCardId } from '../services/YouTubePlayerManager';
 
     export default {
         name: 'YouTubeCard',

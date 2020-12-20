@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import YTPlayer from 'yt-player';
-import { registerCardPlayer, playNextCard, playEvent } from '../includes/YouTubePlayerManager';
+import { registerCardPlayer, playNextCard, playEvent } from './YouTubePlayerManager';
 
 export default class YouTubeCardPlayer {
     constructor(videoId, cardId) {

@@ -3,10 +3,10 @@ import VueRouter from 'vue-router'
 
 import store from '@/store/index'
 
-import Activity from '@/components/Pages/Activity.vue';
-import SearchPage from '@/components/Pages/SearchPage';
-import LoginPage from '@/components/Pages/Auth/LoginPage'
-import CollectionPage from '@/components/Pages/CollectionPage'
+import Activity from '@/views/Activity.vue';
+import SearchPage from '@/views/SearchPage';
+import LoginPage from "@/views/Auth/LoginPage";
+import CollectionPage from "@/views/CollectionPage";
 
 Vue.use(VueRouter)
 

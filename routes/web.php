@@ -99,6 +99,6 @@ Route::get('/contact', function() {
 
 Route::get('/logout', 'UserController@logout');
 
-Route::get('/{vue_capture?}', function () {
+/*Route::get('/{vue_capture?}', function () {
     return view('index');
-})->where('vue_capture', '[\/\w\.-]*');
+})->where('vue_capture', '[\/\w\.-]*');*/
