@@ -29,6 +29,7 @@
     },
     "autoload": {
         "files": [
+            "app/Global/utils.php",
             "app/Global/media.php"
         ],
         "classmap": [

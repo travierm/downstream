@@ -13,11 +13,6 @@ use App\Http\Controllers\Controller;
 
 class CollectionController extends Controller
 {
-    function __construct() 
-    {
-        $this->middleware('auth:api');
-    }
-
     public function getCollection(Request $request) 
     {
         $userId = Auth::user()->id;

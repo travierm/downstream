@@ -51,12 +51,18 @@ Route::post('/media/search', 'MediaAPIController@resolve');
 Route::post('/deploy', 'DeployController@deploy');
 */
 
-//API
+// Controllers in the API Folder only
 Route::namespace('API')->group(function () {
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
 
-    Route::middleware('auth:api')->get('/auth/user', function (Request $request) {
-        return $request->user();
+    /* Authenticated routes only */
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/auth/user', function (Request $request) {
+            return $request->user();
+        });
+
+
+        Route::post('/collection', "CollectionController@getCollection");
     });
 
     /*
@@ -72,7 +78,7 @@ Route::namespace('API')->group(function () {
     //Collection Routes
 
     //authed user collection
-    Route::post('/collection', "CollectionController@getCollection");
+    
     Route::get('/collection/remove/{mediaId}', "CollectionController@removeItem");
     Route::get('/user/collection/{random?}', "CollectionController@getUserCollection");
 

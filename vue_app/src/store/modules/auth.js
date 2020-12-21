@@ -1,8 +1,8 @@
-import router from '@/router/index';
-import { fetchInitUserData } from '../events';
-import AuthService from '@/services/api/AuthService';
+import router from "@/router/index"
+import { fetchInitUserData } from "../events"
+import AuthService from "@/services/api/AuthService"
 
-export const namespaced = true;
+export const namespaced = true
 export const state = {
     user: false,
     error: false,
@@ -12,8 +12,8 @@ export const state = {
 
 export const mutations = {
     SET_TOKEN(state, token) {
-        state.token = token;
-        window.localStorage.setItem("token", token);
+        state.token = token
+        window.localStorage.setItem("token", token)
     },
     SET_LOADING(state, boolean) {
         state.loading = boolean
@@ -26,34 +26,34 @@ export const mutations = {
     },
     CLEAR_USER() {
         window.localStorage.clear()
-    }
+    },
 }
 
 export const getters = {
-    loggedIn: state => {
-        return !!state.user;
-    }
+    loggedIn: (state) => {
+        return !!state.user
+    },
 }
 
 export const actions = {
     login({ commit, dispatch }, params) {
-        commit("SET_LOADING", true);
+        commit("SET_LOADING", true)
 
         return AuthService.login(params)
-            .then(response => { 
-                commit("SET_TOKEN", response.data.token);
-                commit("SET_LOADING", false);
+            .then((response) => {
+                commit("SET_TOKEN", response.data.token)
+                commit("SET_LOADING", false)
                 commit("SET_ERROR", false)
 
                 // Fetch init user data
                 fetchInitUserData()
-                
-            }).catch(error => {
+            })
+            .catch((error) => {
                 commit("SET_ERROR", error)
             })
     },
     logout({ commit, getters }) {
-        if(!getters.loggedIn) {
+        if (!getters.loggedIn) {
             return true
         }
 
@@ -65,20 +65,23 @@ export const actions = {
             })
             .catch(() => {
                 commit("CLEAR_USER")
-            });
+            })
     },
-    getUser({ commit, getters}) {
-        if(getters.loggedIn) {
+    getUser({ commit, getters }) {
+        if (getters.loggedIn) {
             return
         }
 
         return AuthService.getUser()
             .then((response) => {
-                if(response.data) {
-                    commit("SET_USER", response.data.user)
+                if (response.data) {
+                    commit("SET_USER", response.data)
                 }
-            }).catch(error => {
-                router.push('/login')
             })
-    }
+            .catch((error) => {
+                if (router.history.current.path !== "/login") {
+                    router.push("/login")
+                }
+            })
+    },
 }

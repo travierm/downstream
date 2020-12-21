@@ -1,7 +1,10 @@
-import store from './index';
+import store from "./index"
 
-export function fetchInitUserData() {
-    store.dispatch('auth/getUser')
-    store.dispatch('collection/fetchUserCollection')
-    store.dispatch('search/getAutocompleteData')
+export async function fetchInitUserData() {
+    await store.dispatch("auth/getUser")
+
+    if(store.state.auth.user) {    
+        store.dispatch("collection/fetchUserCollection")
+        store.dispatch("search/getAutocompleteData")
+    }
 }
