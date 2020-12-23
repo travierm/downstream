@@ -10,17 +10,17 @@ class SearchAutocompleteTest extends TestCase
 {
 
     /**
-     * A basic feature test example.
+     * Make sure the controller can fetch autocomplete data from the external API
      *
      * @return void
      */
-    public function testExample()
+    public function testAutocompleteResults()
     {
         $user = factory('App\User')->make();
 
         $response = $this->actingAs($user)
             ->get('/api/search/autocomplete/drake');
-            
+
         $response->assertStatus(200)->assertJson([
             'results' => true,
         ]);
