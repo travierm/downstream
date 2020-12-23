@@ -18,3 +18,4 @@ public/css/app\.css\.map
 
 node_services/*/node_modules
 node_modules
+.phpunit.result.cache

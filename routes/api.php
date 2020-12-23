@@ -61,6 +61,8 @@ Route::namespace('API')->group(function () {
             return $request->user();
         });
 
+        // Search autocomplete
+        Route::get('/search/autocomplete/{query}', "SearchAutocompleteController@getResults");
 
         Route::post('/collection', "CollectionController@getCollection");
     });

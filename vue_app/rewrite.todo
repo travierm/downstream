@@ -3,6 +3,17 @@
 Working on Today:
     ✔ Clicking play on a new card should stop the old card @done(20-05-12 21:15)
 
+Ideas:
+    Landing Page Demo:
+        ☐ Do a 'slideshow' of card playing songs that mix together
+        ☐ UI
+            ☐ Take samples from Stripe pages
+        ☐ Song Ideas:
+            ☐ D'vocean
+            ☐ Alex G - Sarah
+            ☐ Kenny Beats boiler room
+            ☐ Something that keeps tempo
+
 Basic Features:
     ☐ YouTube Card
         ☐ Load with Thumbnail
