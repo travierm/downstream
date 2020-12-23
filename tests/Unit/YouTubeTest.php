@@ -15,7 +15,7 @@ class YouTubeTest extends TestCase
      *
      * @return void
      */
-    public function testSearch()
+    public function testCanSearchForYouTubeVideo()
     {   
         $limit = 1;
         $query = "Lil Peep - cobain";
@@ -27,7 +27,7 @@ class YouTubeTest extends TestCase
         $this->assertTrue(is_string($vid));
     }
 
-    public function testGetVideoInfo()
+    public function testCanGetVideoById()
     {
         $api = new YouTube();
 

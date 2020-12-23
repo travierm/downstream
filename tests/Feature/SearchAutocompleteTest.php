@@ -14,7 +14,7 @@ class SearchAutocompleteTest extends TestCase
      *
      * @return void
      */
-    public function testAutocompleteResults()
+    public function testCanFetchAutocompleteResults()
     {
         $user = factory('App\User')->make();
 
