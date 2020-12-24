@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class SearchAutocompleteController extends Controller
 {
-    private $apiUrl = "https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=";
+    private $apiUrl = "http://suggestqueries.google.com/complete/search?client=youtube&ds=yt&client=firefox&q=";
 
     public function getResults($query) 
     {
@@ -18,7 +18,7 @@ class SearchAutocompleteController extends Controller
             $json = $response->json();
 
             // 0 is the original query, 1 is the query results from Google
-            if(@$json[1]) {
+            if($json[1]) {
                 return response()->json([
                     'results' => $json[1]
                 ], 200);
