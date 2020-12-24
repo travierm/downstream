@@ -1,5 +1,5 @@
-import API from './Client'
+import http from "./Client"
 
 export async function fetchUserCollection() {
-    return API.post("/collection");
+    return http.post("/collection")
 }

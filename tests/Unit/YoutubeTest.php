@@ -15,7 +15,7 @@ class YouTubeTest extends TestCase
      *
      * @return void
      */
-    public function testCanSearchForYouTubeVideo()
+    public function testCanSearchForYoutubeVideo()
     {   
         $limit = 1;
         $query = "Lil Peep - cobain";

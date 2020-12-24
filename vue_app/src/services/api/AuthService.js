@@ -1,13 +1,13 @@
-import API from './Client';
+import http from "./Client"
 
 export default {
     login(params) {
-        return API.post("/auth/login", params)
+        return http.post("/auth/login", params)
     },
     logout() {
-        return API.post("/auth/logout")
+        return http.post("/auth/logout")
     },
     getUser() {
-        return API.get("/auth/user")
+        return http.get("/auth/user")
     }
 }
