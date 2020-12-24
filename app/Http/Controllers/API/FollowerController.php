@@ -4,8 +4,7 @@ namespace App\Http\Controllers\API;
 
 use DB;
 use Auth;
-use App\User;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 
 class FollowerController extends Controller

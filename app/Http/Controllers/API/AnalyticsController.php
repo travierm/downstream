@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Auth;
-use App\UserMediaPlays;
+use App\Models\UserMediaPlays;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

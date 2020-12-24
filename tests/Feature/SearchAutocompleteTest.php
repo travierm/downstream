@@ -2,9 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SearchAutocompleteTest extends TestCase
 {
@@ -16,7 +17,7 @@ class SearchAutocompleteTest extends TestCase
      */
     public function testCanFetchAutocompleteResults()
     {
-        $user = factory('App\User')->make();
+        $user = User::factory()->make();
 
         $response = $this->actingAs($user)
             ->get('/api/search/autocomplete/drake');

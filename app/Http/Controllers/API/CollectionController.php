@@ -4,10 +4,10 @@ namespace App\Http\Controllers\API;
 
 use DB;
 use Auth;
-use App\Media;
-use App\MediaMeta;
-use App\UserMedia;
-use App\GlobalQueue;
+use App\Models\Media;
+use App\Models\MediaMeta;
+use App\Models\UserMedia;
+use App\Models\GlobalQueue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
