@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "serve": "cd vue_app/ && yarn serve",
         "dev": "yarn run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -51,34 +52,6 @@
         "vuex-router": "^1.1.5"
     },
     "dependencies": {
-        "@babel/core": "^7.10.2",
-        "@babel/preset-env": "^7.10.2",
-        "axios": "^0.19.2",
-        "bootstrap": "^4.5.0",
-        "bootstrap-vue": "^2.15.0",
-        "colorthief": "^2.3.0",
-        "cross-env": "^5.2.1",
-        "jquery": "^3.4.0",
-        "jquery-ui-bundle": "^1.12.1-migrate",
-        "jsdom": "^11.12.0",
-        "laravel-mix": "^5.0.4",
-        "lodash": "^4.17.15",
-        "mobile-detect": "^1.4.4",
-        "popper.js": "^1.15.0",
-        "purify-css": "^1.2.6",
-        "purifycss-webpack": "^0.7.0",
-        "shortid": "^2.2.15",
-        "socket.io-client": "^2.3.0",
-        "tether": "^1.4.7",
-        "vue": "^2.6.11",
-        "vue-class-component": "^5.0.2",
-        "vue-router": "^3.1.3",
-        "vue-scrollto": "^2.17.1",
-        "vue-server-renderer": "^2.6.10",
-        "vue-template-compiler": "^2.6.11",
-        "vuex": "^3.4.0",
-        "vuex-router-sync": "^5.0.0",
-        "webpack-bundle-analyzer": "^3.5.1",
-        "yt-player": "github:travierm/yt-player"
+       
     }
 }

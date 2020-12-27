@@ -17,6 +17,7 @@
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "league/fractal": "^0.19.2",
         "madcoda/php-youtube-api": "^1.2",
         "rap2hpoutre/laravel-log-viewer": "^1.6",
         "spatie/laravel-honeypot": "^2.2"

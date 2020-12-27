@@ -1,11 +1,8 @@
 <?php
 namespace App\Media;
 
-use DB;
-use App\Media;
-use App\User;
-use App\UserMedia;
-use YouTubeService;
+use App\Models\Media;
+use YoutubeAPI;
 
 class Video {
   public $id;
@@ -38,7 +35,7 @@ class YouTube {
 
   public function search($query, $limit = 5)
   {
-    $results = YouTubeService::search($query, $limit);
+    $results = YoutubeAPI::search($query, $limit);
 
     if(!$results) {
       return false;
@@ -58,7 +55,7 @@ class YouTube {
 
   public function getById($id)
   {
-    return $this->formatVideoInfo(YouTubeService::getVideoInfo($id));
+    return $this->formatVideoInfo(YoutubeAPI::getVideoInfo($id));
   }
 
   /**
