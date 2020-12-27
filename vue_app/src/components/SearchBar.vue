@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
+import $ from "jquery"
 import { mapState } from "vuex"
 import { getAutocompleteResults } from "../services/api/SearchService"
 
@@ -21,16 +21,23 @@ export default {
     name: "SearchBar",
     data: () => ({
         query: null,
-        items: []
+        items: [],
     }),
     methods: {
         dispatchSearchRoute() {
-            this.$router.push("/search")
+            const route = {
+                path: "/search",
+                query: {
+                    query: this.query,
+                },
+            }
+
+            this.$router.push(route)
         },
     },
     watch: {
         query(val) {
-            if(!val) {
+            if (!val) {
                 this.items = []
                 return
             }

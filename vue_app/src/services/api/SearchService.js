@@ -1,4 +1,6 @@
+import Axios from "axios"
 import $ from "jquery"
+import http from "./Client"
 
 const suggestApiURL = "https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="
 
@@ -20,4 +22,8 @@ export function getAutocompleteResults(query, callback) {
             callback(items)
         },
     })
+}
+
+export function searchByQuery(query) {
+    return http.get("/search/" + query)
 }

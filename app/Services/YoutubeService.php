@@ -1,20 +1,19 @@
 <?php
 namespace App\Services;
 
-use YoutubeAPI;
 use App\MediaType\YoutubeVideo;
-
+use Madcoda\Youtube\Facades\Youtube;
 class YoutubeService {
     public static function getVideoById($id)
     {
-        $result = YoutubeAPI::getVideoInfo($id);
+        $result = Youtube::getVideoInfo($id);
 
         return YoutubeVideo::createFromSearchResult($result);
     }
 
-    public static function searchByQuery($query, $maxResults = 20)
+    public static function searchByQuery($query, $maxResults = 12)
     {
-        $results = YoutubeAPI::searchAdvanced([
+        $results = Youtube::searchAdvanced([
             'q' => $query,
             'type' => 'video',
             'videoCategoryId' => 10, // Search for music only

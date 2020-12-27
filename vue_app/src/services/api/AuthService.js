@@ -9,5 +9,5 @@ export default {
     },
     getUser() {
         return http.get("/auth/user")
-    }
+    },
 }

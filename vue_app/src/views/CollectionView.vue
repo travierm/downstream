@@ -31,7 +31,7 @@ import { mapState } from 'vuex';
 import YouTubeCard from '@/components/YouTubeCard';
 
 export default {
-  name: 'CollectionPage',
+  name: 'CollectionView',
   components: {
     'youtube-card': YouTubeCard
   },

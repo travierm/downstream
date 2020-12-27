@@ -40,7 +40,7 @@ import { mapState } from 'vuex';
 const afterLoginRoute = '/collection'
 
 export default {
-  name: 'LoginPage',
+  name: 'LoginView',
   components: {},
   computed: {
     ...mapState('auth', ['error'])
