@@ -6,6 +6,7 @@
         flat
         hide-no-data
         :items="items"
+        v-model="value"
         :search-input.sync="query"
         @input="dispatchSearchRoute()"
     >
@@ -19,20 +20,22 @@ import { getAutocompleteResults } from "../services/api/SearchService"
 
 export default {
     name: "SearchBar",
-    data: () => ({
-        query: null,
-        items: [],
-    }),
+    data: function() {
+        const routeQuery = this.$route.query.query
+        let items = routeQuery ? [routeQuery] : []
+
+        return {
+            items: items,
+            value: routeQuery,
+            query: "",
+        }
+    },
     methods: {
-        test() {
-            console.log('clicked')
-        },
         dispatchSearchRoute() {
-            console.log(this.query)
             const route = {
                 path: "/search",
                 query: {
-                    query: this.query,
+                    query: this.value,
                 },
             }
 
@@ -40,6 +43,16 @@ export default {
         },
     },
     watch: {
+        $route(to, from) {
+            if (to.path == "/search" && to.query.query !== this.value) {
+                this.items = [to.query.query]
+                this.value = to.query.query
+            }
+
+            if (to.path !== "/search") {
+                this.value = ""
+            }
+        },
         query(val) {
             if (!val) {
                 this.items = []

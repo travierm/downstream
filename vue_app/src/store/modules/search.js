@@ -14,6 +14,9 @@ export const mutations = {
 export const getters = {}
 
 export const actions = {
+    setQuery(context, query) {
+        context.commit('SET_QUERY', query)
+    },
     byQuery(context, query) {
         context.commit('SET_QUERY', query)
 

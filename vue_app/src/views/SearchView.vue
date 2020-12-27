@@ -1,11 +1,6 @@
 <template>
     <v-container fluid>
-        <v-row>
-            <v-col>
-            </v-col>
-        </v-row>
-
-        <v-row>
+        <v-row v-if="results.length >= 1">
             <CardCol v-for="(video, index) in results" :key="index">
                 <YoutubeCard
                     :item="video"
@@ -14,6 +9,12 @@
                     :thumbnailURL="video.thumbnail"
                 ></YoutubeCard>
             </CardCol>
+        </v-row>
+
+        <v-row v-else>
+            <v-col>
+                <h1>No results found...</h1>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -42,6 +43,10 @@ export default {
     methods: {
         searchByQuery() {
             const query = this.searchQuery
+
+            if(!query) {
+                return
+            }
 
             this.$store.dispatch('setLoadingBarState', true)
             this.$store

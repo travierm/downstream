@@ -2,11 +2,12 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 
 import store from "@/store/index"
-
 import Activity from "@/views/Activity.vue"
 import SearchView from "@/views/SearchView"
 import LoginView from "@/views/Auth/LoginView"
 import CollectionView from "@/views/CollectionView"
+
+import { applyMiddleware } from "./middleware"
 
 Vue.use(VueRouter)
 
@@ -54,5 +55,7 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes,
 })
+
+applyMiddleware(router)
 
 export default router
