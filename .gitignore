@@ -1,3 +1,4 @@
+.vscode/settings.json
 vue_app/node_modules
 /public/hot
 /public/css/app.css
