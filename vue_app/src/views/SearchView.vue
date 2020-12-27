@@ -43,14 +43,19 @@ export default {
         searchByQuery() {
             const query = this.searchQuery
 
+            this.$store.dispatch('setLoadingBarState', true)
             this.$store
                 .dispatch("search/byQuery", query)
                 .then((response) => {
+                    this.$store.dispatch('setLoadingBarState', false)
+
                     if (response.data.results) {
                         this.results = response.data.results
                     }
                 })
-                .catch(() => {})
+                .catch(() => {
+                    this.$store.dispatch('setLoadingBarState', false)
+                })
         },
     },
     watch: {

@@ -8,9 +8,19 @@ import * as collection from "./modules/collection"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state: {},
-    mutations: {},
-    actions: {},
+    state: {
+        showLoadingBar: false
+    },
+    mutations: {
+        SET_LOADING_BAR_STATE(state, boolean) {
+            state.showLoadingBar = boolean
+        }
+    },
+    actions: {
+        setLoadingBarState(context, boolean) {
+            context.commit('SET_LOADING_BAR_STATE', boolean)
+        }
+    },
     modules: {
         auth,
         search,

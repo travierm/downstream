@@ -7,7 +7,7 @@
         hide-no-data
         :items="items"
         :search-input.sync="query"
-        @keydown.enter="dispatchSearchRoute()"
+        @input="dispatchSearchRoute()"
     >
     </v-autocomplete>
 </template>
@@ -24,7 +24,11 @@ export default {
         items: [],
     }),
     methods: {
+        test() {
+            console.log('clicked')
+        },
         dispatchSearchRoute() {
+            console.log(this.query)
             const route = {
                 path: "/search",
                 query: {
