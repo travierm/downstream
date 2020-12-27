@@ -20,7 +20,7 @@
         v-show="showThumbnail"
         @click="handleThumbnailClick"
     >
-        <div style="width: 90%;" class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate">{{ item.meta.title }}</div>
+        <div style="width: 90%;" class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate">{{ (title || item.meta.title) }}</div>
     </v-img>
 
     <div class="video-instance embed-responsive" :id="cardId"></div>
@@ -34,8 +34,9 @@
     import { getPlayingCardId } from '../services/YouTubePlayerManager';
 
     export default {
-        name: 'YouTubeCard',
+        name: 'YoutubeCard',
         props: {
+            title: String,
             videoId: String,
             thumbnailURL: String,
             item: {

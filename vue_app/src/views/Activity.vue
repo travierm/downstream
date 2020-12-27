@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import YouTubeCard from '@/components/YouTubeCard';
+import YoutubeCard from '@/components/YoutubeCard';
 
 export default {
   name: 'Collection',
   components: {
-    'youtube-card': YouTubeCard
+    'youtube-card': YoutubeCard
   },
   data: () => {
     return {

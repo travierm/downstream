@@ -1,57 +1,59 @@
 <template>
     <v-container fluid>
-
         <v-row v-if="userCollection == undefined || userCollection.length <= 0">
-          <v-col>
-            <v-progress-circular
-              indeterminate
-              color="primary"
-            ></v-progress-circular>
-          </v-col>
+            <v-col>
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                ></v-progress-circular>
+            </v-col>
         </v-row>
 
         <v-row v-else>
-            <v-col cols="12" sm="3" v-for="item in userCollection" :key="item.id">
-              <v-lazy
-                :options="{
-                  // How much of element should be shown before loading it
-                  threshold: .25
-                }"
-                transition="fade-transition"
-              >
-                <youtube-card :item="item" :videoId="item.index" :thumbnailURL="item.meta.thumbnail"></youtube-card>
-              </v-lazy>
-            </v-col>
+            <CardCol v-for="item in userCollection" :key="item.id">
+                <v-lazy
+                    :options="{
+                        // How many elements should be shown before loading it
+                        threshold: 0.25,
+                    }"
+                    transition="fade-transition"
+                >
+                    <YoutubeCard
+                        :item="item"
+                        :videoId="item.index"
+                        :thumbnailURL="item.meta.thumbnail"
+                    ></YoutubeCard>
+                </v-lazy>
+            </CardCol>
         </v-row>
     </v-container>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import YouTubeCard from '@/components/YouTubeCard';
+import { mapState } from "vuex"
+import CardCol from "@/components/CardCol"
+import YoutubeCard from "@/components/YoutubeCard"
 
 export default {
-  name: 'CollectionView',
-  components: {
-    'youtube-card': YouTubeCard
-  },
-  computed: {
-    ...mapState({
-      userCollection: state => state.collection.userCollection
-    })
-  },
-  data: () => {
-    return {}
-  },
-  mounted() {
-    // this.$store.dispatch('collection/fetchUserCollection')
-  },
-  methods:{
-  }
+    name: "CollectionView",
+    components: {
+        CardCol,
+        YoutubeCard
+    },
+    computed: {
+        ...mapState({
+            userCollection: (state) => state.collection.userCollection,
+        }),
+    },
+    data: () => {
+        return {}
+    },
+    mounted() {
+        // this.$store.dispatch('collection/fetchUserCollection')
+    },
+    methods: {},
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+<style scoped></style>
