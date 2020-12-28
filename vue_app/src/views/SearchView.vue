@@ -10,18 +10,12 @@
                 ></YoutubeCard>
             </CardCol>
         </v-row>
-
-        <v-row v-else>
-            <v-col>
-                <h1>No results found...</h1>
-            </v-col>
-        </v-row>
     </v-container>
 </template>
 
 <script>
 import CardCol from "@/components/CardCol"
-import YoutubeCard from "@/components/YoutubeCard"
+import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
 
 export default {
     name: "SearchView",

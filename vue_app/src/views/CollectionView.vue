@@ -32,7 +32,7 @@
 <script>
 import { mapState } from "vuex"
 import CardCol from "@/components/CardCol"
-import YoutubeCard from "@/components/YoutubeCard"
+import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
 
 export default {
     name: "CollectionView",

@@ -4,7 +4,9 @@
         solo
         dense
         flat
+        clearable
         hide-no-data
+        append-icon=""
         :items="items"
         v-model="value"
         :search-input.sync="query"

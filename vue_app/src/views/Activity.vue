@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import YoutubeCard from '@/components/YoutubeCard';
+import YoutubeCard from '@/components/YoutubeCard/YoutubeCard';
 
 export default {
   name: 'Collection',
