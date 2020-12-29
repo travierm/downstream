@@ -64,7 +64,10 @@ Route::namespace('API')->group(function () {
         Route::get('/search/{query}', 'SearchController@getResults');
         Route::get('/search/autocomplete/{query}', "SearchAutocompleteController@getResults");
 
+        // User Collection
         Route::post('/collection', "CollectionController@getCollection");
+        Route::post('/media/collect', 'MediaCollectionController@postCollectItem');
+        Route::delete('/media/collection/{itemId}', 'MediaCollectionController@removeItemFromCollection');
     });
 
     /*

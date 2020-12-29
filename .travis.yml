@@ -3,10 +3,11 @@ matrix:
     - language: php
       php: 7.4
       before_script:
-        - cp .env.travis .env
+        - cp .env.ci .env
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
+        - php artisan migrate
       script: composer run test
     #- language: node_js
     #  node_js: "13"

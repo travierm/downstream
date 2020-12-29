@@ -3,7 +3,7 @@ namespace App\Services;
 
 use Cache;
 
-class FilterMedia {
+class Filter {
     public static function title($string)
     {
         $filters = Cache::get('filters.title', []);

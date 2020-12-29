@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Auth;
-use App\MediaMeta;
-use App\UserMedia;
+use App\Models\MediaMeta;
+use App\Models\UserMedia;
 use App\MediaRemoteReference;
+use App\MediaType\YoutubeVideo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -13,40 +14,49 @@ class Media extends Model
 {
   use SoftDeletes;
   
-  protected $fillable = ['id', 'origin', 'type', 'index', 'subtype', 'meta', 'user_id'];
+  protected $fillable = [
+    'id', 
+    'origin', 
+    'type', 
+    'index', 
+    'subtype', 
+    'title',
+    'thumbnail',
+    'meta', 
+    'user_id'
+  ];
 
-  protected $hidden = ['created_at'];
+  protected $hidden = [
+    'created_at'
+  ];
 
-  /**
-   * Adds collected prop and decodes meta json
-   * Takes a single Media item or an array of Media items
-   * returns either the single item or an array automagically
-   * @param  array||object $items items to be prepared
-   * @return array||object prepared items
-   */
-  public static function prepareItemMeta($items)
+  public static function findByType($type, $index)
   {
-    $returnArray = true;
-    if(!is_array($items)) {
-      $returnArray = false;
+    return self::where('type', $type)
+      ->where('index', $index)
+      ->first();
+  }
 
-      $items = [$items];
+  public static function createFromYoutubeVideo(YoutubeVideo $video, Array $meta = [])
+  {
+    $data = [
+      'origin' => @$meta['origin'] ?: 'youtube#search',
+      'type' => 'youtube',
+      'subtype' => 'video',
+      'index' => $video->videoId,
+      'title' => $video->title,
+      'thumbnail' => $video->thumbnail,
+      'user_id' => $meta['user_id'],
+      'meta' => json_encode([])
+    ];
+
+    $media = self::findByType('youtube', $video->videoId);
+    if(!$media) {
+      $media = new static($data);
+      $media->save();
     }
 
-
-    if(Auth::check()) {
-      self::addUserCollectedProp($items);
-    }
-
-    foreach($items as $item) {
-      $item->meta = json_decode($item->meta);
-    }
-
-    if(!$returnArray) {
-      return $items[0];
-    }
-
-    return $items;
+    return $media;
   }
 
   public static function addUserCollectedProp($rows)
@@ -57,36 +67,6 @@ class Media extends Model
     }
 
     return $rows;
-  }
-
-  public static function firstOrCreate($data)
-  {
-    $media = self::findByType($data['type'], $data['index'])->first();
-
-    if(!$media) {
-      $media = new static($data);
-      $media->save();
-    }
-
-    return $media;
-  }
-
-  public static function isDuplicate($type, $index)
-  {
-    return self::where('type', $type)
-      ->where('index', $index)
-      ->exists();
-  }
-
-  public static function byType($type)
-  {
-    return self::where('type', $type);
-  }
-
-  public static function findByType($type, $index)
-  {
-    return self::where('type', $type)
-      ->where('index', $index);
   }
 
   public function getReferences()
