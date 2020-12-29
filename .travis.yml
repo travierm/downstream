@@ -4,6 +4,7 @@ matrix:
       php: 7.4
       before_script:
         - cp .env.ci .env
+        - cp phpunit.xml.test phpunit.xml
         - touch database/database.sqlite
         - composer self-update
         - composer install --no-interaction
