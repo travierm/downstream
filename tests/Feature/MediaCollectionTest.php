@@ -21,6 +21,7 @@ class MediaCollectionTest extends TestCase
     {
         // Collect
         $response = $this->actingAs($this->user)->post('/api/media/collect', [
+            // Kid Cudi - Tequila Shots
             'videoId' => 'lZcRSy0sk5w'
         ]);
 
