@@ -7,7 +7,7 @@ matrix:
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
-        - php artisan migrate
+        - php artisan migrate --database=sqlite
       script: composer run test
     #- language: node_js
     #  node_js: "13"
