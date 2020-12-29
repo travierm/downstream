@@ -16,8 +16,8 @@ class AddThumbnailToMedia extends Migration
     public function up()
     {
         Schema::table('media', function (Blueprint $table) {
-            $table->string("title")->after('index');
-            $table->string("thumbnail")->after('title');
+            $table->string("title")->nullable()->after('index');
+            $table->string("thumbnail")->nullable()->after('title');
         });
 
         // update all media to use thumbnail from media_meta
