@@ -4,7 +4,7 @@ matrix:
       php: 7.4
       before_script:
         - cp .env.ci .env
-        - touch storage/database.sqlite
+        - touch database/database.sqlite
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
