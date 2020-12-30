@@ -5,12 +5,12 @@
 
             <v-spacer></v-spacer>
 
-            <CollectAction :collected="collected" />
+            <CollectAction :video-id="videoId" :collected="collected" />
         </v-card-actions>
         
         <v-img
             :id="this.cardId + '_media'"
-            :src="thumbnailURL"
+            :src="thumbnail"
             :height="dense ? '250px' : '435px'"
             @click="handleThumbnailClick"
         >
@@ -29,7 +29,7 @@
 <script>
 import $ from "jquery"
 
-// Sub Components
+// Children Components
 import CollectAction from './CollectAction';
 
 import YouTubeCardPlayer from "../../services/YouTubeCardPlayer"
@@ -43,8 +43,9 @@ export default {
     },
     props: {
         title: String,
+        mediaId: String,
         videoId: String,
-        thumbnailURL: String,
+        thumbnail: String,
         item: {
             type: Object,
             default: {
@@ -83,8 +84,6 @@ export default {
         })
 
         this.cardPlayer.registerEventCallback("paused", () => {
-            console.log("pause!")
-
             if (getPlayingCardId(this.cardId)) {
                 // Do nothing if this is the current playing card
                 return true

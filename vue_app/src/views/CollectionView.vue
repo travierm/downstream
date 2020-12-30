@@ -20,8 +20,9 @@
                 >
                     <YoutubeCard
                         :item="item"
+                        :title="item.title"
                         :videoId="item.index"
-                        :thumbnailURL="item.meta.thumbnail"
+                        :thumbnail="item.thumbnail"
                     ></YoutubeCard>
                 </v-lazy>
             </CardCol>

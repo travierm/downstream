@@ -6,7 +6,7 @@
                     :item="video"
                     :title="video.title"
                     :videoId="video.videoId"
-                    :thumbnailURL="video.thumbnail"
+                    :thumbnail="video.thumbnail"
                 ></YoutubeCard>
             </CardCol>
         </v-row>

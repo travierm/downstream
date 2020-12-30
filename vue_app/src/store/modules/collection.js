@@ -1,4 +1,4 @@
-import {fetchUserCollection} from "@/services/api/CollectionService"
+import CollectionService from "@/services/api/CollectionService"
 
 export const namespaced = true
 export const state = {
@@ -14,12 +14,18 @@ export const mutations = {
 export const getters = {}
 
 export const actions = {
-    async fetchUserCollection({commit, rootState, state}) {
-        if (!rootState.auth.token || state.userCollection) {
+    collectItem(commit, videoId) {
+        return CollectionService.collectItem(videoId)
+    },
+    removeItem(commit, itemId) {
+        return CollectionService.removeItem(itemId)
+    },
+    async fetchUserCollection({ commit, rootState, state }) {
+        if (!rootState.auth.token) {
             return
         }
 
-        let response = await fetchUserCollection()
+        let response = await CollectionService.fetchUserCollection()
 
         if (response.data) {
             commit("SET_USER_COLLECTION", response.data.items)

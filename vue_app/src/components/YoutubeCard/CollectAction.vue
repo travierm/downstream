@@ -16,6 +16,15 @@ import { mdiMusicNotePlus, mdiMinusCircle } from "@mdi/js"
 export default {
     name: "CollectAction",
     props: {
+        mediaId: {
+            type: Number,
+            default: 0,
+            required: false,
+        },
+        videoId: {
+            type: String,
+            required: true,
+        },
         collected: {
             type: Boolean,
             default: false,
@@ -31,10 +40,26 @@ export default {
     },
     methods: {
         collect() {
-            this.inCollection = true
+            this.$store
+                .dispatch("collection/collectItem", this.videoId)
+                .then(() => {
+                    this.$store.dispatch('collection/fetchUserCollection')
+                    this.inCollection = true
+                })
+                .catch(() => {
+                    this.inCollection = false
+                })
         },
         remove() {
-            this.inCollection = false
+            this.$store
+                .dispatch("collection/removeItem", this.mediaId)
+                .then(() => {
+                    this.$store.dispatch('collection/fetchUserCollection')
+                    this.inCollection = false
+                })
+                .catch(() => {
+                    this.inCollection = true
+                })
         },
     },
 }

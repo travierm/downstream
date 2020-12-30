@@ -1,5 +1,17 @@
 import http from "./Client"
 
-export async function fetchUserCollection() {
+async function fetchUserCollection() {
     return http.post("/collection")
 }
+
+async function collectItem(videoId) {
+    return http.post("/media/collect", {
+        videoId,
+    })
+}
+
+async function removeItem(itemId) {
+    return http.delete(`/media/collection/${itemId}`)
+}
+
+export default { collectItem, removeItem, fetchUserCollection }
