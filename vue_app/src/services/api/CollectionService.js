@@ -1,7 +1,7 @@
 import http from "./Client"
 
 async function fetchUserCollection() {
-    return http.post("/collection")
+    return http.get("/collection")
 }
 
 async function collectItem(videoId) {

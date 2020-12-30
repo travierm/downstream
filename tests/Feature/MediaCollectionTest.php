@@ -6,21 +6,33 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+global $user;
+
 class MediaCollectionTest extends TestCase
 {
-    private $collectedItemId;
-
     public function setUp(): void
     {
+        global $user;
+
         parent::setUp();
 
-        $this->user = User::factory()->make();
+        if(!$user) {
+            $user = User::factory()->make();
+        }
     }
 
-    public function testCanCollectAndRemoveItemFromCollection()
+    public function testCanFetchUserCollection()
     {
+        global $user;
+        $response = $this->actingAs($user)->get('/api/collection');
+        $response->assertStatus(200);
+    }
+
+    public function testCanCollectItem()
+    {
+        global $user;
         // Collect
-        $response = $this->actingAs($this->user)->post('/api/media/collect', [
+        $response = $this->actingAs($user)->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
             'videoId' => 'lZcRSy0sk5w'
         ]);
@@ -28,9 +40,48 @@ class MediaCollectionTest extends TestCase
         $mediaId = $response->json()['mediaId'];
         $this->assertNotEmpty($mediaId, 'Got mediaId back from route');
         $response->assertStatus(200);
-        
-        // Remove
-        $response = $this->actingAs($this->user)->delete('/api/media/collection/' . $mediaId);
+
+        return $mediaId;
+    }
+
+    /**
+     * @depends testCanCollectItem
+     */
+    public function testCanSeeCollectedItemInCollection($mediaId)
+    {
+        global $user;
+
+        $response = $this->actingAs($user)->get('/api/collection/');
         $response->assertStatus(200);
+
+        $collection = $response->json();
+        $this->assertTrue($collection['items'][0]['media_id'] == $mediaId, 'Collected mediaId exists in collection results');
+        
+        return $mediaId;
+    }
+
+    /**
+     * @depends testCanSeeCollectedItemInCollection
+     */
+    public function testCanRemoveItemFromCollection($mediaId)
+    {
+        global $user;
+
+        $response = $this->actingAs($user)->delete('/api/media/collection/' . $mediaId);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @depends testCanRemoveItemFromCollection
+     */
+    public function testUserCollectionIsEmpty($mediaId)
+    {
+        global $user;
+
+        $response = $this->actingAs($user)->get('/api/collection/');
+        $response->assertStatus(200);
+
+        $collection = $response->json();
+        $this->assertTrue(count($collection['items']) == 0);
     }
 }
