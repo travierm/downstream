@@ -17,13 +17,13 @@
             :src="thumbnail"
             :height="dense ? '250px' : '435px'"
             @click="handleThumbnailClick"
-            v-show="showThumbnail"
+            v-if="showThumbnail"
         >
             <div
                 style="width: 90%;"
                 class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate"
             >
-                {{ guid }}
+                {{ guid + " - " + showThumbnail.toString() }}
             </div>
         </v-img>
 
@@ -53,7 +53,7 @@ export default {
         thumbnail: String,
         guid: {
             type: String,
-            required: true
+            required: true,
         },
         item: {
             type: Object,
@@ -78,20 +78,21 @@ export default {
     mounted() {
         this.cardPlayer = new YouTubeCardPlayer(this.guid, this.videoId)
 
-        this.cardPlayer.registerEventCallback("play", () => {
+        // Register events so we can update our view on player state changes
+        this.cardPlayer.on("play", () => {
             this.handleVideoPlay()
         })
 
         // Reset video once it stops
-        this.cardPlayer.registerEventCallback("ended", () => {
+        this.cardPlayer.on("ended", () => {
             this.handleVideoStop()
         })
 
-        this.cardPlayer.registerEventCallback("stopped_by_manager", () => {
+        this.cardPlayer.on("stopped_by_manager", () => {
             this.handleVideoStop()
         })
 
-        this.cardPlayer.registerEventCallback("paused", () => {
+        this.cardPlayer.on("paused", () => {
             if (getPlayingCardId(this.guid)) {
                 // Do nothing if this is the current playing card
                 return true
@@ -101,7 +102,7 @@ export default {
         })
 
         // When an error happens show the thumbnauk
-        this.cardPlayer.registerEventCallback("unplayable", () => {
+        this.cardPlayer.on("unplayable", () => {
             this.handleVideoStop()
         })
     },
@@ -111,11 +112,11 @@ export default {
 
             $("#" + this.guid).show()
 
-            console.log('play event triggered ' + this.guid)
-            console.log(this.showThumbnail)
+            console.log("DISPLAY play event triggered " + this.guid)
+            this.$set(this, 'showThumbnail', false)
         },
         handleVideoStop() {
-            console.log('stop event triggered ' + this.guid)
+            console.log("DISPLAY stop event triggered " + this.guid)
 
             this.showThumbnail = true
 

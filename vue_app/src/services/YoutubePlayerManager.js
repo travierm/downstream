@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const _DEBUG = true;
+const _DEBUG = false;
 
 let guidIndex = []
 let registeredCards = [];
@@ -34,7 +34,10 @@ export function findIndexByGuid(guid) {
 
 export function setGuidIndex(index) {
     guidIndex = index
+    registeredCards = []
     currentPlayingGuid = false
+
+    dd(index)
 }
 
 export function getPlayingCardId() {
@@ -69,6 +72,9 @@ function stopPlayingCard(guid) {
 }
 
 export function triggerPlayEvent(guid) {
+    dd("trigger playevent " + guid)
+    dd(registeredCards)
+
     const previousPlayingGuid = _.clone(currentPlayingGuid);
     
     if (previousPlayingGuid) {
