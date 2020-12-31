@@ -23,7 +23,7 @@
                 style="width: 90%;"
                 class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate"
             >
-                {{ guid + " - " + showThumbnail.toString() }}
+                {{ title }}
             </div>
         </v-img>
 
