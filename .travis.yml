@@ -11,5 +11,8 @@ matrix:
         - php artisan key:generate
         - php artisan migrate
       script: composer run test
-    #- language: node_js
-    #  node_js: "13"
+    - language: node_js
+      node_js: "13"
+      env:
+        - TEST_DIR=vue_app
+      script: cd $TEST_DIR && yarn && yarn test

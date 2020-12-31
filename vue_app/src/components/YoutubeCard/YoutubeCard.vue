@@ -110,16 +110,19 @@ export default {
             this.showThumbnail = false
 
             $("#" + this.guid).show()
+
+            console.log('play event triggered ' + this.guid)
+            console.log(this.showThumbnail)
         },
         handleVideoStop() {
+            console.log('stop event triggered ' + this.guid)
+
             this.showThumbnail = true
 
             $("#" + this.guid).hide()
         },
         handleThumbnailClick() {
-            this.cardPlayer.play(true)
-
-            this.showThumbnail = false
+            this.cardPlayer.play()
         },
     },
 }

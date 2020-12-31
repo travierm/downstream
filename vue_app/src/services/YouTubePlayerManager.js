@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const _DEBUG = false;
+const _DEBUG = true;
 
 let guidIndex = []
 let registeredCards = [];
@@ -13,9 +13,17 @@ function dd(data) {
 }
 
 function getNextCard(playingGuid) {
+    dd("currentPlayingGuid: " + playingGuid)
+
+
     const currentIndex = findIndexByGuid(playingGuid)
+    dd("currentIndex: " + currentIndex)
+
     const nextIndex = currentIndex >= guidIndex.length - 1 ? 0 : currentIndex + 1
+    dd("nextIndex: " + nextIndex)
+
     const nextGuid = guidIndex[nextIndex]
+    dd("nextGuid: " + nextGuid)
 
     return findCardByGuid(nextGuid)
 }
@@ -51,6 +59,7 @@ export function setGuidIndex(index) {
 }
 
 export function playNextCard() {
+    dd('PLAY NEXT CARD event called')
     if(guidIndex.length <= 0) {
         console.error("Can not play next card since guidIndex is empty")
         return
@@ -59,13 +68,11 @@ export function playNextCard() {
     let nextCard = getNextCard(currentPlayingGuid);
 
     dd("PLAYING " + nextCard.guid)
-
-    nextCard.play(true)
+    nextCard.play()
 }
 
 export function playEvent(guid) {
     const previousPlayingGuid = _.clone(currentPlayingGuid);
-
     
     if (previousPlayingGuid) {
         // Stop playing previous card because a new one would like to play

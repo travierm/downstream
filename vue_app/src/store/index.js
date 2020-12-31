@@ -1,11 +1,12 @@
 import Vue from "vue"
 import Vuex from "vuex"
 
+Vue.use(Vuex)
+
 import * as auth from "./modules/auth"
+import * as player from "./modules/player"
 import * as search from "./modules/search"
 import * as collection from "./modules/collection"
-
-Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     },
     modules: {
         auth,
+        player,
         search,
         collection,
     },

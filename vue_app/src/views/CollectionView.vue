@@ -59,11 +59,10 @@ export default {
             })
         }
     },
-    data: () => {
-        return {}
-    },
     mounted() {
-        // this.$store.dispatch('collection/fetchUserCollection')
+        if(this.collectionGuidIndex.length >= 1) {
+            this.$store.dispatch('player/setGuidIndex', this.collectionGuidIndex)
+        }
     },
     watch: {
         userCollection(value) {

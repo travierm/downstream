@@ -65,6 +65,12 @@ export default class YouTubeCardPlayer {
                    }
 
                    stop() {
+                        if(!this._player) {
+                            console.error("Trying to stop video that was never loaded " + this.guid)
+                            this._player.emit("stopped_by_manager")
+                            return;
+                        }
+
                        this._player.pause()
                        this._player.seek(0)
 

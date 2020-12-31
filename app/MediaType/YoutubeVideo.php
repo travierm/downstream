@@ -2,6 +2,7 @@
 
 namespace App\MediaType;
 
+use Illuminate\Support\Str;
 use App\MediaType\Transformer\YoutubeSearchResult;
 
 class YoutubeVideo {
@@ -20,6 +21,7 @@ class YoutubeVideo {
         $youtubeVideo->title = $data['title'];
         $youtubeVideo->videoId = $data['videoId'];
         $youtubeVideo->thumbnail = $data['thumbnail'];
+        $youtubeVideo->guid = "guid_" . Str::random(35);
 
         return $youtubeVideo;
     }

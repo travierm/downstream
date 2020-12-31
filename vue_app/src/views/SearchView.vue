@@ -4,6 +4,7 @@
             <CardCol v-for="(video, index) in results" :key="index">
                 <YoutubeCard
                     :item="video"
+                    :guid="video.guid"
                     :title="video.title"
                     :videoId="video.videoId"
                     :thumbnail="video.thumbnail"
@@ -50,6 +51,12 @@ export default {
 
                     if (response.data.results) {
                         this.results = response.data.results
+                        
+                        const guidIndex =  this.results.map((item) => {
+                            return item.guid
+                        })
+
+                        this.$store.dispatch('player/setGuidIndex', guidIndex)
                     }
                 })
                 .catch(() => {
