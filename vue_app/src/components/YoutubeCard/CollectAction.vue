@@ -1,20 +1,32 @@
 <template>
-    <v-btn v-if="!inCollection" outlined color="success" @click="collect">
+    <v-btn v-if="!inCollection" outlined color="success" @click="collectItem">
         Collect
         <v-icon class="ml-1" small>{{ mdiMusicNotePlus }}</v-icon>
     </v-btn>
 
-    <v-btn v-else text @click="remove">
+    <v-btn v-else @click="showRemoveConfirmDialog">
         Remove
         <v-icon class="ml-1" color="red" small>{{ mdiMinusCircle }}</v-icon>
+        <ConfirmDialog
+            :show="showConfirmDialog"
+            :message="removeConfirmMessage"
+            v-on:confirmed="removeItem"
+        />
     </v-btn>
 </template>
 
 <script>
+import ConfirmDialog from "../Shared/ConfirmDialog"
 import { mdiMusicNotePlus, mdiMinusCircle } from "@mdi/js"
+
+const removeConfirmMessage =
+    "Are you sure you want to remove this item from your collection?"
 
 export default {
     name: "CollectAction",
+    components: {
+        ConfirmDialog,
+    },
     props: {
         mediaId: {
             type: Number,
@@ -35,31 +47,37 @@ export default {
         return {
             mdiMinusCircle,
             mdiMusicNotePlus,
+            removeConfirmMessage,
             inCollection: this.collected,
+            showConfirmDialog: false,
         }
     },
     methods: {
-        collect() {
+        collectItem() {
             this.$store
                 .dispatch("collection/collectItem", this.videoId)
                 .then(() => {
-                    this.$store.dispatch('collection/fetchUserCollection')
+                    this.$store.dispatch("collection/fetchUserCollection")
                     this.inCollection = true
                 })
                 .catch(() => {
                     this.inCollection = false
                 })
         },
-        remove() {
+        removeItem() {
             this.$store
                 .dispatch("collection/removeItem", this.mediaId)
                 .then(() => {
-                    this.$store.dispatch('collection/fetchUserCollection')
+                    this.$store.dispatch("collection/fetchUserCollection")
                     this.inCollection = false
                 })
                 .catch(() => {
                     this.inCollection = true
                 })
+        },
+        showRemoveConfirmDialog() {
+            console.log('hre');
+            this.showConfirmDialog = true
         },
     },
 }

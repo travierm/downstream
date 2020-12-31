@@ -21,8 +21,10 @@
                     <YoutubeCard
                         :item="item"
                         :title="item.title"
+                        :mediaId="item.media_id"
                         :videoId="item.index"
                         :thumbnail="item.thumbnail"
+                        :collected="item.collected"
                     ></YoutubeCard>
                 </v-lazy>
             </CardCol>
@@ -39,7 +41,7 @@ export default {
     name: "CollectionView",
     components: {
         CardCol,
-        YoutubeCard
+        YoutubeCard,
     },
     computed: {
         ...mapState({

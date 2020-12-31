@@ -5,9 +5,13 @@
 
             <v-spacer></v-spacer>
 
-            <CollectAction :video-id="videoId" :collected="collected" />
+            <CollectAction
+                :videoId="videoId"
+                :mediaId="mediaId"
+                :collected="collected"
+            />
         </v-card-actions>
-        
+
         <v-img
             :id="this.cardId + '_media'"
             :src="thumbnail"
@@ -30,7 +34,7 @@
 import $ from "jquery"
 
 // Children Components
-import CollectAction from './CollectAction';
+import CollectAction from "./CollectAction"
 
 import YouTubeCardPlayer from "../../services/YouTubeCardPlayer"
 import { generateElementId } from "../../services/GlobalFunctions"
@@ -39,11 +43,11 @@ import { getPlayingCardId } from "../../services/YouTubePlayerManager"
 export default {
     name: "YoutubeCard",
     components: {
-        CollectAction
+        CollectAction,
     },
     props: {
         title: String,
-        mediaId: String,
+        mediaId: Number,
         videoId: String,
         thumbnail: String,
         item: {
