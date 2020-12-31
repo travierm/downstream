@@ -17,6 +17,7 @@
             :src="thumbnail"
             :height="dense ? '250px' : '435px'"
             @click="handleThumbnailClick"
+            v-show="showThumbnail"
         >
             <div
                 style="width: 90%;"

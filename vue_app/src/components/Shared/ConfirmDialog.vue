@@ -1,17 +1,17 @@
 <template>
-    <v-dialog v-model="showDialog" persistent max-width="290">
+    <v-dialog v-model="showDialog" persistent max-width="400">
         <v-card>
             <v-card-title class="headline">
                 Confirm
             </v-card-title>
-            <v-card-text>{{ message }}</v-card-text>
+            <v-card-text><h3>{{ message }}</h3></v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="handleClose">
-                    Close
+                <v-btn @click="handleClose">
+                    No
                 </v-btn>
-                <v-btn color="green darken-1" text @click="handleConfirm">
-                    Confirm
+                <v-btn color="green" @click="handleConfirm">
+                    Yes
                 </v-btn>
             </v-card-actions>
         </v-card>
