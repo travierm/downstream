@@ -20,6 +20,7 @@
                 >
                     <YoutubeCard
                         :item="item"
+                        :guid="item.guid"
                         :title="item.title"
                         :mediaId="item.media_id"
                         :videoId="item.index"
@@ -36,6 +37,7 @@
 import { mapState } from "vuex"
 import CardCol from "@/components/CardCol"
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
+import { setGuidIndex } from '../services/YouTubePlayerManager'
 
 export default {
     name: "CollectionView",
@@ -47,12 +49,28 @@ export default {
         ...mapState({
             userCollection: (state) => state.collection.userCollection,
         }),
+        collectionGuidIndex() {
+            if(!this.userCollection) {
+                return [];
+            }
+
+            return this.userCollection.map((item) => {
+                return item.guid
+            })
+        }
     },
     data: () => {
         return {}
     },
     mounted() {
         // this.$store.dispatch('collection/fetchUserCollection')
+    },
+    watch: {
+        userCollection(value) {
+            if(this.collectionGuidIndex.length >= 1) {
+                setGuidIndex(this.collectionGuidIndex)
+            }
+        }
     },
     methods: {},
 }

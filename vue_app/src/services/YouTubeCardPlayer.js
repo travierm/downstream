@@ -3,91 +3,89 @@ import YTPlayer from 'yt-player';
 import { registerCardPlayer, playNextCard, playEvent } from './YouTubePlayerManager';
 
 export default class YouTubeCardPlayer {
-    constructor(videoId, cardId) {
+                   constructor(guid, videoId) {
+                       this.guid = guid
+                       this.videoId = videoId
+                       this._player = false
 
-        this.videoId = videoId;
-        this.cardId = cardId;
+                       this.onPlayCallbacks = []
+                       this.eventCallbacks = []
 
-        this._player = false;
+                       registerCardPlayer(this)
+                   }
 
-        this.onPlayCallbacks = [];
-        this.eventCallbacks = [];
+                   applyEventCallbacks() {
+                       this.eventCallbacks.forEach((event) => {
+                           this._player.on(event.eventType, event.callback)
+                       })
+                   }
 
-        registerCardPlayer(this);
-    }
+                   registerEventCallback(eventType, callback) {
+                       if (eventType == "play") {
+                           this.onPlayCallbacks.push(callback)
+                           return
+                       }
 
-    applyEventCallbacks() {
-        this.eventCallbacks.forEach((event) => {
-            this._player.on(event.eventType, event.callback);
-        })
-    }
+                       if (this._player) {
+                           this._player.on(eventType, callback)
+                       } else {
+                           this.eventCallbacks.push({
+                               eventType,
+                               callback,
+                           })
+                       }
+                   }
 
-    registerEventCallback(eventType, callback) {
-        if(eventType == 'play') {
-            this.onPlayCallbacks.push(callback);
-            return
-        }
+                   handlePlayerEvents() {
+                       this._player.on("ended", () => {
+                           this._player.seek(0)
+                           this._player.pause()
 
-        if(this._player) {
-            this._player.on(eventType, callback);
-        }else{
-            this.eventCallbacks.push({
-                eventType,
-                callback
-            });
-        }
-    }
+                           console.log("ENDED EVENT!")
 
-    handlePlayerEvents() {
-        this._player.on('ended', () => {
-            this._player.seek(0);
-            this._player.pause();
+                           playNextCard()
+                       })
+                   }
 
-            console.log("ENDED EVENT!");
+                   loadVideo() {
+                       const guid = "#" + this.guid
+                       const options = {
+                           volume: 5,
+                           fullscreen: true,
+                           playsinline: true,
+                           height: $(`${guid}_media`).height(),
+                           width: $(`${guid}_media`).width(),
+                       }
 
-            playNextCard()
-        })
-    }
+                       this._player = new YTPlayer(guid, options)
+                       this._player.load(this.videoId)
 
-    loadVideo() {
-        const cardId = "#" + this.cardId;
-        const options = {
-            volume: 5,
-            fullscreen: true,
-            playsinline: true,
-            height: $(`${cardId}_media`).height(),
-            width: $(`${cardId}_media`).width()
-        };
+                       this.applyEventCallbacks()
+                       this.handlePlayerEvents()
+                   }
 
-        this._player = new YTPlayer(cardId, options);
-        this._player.load(this.videoId);
+                   stop() {
+                       this._player.pause()
+                       this._player.seek(0)
 
-        this.applyEventCallbacks();
-        this.handlePlayerEvents()
-    }
+                       this._player.emit("stopped_by_manager")
+                   }
 
-    stop() {
-        this._player.pause();
-        this._player.seek(0);
+                   play(triggerEvent = false) {
+                       if (!this._player) {
+                           this.loadVideo()
+                       }
 
-        this._player.emit('stopped_by_manager');
-    }
+                       if (triggerEvent) {
+                           // Let the player know we started playing
+                           playEvent(this.guid)
+                       }
 
-    play(triggerEvent = false) {
-        if (!this._player) {
-            this.loadVideo();
-        }
+                       this.onPlayCallbacks.forEach((callback) => {
+                           callback()
+                       })
 
-        if(triggerEvent) {
-            // Let the player know we started playing
-            playEvent(this.cardId)
-        }
-        
-        this.onPlayCallbacks.forEach((callback) => {
-            callback();
-        });
-
-        this._player.setVolume(100);
-        this._player.play();
-    }
-}
+                       this._player.setVolume(100)
+                       this._player.play()
+                   }
+               }

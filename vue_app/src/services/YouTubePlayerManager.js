@@ -2,8 +2,9 @@ import _ from 'lodash';
 
 const _DEBUG = false;
 
-let playingCardId = false;
+let guidIndex = []
 let registeredCards = [];
+let currentPlayingGuid = false
 
 function dd(data) {
     if(_DEBUG) {
@@ -11,64 +12,69 @@ function dd(data) {
     }
 }
 
-function getNextCard(currentCardId) {
-    let currentIndex = findCardIndexById(currentCardId)
-    let nextIndex = (currentIndex >= (registeredCards.length - 1) ? 0 : currentIndex + 1);
+function getNextCard(playingGuid) {
+    const currentIndex = findIndexByGuid(playingGuid)
+    const nextIndex = currentIndex >= guidIndex.length - 1 ? 0 : currentIndex + 1
+    const nextGuid = guidIndex[nextIndex]
 
-    return registeredCards[nextIndex]
+    return findCardByGuid(nextGuid)
 }
 
-function findCardIndexById(cardId) {
-    let index = _.findIndex(registeredCards, (card) => {
-        return card.cardId == cardId
-    })
-
-    return index
+function findCardByGuid(guid) {
+    return _.find(registeredCards, { guid })
 }
 
-function findCardById(cardId) {
-    const index = findCardIndexById(cardId);
-
-   return registeredCards[index]
+function findIndexByGuid(guid) {
+    return guidIndex.indexOf(guid)
 }
 
-function stopPlayingCard(cardId) {
-    let playingCard = findCardById(cardId);
+function stopPlayingCard(guid) {
+    let playingCard = findCardByGuid(guid)
 
-    if(playingCard) {
-        playingCard.stop();
+    if (playingCard) {
+        playingCard.stop()
     }
 }
 
 export function getPlayingCardId() {
-    return playingCardId;
+    return currentPlayingGuid;
 }
 
 export function registerCardPlayer(player) {
     registeredCards.push(player);
 
-    dd("Registered player from cardId " + player.cardId + " for videoId " + player.videoId)
+    //dd("Registered player from cardId " + player.cardId + " for videoId " + player.videoId)
 }
 
+export function setGuidIndex(index) {
+    guidIndex = index;
+}
 
 export function playNextCard() {
-    let nextCard = getNextCard(playingCardId);
+    if(guidIndex.length <= 0) {
+        console.error("Can not play next card since guidIndex is empty")
+        return
+    }
+
+    let nextCard = getNextCard(currentPlayingGuid);
+
+    dd("PLAYING " + nextCard.guid)
 
     nextCard.play(true)
 }
 
-export function playEvent(cardId) {
-    const previousPlayingCardId = _.clone(playingCardId);
+export function playEvent(guid) {
+    const previousPlayingGuid = _.clone(currentPlayingGuid);
 
-    console.log("PLAY EVENT: Previous Playing Card:" + previousPlayingCardId);
-    if (previousPlayingCardId) {
-        
+    
+    if (previousPlayingGuid) {
         // Stop playing previous card because a new one would like to play
-        stopPlayingCard(previousPlayingCardId)
+        dd("STOP PLAYING EVENT: Previous Playing Card:" + previousPlayingGuid)
+        stopPlayingCard(previousPlayingGuid)
     }
 
     // Update current playing card id
-    playingCardId = cardId   
+    currentPlayingGuid = guid   
 }
 
 export function pauseEvent(cardId) {
