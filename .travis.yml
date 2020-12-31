@@ -15,4 +15,8 @@ matrix:
       node_js: "13"
       env:
         - TEST_DIR=vue_app
-      script: cd $TEST_DIR && yarn && yarn test:unit
+      script: 
+        - cd $TEST_DIR && yarn
+        - yarn test:unit
+        - yarn test:e2e-ci
+    

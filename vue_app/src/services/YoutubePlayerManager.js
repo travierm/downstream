@@ -12,19 +12,8 @@ function dd(data) {
     }
 }
 
-function getNextCard(playingGuid) {
-    dd("currentPlayingGuid: " + playingGuid)
-
-    const currentIndex = findIndexByGuid(playingGuid)
-    dd("currentIndex: " + currentIndex)
-
-    const nextIndex = currentIndex >= guidIndex.length - 1 ? 0 : currentIndex + 1
-    dd("nextIndex: " + nextIndex)
-
-    const nextGuid = guidIndex[nextIndex]
-    dd("nextGuid: " + nextGuid)
-
-    return findCardByGuid(nextGuid)
+function getNextCard(currentGuid) {
+    return findCardByGuid(getNextGuid(currentGuid))
 }
 
 export function getNextGuid(currentGuid) {
@@ -45,6 +34,7 @@ export function findIndexByGuid(guid) {
 
 export function setGuidIndex(index) {
     guidIndex = index
+    currentPlayingGuid = false
 }
 
 export function getPlayingCardId() {

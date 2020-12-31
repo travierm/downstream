@@ -6,8 +6,10 @@
     "serve": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build --mode production",
     "test:unit": "vue-cli-service test:unit --coverage",
-    "test:unit-watch": "vue-cli-service test:unit --watch",
-    "lint": "vue-cli-service lint"
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e-ci": "vue-cli-service test:e2e --headless",
+    "lint": "vue-cli-service lint",
+    "test:unit-watch": "vue-cli-service test:unit --watch"
   },
   "dependencies": {
     "@mdi/js": "^5.8.55",
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@mdi/font": "^5.8.55",
     "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-router": "~4.2.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",

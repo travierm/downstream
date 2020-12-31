@@ -1,17 +1,17 @@
 import {
-    setGuidIndex,
-    getNextCard,
     getNextGuid,
+    setGuidIndex,
     findIndexByGuid,
 } from "../../src/services/YoutubePlayerManager"
 
 const initialGuidIndex = ["allen", "bob", "chris", "derek"]
+const nextGuidIndex = ["apple", "banana", "cherry", "durian"]
 
 beforeAll(() => {
     setGuidIndex(initialGuidIndex)
 })
 
-describe("Basic", () => {
+describe("YoutubePlayerManager", () => {
     it("it can find index by guid", () => {
         expect(findIndexByGuid("allen")).toBe(0)
         expect(findIndexByGuid("bob")).toBe(1)
@@ -24,5 +24,14 @@ describe("Basic", () => {
         expect(getNextGuid("bob")).toBe("chris")
         expect(getNextGuid("chris")).toBe("derek")
         expect(getNextGuid("derek")).toBe("allen")
+    })
+
+    it("it can update guid index", () => {
+        setGuidIndex(nextGuidIndex)
+
+        expect(getNextGuid("apple")).toBe("banana")
+        expect(getNextGuid("banana")).toBe("cherry")
+        expect(getNextGuid("cherry")).toBe("durian")
+        expect(getNextGuid("durian")).toBe("apple")
     })
 })
