@@ -8,6 +8,7 @@ use App\Models\Media;
 use App\Models\MediaMeta;
 use App\Models\UserMedia;
 use App\Models\GlobalQueue;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -46,6 +47,7 @@ class CollectionController extends Controller
         foreach($items as $media) {
             // items in collection will always be collected
             $media->collected = true;
+            $media->guid = "guid_" . Str::random(35);
 
             $collection[] = $media;
         }
