@@ -1,4 +1,4 @@
-import { setGuidIndex } from "../../services/YouTubePlayerManager"
+import { setGuidIndex } from "../../services/YoutubePlayerManager"
 
 export const namespaced = true
 export const state = {

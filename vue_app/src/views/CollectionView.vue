@@ -37,7 +37,7 @@
 import { mapState } from "vuex"
 import CardCol from "@/components/CardCol"
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
-import { setGuidIndex } from '../services/YouTubePlayerManager'
+import { setGuidIndex } from '../services/YoutubePlayerManager'
 
 export default {
     name: "CollectionView",

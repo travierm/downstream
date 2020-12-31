@@ -15,7 +15,6 @@ function dd(data) {
 function getNextCard(playingGuid) {
     dd("currentPlayingGuid: " + playingGuid)
 
-
     const currentIndex = findIndexByGuid(playingGuid)
     dd("currentIndex: " + currentIndex)
 
@@ -28,20 +27,24 @@ function getNextCard(playingGuid) {
     return findCardByGuid(nextGuid)
 }
 
-function findCardByGuid(guid) {
+export function getNextGuid(currentGuid) {
+    const guidIndexLength = guidIndex.length - 1;
+    const currentIndex = findIndexByGuid(currentGuid)
+    const nextIndex = currentIndex >= guidIndexLength ? 0 : currentIndex + 1
+
+    return guidIndex[nextIndex]
+}
+
+export function findCardByGuid(guid) {
     return _.find(registeredCards, { guid })
 }
 
-function findIndexByGuid(guid) {
+export function findIndexByGuid(guid) {
     return guidIndex.indexOf(guid)
 }
 
-function stopPlayingCard(guid) {
-    let playingCard = findCardByGuid(guid)
-
-    if (playingCard) {
-        playingCard.stop()
-    }
+export function setGuidIndex(index) {
+    guidIndex = index
 }
 
 export function getPlayingCardId() {
@@ -52,10 +55,6 @@ export function registerCardPlayer(player) {
     registeredCards.push(player);
 
     //dd("Registered player from cardId " + player.cardId + " for videoId " + player.videoId)
-}
-
-export function setGuidIndex(index) {
-    guidIndex = index;
 }
 
 export function playNextCard() {
@@ -71,7 +70,15 @@ export function playNextCard() {
     nextCard.play()
 }
 
-export function playEvent(guid) {
+function stopPlayingCard(guid) {
+    let playingCard = findCardByGuid(guid)
+
+    if (playingCard) {
+        playingCard.stop()
+    }
+}
+
+export function triggerPlayEvent(guid) {
     const previousPlayingGuid = _.clone(currentPlayingGuid);
     
     if (previousPlayingGuid) {
@@ -82,12 +89,4 @@ export function playEvent(guid) {
 
     // Update current playing card id
     currentPlayingGuid = guid   
-}
-
-export function pauseEvent(cardId) {
-
-}
-
-export function stopEvent(cardId) {
-
 }

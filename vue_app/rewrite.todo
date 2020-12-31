@@ -54,7 +54,7 @@ YouTubeCardPlayer:
         ☐ Can Load, Play and Stop a video
         ☐ Registers with Manager
 
-YouTubePlayerManager:
+YoutubePlayerManager:
     Manages all Players on the screen
 
     Logic:

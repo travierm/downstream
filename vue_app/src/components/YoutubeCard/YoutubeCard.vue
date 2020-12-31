@@ -38,7 +38,7 @@ import $ from "jquery"
 import CollectAction from "./CollectAction"
 
 import YouTubeCardPlayer from "../../services/YouTubeCardPlayer"
-import { getPlayingCardId } from "../../services/YouTubePlayerManager"
+import { getPlayingCardId } from "../../services/YoutubePlayerManager"
 
 export default {
     name: "YoutubeCard",
