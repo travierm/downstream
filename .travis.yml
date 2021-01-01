@@ -3,8 +3,6 @@ matrix:
     - language: php
       name: "API Unit Testing"
       php: 7.4
-      services:
-        - mysql
       cache:
         directories:
             - vendor
@@ -23,8 +21,6 @@ matrix:
       env:
         - TEST_DIR=vue_app
       php: 7.4
-      services:
-        - mysql
       cache:
         yarn: true
         directories:
@@ -39,7 +35,7 @@ matrix:
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
-        - php artisan migrate
+        - php artisan migrate && php artisan db:seed
         - php artisan serve & APP_PID=$!
         - nvm install stable
         - cd $TEST_DIR && yarn

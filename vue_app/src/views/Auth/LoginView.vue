@@ -19,8 +19,8 @@
             <v-col>
               <v-form ref="loginForm" v-model="valid">
                 <!-- Login Form Inputs -->
-                <v-text-field solo v-model="email" label="Email" :rules="[v => !!v || 'Email is required']" required></v-text-field>
-                <v-text-field solo v-model="password" type="password" label="Password" :rules="[v => !!v || 'Password is required']" required></v-text-field>
+                <v-text-field name="email" solo v-model="email" label="Email" :rules="[v => !!v || 'Email is required']" required></v-text-field>
+                <v-text-field name="password" solo v-model="password" type="password" label="Password" :rules="[v => !!v || 'Password is required']" required></v-text-field>
                 <v-checkbox v-model="rememberMe" label="Remember Me"></v-checkbox>
 
                 <!-- Login Form Actions -->
