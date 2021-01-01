@@ -17,7 +17,8 @@ class DeployController extends Controller
  
         if (hash_equals($githubHash, $localHash)) {
             $root_path = base_path();
-            $process = new Process(['cd', $root_path]);
+	    $process = new Process(['./deploy.sh']);
+	    $process->setWorkingDirectory($root_path);
             $process->run(function ($type, $buffer) {
                 echo $buffer;
             });
