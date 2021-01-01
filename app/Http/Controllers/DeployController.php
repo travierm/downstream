@@ -28,8 +28,8 @@ class DeployController extends Controller
             $root_path = base_path();
             $process = new Process(['./deploy.sh']);
             $process->setWorkingDirectory($root_path);
-            $process->start(function ($type, $buffer) {
-                // echo $buffer;
+            $process->run(function ($type, $buffer) {
+                echo $buffer;
             });
 
             echo "Deployed script started";
