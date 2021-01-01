@@ -2,6 +2,7 @@
     <v-autocomplete
         id="searchInput"
         class="main-search"
+        placeholder="Search for music..."
         solo
         dense
         flat

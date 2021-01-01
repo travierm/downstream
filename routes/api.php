@@ -14,43 +14,6 @@ use App\Http\Controllers\API\Auth\LoginController;
 |
 */
 
-
-
-
-// OLD ROUTES
-
-/*Route::post("/youtube/collect", "YouTubeAPIController@collect");
-Route::post("/youtube/toss", "YouTubeAPIController@toss");
-
-Route::post("/test", "YouTubeAPIController@test");
-
-Route::get('/frontpage', 'FrontPageAPIController@index');
-
-Route::get('/media/index', 'MediaAPIController@index');
-
-Route::get('/media/collected', 'MediaAPIController@collected');
-Route::get('/media/collection/{random?}', 'MediaAPIController@collection');
-Route::get('/media/profile/{hash}', 'MediaAPIController@profile');
-Route::get('/stat/library/size', 'StatAPIController@getLibrarySize');
-Route::get('/stat/user/count', 'StatAPIController@getUserCount');
-Route::get('/stat/queue/count', 'StatAPIController@getGlobalQueueCount');
-
-Route::post('/media/discover', 'MediaAPIController@discover');
-Route::post('/media/discoverables', 'MediaAPIController@getUserDiscoverables');
-
-
-//Auto Resolved Media Actions
-Route::post('/theater/{mediaId}', 'TheaterController@queueFromMediaId');
-Route::get('/media/collect', 'MediaAPIController@resolve');
-Route::get('/media/remove', 'MediaAPIController@resolve');
-Route::get('/media/toss', 'MediaAPIController@resolve');
-Route::post('/media/add', 'MediaAPIController@resolve');
-Route::post('/media/search', 'MediaAPIController@resolve');
-
-//Git Webhook Deployment
-Route::post('/deploy', 'DeployController@deploy');
-*/
-
 // Controllers in the API Folder only
 Route::namespace('API')->group(function () {
     Route::get('/ping', function() {
@@ -75,44 +38,24 @@ Route::namespace('API')->group(function () {
     });
 
     /*
-    //Analytics
+    // Analytics
     Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
 
-    //Global
-    Route::post('/global/push', 'GlobalController@postQueue');
-
-    // Streaming Routes
-    Route::post('/stream/search', 'StreamController@postSearchResults');
-
-    //Collection Routes
-
-    //authed user collection
-    
-    Route::get('/collection/remove/{mediaId}', "CollectionController@removeItem");
-    Route::get('/user/collection/{random?}', "CollectionController@getUserCollection");
-
-    //Following API
+    // Following API
     Route::get('/follow/{follow_id}', "FollowerController@follow");
     Route::get('/unfollow/{follow_id}', "FollowerController@unfollow");
     Route::get('/followers', "FollowerController@getFollowers");
 
-    //playlist
-    Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');
-    //media
-    Route::get('/media/{id}', 'MediaController@getMediaById');
-    Route::post('/media/update', 'MediaController@postUpdate');
-    //user
-    Route::get('/user/info', 'UserController@getUserInfo');
+    // Playlist
+    Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');;
 
-    //Radio
-    Route::get('/radio/seed', 'RadioController@getSeedResults');
-
-    //Spotify
+    // Spotify
     Route::get('/spotify/url', 'SpotifyController@getAuthorizeUrl');
     Route::get('/spotify/disable', 'SpotifyController@disableAccess');
 
-    //Demo
+    // Demo
     Route::get('/demo/search', 'DemoController@searchQuery');
+    
     */
 });
 
