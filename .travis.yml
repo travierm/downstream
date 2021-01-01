@@ -19,7 +19,7 @@ matrix:
         - php artisan migrate
       script: composer run test
     - language: php
-      name: "Frontend E2E & Unit Testing"
+      name: "Vue App E2E & Unit Testing"
       env:
         - TEST_DIR=vue_app
       php: 7.4
@@ -31,6 +31,7 @@ matrix:
             - vue_app/node_modules
             - vendor
             - $HOME/.composer/cache
+            - $HOME/.cache/Cypress
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
@@ -41,9 +42,9 @@ matrix:
         - php artisan migrate
         - php artisan serve & APP_PID=$!
         - nvm install stable
+        - curl -s localhost:8000/api/ping
         - cd $TEST_DIR && yarn
       script:
-        - curl -s localhost:8000/api/ping
         - yarn test:unit
         - yarn test:e2e-ci
       after_script:
