@@ -14,7 +14,7 @@ class DeployController extends Controller
         dd($request);
         exit;
 
-        dd($githubPayload);
+        dd(json_decode($githubPayload));
  
         $localToken = config('app.deploy_secret');
         $localHash = 'sha1=' . hash_hmac('sha1', $githubPayload, $localToken, false);
