@@ -26,12 +26,12 @@ matrix:
       services:
         - mysql
       cache:
-        yarn: true
+        yarn: false
         directories:
-            - vue_app/node_modules
+            #- vue_app/node_modules
             - vendor
             - $HOME/.composer/cache
-            - $HOME/.cache/Cypress
+            #- $HOME/.cache/Cypress
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
