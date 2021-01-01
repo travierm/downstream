@@ -22,7 +22,7 @@ describe("Basic App Features", () => {
 
         // Make sure item exists in user collection
         cy.visit("/collection")
-        cy.contains("div", 'Drake')
+        cy.contains('Drake')
     })
 
     it("Can remove item from collection", () => {
