@@ -32,6 +32,9 @@ class CypressTestSeeder extends Seeder
         if(!$mediaId) {
             $mediaId = DB::table('media')->insertGetId([
                 'index' => '8kUNIXRY9io',
+                'type' => 'youtube',
+                'subtype' => 'video',
+                'origin' => 'youtube#search',
                 'title' => 'Kid Cudi - Mr. Solo Dolo III (Official Visualizer)',
                 'thumbnail' => 'https://i.ytimg.com/vi/8kUNIXRY9io/sddefault.jpg',
                 'meta' => json_encode([]),

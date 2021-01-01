@@ -3,6 +3,8 @@ matrix:
     - language: php
       name: "API Unit Testing"
       php: 7.4
+      services:
+        - mysql
       cache:
         directories:
             - vendor
@@ -10,7 +12,7 @@ matrix:
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
-        - touch database/database.sqlite
+        - mysql -e 'create database ds_main'
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
@@ -21,6 +23,8 @@ matrix:
       env:
         - TEST_DIR=vue_app
       php: 7.4
+      services:
+        - mysql
       cache:
         yarn: true
         directories:
@@ -31,7 +35,7 @@ matrix:
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
-        - touch database/database.sqlite
+        - mysql -e 'create database ds_main'
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
