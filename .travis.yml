@@ -12,6 +12,11 @@ matrix:
         - php artisan migrate
       script: composer run test
     - language: php
+      cache:
+        directories:
+            - vue_app/node_modules
+            - vendor
+            - $HOME/.composer/cache
       php: 7.4
       env:
         - TEST_DIR=vue_app
@@ -23,7 +28,7 @@ matrix:
         - composer install --no-interaction
         - php artisan key:generate
         - php artisan migrate
-        - php artisan serve
+        - php artisan serve & APP_PID=$!
         - nvm install latest
         - yarn -v
         - npm install npm@latest -g
@@ -31,5 +36,7 @@ matrix:
       script:
         - npm run test:unit
         - npm run test:e2e-ci
+      after_script:
+        - kill $APP_PID
     
     
