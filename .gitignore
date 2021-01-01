@@ -1,6 +1,7 @@
 .vscode/settings.json
 vue_app/node_modules
 vue_app/tests/e2e/videos
+vue_app/dist
 /public/hot
 /public/css/app.css
 /public/js/*

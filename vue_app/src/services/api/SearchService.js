@@ -1,11 +1,11 @@
 import Axios from "axios"
-import $ from "jquery"
+import { ajax } from "jquery"
 import http from "./Client"
 
 const suggestApiURL = "https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="
 
 export function getAutocompleteResults(query, callback) {
-    $.ajax({
+    ajax({
         type: "POST",
         url: suggestApiURL + query,
         dataType: "jsonp",

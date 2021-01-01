@@ -4,16 +4,15 @@
 php artisan down
 
 # update source code
-git pull origin master
+git pull
 
 # update PHP dependencies
 #export COMPOSER_HOME='/tmp/composer'
 
-#composer install --no-interaction --no-dev --prefer-dist
+composer install --no-interaction --no-dev --prefer-dist
 	# --no-interaction	Do not ask any interactive question
 	# --no-dev		Disables installation of require-dev packages.
 	# --prefer-dist		Forces installation from package dist even for dev versions.
-
 
 # clear cache
 php artisan cache:clear
@@ -25,14 +24,20 @@ php artisan config:clear
 php artisan config:cache
 
 # restart queues 
-php artisan -v queue:restart
+# php artisan -v queue:restart
 
 # update database
 php artisan migrate --force
-	# --force		Required to run when in production.
-
-# update frontend
-# yarn run prod
 
 # stop maintenance mode
 php artisan up
+
+cd vue_app/
+
+# install deps
+yarn
+
+# rebuild frontend
+yarn run build
+
+

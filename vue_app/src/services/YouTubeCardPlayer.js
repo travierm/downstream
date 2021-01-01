@@ -45,8 +45,6 @@ export default class YouTubeCardPlayer {
             this._player.seek(0)
             this._player.pause()
 
-            console.log("ENDED EVENT!")
-
             playNextCard()
         })
     }

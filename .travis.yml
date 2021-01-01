@@ -49,4 +49,3 @@ matrix:
       after_script:
         - kill $APP_PID
     
-    

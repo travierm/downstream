@@ -1,7 +1,7 @@
 <template>
     <v-card class="mx-auto" max-width="580">
         <v-card-actions>
-            <v-btn text>Share</v-btn>
+            <!-- <v-btn text>Share</v-btn> -->
 
             <v-spacer></v-spacer>
 
@@ -112,13 +112,9 @@ export default {
             this.showThumbnail = false
 
             $("#" + this.guid).show()
-
-            console.log("DISPLAY play event triggered " + this.guid)
             this.$set(this, 'showThumbnail', false)
         },
         handleVideoStop() {
-            console.log("DISPLAY stop event triggered " + this.guid)
-
             this.showThumbnail = true
 
             $("#" + this.guid).hide()
