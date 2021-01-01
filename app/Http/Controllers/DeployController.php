@@ -14,7 +14,7 @@ class DeployController extends Controller
 
         // Only deploy on pushes to master
         $requestData = json_decode($request->payload);
-        if($requestData['ref'] !== 'refs/heads/master') {
+        if($requestData->ref !== 'refs/heads/master') {
             echo "Only deploying on pushes to master";
             exit;
         }
