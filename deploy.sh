@@ -14,7 +14,6 @@ composer install --no-interaction --no-dev --prefer-dist
 	# --no-dev		Disables installation of require-dev packages.
 	# --prefer-dist		Forces installation from package dist even for dev versions.
 
-
 # clear cache
 php artisan cache:clear
 
@@ -30,8 +29,15 @@ php artisan config:cache
 # update database
 php artisan migrate --force
 
+# stop maintenance mode
+php artisan up
+
+cd vue_app/
+
+# install deps
+yarn
+
 # rebuild frontend
 yarn run build
 
-# stop maintenance mode
-php artisan up
+
