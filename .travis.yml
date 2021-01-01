@@ -2,6 +2,10 @@ matrix:
   include:
     - language: php
       php: 7.4
+      cache:
+        directories:
+            - vendor
+            - $HOME/.composer/cache
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
@@ -13,6 +17,7 @@ matrix:
       script: composer run test
     - language: php
       cache:
+        yarn: true
         directories:
             - vue_app/node_modules
             - vendor
@@ -31,11 +36,10 @@ matrix:
         - php artisan serve & APP_PID=$!
         - nvm install stable
         - yarn -v
-        - npm install npm@latest -g
-        - cd $TEST_DIR && npm install
+        - cd $TEST_DIR && yarn
       script:
-        - npm run test:unit
-        - npm run test:e2e-ci
+        - yarn test:unit
+        - yarn test:e2e-ci
       after_script:
         - kill $APP_PID
     
