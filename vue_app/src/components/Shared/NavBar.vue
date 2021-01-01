@@ -1,7 +1,7 @@
 <template>
     <v-app-bar app color="dark" dark>
         <div class="d-flex align-center">
-            <v-toolbar-title class="nav-title">downstream2</v-toolbar-title>
+            <v-toolbar-title class="nav-title">downstream</v-toolbar-title>
 
             <v-btn
                 href="https://github.com/travierm/downstream"
