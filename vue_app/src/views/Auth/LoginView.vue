@@ -24,7 +24,7 @@
                 <v-checkbox v-model="rememberMe" label="Remember Me"></v-checkbox>
 
                 <!-- Login Form Actions -->
-                <v-btn @click="login">Login</v-btn>
+                <v-btn class="loginBtn" @click="login">Login</v-btn>
                 <v-btn class="ml-2" small text color="primary">Forgot Password?</v-btn>
               </v-form>
             </v-col>

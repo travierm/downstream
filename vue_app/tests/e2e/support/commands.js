@@ -13,12 +13,17 @@
 Cypress.Commands.add("login", () => {
     cy.visit("/login")
     cy.get("input[name=email]").type("test@gmail.com")
-    cy.get("input[name=password]").type(`password{enter}`)
+    cy.get("input[name=password]").type(`password`)
+    cy.get('.loginBtn').click()
+
+    cy.wait(1000)
+
+    cy.saveLocalStorage()
 })
 
 Cypress.Commands.add("search", (query) => {
     cy.get("#searchInput").type(query)
-    cy.contains('drake').click()
+    cy.contains("drake").click()
 })
 //
 //

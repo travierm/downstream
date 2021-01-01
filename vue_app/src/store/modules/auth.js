@@ -11,7 +11,7 @@ export const state = {
 }
 
 export const mutations = {
-    SET_TOKEN(state, token) {
+    SET_TOKEN(state, token) {    
         state.token = token
         window.localStorage.setItem("token", token)
     },
@@ -67,8 +67,13 @@ export const actions = {
                 commit("CLEAR_USER")
             })
     },
-    getUser({ commit, getters }) {
+    getUser({ commit, getters, state }) {
         if (getters.loggedIn) {
+            return
+        }
+
+        if (!state.token) {
+            console.error("Can not get user info without token")
             return
         }
 

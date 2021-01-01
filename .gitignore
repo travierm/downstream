@@ -1,5 +1,6 @@
 .vscode/settings.json
 vue_app/node_modules
+vue_app/tests/e2e/videos
 /public/hot
 /public/css/app.css
 /public/js/*
@@ -16,7 +17,6 @@ yarn-error.log
 /public/mix-manifest.json
 /public/js/app.js.map
 public/css/app\.css\.map
-
 node_services/*/node_modules
 node_modules
 .phpunit.result.cache
