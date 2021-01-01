@@ -10,3 +10,4 @@
 |
 */
 
+Route::post('deploy', 'DeployController@deploy');

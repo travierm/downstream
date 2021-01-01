@@ -20,7 +20,8 @@
         "league/fractal": "^0.19.2",
         "madcoda/php-youtube-api": "^1.2",
         "rap2hpoutre/laravel-log-viewer": "^1.6",
-        "spatie/laravel-honeypot": "^2.2"
+        "spatie/laravel-honeypot": "^2.2",
+        "symfony/process": "^5.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
