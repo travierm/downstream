@@ -11,12 +11,25 @@ matrix:
         - php artisan key:generate
         - php artisan migrate
       script: composer run test
-    - language: node_js
-      node_js: "13"
+    - language: php
+      php: 7.4
       env:
         - TEST_DIR=vue_app
-      script: 
-        - cd $TEST_DIR && yarn
-        - yarn test:unit
-        - yarn test:e2e-ci
+      before_script:
+        - cp .env.ci .env
+        - cp phpunit.xml.test phpunit.xml
+        - touch database/database.sqlite
+        - composer self-update
+        - composer install --no-interaction
+        - php artisan key:generate
+        - php artisan migrate
+        - php artisan serve
+        - nvm install latest
+        - yarn -v
+        - npm install npm@latest -g
+        - cd $TEST_DIR && npm install
+      script:
+        - npm run test:unit
+        - npm run test:e2e-ci
+    
     
