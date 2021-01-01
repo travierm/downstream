@@ -5,10 +5,10 @@ matrix:
       php: 7.4
       services:
         - mysql
-      cache:
-        directories:
-            - vendor
-            - $HOME/.composer/cache
+      #cache:
+      #  directories:
+      #      - vendor
+      #      - $HOME/.composer/cache
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
@@ -34,7 +34,6 @@ matrix:
             - $HOME/.cache/Cypress
       before_script:
         - cp .env.ci .env
-        - cp phpunit.xml.test phpunit.xml
         - mysql -e 'create database ds_main'
         - composer self-update
         - composer install --no-interaction
