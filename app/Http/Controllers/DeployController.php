@@ -9,7 +9,7 @@ class DeployController extends Controller
 {
     public function deploy(Request $request)
     {
-        set_time_limit(180);
+        ini_set('max_execution_time', 180)
 
         $githubPayload = $request->getContent();
         $githubHash = $request->header('X-Hub-Signature');
@@ -28,12 +28,9 @@ class DeployController extends Controller
             $root_path = base_path();
             $process = new Process(['./deploy.sh']);
             $process->setWorkingDirectory($root_path);
-            $process->start(function ($type, $buffer) {
+            $process->run(function ($type, $buffer) {
                 echo $buffer;
             });
-
-            echo "Deployed script started";
-            exit;
         }
 
         echo "Failure hash mismatch";
