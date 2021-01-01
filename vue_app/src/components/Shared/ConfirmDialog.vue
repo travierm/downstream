@@ -10,7 +10,7 @@
                 <v-btn @click="handleClose">
                     No
                 </v-btn>
-                <v-btn color="green" @click="handleConfirm">
+                <v-btn id="confirmDialogYesBtn" color="green" @click="handleConfirm">
                     Yes
                 </v-btn>
             </v-card-actions>

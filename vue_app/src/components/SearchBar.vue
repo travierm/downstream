@@ -1,5 +1,6 @@
 <template>
     <v-autocomplete
+        id="searchInput"
         class="main-search"
         solo
         dense
@@ -11,6 +12,7 @@
         v-model="value"
         :search-input.sync="query"
         @input="dispatchSearchRoute()"
+        @keyup.enter="dispatchSearchRoute()"
     >
     </v-autocomplete>
 </template>
@@ -34,10 +36,11 @@ export default {
     },
     methods: {
         dispatchSearchRoute() {
+            console.log(this.query)
             const route = {
                 path: "/search",
                 query: {
-                    query: this.value,
+                    query: (this.value ? this.value :this.query)
                 },
             }
 

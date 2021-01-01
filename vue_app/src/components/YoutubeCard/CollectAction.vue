@@ -1,10 +1,10 @@
 <template>
-    <v-btn v-if="!inCollection" outlined color="success" @click="collectItem">
+    <v-btn class="collectBtn" v-if="!inCollection" outlined color="success" @click="collectItem">
         Collect
         <v-icon class="ml-1" small>{{ mdiMusicNotePlus }}</v-icon>
     </v-btn>
 
-    <v-btn v-else @click="showRemoveConfirmDialog">
+    <v-btn class="removeBtn" v-else @click="showRemoveConfirmDialog">
         Remove
         <v-icon class="ml-1" color="red" small>{{ mdiMinusCircle }}</v-icon>
         <ConfirmDialog
