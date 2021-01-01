@@ -9,16 +9,18 @@ describe("Basic App Features", () => {
         cy.logout()
     })*/
 
-    it("Can see collection", () => {
+    it("Can see collection", () => {                                  
         cy.contains("div", "Kid Cudi - Mr. Solo Dolo III")
     })
-
+   
     it("Can search for and collect item", () => {
-        // Search for drake
+        // Search for drake                                   
         cy.search('drake')
 
         // Collect first search result item
         cy.get(".collectBtn:first").click()
+
+        cy.wait(1000)
 
         // Make sure item exists in user collection
         cy.visit("/collection")
