@@ -14,6 +14,7 @@
 
         <v-img
             :id="this.guid + '_media'"
+            class="youtubeCardThumbnail"
             :src="thumbnail"
             :height="dense ? '250px' : '435px'"
             @click="handleThumbnailClick"

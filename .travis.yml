@@ -40,7 +40,7 @@ matrix:
         - composer install --no-interaction
         - php artisan key:generate
         - php artisan migrate && php artisan db:seed
-        - php artisan serve & APP_PID=$! > /dev/null 2>&1
+        - php artisan serve --quiet & APP_PID=$!
         - nvm install stable
         - cd $TEST_DIR && yarn
       script:
