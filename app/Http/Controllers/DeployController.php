@@ -11,7 +11,13 @@ class DeployController extends Controller
     {
         $githubPayload = $request->getContent();
         $githubHash = $request->header('X-Hub-Signature');
-        dd(json_decode($request->payload));
+
+        // Only deploy on pushes to master
+        $requestData = json_decode($request->payload);
+        if($requestData['ref'] !== 'refs/heads/master') {
+            echo "Only deploying on pushes to master";
+            exit;
+        }
  
         $localToken = config('app.deploy_secret');
         $localHash = 'sha1=' . hash_hmac('sha1', $githubPayload, $localToken, false);
