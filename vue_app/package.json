@@ -7,7 +7,7 @@
     "build": "vue-cli-service build --mode production",
     "test:unit": "vue-cli-service test:unit --coverage",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:e2e-ci": "vue-cli-service test:e2e --video --record --key 100e85d3-fa07-4845-ba30-613180b2a09a",
+    "test:e2e-ci": "vue-cli-service test:e2e --record --key 100e85d3-fa07-4845-ba30-613180b2a09a",
     "lint": "vue-cli-service lint",
     "test:unit-watch": "vue-cli-service test:unit --watch"
   },
