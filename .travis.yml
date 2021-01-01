@@ -1,12 +1,52 @@
 matrix:
   include:
+    # Run Laravel API Unit Tests
     - language: php
+      name: "Laravel API Unit Testing"
       php: 7.4
+      services:
+        - mysql
+      cache:
+        directories:
+            - vendor
+            - $HOME/.composer/cache
       before_script:
-        - cp .env.travis .env
+        - cp .env.ci .env
+        - mysql -e 'create database ds_main'
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
-      script: vendor/bin/phpunit
-    - language: node_js
-      node_js: "13"
+        - php artisan migrate
+      script: composer run test
+    # Run Cypress E2E and Frontend Unit testing
+    - language: php
+      name: "Cypress E2E & Frontend Unit Testing"
+      env:
+        - TEST_DIR=vue_app
+      php: 7.4
+      services:
+        - mysql
+      cache:
+        yarn: true
+        directories:
+            - vendor
+            - vue_app/node_modules
+            - $HOME/.composer/cache
+            - $HOME/.cache/Cypress
+      before_script:
+        - cp .env.ci .env
+        - mysql -e 'create database ds_main'
+        - composer self-update
+        - composer install --no-interaction
+        - php artisan key:generate
+        - php artisan migrate && php artisan db:seed
+        - php artisan serve --quiet & APP_PID=$!
+        - nvm install stable
+        - cd $TEST_DIR && yarn
+      script:
+        - yarn test:unit
+        - yarn test:e2e-ci
+      after_script:
+        - kill $APP_PID
+    
+    

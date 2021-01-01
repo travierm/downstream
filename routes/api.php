@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +14,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::post("/youtube/collect", "YouTubeAPIController@collect");
+
+
+// OLD ROUTES
+
+/*Route::post("/youtube/collect", "YouTubeAPIController@collect");
 Route::post("/youtube/toss", "YouTubeAPIController@toss");
 
 Route::post("/test", "YouTubeAPIController@test");
@@ -47,9 +49,32 @@ Route::post('/media/search', 'MediaAPIController@resolve');
 
 //Git Webhook Deployment
 Route::post('/deploy', 'DeployController@deploy');
+*/
 
-//API
+// Controllers in the API Folder only
 Route::namespace('API')->group(function () {
+    Route::get('/ping', function() {
+        return "pong";
+    });
+    
+    Route::post('/auth/login', 'Auth\LoginController@postLogin');
+
+    /* Authenticated routes only */
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/auth/user', function (Request $request) {
+            return $request->user();
+        });
+
+        Route::get('/search/{query}', 'SearchController@getResults');
+        Route::get('/search/autocomplete/{query}', "SearchAutocompleteController@getResults");
+
+        // User Collection
+        Route::get('/collection', "CollectionController@getCollection");
+        Route::post('/media/collect', 'MediaCollectionController@postCollectItem');
+        Route::delete('/media/collection/{itemId}', 'MediaCollectionController@removeItemFromCollection');
+    });
+
+    /*
     //Analytics
     Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
 
@@ -62,7 +87,7 @@ Route::namespace('API')->group(function () {
     //Collection Routes
 
     //authed user collection
-    Route::post('/collection', "CollectionController@getCollection");
+    
     Route::get('/collection/remove/{mediaId}', "CollectionController@removeItem");
     Route::get('/user/collection/{random?}', "CollectionController@getUserCollection");
 
@@ -88,5 +113,6 @@ Route::namespace('API')->group(function () {
 
     //Demo
     Route::get('/demo/search', 'DemoController@searchQuery');
+    */
 });
 

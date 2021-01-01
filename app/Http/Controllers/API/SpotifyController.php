@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use Auth;
-use App\UserSpotifyToken;
+use App\Models\UserSpotifyToken;
 use App\Services\SpotifyAPI;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class SpotifyController extends Controller

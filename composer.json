@@ -5,15 +5,19 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.3.0",
         "asvae/laravel-api-tester": "^2.0",
         "fideloper/proxy": "~4.0",
+        "fruitcake/laravel-cors": "^2.0",
+        "guzzlehttp/guzzle": "^7.2",
         "jwilsson/spotify-web-api-php": "2.12.0",
         "ksubileau/color-thief-php": "^1.4",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravel/helpers": "^1.2",
+        "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.0",
+        "laravel/ui": "^3.0",
+        "league/fractal": "^0.19.2",
         "madcoda/php-youtube-api": "^1.2",
         "rap2hpoutre/laravel-log-viewer": "^1.6",
         "spatie/laravel-honeypot": "^2.2"
@@ -22,11 +26,12 @@
         "barryvdh/laravel-debugbar": "^3.1",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "^8.5"
+        "mockery/mockery": "1.4.2",
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "files": [
+            "app/Global/utils.php",
             "app/Global/media.php"
         ],
         "classmap": [
@@ -50,7 +55,7 @@
     },
     "scripts": {
         "test": [
-            "vendor/phpunit/phpunit/phpunit"
+            "vendor/phpunit/phpunit/phpunit --colors --testdox"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
