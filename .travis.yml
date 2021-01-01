@@ -48,14 +48,4 @@ matrix:
         - yarn test:e2e-ci
       after_script:
         - kill $APP_PID
-      notifications:
-        webhooks:
-          urls:
-            - https://downstream.us/app/deploy
-          on_success: always # default: always
-          on_failure: never # default: always
-          on_start:   never # default: never
-          on_cancel:  never # default: always
-          on_error:   never # default: always
-    
     
