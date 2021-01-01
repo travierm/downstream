@@ -17,7 +17,8 @@ Cypress.Commands.add("login", () => {
 })
 
 Cypress.Commands.add("search", (query) => {
-    cy.get("#searchInput").type(query + "{enter}")
+    cy.get("#searchInput").type(query)
+    cy.contains('drake').click()
 })
 //
 //
