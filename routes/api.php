@@ -53,6 +53,10 @@ Route::post('/deploy', 'DeployController@deploy');
 
 // Controllers in the API Folder only
 Route::namespace('API')->group(function () {
+    Route::get('/ping', function() {
+        return "pong";
+    });
+    
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
 
     /* Authenticated routes only */

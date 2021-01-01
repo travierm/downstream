@@ -1,7 +1,10 @@
 matrix:
   include:
     - language: php
+      name: "API Unit Testing"
       php: 7.4
+      services:
+        - mysql
       cache:
         directories:
             - vendor
@@ -16,15 +19,18 @@ matrix:
         - php artisan migrate
       script: composer run test
     - language: php
+      name: "Frontend E2E & Unit Testing"
+      env:
+        - TEST_DIR=vue_app
+      php: 7.4
+      services:
+        - mysql
       cache:
         yarn: true
         directories:
             - vue_app/node_modules
             - vendor
             - $HOME/.composer/cache
-      php: 7.4
-      env:
-        - TEST_DIR=vue_app
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
@@ -35,9 +41,9 @@ matrix:
         - php artisan migrate
         - php artisan serve & APP_PID=$!
         - nvm install stable
-        - yarn -v
         - cd $TEST_DIR && yarn
       script:
+        - curl -s localhost:8000/api/ping
         - yarn test:unit
         - yarn test:e2e-ci
       after_script:
