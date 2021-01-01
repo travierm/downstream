@@ -29,7 +29,7 @@ matrix:
         - php artisan key:generate
         - php artisan migrate
         - php artisan serve & APP_PID=$!
-        - nvm install latest
+        - nvm install stable
         - yarn -v
         - npm install npm@latest -g
         - cd $TEST_DIR && npm install
