@@ -11,6 +11,9 @@ class DeployController extends Controller
     {
         $githubPayload = $request->getContent();
         $githubHash = $request->header('X-Hub-Signature');
+        
+        echo($request->header('X-GitHub-Event'));
+        exit;
 
         dd($githubPayload);
  
