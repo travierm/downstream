@@ -1,8 +1,8 @@
 matrix:
   include:
-    # Run PHP Unit Tests
+    # Run Laravel API Unit Tests
     - language: php
-      name: "API Unit Testing"
+      name: "Laravel API Unit Testing"
       php: 7.4
       services:
         - mysql
@@ -18,9 +18,9 @@ matrix:
         - php artisan key:generate
         - php artisan migrate
       script: composer run test
-    # Run Frontend E2E and Unit testing
+    # Run Cypress E2E and Frontend Unit testing
     - language: php
-      name: "Vue App E2E & Unit Testing"
+      name: "Cypress E2E & Frontend Unit Testing"
       env:
         - TEST_DIR=vue_app
       php: 7.4
@@ -29,8 +29,8 @@ matrix:
       cache:
         yarn: true
         directories:
-            - vue_app/node_modules
             - vendor
+            - vue_app/node_modules
             - $HOME/.composer/cache
             - $HOME/.cache/Cypress
       before_script:
