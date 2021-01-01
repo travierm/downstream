@@ -9,7 +9,7 @@ class DeployController extends Controller
 {
     public function deploy(Request $request)
     {
-        ini_set('max_execution_time', 180)
+        ini_set('max_execution_time', 180);
 
         $githubPayload = $request->getContent();
         $githubHash = $request->header('X-Hub-Signature');
