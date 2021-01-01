@@ -26,12 +26,12 @@ matrix:
       services:
         - mysql
       cache:
-        yarn: false
+        yarn: true
         directories:
-            #- vue_app/node_modules
+            - vue_app/node_modules
             - vendor
             - $HOME/.composer/cache
-            #- $HOME/.cache/Cypress
+            - $HOME/.cache/Cypress
       before_script:
         - cp .env.ci .env
         - cp phpunit.xml.test phpunit.xml
@@ -42,7 +42,6 @@ matrix:
         - php artisan migrate
         - php artisan serve & APP_PID=$!
         - nvm install stable
-        - curl -s localhost:8000/api/ping
         - cd $TEST_DIR && yarn
       script:
         - yarn test:unit
