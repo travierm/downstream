@@ -1,23 +1,24 @@
 matrix:
   include:
+    # Run PHP Unit Tests
     - language: php
       name: "API Unit Testing"
       php: 7.4
       services:
         - mysql
-      #cache:
-      #  directories:
-      #      - vendor
-      #      - $HOME/.composer/cache
+      cache:
+        directories:
+            - vendor
+            - $HOME/.composer/cache
       before_script:
         - cp .env.ci .env
-        - cp phpunit.xml.test phpunit.xml
         - mysql -e 'create database ds_main'
         - composer self-update
         - composer install --no-interaction
         - php artisan key:generate
         - php artisan migrate
       script: composer run test
+    # Run Frontend E2E and Unit testing
     - language: php
       name: "Vue App E2E & Unit Testing"
       env:
