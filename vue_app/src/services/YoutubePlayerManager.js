@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 const _DEBUG = false;
 
+let volume = 100;
 let guidIndex = []
 let registeredCards = [];
 let currentPlayingGuid = false
@@ -40,8 +41,30 @@ export function setGuidIndex(index) {
     dd(index)
 }
 
+export function getPlayingCard() {
+    if(!currentPlayingGuid) {
+        return false;
+    }
+
+    return findCardByGuid(currentPlayingGuid)
+}
+
 export function getPlayingCardId() {
-    return currentPlayingGuid;
+    return currentPlayingGuid
+}
+
+export function getVolume() {
+    return volume
+}
+
+export function setVolume(value) {
+    volume = value;
+
+    const playingVideo = getPlayingCard();
+
+    if(playingVideo) {
+        playingVideo.setVolume(value)
+    }
 }
 
 export function registerCardPlayer(player) {
@@ -60,6 +83,7 @@ export function playNextCard() {
     let nextCard = getNextCard(currentPlayingGuid);
 
     dd("PLAYING " + nextCard.guid)
+    nextCard.setVolume(volume)
     nextCard.play()
 }
 
