@@ -1,4 +1,4 @@
-import { setGuidIndex } from "../../services/YoutubePlayerManager"
+import YoutubePlayerManager from "../../services/YoutubePlayerManager"
 
 export const namespaced = true
 export const state = {
@@ -15,6 +15,6 @@ export const mutations = {
 export const actions = {
     setGuidIndex({ commit }, index) {
         commit('SET_GUID_INDEX', index)
-        setGuidIndex(index)
+        YoutubePlayerManager.setGuidIndex(index)
     },
 }

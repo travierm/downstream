@@ -37,11 +37,10 @@
 
 <script>
 import { mapState } from "vuex"
-import CardCol from "@/components/CardCol"
-import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
-import { setGuidIndex } from '../../services/YoutubePlayerManager'
 
-import BottomBar from '@/components/BottomBar';
+import CardCol from "@/components/CardCol"
+import BottomBar from "@/components/BottomBar"
+import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
 
 export default {
     name: "CollectionView",
@@ -55,26 +54,32 @@ export default {
             userCollection: (state) => state.collection.userCollection,
         }),
         collectionGuidIndex() {
-            if(!this.userCollection) {
-                return [];
+            if (!this.userCollection) {
+                return []
             }
 
             return this.userCollection.map((item) => {
                 return item.guid
             })
-        }
+        },
     },
     mounted() {
-        if(this.collectionGuidIndex.length >= 1) {
-            this.$store.dispatch('player/setGuidIndex', this.collectionGuidIndex)
+        if (this.collectionGuidIndex.length >= 1) {
+            this.$store.dispatch(
+                "player/setGuidIndex",
+                this.collectionGuidIndex
+            )
         }
     },
     watch: {
         userCollection(value) {
-            if(this.collectionGuidIndex.length >= 1) {
-                setGuidIndex(this.collectionGuidIndex)
+            if (this.collectionGuidIndex.length >= 1) {
+                this.$store.dispatch(
+                    "player/setGuidIndex",
+                    this.collectionGuidIndex
+                )
             }
-        }
+        },
     },
     methods: {},
 }

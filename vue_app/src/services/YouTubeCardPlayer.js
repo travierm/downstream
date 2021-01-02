@@ -1,11 +1,6 @@
 import $ from "jquery"
 import YTPlayer from "yt-player"
-import {
-    getVolume,
-    registerCardPlayer,
-    playNextCard,
-    triggerPlayEvent,
-} from "./YoutubePlayerManager"
+import YoutubePlayerManager from "./YoutubePlayerManager"
 
 export default class YouTubeCardPlayer {
     constructor(guid, videoId) {
@@ -16,7 +11,7 @@ export default class YouTubeCardPlayer {
         this.onPlayCallbacks = []
         this.eventCallbacks = []
 
-        registerCardPlayer(this)
+        YoutubePlayerManager.registerCardPlayer(this)
     }
 
     applyEventCallbacks() {
@@ -46,7 +41,7 @@ export default class YouTubeCardPlayer {
             this._player.seek(0)
             this._player.pause()
 
-            playNextCard()
+            YoutubePlayerManager.playNextCard()
         })
     }
 
@@ -97,7 +92,7 @@ export default class YouTubeCardPlayer {
 
         if (triggerEvent) {
             // Let the player know we started playing
-            triggerPlayEvent(this.guid)
+            YoutubePlayerManager.triggerPlayEvent(this.guid)
         }
 
         this.onPlayCallbacks.forEach((callback) => {

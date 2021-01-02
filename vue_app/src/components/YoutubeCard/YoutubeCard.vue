@@ -35,11 +35,11 @@
 <script>
 import $ from "jquery"
 
-// Children Components
+// Components
 import CollectAction from "./CollectAction"
 
+// Services
 import YouTubeCardPlayer from "../../services/YouTubeCardPlayer"
-import { getPlayingCardId } from "../../services/YoutubePlayerManager"
 
 export default {
     name: "YoutubeCard",
@@ -53,7 +53,7 @@ export default {
         videoId: String,
         thumbnail: String,
         hideActions: {
-            default: false
+            default: false,
         },
         guid: {
             type: String,
@@ -90,14 +90,7 @@ export default {
             this.handleVideoStop()
         })
 
-        this.cardPlayer.on("paused", () => {
-            if (getPlayingCardId(this.guid)) {
-                // Do nothing if this is the current playing card
-                return true
-            }
-
-            // this.handleVideoStop()
-        })
+        this.cardPlayer.on("paused", () => {})
 
         // When an error happens show the thumbnauk
         this.cardPlayer.on("unplayable", () => {
@@ -109,7 +102,7 @@ export default {
             this.showThumbnail = false
 
             $("#" + this.guid).show()
-            this.$set(this, 'showThumbnail', false)
+            this.$set(this, "showThumbnail", false)
         },
         handleVideoStop() {
             this.showThumbnail = true
