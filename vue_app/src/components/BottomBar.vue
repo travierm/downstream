@@ -3,7 +3,12 @@
         <v-container fluid>
             <v-row no-gutters class="justify-left">
                 <v-col cols="auto">
-                    <v-btn color="primary" outlined class="focusBtn ml-2">Focus</v-btn>
+                    <v-btn
+                        @click="focusOnPlayingCard"
+                        color="primary"
+                        class="focusBtn ml-2"
+                        >Focus</v-btn
+                    >
                 </v-col>
 
                 <v-col lg="2">
@@ -15,7 +20,7 @@
 </template>
 
 <script>
-import { setVolume } from '../services/YoutubePlayerManager'
+import { setVolume, getPlayingCardId } from '../services/YoutubePlayerManager'
 import VolumeSlider from './VolumeSlider'
 
 export default {
@@ -29,10 +34,21 @@ export default {
     },
     mounted() {},
     methods: {
+        focusOnPlayingCard() {
+            const playingCardGuid = getPlayingCardId();
+
+            if(playingCardGuid) {
+                this.$vuetify.goTo('#' + playingCardGuid, {
+                    offset: 150,
+                    duration: 800,
+                    easing: 'easeInOutCubic',
+                })
+            }
+        },
         changeVolume(value) {
             _.debounce(() => {
                 setVolume(value)
-            }, 450)();  
+            }, 450)();
         }
     },
 }
