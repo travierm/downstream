@@ -4,7 +4,7 @@
 php artisan down
 
 # update source code
-git pull
+git pull origin master
 
 # update PHP dependencies
 #export COMPOSER_HOME='/tmp/composer'
