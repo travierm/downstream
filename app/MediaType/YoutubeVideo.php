@@ -6,9 +6,8 @@ use Illuminate\Support\Str;
 use App\MediaType\Transformer\YoutubeSearchResult;
 
 class YoutubeVideo {
-    public int $mediaId;
+    public int $mediaId = 0;
     public bool $collected = false;
-
     public string $title;
     public string $videoId;
     public string $thumbnail;

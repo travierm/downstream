@@ -43,10 +43,10 @@ class SearchTest extends TestCase
         global $user;
         $testVideoId = 'lZcRSy0sk5w';
         // Collect
-        $response = $this->actingAs($user)->post('/api/media/collect', [
+        $collectedMediaId = $this->actingAs($user)->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
             'videoId' => $testVideoId
-        ])->assertStatus(200);
+        ])->assertStatus(200)->decodeResponseJson()['mediaId'];
 
         $response = $this->actingAs($user)->get('/api/search/lZcRSy0sk5w')->assertStatus(200);
 
@@ -61,6 +61,7 @@ class SearchTest extends TestCase
                 
                 $foundMatch = true;
                 $this->assertTrue($video['collected'] == true, 'Collected videoId has property collected in search results');
+                $this->assertTrue($video['mediaId'] == $collectedMediaId, 'Collected mediaId matches mediaId in search results');
             }
         }
 

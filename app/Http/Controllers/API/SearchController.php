@@ -13,6 +13,7 @@ class SearchController extends Controller
         $userId = Auth::user()->id;
 
         $videos = YoutubeService::searchByQuery($query);
+        $videos = YoutubeService::updateMediaIdOnVideos($videos);
         $videos = YoutubeService::updateCollectedOnVideos($videos, $userId);
 
         return response()->json([
