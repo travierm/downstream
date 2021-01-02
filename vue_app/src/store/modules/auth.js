@@ -25,6 +25,7 @@ export const mutations = {
         state.user = user
     },
     CLEAR_USER() {
+        state.user = false;
         window.localStorage.clear()
     },
 }
