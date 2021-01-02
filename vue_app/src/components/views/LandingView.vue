@@ -11,10 +11,10 @@
                 </v-btn>
 
                 <YoutubeCard
-                    guid="test"
-                    title="King Kurushimi - Sinking "
-                    videoId="ZCbMHxCoHr8"
-                    thumbnail="https://i.ytimg.com/vi/ZCbMHxCoHr8/sddefault.jpg"
+                    guid="landing_1"
+                    videoId="lZcRSy0sk5w"
+                    title="Kid Cudi - Tequila Shots "
+                    thumbnail="https://i.ytimg.com/vi/lZcRSy0sk5w/sddefault.jpg"
                     :hide-actions="true"
                 ></YoutubeCard>
             </v-col>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import YoutubeCard from "../components/YoutubeCard/YoutubeCard"
+import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
 
 export default {
     name: "LandingView",

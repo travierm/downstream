@@ -4,14 +4,14 @@ import AuthService from "@/services/api/AuthService"
 
 export const namespaced = true
 export const state = {
-    user: false,
+    user: window.localStorage.getItem("user"),
     error: false,
     loading: false,
     token: window.localStorage.getItem("token"),
 }
 
 export const mutations = {
-    SET_TOKEN(state, token) {    
+    SET_TOKEN(state, token) {
         state.token = token
         window.localStorage.setItem("token", token)
     },
@@ -23,8 +23,10 @@ export const mutations = {
     },
     SET_USER(state, user) {
         state.user = user
+        window.localStorage.setItem("user", user)
     },
     CLEAR_USER() {
+        state.user = false
         window.localStorage.clear()
     },
 }
@@ -42,6 +44,7 @@ export const actions = {
         return AuthService.login(params)
             .then(async (response) => {
                 commit("SET_TOKEN", response.data.token)
+                commit("SET_USER", response.data.user)
                 commit("SET_LOADING", false)
                 commit("SET_ERROR", false)
 
@@ -57,15 +60,9 @@ export const actions = {
             return true
         }
 
-        commit("SET_USER", false)
+        commit("CLEAR_USER")
 
-        return AuthService.logout()
-            .then(() => {
-                commit("CLEAR_USER")
-            })
-            .catch(() => {
-                commit("CLEAR_USER")
-            })
+        return true
     },
     getUser({ commit, getters, state }) {
         if (getters.loggedIn) {

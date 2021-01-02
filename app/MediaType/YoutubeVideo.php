@@ -17,7 +17,7 @@ class YoutubeVideo {
         $data = YoutubeSearchResult::transform($raw);
 
         $youtubeVideo = new self();
-        $youtubeVideo->title = $data['title'];
+        $youtubeVideo->title = html_entity_decode(htmlspecialchars_decode($data['title']), ENT_QUOTES, 'UTF-8');
         $youtubeVideo->videoId = $data['videoId'];
         $youtubeVideo->thumbnail = $data['thumbnail'];
         $youtubeVideo->guid = "guid_" . Str::random(35);

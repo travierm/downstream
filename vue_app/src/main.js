@@ -6,6 +6,11 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+const loggedIn = store.getters["auth/loggedIn"]
+if (!loggedIn && store.state.auth.token) {
+    store.dispatch("auth/getUser")
+}
+
 new Vue({
   router,
   vuetify,

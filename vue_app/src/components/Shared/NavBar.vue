@@ -47,7 +47,7 @@
 
             <!-- Collection -->
             <v-btn
-                v-if="$vuetify.breakpoint.smAndUp"
+                v-if="$vuetify.breakpoint.smAndUp && loggedIn"
                 class="ml-4 mr-2"
                 to="/collection"
                 rounded

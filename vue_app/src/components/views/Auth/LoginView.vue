@@ -1,7 +1,7 @@
 <template>
     <v-container class="d-flex flex-wrap justify-center" @keyup.enter="login()">
       <!-- Login Sheet -->
-      <v-sheet elevation=2 class="pl-10 pr-10" width="40%" style="min-width: 250px;">
+      <v-sheet elevation=2 class="pl-10 pr-10" :width="sheetWidth" style="min-width: 250px;">
         <div>
           <!-- Login Header Text -->
           <v-row class="mt-2">
@@ -43,7 +43,10 @@ export default {
   name: 'LoginView',
   components: {},
   computed: {
-    ...mapState('auth', ['error'])
+    ...mapState('auth', ['error']),
+    sheetWidth() {
+      return (this.$vuetify.breakpoint.smAndUp ? '40%' : '100%)')
+    }
   },
   data: () => {
     return {
