@@ -4,8 +4,8 @@ Active:
     ✔ Focus & Volume Bar @done(21-01-02 00:18)
     ☐ Basic Playlists
 Bugs:
-    ☐ Login Card on mobile
-    ☐ Title has symbols in it from search results
+    ✔ Login Card on mobile @done(21-01-02 12:16)
+    ✔ Title has symbols in it from search results @done(21-01-02 12:20)
     ☐ Removing an item resets the guidIndex but keeps playing song
     ☐ Keyboard stays up after loading search route on mobile ( focus issue )
 Backlog:
