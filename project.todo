@@ -1,18 +1,20 @@
 -- Project TODO --
 Active:
-    ☐ Focus & Volume Bar
+    ☐ Redirect to Collection on page load if authed unless coming from collection to landing page
+    ✔ Focus & Volume Bar @done(21-01-02 00:18)
     ☐ Basic Playlists
-    ☐ Direct Share link
 Bugs:
+    ☐ Login Card on mobile
+    ☐ Title has symbols in it from search results
+    ☐ Removing an item resets the guidIndex but keeps playing song
+    ☐ Keyboard stays up after loading search route on mobile ( focus issue )
 Backlog:
 
 -- Release Plan --
 Version: 
-    v1.3.1
+    v1.3.2
 Features:
     ☐ Basic Playlists
-    ☐ Focus & Volume Bar
-    ☐ Direct Share link
 
 -- Ideas only beyond this --
 Playlist Feature Todo:

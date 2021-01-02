@@ -1,6 +1,6 @@
 <template>
-    <v-app-bar color="grey darken-4" dense dark fixed bottom>
-        <v-container fluid>
+    <v-app-bar app color="grey darken-4" dense dark fixed bottom>
+        <v-container>
             <v-row no-gutters class="justify-left">
                 <v-col cols="auto">
                     <v-btn
