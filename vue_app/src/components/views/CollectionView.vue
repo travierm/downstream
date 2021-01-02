@@ -1,5 +1,11 @@
 <template>
     <v-container fluid>
+        <v-row>
+            <v-col>
+                <CollectionDetails />
+            </v-col>
+        </v-row>
+
         <v-row v-if="userCollection == undefined || userCollection.length <= 0">
             <v-col>
                 <v-progress-circular
@@ -40,6 +46,7 @@ import { mapState } from "vuex"
 
 import CardCol from "@/components/CardCol"
 import BottomBar from "@/components/BottomBar"
+import CollectionDetails from './partials/CollectionDetails'
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
 
 export default {
@@ -48,6 +55,7 @@ export default {
         CardCol,
         BottomBar,
         YoutubeCard,
+        CollectionDetails
     },
     computed: {
         ...mapState({
