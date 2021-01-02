@@ -1,6 +1,7 @@
 import $ from "jquery"
 import YTPlayer from "yt-player"
 import {
+    getVolume,
     registerCardPlayer,
     playNextCard,
     triggerPlayEvent,
@@ -81,6 +82,14 @@ export default class YouTubeCardPlayer {
         this._player.emit("stopped_by_manager")
     }
 
+    setVolume(value = 100) {
+        if(this._player) {
+            this._player.setVolume(value)
+        }else{
+            console.error('Tried setting volume on player that was not loaded')
+        }
+    }
+
     play(triggerEvent = true) {
         if (!this._player) {
             this.loadVideo()
@@ -95,7 +104,7 @@ export default class YouTubeCardPlayer {
             callback()
         })
 
-        this._player.setVolume(100)
+        this._player.setVolume(getVolume())
         this._player.play()
     }
 }

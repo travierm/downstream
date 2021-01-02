@@ -30,6 +30,8 @@
                 </v-lazy>
             </CardCol>
         </v-row>
+
+        <BottomBar />
     </v-container>
 </template>
 
@@ -39,10 +41,13 @@ import CardCol from "@/components/CardCol"
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
 import { setGuidIndex } from '../services/YoutubePlayerManager'
 
+import BottomBar from '../components/BottomBar';
+
 export default {
     name: "CollectionView",
     components: {
         CardCol,
+        BottomBar,
         YoutubeCard,
     },
     computed: {

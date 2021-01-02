@@ -13,17 +13,21 @@
                 ></YoutubeCard>
             </CardCol>
         </v-row>
+
+        <BottomBar />
     </v-container>
 </template>
 
 <script>
 import CardCol from "@/components/CardCol"
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
+import BottomBar from '../components/BottomBar';
 
 export default {
     name: "SearchView",
     components: {
         CardCol,
+        BottomBar,
         YoutubeCard
     },
     data: () => ({

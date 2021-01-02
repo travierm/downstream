@@ -5,6 +5,7 @@ import store from "@/store/index"
 import Activity from "@/views/Activity.vue"
 import SearchView from "@/views/SearchView"
 import LoginView from "@/views/Auth/LoginView"
+import LandingView from '@/views/LandingView'
 import CollectionView from "@/views/CollectionView"
 
 import { applyMiddleware } from "./middleware"
@@ -15,22 +16,31 @@ const routes = [
     // Default Route
     {
         path: "/",
-        component: CollectionView,
+        component: LandingView,
     },
     {
         path: "/activity",
         name: "Activity",
         component: Activity,
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/collection",
         name: "Collection",
         component: CollectionView,
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/search",
         name: "Search",
         component: SearchView,
+        meta: {
+            requiresAuth: true,
+        },
     },
 
     // Auth Views
@@ -45,7 +55,7 @@ const routes = [
         component: LoginView,
         beforeEnter(to, from, next) {
             store.dispatch("auth/logout")
-            router.push("/login")
+            router.push("/")
         },
     },
 ]

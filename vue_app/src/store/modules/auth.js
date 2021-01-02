@@ -40,13 +40,13 @@ export const actions = {
         commit("SET_LOADING", true)
 
         return AuthService.login(params)
-            .then((response) => {
+            .then(async (response) => {
                 commit("SET_TOKEN", response.data.token)
                 commit("SET_LOADING", false)
                 commit("SET_ERROR", false)
 
                 // Fetch init user data
-                fetchInitUserData()
+                await fetchInitUserData()
             })
             .catch((error) => {
                 commit("SET_ERROR", error)

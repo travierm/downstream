@@ -1,27 +1,20 @@
-
-
 -- Project TODO --
-
 Active:
-    ☐ Chunking through data and running processes against them
-    ☐ Sync collection back to Spotify on button click or interval
-        ☐  Service to match Youtube videos with Spotify Track IDS
-    ☐ No Refresh: Make sure the app from login to logout can work without a refresh
-    ☐ Update media to use new video source (limit to users with 100+ tracks in collection)
-
+    ☐ Focus & Volume Bar
+    ☐ Basic Playlists
+    ☐ Direct Share link
 Bugs:
-    ☐ Player will not properly focus on cards when switching
-    ☐ indexForward will skip multiple songs ahead
+Backlog:
 
-Planned:
-    ☐ Improved Search
-        ☐ Search collection and Youtube with autocomplete
-    ☐ Improved Follower Feed
-        ☐ Add settings for follower feed days
-    ☐ Playlist Feature
+-- Release Plan --
+Version: 
+    v1.3.1
+Features:
+    ☐ Basic Playlists
+    ☐ Focus & Volume Bar
+    ☐ Direct Share link
 
 -- Ideas only beyond this --
-
 Playlist Feature Todo:
     ☐ Make modal that can create or update a playlist from the collection
     ☐ Make a playlist index page
@@ -36,7 +29,6 @@ Streaming Feature:
     ☐ Search Bar
 
 Experiments:
-    ☐ Try playing songs based of vue-router url. Could fix not playing when out of focus and mobile compat
     ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
 
 Archive:  

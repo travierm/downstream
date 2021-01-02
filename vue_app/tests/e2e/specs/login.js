@@ -2,15 +2,17 @@
 import "cypress-localstorage-commands"
 
 describe("Login", () => {
-    before(() => {
-        cy.login()
-    })
-
     beforeEach(() => {
        cy.restoreLocalStorage()
     })
 
-    it("Can see collection", () => {                                 
+    it('Can see landing page', () => {
+        cy.visit('/')
+        cy.contains('Welcome to downstream')
+    })
+
+    it("Can see collection", () => {     
+        cy.login()                            
         cy.contains("div", "Kid Cudi - Mr. Solo Dolo III")
     })
 })
