@@ -20,15 +20,15 @@
 
 <script>
 import CardCol from "@/components/CardCol"
+import BottomBar from "@/components/BottomBar"
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
-import BottomBar from '@/components/BottomBar';
 
 export default {
     name: "SearchView",
     components: {
         CardCol,
         BottomBar,
-        YoutubeCard
+        YoutubeCard,
     },
     data: () => ({
         results: [],
@@ -36,7 +36,7 @@ export default {
     computed: {
         searchQuery() {
             return this.$route.query.query
-        }
+        },
     },
     mounted() {
         this.searchByQuery()
@@ -45,36 +45,36 @@ export default {
         searchByQuery() {
             const query = this.searchQuery
 
-            if(!query) {
+            if (!query) {
                 return
             }
 
-            this.$store.dispatch('setLoadingBarState', true)
+            this.$store.dispatch("setLoadingBarState", true)
             this.$store
                 .dispatch("search/byQuery", query)
                 .then((response) => {
-                    this.$store.dispatch('setLoadingBarState', false)
+                    this.$store.dispatch("setLoadingBarState", false)
 
                     if (response.data.results) {
                         this.results = response.data.results
-                        
-                        const guidIndex =  this.results.map((item) => {
+
+                        const guidIndex = this.results.map((item) => {
                             return item.guid
                         })
 
-                        this.$store.dispatch('player/setGuidIndex', guidIndex)
+                        this.$store.dispatch("player/setGuidIndex", guidIndex)
                     }
                 })
                 .catch(() => {
-                    this.$store.dispatch('setLoadingBarState', false)
+                    this.$store.dispatch("setLoadingBarState", false)
                 })
         },
     },
     watch: {
         searchQuery() {
             this.searchByQuery()
-        }
-    }
+        },
+    },
 }
 </script>
 

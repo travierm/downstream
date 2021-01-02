@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { setVolume, getPlayingCardId } from '../services/YoutubePlayerManager'
+import YoutubePlayerManager from '../services/YoutubePlayerManager'
 import VolumeSlider from './VolumeSlider'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     mounted() {},
     methods: {
         focusOnPlayingCard() {
-            const playingCardGuid = getPlayingCardId();
+            const playingCardGuid = YoutubePlayerManager.getPlayingCardId();
 
             if(playingCardGuid) {
                 this.$vuetify.goTo('#' + playingCardGuid, {
@@ -47,7 +47,7 @@ export default {
         },
         changeVolume(value) {
             _.debounce(() => {
-                setVolume(value)
+                YoutubePlayerManager.setVolume(value)
             }, 450)();
         }
     },
