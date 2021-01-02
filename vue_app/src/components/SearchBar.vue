@@ -37,7 +37,6 @@ export default {
     },
     methods: {
         dispatchSearchRoute() {
-            console.log(this.query)
             const route = {
                 path: "/search",
                 query: {
