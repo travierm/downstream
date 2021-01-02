@@ -76,7 +76,6 @@ export default {
                 })
         },
         showRemoveConfirmDialog() {
-            console.log('hre');
             this.showConfirmDialog = true
         },
     },

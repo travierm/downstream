@@ -6,7 +6,9 @@
                     :item="video"
                     :guid="video.guid"
                     :title="video.title"
+                    :mediaId="video.mediaId"
                     :videoId="video.videoId"
+                    :collected="video.collected"
                     :thumbnail="video.thumbnail"
                 ></YoutubeCard>
             </CardCol>
