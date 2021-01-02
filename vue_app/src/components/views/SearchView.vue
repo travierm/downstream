@@ -21,7 +21,7 @@
 <script>
 import CardCol from "@/components/CardCol"
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
-import BottomBar from '../components/BottomBar';
+import BottomBar from '@/components/BottomBar';
 
 export default {
     name: "SearchView",

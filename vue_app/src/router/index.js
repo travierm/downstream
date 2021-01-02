@@ -2,11 +2,11 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 
 import store from "@/store/index"
-import Activity from "@/views/Activity.vue"
-import SearchView from "@/views/SearchView"
-import LoginView from "@/views/Auth/LoginView"
-import LandingView from '@/views/LandingView'
-import CollectionView from "@/views/CollectionView"
+import Activity from "@/components/views/Activity"
+import SearchView from "@/components/views/SearchView"
+import LoginView from "@/components/views/Auth/LoginView"
+import LandingView from "@/components/views/LandingView"
+import CollectionView from "@/components/views/CollectionView"
 
 import { applyMiddleware } from "./middleware"
 
