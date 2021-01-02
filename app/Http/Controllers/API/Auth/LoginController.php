@@ -32,7 +32,11 @@ class LoginController extends Controller
 
         $deviceName = $request->device_name || 'webapp';
         $token = $user->createToken($deviceName)->plainTextToken;
-        $data = ['token' => $token];
+
+        $data = [
+            'user' => $user,
+            'token' => $token,
+        ];
 
         return response()->json($data, 200);
     }

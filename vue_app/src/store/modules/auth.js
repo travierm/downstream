@@ -42,6 +42,7 @@ export const actions = {
         return AuthService.login(params)
             .then(async (response) => {
                 commit("SET_TOKEN", response.data.token)
+                commit("SET_USER", response.data.user)
                 commit("SET_LOADING", false)
                 commit("SET_ERROR", false)
 

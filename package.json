@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "serve": "cd vue_app/ && yarn serve",
-        "build": "cd vue_app/ && yarn build"
+        "build": "cd vue_app/ && yarn build",
+        "test:e2e": "cd vue_app/ && yarn test:e2e"
     },
     "devDependencies": {
     },

@@ -1,18 +1,14 @@
 -- Project TODO --
 Active:
-    ☐ Redirect to Collection on page load if authed unless coming from collection to landing page
-    ✔ Focus & Volume Bar @done(21-01-02 00:18)
-    ☐ Basic Playlists
+    ☐ Playlists
+    ☐ Collection Links & Stats
+    ☐ Clear users collection besides test media before running e2e tests
+    
 Bugs:
-    ✔ Login Card on mobile @done(21-01-02 12:16)
-    ✔ Title has symbols in it from search results @done(21-01-02 12:20)
     ☐ Removing an item resets the guidIndex but keeps playing song
     ☐ Keyboard stays up after loading search route on mobile ( focus issue )
-Backlog:
 
 -- Release Plan --
-Version: 
-    v1.3.2
 Features:
     ☐ Basic Playlists
 
@@ -34,6 +30,9 @@ Experiments:
     ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
 
 Archive:  
+  ✔ Focus & Volume Bar @done(21-01-02 00:18) @project(Active)
+  ✔ Login Card on mobile @done(21-01-02 12:16) @project(Bugs)
+  ✔ Title has symbols in it from search results @done(21-01-02 12:20) @project(Bugs)
   ✔ cleanup navbar move admin/ off or somewhere else @done(19-04-20 14:16) @project(Active)
   ✔ Fix Collection loading forever when not logged in @done(19-03-19 20:04) @project(Active)
   ✔ Fix toss collection bug @done(19-03-31 12:22) @project(Active)
