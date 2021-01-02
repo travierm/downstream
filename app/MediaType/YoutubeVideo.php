@@ -7,7 +7,7 @@ use App\MediaType\Transformer\YoutubeSearchResult;
 
 class YoutubeVideo {
     public int $mediaId;
-    public bool $collected;
+    public bool $collected = false;
 
     public string $title;
     public string $videoId;
