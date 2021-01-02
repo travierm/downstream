@@ -1,7 +1,12 @@
 <template>
-    <v-app-bar app color="dark" dark>
-        <div class="d-flex align-center">
-            <v-toolbar-title class="nav-title">downstream</v-toolbar-title>
+    <v-app-bar app color="dark" dark elevate-on-scroll>
+        <div
+            class="d-flex align-center"
+            v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
+        >
+            <router-link tag="div" to="/">
+                <v-toolbar-title class="navbar-brand">downstream</v-toolbar-title>
+            </router-link>
 
             <v-btn
                 href="https://github.com/travierm/downstream"
@@ -16,7 +21,9 @@
 
         <v-spacer />
 
-        <SearchBar />
+        <v-btn to="/login" outlined v-if="!loggedIn">Login</v-btn>
+
+        <SearchBar v-if="loggedIn" class="mt-1" />
 
         <!-- Loading Bar -->
         <v-progress-linear
@@ -39,7 +46,12 @@
             </v-btn>-->
 
             <!-- Collection -->
-            <v-btn class="ml-4 mr-2" to="/collection" rounded text
+            <v-btn
+                v-if="$vuetify.breakpoint.smAndUp"
+                class="ml-4 mr-2"
+                to="/collection"
+                rounded
+                text
                 >Collection</v-btn
             >
 
@@ -54,7 +66,25 @@
             </v-btn> -->
         </div>
 
-        <v-menu offset-y>
+        <v-menu left bottom v-if="$vuetify.breakpoint.xsOnly && loggedIn">
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+            </template>
+
+            <v-list>
+                <v-list-item
+                    v-for="link in mobileLinks"
+                    :key="link.url"
+                    @click="$router.push(link.url)"
+                >
+                    <v-list-item-title>{{ link.text }}</v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-menu>
+
+        <v-menu offset-y v-if="$vuetify.breakpoint.smAndUp && loggedIn">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn v-bind="attrs" v-on="on" rounded text>
                     <v-icon>mdi-account</v-icon>
@@ -86,6 +116,17 @@
 import { mapState, mapGetters } from "vuex"
 import SearchBar from "@/components/SearchBar"
 
+const mobileLinks = [
+    {
+        text: "Collection",
+        url: "/collection",
+    },
+    {
+        text: "Logout",
+        url: "/logout",
+    },
+]
+
 export default {
     name: "NavBar",
     components: {
@@ -98,7 +139,9 @@ export default {
         }),
     },
     data: () => {
-        return {}
+        return {
+            mobileLinks,
+        }
     },
     mounted() {},
     methods: {},
@@ -106,8 +149,10 @@ export default {
 </script>
 
 <style scoped>
-.nav-title {
+.navbar-brand {
     font-size: 2em;
+    font-weight: 400;
+    font-family: Roboto;
 }
 
 .main-search {

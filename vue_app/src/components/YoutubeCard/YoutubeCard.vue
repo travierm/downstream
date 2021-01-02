@@ -1,6 +1,6 @@
 <template>
     <v-card class="mx-auto" max-width="580">
-        <v-card-actions>
+        <v-card-actions v-if="!hideActions">
             <!-- <v-btn text>Share</v-btn> -->
 
             <v-spacer></v-spacer>
@@ -52,15 +52,12 @@ export default {
         mediaId: Number,
         videoId: String,
         thumbnail: String,
+        hideActions: {
+            default: false
+        },
         guid: {
             type: String,
             required: true,
-        },
-        item: {
-            type: Object,
-            default: {
-                meta: {},
-            },
         },
         collected: {
             type: Boolean,
@@ -125,3 +122,9 @@ export default {
     },
 }
 </script>
+
+<style>
+.youtubeCardTitle {
+    text-align: left;
+}
+</style>

@@ -4,7 +4,7 @@
       <v-sheet elevation=2 class="pl-10 pr-10" width="40%" style="min-width: 250px;">
         <div>
           <!-- Login Header Text -->
-          <v-row>
+          <v-row class="mt-2">
             <v-col>
                 <h1>Login</h1>
 
@@ -15,7 +15,7 @@
           </v-row>
 
           <!-- Login Form -->
-          <v-row>
+          <v-row class="mb-2">
             <v-col>
               <v-form ref="loginForm" v-model="valid">
                 <!-- Login Form Inputs -->

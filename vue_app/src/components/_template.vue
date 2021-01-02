@@ -10,15 +10,10 @@
 export default {
     name: "_page_template",
     props: {
-        number: {
-            type: Number,
-            default: 0,
-            required: false,
-        },
-        string: {
+        /*string: {
             type: String,
             required: true,
-        },
+        },*/
     },
     components: {},
     data: () => {
