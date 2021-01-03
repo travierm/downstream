@@ -1,19 +1,16 @@
 <template>
-    <v-autocomplete
+    <v-text-field
         color="secondary"
-        v-model="value"
-        :search-input.sync="query"
-        :items="items"
+        v-model="query"
         solo
         dense
         flat
-        clearable
         label="Search Collection...."
+        clearable
         hide-details
         hide-selected
         light
-        multiple
-    ></v-autocomplete>
+    ></v-text-field>
 </template>
 
 <script>
@@ -40,7 +37,7 @@ export default {
         query: function(val) {
             this.$store.commit('collection/SET_SEARCH_QUERY', val)
 
-            let indexes = _.map(this.collectionSearchResults, "guid")
+            let indexes = _.map(this.collection, "guid")
             this.$store.dispatch("player/setGuidIndex", indexes)
             console.log(indexes)
         },
