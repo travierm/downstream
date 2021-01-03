@@ -30,8 +30,17 @@ describe("Collection", () => {
 
         cy.wait(1000)
 
-        cy.get("iframe").should('be.visible')
+        cy.get("iframe").should("be.visible")
     })
+
+    it("Video does not show thumbnail when playing", () => {
+
+        // Ensure only one card is showing its thumbnail
+        cy.get("div")
+            .find(".youtubeCardTitle")
+            .should("not.be.visible")
+    })
+
 
     it("Can remove item from collection", () => {
         // Collect first search result item
