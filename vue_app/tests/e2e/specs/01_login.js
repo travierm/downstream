@@ -14,14 +14,4 @@ describe("Login", () => {
         cy.visit('/')
         cy.contains('Welcome to downstream')
     })
-
-    it("Can see collection", () => {                 
-        cy.visit("/collection")
-        cy.contains("div", "Kid Cudi - Mr. Solo Dolo III")
-    })
-
-    it("/login redirects to /collection when loggedIn", () => {
-        cy.visit("/login")
-        cy.contains("div", "Kid Cudi - Mr. Solo Dolo III")
-    })
 })

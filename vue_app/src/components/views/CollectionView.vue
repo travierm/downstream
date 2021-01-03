@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-row>
             <v-col>
-                <CollectionDetails />
+                <CollectionBar />
             </v-col>
         </v-row>
 
@@ -42,12 +42,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState, mapGetters } from "vuex"
 
 import CardCol from "@/components/CardCol"
 import BottomBar from "@/components/BottomBar"
-import CollectionDetails from './partials/CollectionDetails'
 import YoutubeCard from "@/components/YoutubeCard/YoutubeCard"
+import CollectionBar from '@/components/Collection/CollectionBar'
+import CollectionSearchInput from '@/components/Collection/CollectionSearchInput'
 
 export default {
     name: "CollectionView",
@@ -55,11 +56,11 @@ export default {
         CardCol,
         BottomBar,
         YoutubeCard,
-        CollectionDetails
+        CollectionBar
     },
     computed: {
-        ...mapState({
-            collection: (state) => state.collection.collection,
+        ...mapGetters({
+            collection: "collection/collectionSearchResults",
         }),
         collectionGuidIndex() {
             if (!this.collection) {

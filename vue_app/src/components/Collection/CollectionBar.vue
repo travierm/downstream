@@ -5,7 +5,10 @@
 
                 <v-col cols="auto">
                     <v-btn color="primary">Playlists</v-btn>
-                    <v-btn class="ml-2" color="success">Following</v-btn>
+                </v-col>
+
+                <v-col cols="auto">
+                    <CollectionSearchInput />
                 </v-col>
 
                 <v-col cols="auto">
@@ -22,10 +25,13 @@
 
 <script>
 import { mapState } from "vuex"
+import CollectionSearchInput from '@/components/Collection/CollectionSearchInput'
 
 export default {
-    name: "CollectionDetails",
-    components: {},
+    name: "CollectionBar",
+    components: {
+        CollectionSearchInput
+    },
     computed: {
         ...mapState({
             collection: (state) => state.collection.collection,

@@ -2,11 +2,15 @@ import CollectionService from "@/services/api/CollectionService"
 
 export const namespaced = true
 export const state = {
+    searchQuery: "",
     hash: window.localStorage.getItem("collectionHash"),
     collection: JSON.parse(window.localStorage.getItem("collection")),
 }
 
 export const mutations = {
+    SET_SEARCH_QUERY(state, query) {
+        state.searchQuery = query
+    },
     UPDATE_COLLECTION(state, data) {
         const { hash, items } = data
 
@@ -18,7 +22,19 @@ export const mutations = {
     },
 }
 
-export const getters = {}
+export const getters = {
+    collectionSearchResults(state) {
+        const searchQuery = state.searchQuery
+
+        if(!searchQuery) {
+            return state.collection
+        }
+
+        return state.collection.filter((video) => {
+            return video.title.toLowerCase().includes(searchQuery.toLowerCase())
+        })
+    },
+}
 
 export const actions = {
     collectItem(commit, videoId) {
@@ -32,10 +48,12 @@ export const actions = {
             return
         }
 
-        let response = await CollectionService.fetchCollection()
+        const response = await CollectionService.fetchCollection()
         if (response.data) {
-            if(response.data.hash !== state.hash) {
-                console.log('Collection hash does not match. Updating local state!')
+            if (response.data.hash !== state.hash) {
+                console.log(
+                    "Collection hash does not match. Updating local state!"
+                )
 
                 commit("UPDATE_COLLECTION", response.data)
             }

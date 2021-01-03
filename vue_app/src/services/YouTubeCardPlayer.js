@@ -99,7 +99,7 @@ export default class YouTubeCardPlayer {
             callback()
         })
 
-        this._player.setVolume(getVolume())
+        this._player.setVolume(YoutubePlayerManager.getVolume())
         this._player.play()
     }
 }

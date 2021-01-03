@@ -1,6 +1,6 @@
 import _ from "lodash"
 
-const _DEBUG = false
+const _DEBUG = true
 
 function dd(data) {
     if (_DEBUG) {
@@ -46,6 +46,11 @@ class YoutubePlayerManager {
     }
 
     findCardByGuid(guid) {
+
+        if(!guid) {
+            throw Error('guid no passed')
+        }
+
         return _.find(this.registeredCards, { guid })
     }
 
@@ -59,8 +64,12 @@ class YoutubePlayerManager {
         this.currentPlayingGuid = false
     }
 
+    getVolume() {
+        return this.volume
+    }
+
     setVolume(value) {
-        volume = value
+        this.volume = value
 
         const playingVideo = getPlayingCard()
 
@@ -71,7 +80,6 @@ class YoutubePlayerManager {
 
     // Large Methods
     playNextCard() {
-        dd("PLAY NEXT CARD event called")
         if (this.guidIndex.length <= 0) {
             console.error("Can not play next card since guidIndex is empty")
             return
@@ -79,7 +87,6 @@ class YoutubePlayerManager {
 
         let nextCard = this.getNextCard(this.currentPlayingGuid)
 
-        dd("PLAYING " + nextCard.guid)
         nextCard.setVolume(volume)
         nextCard.play()
     }
@@ -93,14 +100,11 @@ class YoutubePlayerManager {
     }
 
     triggerPlayEvent(guid) {
-        dd("trigger playevent " + guid)
-        dd(registeredCards)
-
         const previousPlayingGuid = _.clone(this.currentPlayingGuid)
 
         if (previousPlayingGuid) {
             // Stop playing previous card because a new one would like to play
-            this.stopPlayingCard(this.previousPlayingGuid)
+            this.stopPlayingCard(previousPlayingGuid)
         }
 
         // Update current playing card id
