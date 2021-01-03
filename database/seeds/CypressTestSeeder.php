@@ -28,7 +28,7 @@ class CypressTestSeeder extends Seeder
             ]);
         }
 
-        $mediaId = DB::table('media')->where('index', '8kUNIXRY9io')->pluck('id')->first();
+        /*$mediaId = DB::table('media')->where('index', '8kUNIXRY9io')->pluck('id')->first();
         if(!$mediaId) {
             $mediaId = DB::table('media')->insertGetId([
                 'index' => '8kUNIXRY9io',
@@ -45,6 +45,6 @@ class CypressTestSeeder extends Seeder
         DB::table('user_media')->insert([
             'user_id' => $userId,
             'media_id' => $mediaId
-        ]);
+        ]);*/
     }
 }
