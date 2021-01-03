@@ -59,8 +59,12 @@ class YoutubePlayerManager {
         this.currentPlayingGuid = false
     }
 
+    getVolume() {
+        return this.volume
+    }
+
     setVolume(value) {
-        volume = value
+        this.volume = value
 
         const playingVideo = getPlayingCard()
 
@@ -94,7 +98,6 @@ class YoutubePlayerManager {
 
     triggerPlayEvent(guid) {
         dd("trigger playevent " + guid)
-        dd(registeredCards)
 
         const previousPlayingGuid = _.clone(this.currentPlayingGuid)
 
