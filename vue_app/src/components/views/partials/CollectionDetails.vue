@@ -9,7 +9,7 @@
                 </v-col>
 
                 <v-col cols="auto">
-                    <div class="title">Collection Size: {{ userCollection.length }}</div>
+                    <div class="title">Collection Size: {{ collection.length }}</div>
                 </v-col>
 
                 <v-col cols="auto">
@@ -28,7 +28,7 @@ export default {
     components: {},
     computed: {
         ...mapState({
-            userCollection: (state) => state.collection.userCollection,
+            collection: (state) => state.collection.collection,
         }),
     },
     watch: {},

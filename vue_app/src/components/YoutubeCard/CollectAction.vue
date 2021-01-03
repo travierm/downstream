@@ -57,7 +57,7 @@ export default {
             this.$store
                 .dispatch("collection/collectItem", this.videoId)
                 .then(() => {
-                    this.$store.dispatch("collection/fetchUserCollection")
+                    this.$store.dispatch("collection/fetchCollection")
                     this.inCollection = true
                 })
                 .catch(() => {
@@ -68,7 +68,7 @@ export default {
             this.$store
                 .dispatch("collection/removeItem", this.mediaId)
                 .then(() => {
-                    this.$store.dispatch("collection/fetchUserCollection")
+                    this.$store.dispatch("collection/fetchCollection")
                     this.inCollection = false
                 })
                 .catch(() => {

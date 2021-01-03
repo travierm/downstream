@@ -31,6 +31,10 @@ export function applyMiddleware(router) {
             return next("/collection")
         }
 
+        if (to.path == "/" && loggedIn) {
+            return next("/collection")
+        }
+
         return next()
     })
 }

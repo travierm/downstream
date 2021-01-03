@@ -6,7 +6,7 @@
             </v-col>
         </v-row>
 
-        <v-row v-if="userCollection == undefined || userCollection.length <= 0">
+        <v-row v-if="collection == undefined || collection.length <= 0">
             <v-col>
                 <v-progress-circular
                     indeterminate
@@ -16,7 +16,7 @@
         </v-row>
 
         <v-row v-else>
-            <CardCol v-for="item in userCollection" :key="item.id">
+            <CardCol v-for="item in collection" :key="item.id">
                 <v-lazy
                     :options="{
                         // How many elements should be shown before loading it
@@ -59,14 +59,14 @@ export default {
     },
     computed: {
         ...mapState({
-            userCollection: (state) => state.collection.userCollection,
+            collection: (state) => state.collection.collection,
         }),
         collectionGuidIndex() {
-            if (!this.userCollection) {
+            if (!this.collection) {
                 return []
             }
 
-            return this.userCollection.map((item) => {
+            return this.collection.map((item) => {
                 return item.guid
             })
         },
@@ -80,7 +80,7 @@ export default {
         }
     },
     watch: {
-        userCollection(value) {
+        collection(value) {
             if (this.collectionGuidIndex.length >= 1) {
                 this.$store.dispatch(
                     "player/setGuidIndex",

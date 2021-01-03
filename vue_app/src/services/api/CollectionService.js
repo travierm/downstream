@@ -1,6 +1,6 @@
 import http from "./Client"
 
-async function fetchUserCollection() {
+async function fetchCollection() {
     return http.get("/collection")
 }
 
@@ -14,4 +14,4 @@ async function removeItem(itemId) {
     return http.delete(`/media/collection/${itemId}`)
 }
 
-export default { collectItem, removeItem, fetchUserCollection }
+export default { collectItem, removeItem, fetchCollection }

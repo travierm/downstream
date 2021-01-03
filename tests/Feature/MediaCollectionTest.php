@@ -74,7 +74,7 @@ class MediaCollectionTest extends TestCase
     /**
      * @depends testCanRemoveItemFromCollection
      */
-    public function testUserCollectionIsEmpty($mediaId)
+    public function testCollectionIsEmpty($mediaId)
     {
         global $user;
 

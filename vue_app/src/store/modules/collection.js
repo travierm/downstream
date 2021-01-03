@@ -2,12 +2,19 @@ import CollectionService from "@/services/api/CollectionService"
 
 export const namespaced = true
 export const state = {
-    userCollection: false,
+    hash: window.localStorage.getItem("collectionHash"),
+    collection: JSON.parse(window.localStorage.getItem("collection")),
 }
 
 export const mutations = {
-    SET_USER_COLLECTION(state, items) {
-        state.userCollection = Object.freeze(items)
+    UPDATE_COLLECTION(state, data) {
+        const { hash, items } = data
+
+        state.hash = hash
+        state.collection = Object.freeze(items)
+
+        window.localStorage.setItem("collectionHash", hash)
+        window.localStorage.setItem("collection", JSON.stringify(items))
     },
 }
 
@@ -20,15 +27,18 @@ export const actions = {
     removeItem(commit, itemId) {
         return CollectionService.removeItem(itemId)
     },
-    async fetchUserCollection({ commit, rootState, state }) {
+    async fetchCollection({ commit, rootState, state }) {
         if (!rootState.auth.token) {
             return
         }
 
-        let response = await CollectionService.fetchUserCollection()
-
+        let response = await CollectionService.fetchCollection()
         if (response.data) {
-            commit("SET_USER_COLLECTION", response.data.items)
+            if(response.data.hash !== state.hash) {
+                console.log('Collection hash does not match. Updating local state!')
+
+                commit("UPDATE_COLLECTION", response.data)
+            }
         }
     },
 }
