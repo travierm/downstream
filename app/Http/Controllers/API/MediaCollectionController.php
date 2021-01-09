@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Cache;
 use App\Models\Media;
 use App\Models\UserMedia;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class MediaCollectionController extends Controller
      */
     public function postCollectItem(Request $request)
     {
+
         $userId = Auth::user()->id;
         $videoId = $request->videoId;
 
@@ -59,6 +61,8 @@ class MediaCollectionController extends Controller
             ], 500);
         }
 
+        $this->clearCollectionCache($userId);
+
         return response()->json([
             'mediaId' => $media->id,
             'message' => 'successfully collected media item'
@@ -73,8 +77,19 @@ class MediaCollectionController extends Controller
             ->where('media_id', $itemId)
             ->delete();
 
+        $this->clearCollectionCache($userId);
+
         return response()->json([
             'message' => 'removed item from collection'
         ], 200);
+    }
+
+    private function clearCollectionCache($userId)
+    {
+        $itemHashCacheKey = 'user_collection_items_hash_' . $userId;
+        $collectionCacheKey  = 'user_collection_items_' . $userId;
+        
+        Cache::forget($itemHashCacheKey);
+        Cache::forget($collectionCacheKey);
     }
 }
