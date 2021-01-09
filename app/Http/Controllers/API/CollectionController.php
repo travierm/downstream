@@ -52,7 +52,12 @@ class CollectionController extends Controller
             $collection[] = $media;
         }
 
+        $mediaIds = array_map(function($item) {
+            return $item->id;
+        }, $collection);
+
         return response()->json([
+            'hash' => md5(serialize($mediaIds)),
             'items' => $collection
         ], 200);
     }
