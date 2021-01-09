@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\API;
 
+
 use DB;
 use Auth;
-use App\Models\Media;
-use App\Models\MediaMeta;
-use App\Models\UserMedia;
-use App\Models\GlobalQueue;
+use Cache;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CollectionController extends Controller
 {
+    private $shouldCacheCollection = true;
+
     public function getCollection(Request $request) 
     {
         $userId = Auth::user()->id;
@@ -23,8 +23,23 @@ class CollectionController extends Controller
                 'code'      =>  401,
                 'message'   =>  "No UserID was found"
               ], 401);
+        }else{
+            $collectionCacheKey  = 'user_collection_items_' . $userId;
+            $itemHashCacheKey = 'user_collection_items_hash_' . $userId;
         }
 
+        if($this->shouldCacheCollection) {
+            if (Cache::has($collectionCacheKey) && Cache::has($itemHashCacheKey)) {
+                $items = Cache::get($collectionCacheKey);
+                $itemsHash = Cache::get($itemHashCacheKey);
+
+                return response()->json([
+                    'hash' => $itemsHash,
+                    'items' => $items
+                ], 200);
+            }
+        }
+        
         $queryBuilder = DB::table('media')
             ->join('user_media', 'user_media.media_id', '=', 'media.id')
             ->where('user_media.user_id', $userId)
@@ -56,8 +71,15 @@ class CollectionController extends Controller
             return $item->id;
         }, $collection);
 
+        $collectionItemsHash = md5(serialize($mediaIds));
+        
+        if($this->shouldCacheCollection) {
+            Cache::put($collectionCacheKey, $collection);
+            Cache::put($itemHashCacheKey, $collectionItemsHash);
+        }
+
         return response()->json([
-            'hash' => md5(serialize($mediaIds)),
+            'hash' => $collectionItemsHash,
             'items' => $collection
         ], 200);
     }
