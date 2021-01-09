@@ -3,9 +3,9 @@
         <v-sheet color="grey darken-4" elevation="1">
             <v-row class="ml-2" justify="start"> 
 
-                <v-col cols="auto">
+                <!-- <v-col cols="auto">
                     <v-btn color="primary">Playlists</v-btn>
-                </v-col>
+                </v-col> -->
 
                 <v-col cols="auto">
                     <CollectionSearchInput />
@@ -15,9 +15,9 @@
                     <div class="title">Collection Size: {{ collection.length }}</div>
                 </v-col>
 
-                <v-col cols="auto">
+                <!-- <v-col cols="auto">
                     <div class="title">Playlists: {{ 0 }}</div>
-                </v-col>
+                </v-col> -->
             </v-row>
         </v-sheet>
     </v-container>

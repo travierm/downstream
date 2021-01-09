@@ -9,9 +9,4 @@ describe("Login", () => {
     beforeEach(() => {
        cy.restoreLocalStorage()
     })
-
-    it('Can see landing page', () => {
-        cy.visit('/')
-        cy.contains('Welcome to downstream')
-    })
 })
