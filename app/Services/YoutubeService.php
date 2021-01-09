@@ -53,9 +53,9 @@ class YoutubeService {
         $results = Youtube::searchAdvanced([
             'q' => $query,
             'type' => 'video',
-            'videoCategoryId' => 10, // Search for music only
             'part' => 'id,snippet',
             'maxResults' => $maxResults
+            // 'videoCategoryId' => 10, // Search for music only
         ]);
 
         if(count($results) <= 0) {

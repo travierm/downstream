@@ -29,7 +29,9 @@ class YoutubePlayerManager {
     }
 
     getNextCard(currentGuid) {
-        this.findCardByGuid(this.getNextGuid(currentGuid))
+        const nextGuid = this.getNextGuid(currentGuid)
+        
+        return this.findCardByGuid(nextGuid)
     }
 
     getNextGuid(currentGuid) {
@@ -81,13 +83,15 @@ class YoutubePlayerManager {
     // Large Methods
     playNextCard() {
         if (this.guidIndex.length <= 0) {
-            console.error("Can not play next card since guidIndex is empty")
-            return
+            throw Error("Can not play next card since guidIndex is empty")
         }
 
-        let nextCard = this.getNextCard(this.currentPlayingGuid)
+        const nextCard = this.getNextCard(this.currentPlayingGuid)
+        if(!nextCard) {
+            throw Error('Failed to find nextCard after guid ' + this.currentPlayingGuid)
+        }
 
-        nextCard.setVolume(volume)
+        nextCard.setVolume(this.currentPlayingGuid)
         nextCard.play()
     }
 
