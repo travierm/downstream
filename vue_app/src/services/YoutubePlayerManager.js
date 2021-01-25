@@ -73,7 +73,7 @@ class YoutubePlayerManager {
     setVolume(value) {
         this.volume = value
 
-        const playingVideo = getPlayingCard()
+        const playingVideo = this.getPlayingCard()
 
         if (playingVideo) {
             playingVideo.setVolume(value)
