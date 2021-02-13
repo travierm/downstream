@@ -83,10 +83,10 @@ export default {
     watch: {
         collection(value) {
             if (this.collectionGuidIndex.length >= 1) {
-                this.$store.dispatch(
+                /*this.$store.dispatch(
                     "player/setGuidIndex",
                     this.collectionGuidIndex
-                )
+                )*/
             }
         },
     },

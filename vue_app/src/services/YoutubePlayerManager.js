@@ -50,7 +50,7 @@ class YoutubePlayerManager {
     findCardByGuid(guid) {
 
         if(!guid) {
-            throw Error('guid no passed')
+            throw Error('guid not passed')
         }
 
         return _.find(this.registeredCards, { guid })
@@ -81,6 +81,13 @@ class YoutubePlayerManager {
     }
 
     // Large Methods
+    removeCard(guid) {
+        _.remove(this.guidIndex, guid)
+        _.remove(this.registeredCards, {
+            guid
+        })
+    }
+
     playNextCard() {
         if (this.guidIndex.length <= 0) {
             throw Error("Can not play next card since guidIndex is empty")
