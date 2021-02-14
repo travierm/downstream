@@ -1,123 +1,129 @@
 <template>
-    <v-card class="mx-auto" max-width="580">
-        <v-card-actions v-if="!hideActions">
-            <!-- <v-btn text>Share</v-btn> -->
+  <v-card class="mx-auto" max-width="580">
+    <v-card-actions v-if="!hideActions">
+      <!-- <v-btn text>Share</v-btn> -->
 
-            <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-            <CollectAction
-                :videoId="videoId"
-                :mediaId="mediaId"
-                :collected="collected"
-            />
-        </v-card-actions>
+      <CollectAction
+        :videoId="videoId"
+        :mediaId="mediaId"
+        :collected="collected"
+      />
+    </v-card-actions>
 
-        <v-img
-            :id="this.guid + '_media'"
-            class="youtubeCardThumbnail"
-            :src="thumbnail"
-            :height="dense ? '250px' : '435px'"
-            @click="handleThumbnailClick"
-            v-if="showThumbnail"
-        >
-            <div
-                style="width: 90%;"
-                class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
-            >
-                {{ title }}
-            </div>
-        </v-img>
+    <v-img
+      :id="this.guid + '_media'"
+      class="youtubeCardThumbnail"
+      :src="thumbnail"
+      :height="dense ? '250px' : '435px'"
+      @click="handleThumbnailClick"
+      v-if="showThumbnail"
+    >
+      <div
+        style="width: 90%;"
+        class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
+      >
+        {{ title }}
+      </div>
+    </v-img>
 
-        <div class="video-instance embed-responsive" :id="guid"></div>
-    </v-card>
+    <div class="video-instance embed-responsive" :id="guid"></div>
+  </v-card>
 </template>
 
 <script>
-import $ from "jquery"
+import $ from "jquery";
 
 // Components
-import CollectAction from "./CollectAction"
+import CollectAction from "./CollectAction";
 
 // Services
-import YouTubeCardPlayer from "../../services/YouTubeCardPlayer"
+import YouTubeCardPlayer from "../../services/YouTubeCardPlayer";
 
 export default {
-    name: "YoutubeCard",
-    components: {
-        CollectAction,
+  name: "YoutubeCard",
+  components: {
+    CollectAction,
+  },
+  props: {
+    guid: String,
+    title: String,
+    mediaId: Number,
+    videoId: String,
+    thumbnail: String,
+    hideActions: {
+      default: false,
     },
-    props: {
-        guid: String,
-        title: String,
-        mediaId: Number,
-        videoId: String,
-        thumbnail: String,
-        hideActions: {
-            default: false,
-        },
-        guid: {
-            type: String,
-            required: true,
-        },
-        collected: {
-            type: Boolean,
-            default: false,
-        },
-        dense: {
-            type: Boolean,
-            default: false,
-        },
+    guid: {
+      type: String,
+      required: true,
     },
-    data() {
-        return {
-            showThumbnail: true,
-        }
+    collected: {
+      type: Boolean,
+      default: false,
     },
-    mounted() {
-        this.cardPlayer = new YouTubeCardPlayer(this.guid, this.videoId)
-
-        // Register events so we can update our view on player state changes
-        this.cardPlayer.on("play", () => {
-            this.handleVideoPlay()
-        })
-
-        // Reset video once it stops
-        this.cardPlayer.on("ended", () => {
-            this.handleVideoStop()
-        })
-
-        this.cardPlayer.on("stopped_by_manager", () => {
-            this.handleVideoStop()
-        })
-
-        this.cardPlayer.on("paused", () => {})
-
-        // When an error happens show the thumbnauk
-        this.cardPlayer.on("unplayable", () => {
-            this.handleVideoStop()
-        })
+    dense: {
+      type: Boolean,
+      default: false,
     },
-    methods: {
-        handleVideoPlay() {
-            this.showThumbnail = false
+  },
+  data() {
+    return {
+      showThumbnail: true,
+    };
+  },
+  updated() {
+    this.registerCardPlayer()
+  },
+  mounted() {
+    this.registerCardPlayer()
+  },
+  methods: {
+    handleVideoPlay() {
+      this.showThumbnail = false;
 
-            $("#" + this.guid).show()
-            this.$set(this, "showThumbnail", false)
-        },
-        handleVideoStop() {
-            this.showThumbnail = true
-
-            $("#" + this.guid).hide()
-        },
-        handleThumbnailClick() {
-            this.cardPlayer.play()
-        },
+      $("#" + this.guid).show();
+      this.$set(this, "showThumbnail", false);
     },
-}
+    handleVideoStop() {
+      this.showThumbnail = true;
+
+      $("#" + this.guid).hide();
+    },
+    handleThumbnailClick() {
+      this.cardPlayer.play();
+    },
+    registerCardPlayer() {
+      this.cardPlayer = new YouTubeCardPlayer(this.guid, this.videoId);
+
+      // Register events so we can update our view on player state changes
+      this.cardPlayer.on("play", () => {
+        this.handleVideoPlay();
+      });
+
+      // Reset video once it stops
+      this.cardPlayer.on("ended", () => {
+        this.handleVideoStop();
+      });
+
+      this.cardPlayer.on("stopped_by_manager", () => {
+        this.handleVideoStop();
+      });
+
+      this.cardPlayer.on("paused", () => {});
+
+      // When an error happens show the thumbnauk
+      this.cardPlayer.on("unplayable", () => {
+        this.handleVideoStop();
+      });
+    },
+  },
+};
 </script>
 
 <style>
 .youtubeCardTitle {
-    text-align: left;
+  text-align: left;
 }
 </style>

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import CollectionService from "@/services/api/CollectionService"
 
 export const namespaced = true
@@ -10,6 +11,9 @@ export const state = {
 export const mutations = {
     SET_SEARCH_QUERY(state, query) {
         state.searchQuery = query
+    },
+    REMOVE_COLLECTION_ITEM(state, mediaId) {
+        state.collection = _.reject(state.collection, { media_id: mediaId })
     },
     UPDATE_COLLECTION(state, data) {
         const { hash, items } = data
@@ -40,8 +44,10 @@ export const actions = {
     collectItem(commit, videoId) {
         return CollectionService.collectItem(videoId)
     },
-    removeItem(commit, itemId) {
-        return CollectionService.removeItem(itemId)
+    removeItem({ commit }, mediaId) {
+        commit('REMOVE_COLLECTION_ITEM', mediaId)
+
+        return CollectionService.removeItem(mediaId)
     },
     async fetchCollection({ commit, rootState, state }) {
         if (!rootState.auth.token) {

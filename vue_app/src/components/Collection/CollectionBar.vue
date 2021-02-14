@@ -1,17 +1,17 @@
 <template>
-    <v-container fluid>
+    <v-container fluid :class="containerClass">
         <v-sheet color="grey darken-4" elevation="1">
-            <v-row class="ml-2" justify="start"> 
+            <v-row class="ml-1"> 
 
                 <!-- <v-col cols="auto">
                     <v-btn color="primary">Playlists</v-btn>
                 </v-col> -->
 
-                <v-col cols="auto">
-                    <CollectionSearchInput />
+                <v-col :cols="(mobileBreakpoint ? '12' : 'auto')">
+                    <CollectionSearchInput :class="(mobileBreakpoint ? 'mr-4' : '')" />
                 </v-col>
 
-                <v-col cols="auto">
+                <v-col cols="auto" v-if="!mobileBreakpoint">
                     <div class="title">Collection Size: {{ collection.length }}</div>
                 </v-col>
 
@@ -33,6 +33,12 @@ export default {
         CollectionSearchInput
     },
     computed: {
+        containerClass() {
+            return (this.mobileBreakpoint ? 'pl-0 pr-0' : 'pa-2')
+        },
+        mobileBreakpoint() {
+            return this.$vuetify.breakpoint.mobile
+        },
         ...mapState({
             collection: (state) => state.collection.collection,
         }),

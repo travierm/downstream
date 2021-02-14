@@ -18,6 +18,7 @@
 <script>
 import ConfirmDialog from "../Shared/ConfirmDialog"
 import { mdiMusicNotePlus, mdiMinusCircle } from "@mdi/js"
+import YouTubePlayerManager from '../../services/YoutubePlayerManager'
 
 const removeConfirmMessage =
     "Are you sure you want to remove this item from your collection?"
@@ -68,8 +69,7 @@ export default {
             this.$store
                 .dispatch("collection/removeItem", this.mediaId)
                 .then(() => {
-                    this.$store.dispatch("collection/fetchCollection")
-                    this.inCollection = false
+                    YouTubePlayerManager.removeCard(this.guid)
                 })
                 .catch(() => {
                     this.inCollection = true
