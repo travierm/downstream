@@ -4,6 +4,9 @@ module.exports = {
     lintOnSave: false,
     transpileDependencies: ["vuetify"],
     configureWebpack: {
+        devServer: {
+            progress: false
+        },
         devtool: "source-map",
         resolve: {
             alias: {
