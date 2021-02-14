@@ -43,6 +43,7 @@ matrix:
         - php artisan serve --quiet & APP_PID=$!
         - nvm install stable
         - cd $TEST_DIR && yarn
+        - echo -e 'pcm.!default {\n type hw\n card 0\n}\n\nctl.!default {\n type hw\n card 0\n}' > ~/.asoundrc
       script:
         - yarn test:unit
         - yarn test:e2e-ci
