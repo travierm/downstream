@@ -1,11 +1,14 @@
 -- Project TODO --
 Active:
-    ☐ Playlists
+    ☐ Push to Top
+    ☐ Improve Collection Search
+    ☐ Collection Shuffle
+    ☐ Radio Feature
     ☐ Collection Links & Stats
-    ☐ Clear users collection besides test media before running e2e tests
+    ☐ Clear users collection besides test media before running e2e tests   
     
 Bugs:
-    ☐ Removing an item resets the guidIndex but keeps playing song
+    ☐ Remove popup only shows up once
     ☐ Keyboard stays up after loading search route on mobile ( focus issue )
 
 -- Release Plan --
@@ -30,6 +33,7 @@ Experiments:
     ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
 
 Archive:  
+  ✔ Removing an item resets the guidIndex but keeps playing song @done(21-02-14 12:18) @project(Bugs)
   ✔ Focus & Volume Bar @done(21-01-02 00:18) @project(Active)
   ✔ Login Card on mobile @done(21-01-02 12:16) @project(Bugs)
   ✔ Title has symbols in it from search results @done(21-01-02 12:20) @project(Bugs)

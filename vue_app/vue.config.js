@@ -3,6 +3,9 @@ const path = require("path")
 module.exports = {
     lintOnSave: false,
     transpileDependencies: ["vuetify"],
+    devServer: {
+        progress: false
+    },
     configureWebpack: {
         devtool: "source-map",
         resolve: {

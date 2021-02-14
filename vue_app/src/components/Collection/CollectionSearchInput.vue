@@ -37,9 +37,6 @@ export default {
     query: function(val) {
       this.$store.commit("collection/SET_SEARCH_QUERY", val);
 
-      // Stop playing current card so it doesn't get lost when the index is updated
-      YoutubePlayerManager.stopPlayingCard();
-
       let indexes = _.map(this.collection, "guid");
       this.$store.dispatch("player/setGuidIndex", indexes);
     },

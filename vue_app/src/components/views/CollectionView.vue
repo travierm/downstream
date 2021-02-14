@@ -53,21 +53,13 @@ export default {
   },
   computed: {
     ...mapGetters({
+      guidIndex: "collection/guidIndex",
       collection: "collection/collectionSearchResults",
-    }),
-    collectionGuidIndex() {
-      if (!this.collection) {
-        return [];
-      }
-
-      return this.collection.map((item) => {
-        return item.guid;
-      });
-    },
+    })
   },
   mounted() {
-    if (this.collectionGuidIndex.length >= 1) {
-      this.$store.dispatch("player/setGuidIndex", this.collectionGuidIndex);
+    if (this.guidIndex.length >= 1) {
+      this.$store.dispatch("player/setGuidIndex", this.guidIndex);
     }
   },
 };

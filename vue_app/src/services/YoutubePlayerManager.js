@@ -61,6 +61,11 @@ class YoutubePlayerManager {
     }
 
     setGuidIndex(index) {
+        // Stop playing current card so it doesn't get lost when the index is updated
+        if(this.currentPlayingGuid) {
+            this.stopPlayingCard(this.currentPlayingGuid);
+        }
+
         this.guidIndex = index
         this.registeredCards = []
         this.currentPlayingGuid = false
@@ -103,7 +108,7 @@ class YoutubePlayerManager {
     }
 
     stopPlayingCard(guid) {
-        let playingCard = this.findCardByGuid(guid)
+        const playingCard = this.findCardByGuid(guid)
 
         if (playingCard) {
             playingCard.stop()
