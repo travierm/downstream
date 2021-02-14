@@ -12,6 +12,9 @@ export const mutations = {
     SET_SEARCH_QUERY(state, query) {
         state.searchQuery = query
     },
+    SHUFFLE_COLLECTION(state) {
+        state.collection = _.shuffle(state.collection)
+    },
     REMOVE_COLLECTION_ITEM(state, mediaId) {
         state.collection = _.reject(state.collection, { media_id: mediaId })
     },
@@ -27,6 +30,15 @@ export const mutations = {
 }
 
 export const getters = {
+    guidIndex(state) {
+        if (!state.collection) {
+            return [];
+        }
+    
+        return state.collection.map((item) => {
+            return item.guid;
+        });
+    },
     collectionSearchResults(state) {
         const searchQuery = state.searchQuery
 
@@ -41,6 +53,10 @@ export const getters = {
 }
 
 export const actions = {
+    shuffle(context) {
+        context.commit('SHUFFLE_COLLECTION')
+        context.dispatch('player/setGuidIndex', context.getters.guidIndex, { root: true })
+    },
     collectItem(commit, videoId) {
         return CollectionService.collectItem(videoId)
     },

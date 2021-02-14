@@ -4,6 +4,16 @@
             <v-row no-gutters class="justify-left">
                 <v-col cols="auto">
                     <v-btn
+                        v-if="onCollectionRoute"
+                        @click="shuffleCollection"
+                        color="secondary"
+                        class="focusBtn ml-2"
+                        >Shuffle</v-btn
+                    >
+                </v-col>
+
+                <v-col cols="auto">
+                    <v-btn
                         @click="focusOnPlayingCard"
                         color="primary"
                         class="focusBtn ml-2"
@@ -24,20 +34,30 @@ import YoutubePlayerManager from '../services/YoutubePlayerManager'
 import VolumeSlider from './VolumeSlider'
 
 export default {
-    name: "BottomBar",
+    name: 'BottomBar',
     props: {},
     components: {
-        VolumeSlider
+        VolumeSlider,
+    },
+    computed: {
+        onCollectionRoute() {
+            return this.$route.path == '/collection'
+        },
     },
     data: () => {
         return {}
     },
-    mounted() {},
+    mounted() {
+        dd(this.$route)
+    },
     methods: {
+        shuffleCollection() {
+            this.$store.dispatch('collection/shuffle')
+        },
         focusOnPlayingCard() {
-            const playingCardGuid = YoutubePlayerManager.getPlayingCardId();
+            const playingCardGuid = YoutubePlayerManager.getPlayingCardId()
 
-            if(playingCardGuid) {
+            if (playingCardGuid) {
                 this.$vuetify.goTo('#' + playingCardGuid, {
                     offset: 150,
                     duration: 800,
@@ -48,8 +68,8 @@ export default {
         changeVolume(value) {
             _.debounce(() => {
                 YoutubePlayerManager.setVolume(value)
-            }, 450)();
-        }
+            }, 450)()
+        },
     },
 }
 </script>

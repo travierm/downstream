@@ -5,7 +5,9 @@
             v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
         >
             <router-link tag="div" to="/">
-                <v-toolbar-title class="navbar-brand">downstream</v-toolbar-title>
+                <v-toolbar-title class="navbar-brand"
+                    >downstream</v-toolbar-title
+                >
             </router-link>
 
             <v-btn
@@ -113,29 +115,29 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex"
-import SearchBar from "@/components/SearchBar"
+import { mapState, mapGetters } from 'vuex'
+import SearchBar from '@/components/SearchBar'
 
 const mobileLinks = [
     {
-        text: "Collection",
-        url: "/collection",
+        text: 'Collection',
+        url: '/collection',
     },
     {
-        text: "Logout",
-        url: "/logout",
+        text: 'Logout',
+        url: '/logout',
     },
 ]
 
 export default {
-    name: "NavBar",
+    name: 'NavBar',
     components: {
         SearchBar,
     },
     computed: {
-        ...mapState(["showLoadingBar"]),
+        ...mapState(['showLoadingBar']),
         ...mapGetters({
-            loggedIn: "auth/loggedIn",
+            loggedIn: 'auth/loggedIn',
         }),
     },
     data: () => {

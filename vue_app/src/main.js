@@ -11,6 +11,12 @@ if (!loggedIn && store.state.auth.token) {
     store.dispatch("auth/getUser")
 }
 
+if(process.env.NODE_ENV == 'development') {
+  window.dd = console.log
+}else {
+  window.dd = () => {}
+}
+
 new Vue({
   router,
   vuetify,
