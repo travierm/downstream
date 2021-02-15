@@ -35,7 +35,6 @@ import VolumeSlider from './VolumeSlider'
 
 export default {
   name: 'BottomBar',
-  props: {},
   components: {
     VolumeSlider,
   },
@@ -47,6 +46,11 @@ export default {
   methods: {
     shuffleCollection() {
       this.$store.dispatch('collection/shuffle')
+      this.$vuetify.goTo('#app', {
+        offset: 150,
+        duration: 800,
+        easing: 'easeInOutCubic',
+      })
     },
     focusOnPlayingCard() {
       const playingCardGuid = YoutubePlayerManager.getPlayingCardId()
