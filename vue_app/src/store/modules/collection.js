@@ -3,6 +3,7 @@ import CollectionService from '@/services/api/CollectionService'
 
 export const namespaced = true
 export const state = {
+  shuffled: false,
   searchQuery: '',
   hash: window.localStorage.getItem('collectionHash'),
   collection: JSON.parse(window.localStorage.getItem('collection')),
@@ -13,6 +14,7 @@ export const mutations = {
     state.searchQuery = query
   },
   SHUFFLE_COLLECTION(state) {
+    state.shuffled = true
     state.collection = _.shuffle(state.collection)
   },
   REMOVE_COLLECTION_ITEM(state, mediaId) {
