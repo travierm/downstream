@@ -12,7 +12,7 @@ class UserMedia extends Model
   use SoftDeletes;
   
   protected $table = 'user_media';
-  protected $fillable = ['media_id', 'user_id'. 'pushed_at'];
+  protected $fillable = ['media_id', 'user_id', 'pushed_at'];
 
   public static function findById($mediaId, $userId)
   {
