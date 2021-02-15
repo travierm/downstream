@@ -70,7 +70,7 @@ export const actions = {
     return CollectionService.removeItem(mediaId)
   },
   updateGuidIndex(context) {
-    const guidIndex = context.getter.guidIndex
+    const guidIndex = context.getters.guidIndex
 
     if (guidIndex) {
       context.dispatch('player/setGuidIndex', guidIndex, { root: true })

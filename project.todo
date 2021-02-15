@@ -13,15 +13,21 @@ Bugs:
 
 -- Release Plan --
 Features:
-    ☐ Basic Playlists
+    ☐ Mood List
 
 -- Ideas only beyond this --
-Playlist Feature Todo:
-    ☐ Make modal that can create or update a playlist from the collection
-    ☐ Make a playlist index page
-    ☐ Add a top 5 playlist to top of users collection
-    ☐ Easy way to remove items from playlist
-    ☐ Setting to allow a playlist's items to be hidden from collection page
+Moodlist Feature Todo:
+    ☐ Moodlist Model
+        ☐ Open on each item
+        ☐ Create new moodlist ( name string, private boolean )
+        ☐ Add song to existing moodlist
+            ☐ Show item count list for each moodlist
+            ☐ Show checkmarks for each moodlist the item is already on
+            ☐ Be able to remove from lists
+            ☐ Be able to add to lists
+    ☐ Make modal that can create or update a moodlist from the collection
+    ☐ Choose moods to filter songs on collection
+    ☐ Direct link to moodlists
 
 Streaming Feature:
     ☐ Allow 100+ video connections
