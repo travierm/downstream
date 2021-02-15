@@ -49,6 +49,7 @@ export default {
         },
         handleClose() {
             this.showDialog = false
+            this.$emit("closed", true)
         },
     },
 }
