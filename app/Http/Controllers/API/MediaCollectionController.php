@@ -12,6 +12,29 @@ use Illuminate\Support\Facades\Auth;
 
 class MediaCollectionController extends Controller
 {
+    public function pushItem(Int $mediaId) {
+        $userId = Auth::user()->id;
+
+        $item = UserMedia::where('user_id', $userId)
+            ->where('media_id', $mediaId)
+            ->first();
+
+        if($item) {
+            $item->pushed_at = now();
+            $item->save();
+
+            return response()->json([
+                'mediaId' => $mediaId,
+                'message' => 'Updated item pushed_at date'
+            ], 200);
+        }
+
+        return response()->json([
+            'mediaId' => $mediaId,
+            'message' => 'Failed to update pushed_at date on item'
+        ], 500);
+    }
+
     /**
      * Logic:
      * - Check if videoId is already a media item

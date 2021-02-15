@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 
 class CollectionController extends Controller
 {
-    private $shouldCacheCollection = true;
+    private $shouldCacheCollection = false;
 
     public function getCollection(Request $request) 
     {
@@ -53,7 +53,7 @@ class CollectionController extends Controller
         if($request->randomized) {
             $queryBuilder->orderByRaw("RAND()");
         }else{
-            $queryBuilder->orderBy('user_media.id', 'DESC');
+            $queryBuilder->orderBy('user_media.pushed_at', 'DESC');
         }
 
         $items = $queryBuilder->get();

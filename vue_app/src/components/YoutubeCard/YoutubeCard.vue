@@ -5,6 +5,8 @@
 
       <v-spacer></v-spacer>
 
+      <PushAction :mediaId="mediaId" />
+
       <CollectAction
         :videoId="videoId"
         :mediaId="mediaId"
@@ -33,17 +35,19 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 
 // Components
-import CollectAction from "./CollectAction";
+import PushAction from './PushAction'
+import CollectAction from './CollectAction'
 
 // Services
-import YouTubeCardPlayer from "../../services/YouTubeCardPlayer";
+import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 
 export default {
-  name: "YoutubeCard",
+  name: 'YoutubeCard',
   components: {
+    PushAction,
     CollectAction,
   },
   props: {
@@ -71,7 +75,7 @@ export default {
   data() {
     return {
       showThumbnail: true,
-    };
+    }
   },
   updated() {
     this.registerCardPlayer()
@@ -81,45 +85,45 @@ export default {
   },
   methods: {
     handleVideoPlay() {
-      this.showThumbnail = false;
+      this.showThumbnail = false
 
-      $("#" + this.guid).show();
-      this.$set(this, "showThumbnail", false);
+      $('#' + this.guid).show()
+      this.$set(this, 'showThumbnail', false)
     },
     handleVideoStop() {
-      this.showThumbnail = true;
+      this.showThumbnail = true
 
-      $("#" + this.guid).hide();
+      $('#' + this.guid).hide()
     },
     handleThumbnailClick() {
-      this.cardPlayer.play();
+      this.cardPlayer.play()
     },
     registerCardPlayer() {
-      this.cardPlayer = new YouTubeCardPlayer(this.guid, this.videoId);
+      this.cardPlayer = new YouTubeCardPlayer(this.guid, this.videoId)
 
       // Register events so we can update our view on player state changes
-      this.cardPlayer.on("play", () => {
-        this.handleVideoPlay();
-      });
+      this.cardPlayer.on('play', () => {
+        this.handleVideoPlay()
+      })
 
       // Reset video once it stops
-      this.cardPlayer.on("ended", () => {
-        this.handleVideoStop();
-      });
+      this.cardPlayer.on('ended', () => {
+        this.handleVideoStop()
+      })
 
-      this.cardPlayer.on("stopped_by_manager", () => {
-        this.handleVideoStop();
-      });
+      this.cardPlayer.on('stopped_by_manager', () => {
+        this.handleVideoStop()
+      })
 
-      this.cardPlayer.on("paused", () => {});
+      this.cardPlayer.on('paused', () => {})
 
       // When an error happens show the thumbnauk
-      this.cardPlayer.on("unplayable", () => {
-        this.handleVideoStop();
-      });
+      this.cardPlayer.on('unplayable', () => {
+        this.handleVideoStop()
+      })
     },
   },
-};
+}
 </script>
 
 <style>

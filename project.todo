@@ -8,7 +8,7 @@ Active:
     ☐ Clear users collection besides test media before running e2e tests   
     
 Bugs:
-    ☐ Remove popup only shows up once
+    ✔ Remove popup only shows up once @done(21-02-14 20:11)
     ☐ Keyboard stays up after loading search route on mobile ( focus issue )
 
 -- Release Plan --

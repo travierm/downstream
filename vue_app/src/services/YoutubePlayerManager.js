@@ -1,16 +1,14 @@
 import _ from "lodash"
+import Cache from '../services/Cache'
 
 const _DEBUG = true
 
-function dd(data) {
-    if (_DEBUG) {
-        console.log(data)
-    }
-}
-
 class YoutubePlayerManager {
     constructor() {
-        this.volume = 100
+        this.localCache = new Cache(true)
+        this.localCache.setStoragePrefix('player_manager_')
+
+        this.volume = this.localCache.get('volume', 100)
         this.guidIndex = []
         this.registeredCards = []
         this.currentPlayingGuid = false
@@ -77,6 +75,7 @@ class YoutubePlayerManager {
 
     setVolume(value) {
         this.volume = value
+        this.localCache.set('volume', value)
 
         const playingVideo = this.getPlayingCard()
 

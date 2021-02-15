@@ -10,6 +10,7 @@
         <ConfirmDialog
             :show="showConfirmDialog"
             :message="removeConfirmMessage"
+            v-on:closed="showConfirmDialog = false"
             v-on:confirmed="removeItem"
         />
     </v-btn>
