@@ -36,15 +36,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
-import CardCol from "@/components/CardCol";
-import BottomBar from "@/components/BottomBar";
-import YoutubeCard from "@/components/YoutubeCard/YoutubeCard";
-import CollectionBar from "@/components/Collection/CollectionBar";
+import CardCol from '@/components/CardCol'
+import BottomBar from '@/components/BottomBar'
+import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
+import CollectionBar from '@/components/Collection/CollectionBar'
 
 export default {
-  name: "CollectionView",
+  name: 'CollectionView',
   components: {
     CardCol,
     BottomBar,
@@ -53,14 +53,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      guidIndex: "collection/guidIndex",
-      collection: "collection/collectionSearchResults",
-    })
+      guidIndex: 'collection/guidIndex',
+      collection: 'collection/collectionSearchResults',
+    }),
   },
   mounted() {
     if (this.guidIndex.length >= 1) {
-      this.$store.dispatch("player/setGuidIndex", this.guidIndex);
+      this.$store.dispatch('collection/updateGuidIndex')
     }
   },
-};
+}
 </script>
