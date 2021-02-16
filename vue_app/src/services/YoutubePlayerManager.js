@@ -10,6 +10,7 @@ class YoutubePlayerManager {
 
         this.volume = this.localCache.get('volume', 100)
         this.guidIndex = []
+        this.guidQueue = []
         this.registeredCards = []
         this.currentPlayingGuid = false
     }
@@ -97,17 +98,33 @@ class YoutubePlayerManager {
         })
     }
 
+    // Add a guid to be queued to play next
+    queueNextCard(guid) {
+        if(typeof guid === 'string') {
+            this.guidQueue.push(guid)
+        }
+    }
+
     playNextCard() {
         if (this.guidIndex.length <= 0) {
             throw Error("Can not play next card since guidIndex is empty")
         }
 
-        const nextCard = this.getNextCard(this.currentPlayingGuid)
+        let nextCard = false
+        if(this.guidQueue.length >= 1) {
+            const guid = this.guidQueue.shift()
+
+            // We have songs queued up to play
+            nextCard = this.findCardByGuid(guid)
+        }else{
+            nextCard = this.getNextCard(this.currentPlayingGuid)
+        }
+        
         if(!nextCard) {
             throw Error('Failed to find nextCard after guid ' + this.currentPlayingGuid)
         }
 
-        nextCard.setVolume(this.currentPlayingGuid)
+        nextCard.setVolume(this.volume)
         nextCard.play()
     }
 
