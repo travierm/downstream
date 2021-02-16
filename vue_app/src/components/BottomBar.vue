@@ -61,6 +61,12 @@ export default {
           duration: 800,
           easing: 'easeInOutCubic',
         })
+      } else {
+        this.$vuetify.goTo('#app', {
+          offset: 0,
+          duration: 800,
+          easing: 'easeInOutCubic',
+        })
       }
     },
     changeVolume(value) {
