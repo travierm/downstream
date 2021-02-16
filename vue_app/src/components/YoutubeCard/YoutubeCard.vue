@@ -1,11 +1,11 @@
 <template>
   <v-card class="mx-auto" max-width="580">
     <v-card-actions v-if="!hideActions">
-      <!-- <v-btn text>Share</v-btn> -->
-
       <v-spacer></v-spacer>
 
       <PushAction :mediaId="mediaId" />
+
+      <MoodListAction v-if="collected" :mediaId="mediaId" />
 
       <CollectAction
         :videoId="videoId"
@@ -40,6 +40,7 @@ import $ from 'jquery'
 // Components
 import PushAction from './PushAction'
 import CollectAction from './CollectAction'
+import MoodListAction from './MoodListAction'
 
 // Services
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
@@ -51,6 +52,7 @@ export default {
   components: {
     PushAction,
     CollectAction,
+    MoodListAction,
   },
   props: {
     guid: String,
@@ -76,8 +78,8 @@ export default {
   },
   computed: {
     cardTitle() {
-      return (window.$showCardGuids ? this.guid : this.title)
-    }
+      return window.$showCardGuids ? this.guid : this.title
+    },
   },
   data() {
     return {
