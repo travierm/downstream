@@ -1,5 +1,5 @@
 <template>
-  <v-btn icon class="collectBtn" v-if="!inCollection" @click="collectItem">
+  <v-btn icon color="green accent-3" class="collectBtn" v-if="!inCollection" @click="collectItem">
     <v-icon class="ml-1">{{ mdiMusicNotePlus }}</v-icon>
   </v-btn>
 
@@ -69,6 +69,7 @@ export default {
         .dispatch('collection/removeItem', this.mediaId)
         .then(() => {
           YouTubePlayerManager.removeCard(this.guid)
+          this.inCollection = false
         })
         .catch(() => {
           this.inCollection = true

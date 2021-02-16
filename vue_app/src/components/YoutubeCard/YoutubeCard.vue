@@ -3,10 +3,8 @@
     <v-card-actions v-if="!hideActions">
       <v-spacer></v-spacer>
 
-      <PushAction :mediaId="mediaId" />
-
+      <PushAction v-if="collected" :mediaId="mediaId" />
       <MoodListAction v-if="collected" :mediaId="mediaId" />
-
       <CollectAction
         :videoId="videoId"
         :mediaId="mediaId"
