@@ -2,16 +2,17 @@
   <v-dialog v-model="showDialog" persistent max-width="400">
     <v-card>
       <v-card-title class="headline">
-        Mood List
+        Mood Lists
       </v-card-title>
-      <v-card-text></v-card-text>
+
+      <v-card-text>
+        <MoodList />
+      </v-card-text>
+
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn id="confirmDialogYesBtn" color="green" @click="handleConfirm">
-          Yes
-        </v-btn>
         <v-btn @click="handleClose">
-          No
+          Close
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -19,9 +20,14 @@
 </template>
 
 <script>
+import MoodList from './MoodList'
+
 export default {
   name: 'MoodListDialog',
   props: {},
+  components: {
+    MoodList
+  },
   data: function() {
     return {
       showDialog: this.show,

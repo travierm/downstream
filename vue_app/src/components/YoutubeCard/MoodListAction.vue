@@ -1,8 +1,8 @@
 <template>
-  <v-btn class="collectBtn" icon color="blue lighten-1">
+  <v-btn class="collectBtn" @click="toggleDialog" icon color="blue lighten-1">
     <v-icon class="ml-1">{{ mdiPlaylistMusic }}</v-icon>
 
-    <MoodListDialog />
+    <MoodListDialog ref="moodListDialog" />
   </v-btn>
 </template>
 
@@ -27,7 +27,11 @@ export default {
       mdiPlaylistMusic,
     }
   },
-  methods: {},
+  methods: {
+    toggleDialog() {
+      this.$refs.moodListDialog.openDialog()
+    }
+  },
 }
 </script>
 
