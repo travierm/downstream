@@ -29,7 +29,7 @@ matrix:
       cache:
         yarn: true
         directories:
-            - vendor
+            # - vendor
             - vue_app/node_modules
             - $HOME/.composer/cache
             - $HOME/.cache/Cypress
