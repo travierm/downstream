@@ -16,7 +16,7 @@ class MediaCollectionTest extends TestCase
 
         parent::setUp();
 
-        if(!$user) {
+        if (!$user) {
             $user = User::factory()->make();
         }
     }
@@ -56,7 +56,7 @@ class MediaCollectionTest extends TestCase
 
         $collection = $response->json();
         $this->assertTrue($collection['items'][0]['media_id'] == $mediaId, 'Collected mediaId exists in collection results');
-        
+
         return $mediaId;
     }
 
@@ -83,5 +83,30 @@ class MediaCollectionTest extends TestCase
 
         $collection = $response->json();
         $this->assertTrue(count($collection['items']) == 0);
+    }
+
+    public function testCanSeeCollectedItemAtTopOfCollection()
+    {
+        global $user;
+
+        $this->actingAs($user)->post('/api/media/collect', [
+            // Kid Cudi - Tequila Shots
+            'videoId' => 'lZcRSy0sk5w'
+        ]);
+
+        sleep(1);
+
+        $this->actingAs($user)->post('/api/media/collect', [
+            // Drake - Laugh Now Cry Later 
+            'videoId' => 'JFm7YDVlqnI'
+        ]);
+
+        $response = $this->actingAs($user)->get('/api/collection/');
+        $response->assertStatus(200);
+
+        $collection = $response->json();
+
+        $firstItemIndex = $collection['items'][0]['index'];
+        $this->assertEquals('JFm7YDVlqnI', $firstItemIndex, 'last collected item is not at top of list');
     }
 }

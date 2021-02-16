@@ -8,7 +8,11 @@ Active:
     ☐ Clear users collection besides test media before running e2e tests   
     
 Bugs:
+    ☐ Redirect to HTTPS automatically
     ✔ Remove popup only shows up once @done(21-02-14 20:11)
+    ☐ on refresh and on /collection scroll to top
+    ☐ Shuffling multiple times with cause play manager to act weird
+    ☐ updating volume of card when shuffled
     ☐ Keyboard stays up after loading search route on mobile ( focus issue )
 
 -- Release Plan --
@@ -16,6 +20,24 @@ Features:
     ☐ Mood List
 
 -- Ideas only beyond this --
+Small Features:
+    ☐ Ability to queue replays of current song
+    ☐ Change title text depending on background image
+    ☐ Maybe check px to px what the bg color will be for the font
+    ☐ Full screen mode pop in and out of items at fullscreen
+
+Listen to Friends:
+    ☐ Allow users to stream music friends are playing ( include history )
+    ☐ Allow users to disable this feature
+    ☐ Queue current song friend is playing
+
+Theater View:
+    ☐ Cool visualizer / Or play video ( maybe both )
+    ☐ Collection / Moodlist items shows up at the bottom
+    ☐ Show current playing song at bottom
+    ☐ Click to open list of next songs
+    ☐ Switch between collection and moodlist allow shuffling
+
 Moodlist Feature Todo:
     ☐ Moodlist Model
         ☐ Open on each item

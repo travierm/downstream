@@ -15,7 +15,7 @@ class AddPushedAtColumnToUserMediaTable extends Migration
     public function up()
     {
         Schema::table('user_media', function (Blueprint $table) {
-            $table->timestamp('pushed_at')->nullable()->after('media_id');
+            $table->timestamp('pushed_at')->useCurrent()->after('media_id');
         });
 
         $items = UserMedia::withTrashed()->get();
