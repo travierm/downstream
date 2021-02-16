@@ -2,6 +2,20 @@
   <v-app-bar app color="grey darken-4" dense dark fixed bottom>
     <v-container>
       <v-row no-gutters class="justify-left">
+
+        <v-col cols="auto" class="mr-1">
+          <span>{{ playerQueueCount }}</span>
+          <v-btn
+            @click="replayCurrentCard"
+            color="primary"
+            icon
+            class="ml-2 pa-1 mt-1"
+            small
+
+            ><v-icon large>{{ mdiReplay }}</v-icon></v-btn
+          >
+        </v-col>
+
         <v-col cols="auto">
           <v-btn
             v-if="onCollectionRoute"
@@ -21,7 +35,7 @@
           >
         </v-col>
 
-        <v-col lg="2">
+        <v-col lg="2" v-if="$vuetify.breakpoint.smAndUp">
           <VolumeSlider v-on:update="changeVolume" class="ml-4" />
         </v-col>
       </v-row>
@@ -30,8 +44,10 @@
 </template>
 
 <script>
-import YoutubePlayerManager from '../services/YoutubePlayerManager'
+import { mdiReplay } from '@mdi/js';
+
 import VolumeSlider from './VolumeSlider'
+import YoutubePlayerManager from '../services/YoutubePlayerManager'
 
 export default {
   name: 'BottomBar',
@@ -39,11 +55,27 @@ export default {
     VolumeSlider,
   },
   computed: {
+    playerQueueCount() {
+      return this.manager.guidQueue.length
+    },
     onCollectionRoute() {
       return this.$route.path == '/collection'
     },
   },
+  data(){
+    return {
+      mdiReplay,
+      manager: YoutubePlayerManager
+    }
+  },
   methods: {
+    replayCurrentCard() {
+      const currentPlayingGuid = this.manager.currentPlayingGuid
+
+      if(currentPlayingGuid) {
+         this.manager.queueNextCard(currentPlayingGuid)
+      }
+    },
     shuffleCollection() {
       this.$store.dispatch('collection/shuffle')
       this.$vuetify.goTo('#app', {
