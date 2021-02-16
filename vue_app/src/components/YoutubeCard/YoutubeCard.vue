@@ -44,7 +44,7 @@ import CollectAction from './CollectAction'
 // Services
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 
-window.$showCardGuids = true
+window.$showCardGuids = false
 
 export default {
   name: 'YoutubeCard',
