@@ -7,7 +7,7 @@
             <v-card-text><h3>{{ message }}</h3></v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn id="confirmDialogYesBtn" color="green" @click="handleConfirm">
+                <v-btn id="confirmDialogYesBtn" color="red" @click="handleConfirm">
                     Yes
                 </v-btn>
                 <v-btn @click="handleClose">
