@@ -26,7 +26,7 @@
         style="width: 90%;"
         class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
       >
-        {{ title }}
+        {{ cardTitle }}
       </div>
     </v-img>
 
@@ -43,6 +43,8 @@ import CollectAction from './CollectAction'
 
 // Services
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
+
+window.$showCardGuids = true
 
 export default {
   name: 'YoutubeCard',
@@ -72,13 +74,15 @@ export default {
       default: false,
     },
   },
+  computed: {
+    cardTitle() {
+      return (window.$showCardGuids ? this.guid : this.title)
+    }
+  },
   data() {
     return {
       showThumbnail: true,
     }
-  },
-  updated() {
-    this.registerCardPlayer()
   },
   mounted() {
     this.registerCardPlayer()

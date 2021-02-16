@@ -55,6 +55,11 @@ class YoutubePlayerManager {
     }
 
     registerCardPlayer(player) {
+        if(this.findCardByGuid(player.guid)) {
+            console.info("Stop duplicate card registration " + player.guid)
+            return
+        }
+
         this.registeredCards.push(player)
     }
 
@@ -128,5 +133,7 @@ class YoutubePlayerManager {
 }
 
 const $manager = new YoutubePlayerManager()
+
+window.$manager = $manager
 
 export default $manager

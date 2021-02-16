@@ -67,7 +67,7 @@ export default class YouTubeCardPlayer {
             console.error(
                 "Trying to stop video that was never loaded " + this.guid
             )
-            this._player.emit("stopped_by_manager")
+            
             return
         }
 
