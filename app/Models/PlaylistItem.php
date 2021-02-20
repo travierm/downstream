@@ -15,4 +15,21 @@ class PlaylistItem extends Model
         'created_by',
         'playlist_id'
     ];
+
+    public static function findOrCreate($userId, $playlistId, $mediaId)
+    {
+        $data = [
+            'created_by' => $userId,
+            'playlist_id' => $playlistId,
+            'media_id' => $mediaId
+        ];
+
+        $item = self::where($data)->first();
+
+        if (!$item) {
+            return self::create($data);
+        }
+
+        return $item;
+    }
 }

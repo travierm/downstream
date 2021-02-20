@@ -3,84 +3,108 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Tests\UserData;
 use App\Models\User;
+use App\Models\Playlist;
 use Illuminate\Foundation\Testing\WithFaker;
 
 global $user;
 
 class PlaylistTest extends TestCase
 {
-    use WithFaker;
-    
-    public function setUp(): void
-    {
-        global $user;
+  use WithFaker;
 
-        parent::setUp();
-        $this->setUpFaker();
+  public function setUp(): void
+  {
+    global $user;
 
-        if (!$user) {
-            $user = User::factory()->make();
-        }
+    parent::setUp();
+    $this->setUpFaker();
+
+    if (!$user) {
+      $user = User::factory()->make();
     }
 
-    // Create list
-    public function testCanCreateList()
-    {
-        global $user;
+    UserData::setUser($user->id);
+  }
 
-        $response = $this->actingAs($user)->post('/api/playlist/create', [
-          'name' => $this->faker->city
-        ]);
+  // Create list
+  public function testCanCreateList()
+  {
+    global $user;
 
-        $response->assertStatus(200);
-    }
+    $response = $this->actingAs($user)->post('/api/playlist/create', [
+      'name' => $this->faker->city
+    ]);
 
-    // Get all lists
-    public function testCanGetAllLists() {
-      global $user;
+    $playlistId = $response->json()['playlist_id'];
 
-      $response = $this->actingAs($user)->get('/api/playlist/all');
-      $response->assertStatus(200);
-    }
+    $response->assertStatus(200);
+    $this->assertNotEmpty($playlistId, 'Playlist ID is returned from playlist/create');
 
-    // Delete list
-    public function testCanDeleteList() {
-      global $user;
+    return $playlistId;
+  }
 
-      $response = $this->actingAs($user)->delete('/api/playlist/delete/1');
-      $response->assertStatus(200);
-    }
+  /**
+   * @depends testCanCreateList
+   */
+  public function testCanGetAllLists($playlistId)
+  {
+    global $user;
 
-    // Add item to list
-    public function testCanAddItemToList() {
-      global $user;
+    $response = $this->actingAs($user)->get('/api/playlist/all');
+    $response->assertStatus(200);
+    $response->assertJsonFragment(['id' => $playlistId], 'Created playlist_id exists in /playlist/all data');
+  }
 
-      $response = $this->actingAs($user)->get('/api/playlist/1/add', [
-        'media_id' => 1
-      ]);
+  /**
+   * @depends testCanCreateList
+   */
+  public function testCanAddItemToList($playlistId)
+  {
+    global $user;
 
-      $response->assertStatus(200);
-    }
+    $media = UserData::getFirstCollectedItem();
 
-    // See items in list
-    public function testCanSeeItemInList() {
-      global $user;
+    // Add media to playlist
+    $response = $this->actingAs($user)->post('/api/playlist/add', [
+      'media_id' => $media->id,
+      'playlist_id' => $playlistId
+    ]);
+    $response->assertStatus(200);
 
-      $response = $this->actingAs($user)->get('/api/playlist/1');
-      $response->assertStatus(200);
-    }
+    // See media in playlist
+    $response = $this->actingAs($user)->get('/api/playlist/' . $playlistId);
+    $response->assertStatus(200);
+    $response->assertJsonFragment([
+      'id' => $media->id
+    ]);
+  }
 
-    // Dekete item from list
-    public function testCanDeleteItemFromList() {
-      global $user;
+  /**
+   * @depends testCanCreateList
+   */
+  public function testCanDeleteList($playlistId)
+  {
+    global $user;
 
-      $response = $this->actingAs($user)->delete('/api/playlist/1/delete', [
-        'media_id' => 1
-      ]);
+    $response = $this->actingAs($user)->delete('/api/playlist/delete/' . $playlistId);
+    $response->assertStatus(200);
 
-      $response->assertStatus(200);
-    }
+    $response = $this->actingAs($user)->get('/api/playlist/all');
+    $response->assertStatus(200);
+    $response->assertJsonMissing(['id' => $playlistId], 'Deleted playlist_id does not exists in /playlist/all data');
+  }
+
+  // Dekete item from list
+  public function testCanDeleteItemFromList()
+  {
+    global $user;
+
+    $response = $this->actingAs($user)->delete('/api/playlist/delete', [
+      'media_id' => 1
+    ]);
+
+    $response->assertStatus(200);
+  }
 }
-
-?>
