@@ -37,6 +37,16 @@ Route::namespace('API')->group(function () {
         Route::post('/media/push/{mediaId}', 'MediaCollectionController@pushItem');
         Route::post('/media/collect', 'MediaCollectionController@postCollectItem');
         Route::delete('/media/collection/{itemId}', 'MediaCollectionController@removeItemFromCollection');
+
+        // Playlists
+        Route::get('/playlist/all', 'PlaylistController@getAllLists');
+        Route::post('/playlist/create', 'PlaylistController@createList');
+        Route::delete('/playlist/delete/{playlistId}', 'PlaylistController@deleteList');
+        
+        // Item Routes
+        Route::get('/playlist/{playlistId}', 'PlaylistController@getListItems');
+        Route::get('/playlist/{playlistId}/add', 'PlaylistController@addItem');
+        Route::delete('/playlist/{playlistId}/delete', 'PlaylistController@deleteItem');
     });
 
     /*
