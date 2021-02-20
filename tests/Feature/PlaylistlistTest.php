@@ -60,7 +60,7 @@ class PlaylistTest extends TestCase
   /**
    * @depends testCanCreateList
    */
-  public function testCanAddItemToList($playlistId)
+  public function testCanAddAndRemoveItemFromList($playlistId)
   {
     global $user;
 
@@ -79,6 +79,20 @@ class PlaylistTest extends TestCase
     $response->assertJsonFragment([
       'id' => $media->id
     ]);
+
+    // Delete media from playlist
+    $response = $this->actingAs($user)->delete('/api/playlist/delete', [
+      'media_id' => $media->id,
+      'playlist_id' => $playlistId
+    ]);
+    $response->assertStatus(200);
+
+    // Can not see media in playlist
+    $response = $this->actingAs($user)->get('/api/playlist/' . $playlistId);
+    $response->assertStatus(200);
+    $response->assertJsonMissing([
+      'id' => $media->id
+    ]);
   }
 
   /**
@@ -94,17 +108,5 @@ class PlaylistTest extends TestCase
     $response = $this->actingAs($user)->get('/api/playlist/all');
     $response->assertStatus(200);
     $response->assertJsonMissing(['id' => $playlistId], 'Deleted playlist_id does not exists in /playlist/all data');
-  }
-
-  // Dekete item from list
-  public function testCanDeleteItemFromList()
-  {
-    global $user;
-
-    $response = $this->actingAs($user)->delete('/api/playlist/delete', [
-      'media_id' => 1
-    ]);
-
-    $response->assertStatus(200);
   }
 }

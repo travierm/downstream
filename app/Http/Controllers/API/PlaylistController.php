@@ -120,7 +120,29 @@ class PlaylistController extends Controller
         ]);
     }
 
-    public function deleteItem()
+    public function deleteItem(Request $request)
     {
+        $mediaId = $request->input('media_id');
+        $playlistId = $request->input('playlist_id');
+
+        $playlistItem = PlaylistItem::where([
+            'created_by' => $this->userId,
+            'playlist_id' => $playlistId,
+            'media_id' => $mediaId
+        ]);
+
+        if ($playlistItem) {
+            $playlistItem->delete();
+
+            return response()->json([
+                'code' => 200,
+                'message' => "deleted playlist item"
+            ]);
+        }
+
+        return response()->json([
+            'code' => 500,
+            'message' => "could not delete playlist ite,"
+        ]);
     }
 }
