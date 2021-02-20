@@ -14,4 +14,15 @@ class Playlist extends Model
         'private',
         'created_by'
     ];
+
+    public static function findOrCreate($userId, $name) {
+        trim($name);
+
+        $playlist = self::where([
+            'name' => $name,
+            'created_by' => $userId
+        ])->first();
+        
+        return ($playlist ? $playlist : new static);
+    }
 }

@@ -4,16 +4,20 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\WithFaker;
 
 global $user;
 
 class PlaylistTest extends TestCase
 {
+    use WithFaker;
+    
     public function setUp(): void
     {
         global $user;
 
         parent::setUp();
+        $this->setUpFaker();
 
         if (!$user) {
             $user = User::factory()->make();
@@ -26,7 +30,7 @@ class PlaylistTest extends TestCase
         global $user;
 
         $response = $this->actingAs($user)->post('/api/playlist/create', [
-          'name' => 'Big Chillin'
+          'name' => $this->faker->city
         ]);
 
         $response->assertStatus(200);

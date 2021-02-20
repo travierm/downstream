@@ -17,7 +17,7 @@ class CreatePlaylistTables extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('created_by')->references('id')->on('users');
-            $table->boolean('private');
+            $table->boolean('private')->default(0);
             $table->timestamps();
         });
 
