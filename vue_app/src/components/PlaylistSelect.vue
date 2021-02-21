@@ -23,7 +23,11 @@ export default {
   name: 'PlaylistSelect',
   computed: {
     ...mapState({
-      playlists: state => state.playlist.playlists,
+      playlists: state => {
+        return state.playlist.playlists.filter((list) => {
+          return list.count >= 1
+        })
+      },
     }),
   },
   data() {
@@ -39,6 +43,7 @@ export default {
         await this.$store.dispatch('collection/fetchCollection', this.selectedPlaylist.id)
         this.$store.dispatch('collection/updateGuidIndex')
       }else{
+        this.selectedPlaylist = false;
         this.$store.dispatch('playlist/setSelectedPlaylist', false)
 
         await this.$store.dispatch('collection/fetchCollection')

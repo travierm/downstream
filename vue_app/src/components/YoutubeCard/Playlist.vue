@@ -130,7 +130,7 @@ export default {
 
       deletePlaylist(item.id)
         .then(() => {
-          this.$store.dispatch('playlist/getAll', item.id)
+          this.$store.dispatch('playlist/getAll', this.mediaId)
         })
         .catch(err => {
           console.error(err)
@@ -141,6 +141,7 @@ export default {
         deletePlaylistItem(item.id, this.mediaId)
           .then(() => {
             item.itemAdded = false
+            this.$store.dispatch('playlist/getAll', this.mediaId)
           })
           .catch(err => {
             console.error(err)
@@ -149,6 +150,7 @@ export default {
         addPlaylistItem(item.id, this.mediaId)
           .then(() => {
             item.itemAdded = true
+            this.$store.dispatch('playlist/getAll', this.mediaId)
           })
           .catch(err => {
             console.error(err)

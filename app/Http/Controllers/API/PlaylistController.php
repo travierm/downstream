@@ -38,6 +38,7 @@ class PlaylistController extends Controller
         }
 
         foreach ($userLists as $playlist) {
+            $playlist->count = $playlist->getItemCount();
 
             if (in_array($playlist->id, $playlistIds)) {
                 $playlist->itemAdded = true;
