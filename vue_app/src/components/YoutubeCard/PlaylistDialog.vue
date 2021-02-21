@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showDialog" persistent max-width="400">
+  <v-dialog v-model="showDialog" max-width="400">
     <v-card>
       <v-card-title class="headline">
         Playlists
@@ -58,7 +58,7 @@ export default {
     handleClose() {
       this.showDialog = false
       this.$emit('closed', true)
-    }
+    },
   },
 }
 </script>

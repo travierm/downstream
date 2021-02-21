@@ -19,7 +19,7 @@
       </v-btn>
     </div>
 
-    <v-spacer />
+    <v-spacer v-if="$vuetify.breakpoint.smAndUp || !loggedIn" />
 
     <v-btn to="/login" outlined v-if="!loggedIn">Login</v-btn>
 
