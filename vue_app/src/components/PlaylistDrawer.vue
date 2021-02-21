@@ -32,6 +32,16 @@
         <v-list-item-title>{{ playlist.name }}</v-list-item-title>
       </v-list-item>
 
+      <v-list-item v-if="playlists.length <= 0">
+        <v-list-item-title>No Playlists Created</v-list-item-title>
+      </v-list-item>
+
+      <v-list-item
+        v-if="playlists.length >= 1 && playlistsWithCounts.length <= 0"
+      >
+        <v-list-item-title>All playlists are empty</v-list-item-title>
+      </v-list-item>
+
       <v-list-item link @click="showCollection"
         ><v-list-item-icon><v-icon>mdi-all-inclusive</v-icon></v-list-item-icon>
         <v-list-item-title>Collection</v-list-item-title>
@@ -51,13 +61,13 @@ export default {
   computed: {
     ...mapState({
       playlistDrawerStatus: state => state.playlistDrawerStatus,
-      playlists: state => {
-        console.log('paylists', state)
-        return state.playlist.playlists.filter(list => {
-          return list.count >= 1
-        })
-      },
+      playlists: state => state.playlist.playlists,
     }),
+    playlistsWithCounts() {
+      return this.playlists.filter(list => {
+        return list.count >= 1
+      })
+    },
   },
   data() {
     return {
