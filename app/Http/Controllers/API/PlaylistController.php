@@ -144,11 +144,8 @@ class PlaylistController extends Controller
         ]);
     }
 
-    public function deleteItem(Request $request)
+    public function deleteItem($playlistId, $mediaId)
     {
-        $mediaId = $request->input('media_id');
-        $playlistId = $request->input('playlist_id');
-
         $playlistItem = PlaylistItem::where([
             'created_by' => $this->userId,
             'playlist_id' => $playlistId,

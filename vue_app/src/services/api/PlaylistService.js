@@ -14,7 +14,7 @@ export function createPlaylist(name) {
 
 export function deletePlaylist(playlistId) {
   if (!playlistId) {
-    return
+    return false
   }
 
   return http.delete(`/playlist/delete/${playlistId}`)
@@ -22,7 +22,7 @@ export function deletePlaylist(playlistId) {
 
 export function addPlaylistItem(playlistId, mediaId) {
   if (!playlistId || !mediaId) {
-    return
+    return false
   }
 
   return http.post('/playlist/add', {
@@ -36,8 +36,6 @@ export function deletePlaylistItem(playlistId, mediaId) {
     return
   }
 
-  return http.post('/playlist/add', {
-    media_id: mediaId,
-    playlist_id: playlistId,
-  })
+  const route = `/playlist/${playlistId}/delete/${mediaId}`
+  return http.delete(route)
 }

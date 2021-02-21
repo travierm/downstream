@@ -89,10 +89,8 @@ class PlaylistTest extends TestCase
     ]);
 
     // Delete media from playlist
-    $response = $this->actingAs($user)->delete('/api/playlist/delete', [
-      'media_id' => $media->id,
-      'playlist_id' => $playlistId
-    ]);
+    $route = '/api/playlist/' . $playlistId . '/delete/' . $media->id;
+    $response = $this->actingAs($user)->delete($route);
     $response->assertStatus(200);
 
     // Can not see media in playlist

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-list flat>
+    <div class="ml-4 mt-2" v-if="playlists.length <= 0">
+      <h3>No playlists created yet..</h3>
+    </div>
+    <v-list flat v-else>
       <v-list-item-group dark color="white" :ripple="false">
         <v-list-item
           exact-active-class="no-active"
@@ -17,7 +20,22 @@
           <v-list-item-content>
             <v-list-item-title v-text="item.name"></v-list-item-title>
           </v-list-item-content>
+
+          <v-btn
+            icon
+            class="removeBtn"
+            @click.stop.prevent="confirmPlaylistDelete(item)"
+          >
+            <v-icon class="ml-1" color="red">{{ mdiMinusCircle }}</v-icon>
+          </v-btn>
         </v-list-item>
+
+        <ConfirmDialog
+          :show="showConfirmDialog"
+          message="Are you sure you want to delete this playlist?"
+          v-on:closed="showConfirmDialog = false"
+          v-on:confirmed="deleteList(selectedItem)"
+        />
       </v-list-item-group>
     </v-list>
 
@@ -49,42 +67,45 @@ import {
   deletePlaylist,
   deletePlaylistItem,
 } from '../../services/api/PlaylistService'
-import { mdiCheckboxIntermediate, mdiCheckboxBlankOutline } from '@mdi/js'
+import {
+  mdiCheckboxIntermediate,
+  mdiCheckboxBlankOutline,
+  mdiMinusCircle,
+} from '@mdi/js'
+import ConfirmDialog from '../Shared/ConfirmDialog'
 
 export default {
   name: 'Playlist',
-  components: {},
+  components: {
+    ConfirmDialog,
+  },
   props: {
     mediaId: {
       type: Number,
       default: 0,
       required: false,
     },
+    playlists: {
+      type: Array,
+      default: [],
+      required: false,
+    },
+    updateLists: {
+      type: Function,
+      required: true,
+    },
   },
   data: () => {
     return {
+      selectedItem: false,
       listNameInput: '',
+      showConfirmDialog: false,
+      mdiMinusCircle,
       mdiCheckboxIntermediate,
       mdiCheckboxBlankOutline,
-      playlists: [],
     }
   },
-  mounted() {
-    this.fetchAllPlaylists()
-  },
   methods: {
-    fetchAllPlaylists() {
-      getAllPlaylists(this.mediaId)
-        .then(resp => {
-          const items = resp.data.items
-          if (items) {
-            this.playlists = items
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
     createList() {
       if (this.listNameInput == '') {
         return
@@ -98,7 +119,22 @@ export default {
       createPlaylist(this.listNameInput)
         .then(() => {
           this.listNameInput = ''
-          this.fetchAllPlaylists()
+          this.updateLists()
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    confirmPlaylistDelete(item) {
+      this.selectedItem = item
+      this.showConfirmDialog = true
+    },
+    deleteList(item) {
+      this.showConfirmDialog = false
+
+      deletePlaylist(item.id)
+        .then(() => {
+          this.updateLists()
         })
         .catch(err => {
           console.error(err)

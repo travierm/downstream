@@ -46,7 +46,7 @@ Route::namespace('API')->group(function () {
         // Item Routes
         Route::get('/playlist/{playlistId}', 'PlaylistController@getListItems');
         Route::post('/playlist/add', 'PlaylistController@addItem');
-        Route::delete('/playlist/delete', 'PlaylistController@deleteItem');
+        Route::delete('/playlist/{playlistId}/delete/{mediaId}', 'PlaylistController@deleteItem');
     });
 
     /*

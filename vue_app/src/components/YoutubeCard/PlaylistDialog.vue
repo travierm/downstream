@@ -6,7 +6,7 @@
       </v-card-title>
 
       <v-card-text>
-        <Playlist :mediaId='mediaId' />
+        <Playlist :mediaId="mediaId" :playlists='playlists' :updateLists='fetchAllPlaylists' />
       </v-card-text>
 
       <v-card-actions>
@@ -21,6 +21,7 @@
 
 <script>
 import Playlist from './Playlist'
+import { getAllPlaylists } from '../../services/api/PlaylistService'
 
 export default {
   name: 'PlaylistDialog',
@@ -37,6 +38,7 @@ export default {
   },
   data: function() {
     return {
+      playlists: [],
       showDialog: this.show,
     }
   },
@@ -48,6 +50,7 @@ export default {
   methods: {
     openDialog() {
       this.showDialog = true
+      this.fetchAllPlaylists()
     },
     handleConfirm() {
       this.showDialog = false
@@ -56,6 +59,19 @@ export default {
     handleClose() {
       this.showDialog = false
       this.$emit('closed', true)
+    },
+    // API Methods
+    fetchAllPlaylists() {
+      getAllPlaylists(this.mediaId)
+        .then(resp => {
+          const items = resp.data.items
+          if (items) {
+            this.playlists = items
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     },
   },
 }
