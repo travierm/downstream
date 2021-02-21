@@ -41,7 +41,7 @@ abstract class TestCase extends BaseTestCase
 
             UserMedia::where('user_id', $userId)->delete();
             Playlist::where('created_by', $userId)->delete();
-            PlaylistItem::where('created_by', $userId)->delete();
+            PlaylistItem::where('created_by', $userId)->forceDelete();
 
             $user->delete();
         }
