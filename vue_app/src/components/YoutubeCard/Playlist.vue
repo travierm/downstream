@@ -60,8 +60,8 @@
 
 <script>
 import _ from 'lodash'
+import { mapState } from 'vuex'
 import {
-  getAllPlaylists,
   createPlaylist,
   addPlaylistItem,
   deletePlaylist,
@@ -79,20 +79,16 @@ export default {
   components: {
     ConfirmDialog,
   },
+  computed: {
+    ...mapState({
+      playlists: state => state.playlist.playlists,
+    }),
+  },
   props: {
     mediaId: {
       type: Number,
       default: 0,
       required: false,
-    },
-    playlists: {
-      type: Array,
-      default: [],
-      required: false,
-    },
-    updateLists: {
-      type: Function,
-      required: true,
     },
   },
   data: () => {
@@ -119,7 +115,7 @@ export default {
       createPlaylist(this.listNameInput)
         .then(() => {
           this.listNameInput = ''
-          this.updateLists()
+          this.$store.dispatch('playlist/getAll')
         })
         .catch(err => {
           console.error(err)
@@ -134,7 +130,7 @@ export default {
 
       deletePlaylist(item.id)
         .then(() => {
-          this.updateLists()
+          this.$store.dispatch('playlist/getAll', item.id)
         })
         .catch(err => {
           console.error(err)

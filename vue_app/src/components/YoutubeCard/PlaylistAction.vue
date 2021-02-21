@@ -29,6 +29,7 @@ export default {
   },
   methods: {
     toggleDialog() {
+      // this.$store.dispatch('playlist/getAll')
       this.$refs.playlistDialog.openDialog()
     }
   },

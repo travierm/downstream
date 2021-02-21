@@ -76,12 +76,12 @@ export const actions = {
       context.dispatch('player/setGuidIndex', guidIndex, { root: true })
     }
   },
-  async fetchCollection({ commit, rootState, state }) {
+  async fetchCollection({ commit, rootState, state }, playlistId = false) {
     if (!rootState.auth.token) {
       return
     }
 
-    const response = await CollectionService.fetchCollection()
+    const response = await CollectionService.fetchCollection(playlistId)
     if (response.data) {
       if (response.data.hash !== state.hash) {
         console.log('Collection hash does not match. Updating local state!')
