@@ -2,18 +2,17 @@
   <v-dialog v-model="showDialog" persistent max-width="400">
     <v-card>
       <v-card-title class="headline">
-        Confirm
+        Playlists
       </v-card-title>
-      <v-card-text
-        ><h3>{{ message }}</h3></v-card-text
-      >
+
+      <v-card-text>
+        <Playlist :mediaId="mediaId" />
+      </v-card-text>
+
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn id="confirmDialogYesBtn" color="red" @click="handleConfirm">
-          Yes
-        </v-btn>
         <v-btn @click="handleClose">
-          No
+          Close
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -21,21 +20,24 @@
 </template>
 
 <script>
+import Playlist from './Playlist'
+
 export default {
-  name: 'ConfimDialog',
+  name: 'PlaylistDialog',
+  props: {},
+  components: {
+    Playlist,
+  },
   props: {
-    show: {
-      type: Boolean,
-      default: false,
-      required: true,
-    },
-    message: {
-      type: String,
-      required: true,
+    mediaId: {
+      type: Number,
+      default: 0,
+      required: false,
     },
   },
   data: function() {
     return {
+      playlists: [],
       showDialog: this.show,
     }
   },
@@ -45,6 +47,10 @@ export default {
     },
   },
   methods: {
+    openDialog() {
+      this.showDialog = true
+      this.$store.dispatch('playlist/getAll', this.mediaId)
+    },
     handleConfirm() {
       this.showDialog = false
       this.$emit('confirmed', true)
@@ -52,7 +58,7 @@ export default {
     handleClose() {
       this.showDialog = false
       this.$emit('closed', true)
-    },
+    }
   },
 }
 </script>

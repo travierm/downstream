@@ -1,8 +1,13 @@
 -- Project TODO --
 Active:
-    ☐ Push to Top
+    ☐ Mood Lists
+        ☐ Backend
+            ☐ Soft delete items from lists unless the entire list is deleted
+                Allows items to get back original created_at ( or added to list date )
+
+    ✔ Push to Top @done(21-02-15 23:17)
     ☐ Improve Collection Search
-    ☐ Collection Shuffle
+    ✔ Collection Shuffle @done(21-02-15 23:17)
     ☐ Radio Feature
     ☐ Collection Links & Stats
     ☐ Clear users collection besides test media before running e2e tests   

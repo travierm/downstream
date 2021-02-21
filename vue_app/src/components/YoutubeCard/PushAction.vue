@@ -8,7 +8,7 @@
         color="green accent-3"
         @click="pushItem"
       >
-        <v-icon large>{{ mdiArrowUpThick }}</v-icon>
+        <v-icon>{{ mdiArrowUpThick }}</v-icon>
       </v-btn>
     </template>
     <span>Push an item to the top of your collection</span>

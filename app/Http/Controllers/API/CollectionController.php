@@ -17,6 +17,7 @@ class CollectionController extends Controller
     public function getCollection(Request $request) 
     {
         $userId = Auth::user()->id;
+        $playlistId = $request->get('playlist_id');
 
         if(!$userId) {
             return response()->json([
@@ -28,7 +29,7 @@ class CollectionController extends Controller
             $itemHashCacheKey = 'user_collection_items_hash_' . $userId;
         }
 
-        if($this->shouldCacheCollection) {
+        if($this->shouldCacheCollection && !$playlistId) {
             if (Cache::has($collectionCacheKey) && Cache::has($itemHashCacheKey)) {
                 $items = Cache::get($collectionCacheKey);
                 $itemsHash = Cache::get($itemHashCacheKey);
@@ -44,6 +45,13 @@ class CollectionController extends Controller
             ->join('user_media', 'user_media.media_id', '=', 'media.id')
             ->where('user_media.user_id', $userId)
             ->whereNull('user_media.deleted_at');
+        
+        if($playlistId) {
+            $queryBuilder->join('playlist_items', 'playlist_items.media_id', '=', 'media.id');
+            $queryBuilder->where('playlist_items.created_by', $userId);
+            $queryBuilder->where('playlist_items.playlist_id', $playlistId);
+            $queryBuilder->whereNull('playlist_items.deleted_at');
+        }
 
         // Add limit if needed for mobile
         if($request->limit) {

@@ -17,7 +17,7 @@
 
     <v-row v-else>
       <CardCol v-for="item in collection" :key="item.id">
-        <v-lazy :options="{ threshold: 0.25 }" transition="fade-transition">
+        <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
           <YoutubeCard
             :item="item"
             :guid="item.guid"

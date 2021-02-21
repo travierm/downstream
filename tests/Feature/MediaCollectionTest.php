@@ -55,7 +55,13 @@ class MediaCollectionTest extends TestCase
         $response->assertStatus(200);
 
         $collection = $response->json();
-        $this->assertTrue($collection['items'][0]['media_id'] == $mediaId, 'Collected mediaId exists in collection results');
+        if(!$collection) {
+            dd($collection);
+        }
+        
+        $response->assertJsonFragment([
+            'media_id' => $mediaId
+        ]);
 
         return $mediaId;
     }
