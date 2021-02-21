@@ -2,7 +2,6 @@
   <v-app-bar app color="grey darken-4" dense dark fixed bottom>
     <v-container>
       <v-row no-gutters class="justify-left">
-
         <v-col cols="auto" class="mr-1">
           <span>{{ playerQueueCount }}</span>
           <v-btn
@@ -11,7 +10,6 @@
             icon
             class="ml-2 pa-1 mt-1"
             small
-
             ><v-icon large>{{ mdiReplay }}</v-icon></v-btn
           >
         </v-col>
@@ -44,7 +42,7 @@
 </template>
 
 <script>
-import { mdiReplay } from '@mdi/js';
+import { mdiReplay } from '@mdi/js'
 
 import VolumeSlider from './VolumeSlider'
 import YoutubePlayerManager from '../services/YoutubePlayerManager'
@@ -62,18 +60,18 @@ export default {
       return this.$route.path == '/collection'
     },
   },
-  data(){
+  data() {
     return {
       mdiReplay,
-      manager: YoutubePlayerManager
+      manager: YoutubePlayerManager,
     }
   },
   methods: {
     replayCurrentCard() {
       const currentPlayingGuid = this.manager.currentPlayingGuid
 
-      if(currentPlayingGuid) {
-         this.manager.queueNextCard(currentPlayingGuid)
+      if (currentPlayingGuid) {
+        this.manager.queueNextCard(currentPlayingGuid)
       }
     },
     shuffleCollection() {
