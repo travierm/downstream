@@ -2,8 +2,10 @@
   <v-container fluid>
     <v-row>
       <v-col>
+        <CollectionBar />
+
         <!-- Mobile Playlist Button -->
-        <div class="mb-2 mr-4 ml-4">
+        <div class="mt-2 mr-4 ml-4">
           <v-btn
             v-if="mobileBreakpoint"
             color="primary"
@@ -15,7 +17,6 @@
           >
         </div>
 
-        <CollectionBar />
         <PlaylistDrawer />
       </v-col>
     </v-row>
