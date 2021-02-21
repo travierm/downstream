@@ -11,6 +11,10 @@
                     <CollectionSearchInput :class="(mobileBreakpoint ? 'mr-4' : '')" />
                 </v-col>
 
+                <v-col cols="auto">
+                    <PlaylistSelect />
+                </v-col>
+
                 <v-col cols="auto" v-if="!mobileBreakpoint">
                     <div class="title">Collection Size: {{ collection.length }}</div>
                 </v-col>
@@ -25,11 +29,13 @@
 
 <script>
 import { mapState } from "vuex"
+import PlaylistSelect from '../PlaylistSelect'
 import CollectionSearchInput from '@/components/Collection/CollectionSearchInput'
 
 export default {
     name: "CollectionBar",
     components: {
+        PlaylistSelect,
         CollectionSearchInput
     },
     computed: {
