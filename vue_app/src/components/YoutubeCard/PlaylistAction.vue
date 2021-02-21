@@ -2,18 +2,18 @@
   <v-btn class="collectBtn" @click="toggleDialog" icon color="blue lighten-1">
     <v-icon class="ml-1">{{ mdiPlaylistMusic }}</v-icon>
 
-    <MoodListDialog ref="moodListDialog" />
+    <PlaylistDialog :mediaId='mediaId' ref="playlistDialog" />
   </v-btn>
 </template>
 
 <script>
 import { mdiPlaylistMusic } from '@mdi/js'
-import MoodListDialog from './MoodListDialog'
+import PlaylistDialog from './PlaylistDialog'
 
 export default {
-  name: 'MoodListAction',
+  name: 'PlaylistAction',
   components: {
-    MoodListDialog,
+    PlaylistDialog,
   },
   props: {
     mediaId: {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     toggleDialog() {
-      this.$refs.moodListDialog.openDialog()
+      this.$refs.playlistDialog.openDialog()
     }
   },
 }

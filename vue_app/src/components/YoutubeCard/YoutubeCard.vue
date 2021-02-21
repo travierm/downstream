@@ -4,7 +4,7 @@
       <v-spacer></v-spacer>
 
       <PushAction v-if="collected" :mediaId="mediaId" />
-      <MoodListAction v-if="collected" :mediaId="mediaId" />
+      <PlaylistAction v-if="collected" :mediaId="mediaId" />
       <CollectAction
         :videoId="videoId"
         :mediaId="mediaId"
@@ -38,7 +38,7 @@ import $ from 'jquery'
 // Components
 import PushAction from './PushAction'
 import CollectAction from './CollectAction'
-import MoodListAction from './MoodListAction'
+import PlaylistAction from './PlaylistAction'
 
 // Services
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
@@ -50,7 +50,7 @@ export default {
   components: {
     PushAction,
     CollectAction,
-    MoodListAction,
+    PlaylistAction,
   },
   props: {
     guid: String,

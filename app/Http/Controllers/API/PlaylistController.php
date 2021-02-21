@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+
 use App\Models\Media;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
@@ -13,7 +14,42 @@ class PlaylistController extends Controller
 {
     function __construct()
     {
-        $this->userId = Auth::user()->id;
+        $this->middleware(function ($request, $next) {
+            $this->userId = Auth::user()->id;
+
+            return $next($request);
+        });
+    }
+
+    public function getAllLists(Request $request)
+    {
+        $mediaId = $request->get('media_id');
+
+        $userLists = Playlist::where(['created_by' => $this->userId])
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        $playlistIds = [];
+        if ($mediaId) {
+            $playlistIds = PlaylistItem::where([
+                'media_id' => $mediaId,
+                'created_by' => $this->userId
+            ])->pluck('playlist_id')->all();
+        }
+
+        foreach ($userLists as $playlist) {
+
+            if (in_array($playlist->id, $playlistIds)) {
+                $playlist->itemAdded = true;
+            } else {
+                $playlist->itemAdded = false;
+            }
+        }
+
+        return response()->json([
+            'code' => 200,
+            'items' => $userLists
+        ]);
     }
 
     public function getListItems($playlistId)
@@ -35,18 +71,6 @@ class PlaylistController extends Controller
         return response()->json([
             'code' => 500,
             'message' => 'could not fetch item of playlist' . $playlistId
-        ]);
-    }
-
-    public function getAllLists()
-    {
-        $userLists = Playlist::where(['created_by' => $this->userId])
-            ->orderBy('created_at', 'DESC')
-            ->get();
-
-        return response()->json([
-            'code' => 200,
-            'items' => $userLists
         ]);
     }
 

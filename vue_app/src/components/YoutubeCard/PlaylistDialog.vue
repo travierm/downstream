@@ -2,11 +2,11 @@
   <v-dialog v-model="showDialog" persistent max-width="400">
     <v-card>
       <v-card-title class="headline">
-        Mood Lists
+        Playlists
       </v-card-title>
 
       <v-card-text>
-        <MoodList />
+        <Playlist :mediaId='mediaId' />
       </v-card-text>
 
       <v-card-actions>
@@ -20,13 +20,20 @@
 </template>
 
 <script>
-import MoodList from './MoodList'
+import Playlist from './Playlist'
 
 export default {
-  name: 'MoodListDialog',
+  name: 'PlaylistDialog',
   props: {},
   components: {
-    MoodList
+    Playlist,
+  },
+  props: {
+    mediaId: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
   },
   data: function() {
     return {

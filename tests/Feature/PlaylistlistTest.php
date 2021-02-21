@@ -80,6 +80,14 @@ class PlaylistTest extends TestCase
       'id' => $media->id
     ]);
 
+    // See media has itemAdded true when viewing all playlists
+    $mediaParam = '?media_id=' . $media->id;
+    $response = $this->actingAs($user)->get('/api/playlist/all' . $mediaParam);
+    $response->assertStatus(200);
+    $response->assertJsonFragment([
+      'itemAdded' => true
+    ]);
+
     // Delete media from playlist
     $response = $this->actingAs($user)->delete('/api/playlist/delete', [
       'media_id' => $media->id,
