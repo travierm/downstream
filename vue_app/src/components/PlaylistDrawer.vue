@@ -4,8 +4,8 @@
     v-model="drawerOpen"
     absolute
     temporary
-    light
-    color="primary"
+    dark
+    color="dark"
   >
     <v-list>
       <v-list-item link>
@@ -22,7 +22,7 @@
     <v-list nav dense>
       <v-list-item
         link
-        v-for="playlist in playlists"
+        v-for="playlist in playlistsWithCounts"
         :key="playlist.id"
         @click="updateSelectedPlaylist(playlist)"
       >
@@ -44,7 +44,7 @@
 
       <v-list-item link @click="showCollection"
         ><v-list-item-icon><v-icon>mdi-all-inclusive</v-icon></v-list-item-icon>
-        <v-list-item-title>Collection</v-list-item-title>
+        <v-list-item-title>View Collection</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>

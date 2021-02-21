@@ -10,7 +10,7 @@
           <CollectionSearchInput :class="mobileBreakpoint ? 'mr-4' : ''" />
         </v-col>
 
-        <v-col cols="auto">
+        <v-col cols="auto" v-if="!mobileBreakpoint">
           <v-btn
             color="primary"
             lg
