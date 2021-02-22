@@ -1,39 +1,51 @@
 <template>
-  <v-card class="mx-auto" max-width="580">
-    <v-card-actions v-if="!hideActions">
-      <v-spacer></v-spacer>
+  <VueGlow
+    :disabled="showThumbnail"
+    color="#FF0000"
+    mode="hex"
+    fade
+    interval="20"
+    intense
+    rounded
+    tile
+  >
+    <v-card class="ma-auto">
+      <v-card-actions v-if="!hideActions">
+        <v-spacer></v-spacer>
 
-      <PushAction v-if="collected" :mediaId="mediaId" />
-      <PlaylistAction v-if="collected" :mediaId="mediaId" />
-      <CollectAction
-        :videoId="videoId"
-        :mediaId="mediaId"
-        :collected="collected"
-      />
-    </v-card-actions>
+        <PushAction v-if="collected" :mediaId="mediaId" />
+        <PlaylistAction v-if="collected" :mediaId="mediaId" />
+        <CollectAction
+          :videoId="videoId"
+          :mediaId="mediaId"
+          :collected="collected"
+        />
+      </v-card-actions>
 
-    <v-img
-      :id="this.guid + '_media'"
-      class="youtubeCardThumbnail"
-      :src="thumbnail"
-      :height="dense ? '250px' : '435px'"
-      @click="handleThumbnailClick"
-      v-if="showThumbnail"
-    >
-      <div
-        style="width: 90%;"
-        class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
+      <v-img
+        :id="this.guid + '_media'"
+        class="youtubeCardThumbnail"
+        :src="thumbnail"
+        :height="dense ? '250px' : '435px'"
+        @click="handleThumbnailClick"
+        v-if="showThumbnail"
       >
-        {{ cardTitle }}
-      </div>
-    </v-img>
+        <div
+          style="width: 90%;"
+          class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
+        >
+          {{ cardTitle }}
+        </div>
+      </v-img>
 
-    <div class="video-instance embed-responsive" :id="guid"></div>
-  </v-card>
+      <div class="video-instance embed-responsive" :id="guid"></div>
+    </v-card>
+  </VueGlow>
 </template>
 
 <script>
 import $ from 'jquery'
+import VueGlow from 'vue-glow'
 
 // Components
 import PushAction from './PushAction'
@@ -48,6 +60,7 @@ window.$showCardGuids = false
 export default {
   name: 'YoutubeCard',
   components: {
+    VueGlow,
     PushAction,
     CollectAction,
     PlaylistAction,
@@ -133,5 +146,16 @@ export default {
 <style>
 .youtubeCardTitle {
   text-align: left;
+}
+
+.glowing-border {
+  border: 2px solid #dadada;
+  border-radius: 7px;
+}
+
+.glowing-border:focus {
+  outline: none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed;
 }
 </style>
