@@ -1,6 +1,6 @@
 <template>
   <v-container fluid :class="containerClass">
-    <v-sheet color="grey darken-4" elevation="1">
+    <v-sheet color="grey darken-4" elevation="1" v-if="!mobileBreakpoint">
       <v-row class="ml-1">
         <!-- <v-col cols="auto">
                     <v-btn color="primary">Playlists</v-btn>
@@ -30,6 +30,9 @@
                 </v-col> -->
       </v-row>
     </v-sheet>
+    <CollectionSearchInput v-else class='ml-4 mr-4'  />
+      
+    </v-col>
   </v-container>
 </template>
 
