@@ -9,18 +9,7 @@
         <v-col :cols="mobileBreakpoint ? '12' : 'auto'">
           <CollectionSearchInput :class="mobileBreakpoint ? 'mr-4' : ''" />
         </v-col>
-
-        <v-col cols="auto" v-if="!mobileBreakpoint">
-          <v-btn
-            color="primary"
-            lg
-            @click="$store.dispatch('setPlaylistDrawerStatus', true)"
-          >
-            <v-icon class="pr-1">{{ mdiPlaylistMusic }}</v-icon>
-            Playlists</v-btn
-          >
-        </v-col>
-
+        
         <v-col cols="auto" v-if="!mobileBreakpoint">
           <div class="title">Collection Size: {{ collection.length }}</div>
         </v-col>
