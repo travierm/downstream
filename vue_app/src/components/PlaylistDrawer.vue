@@ -30,6 +30,7 @@
           <v-icon>mdi-playlist-music</v-icon>
         </v-list-item-icon>
         <v-list-item-title>{{ playlist.name }}</v-list-item-title>
+        <v-list-item-action-text>{{ playlist.count }}</v-list-item-action-text>
       </v-list-item>
 
       <v-list-item v-if="playlists.length <= 0">

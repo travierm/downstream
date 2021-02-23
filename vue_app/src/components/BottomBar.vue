@@ -20,16 +20,28 @@
             @click="shuffleCollection"
             color="secondary"
             class="focusBtn ml-2"
-            >Shuffle</v-btn
+            ><v-icon>mdi-shuffle-variant</v-icon></v-btn
+          >
+        </v-col>
+
+        <v-col cols="auto">
+          <v-btn
+            class="ml-2"
+            color="primary"
+            lg
+            @click="$store.dispatch('setPlaylistDrawerStatus', true)"
+          >
+            <v-icon class="pr-1">mdi-playlist-music</v-icon>
+            Playlists</v-btn
           >
         </v-col>
 
         <v-col cols="auto">
           <v-btn
             @click="focusOnPlayingCard"
-            color="primary"
+            color="secondary"
             class="focusBtn ml-2"
-            >Focus</v-btn
+            ><v-icon class="pr-1">mdi-magnify</v-icon>Focus</v-btn
           >
         </v-col>
 
