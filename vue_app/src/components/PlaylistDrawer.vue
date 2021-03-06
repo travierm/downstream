@@ -2,7 +2,7 @@
   <v-navigation-drawer
     v-if="drawerOpen"
     v-model="drawerOpen"
-    absolute
+    fixed
     temporary
     dark
     color="dark"
