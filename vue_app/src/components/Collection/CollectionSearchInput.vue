@@ -14,35 +14,30 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import YoutubePlayerManager from "../../services/YoutubePlayerManager";
-
+import { mapGetters } from 'vuex'
 export default {
-  name: "CollectionSearchInput",
+  name: 'CollectionSearchInput',
   computed: {
     ...mapGetters({
-      collection: "collection/collectionSearchResults",
+      collection: 'collection/collectionSearchResults',
     }),
   },
   data: () => {
     return {
       items: [],
-      query: "",
-      value: "",
-    };
+      query: '',
+      value: '',
+    }
   },
   mounted() {},
   methods: {},
   watch: {
     query: function(val) {
-      this.$store.commit("collection/SET_SEARCH_QUERY", val);
+      this.$store.commit('collection/SET_SEARCH_QUERY', val)
 
-      let indexes = _.map(this.collection, "guid");
-      this.$store.dispatch("player/setGuidIndex", indexes);
+      let indexes = _.map(this.collection, 'guid')
+      this.$store.dispatch('player/setGuidIndex', indexes)
     },
   },
-};
+}
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>

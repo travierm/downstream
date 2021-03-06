@@ -53,6 +53,7 @@ import CollectAction from './CollectAction'
 import PlaylistAction from './PlaylistAction'
 
 // Services
+import Analytics from '../../services/api/AnalyticsService'
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 
 window.$showCardGuids = false
@@ -120,6 +121,10 @@ export default {
 
       // Register events so we can update our view on player state changes
       this.cardPlayer.on('play', () => {
+        if (this.mediaId) {
+          Analytics.playedMedia(this.mediaId)
+        }
+
         this.handleVideoPlay()
       })
 

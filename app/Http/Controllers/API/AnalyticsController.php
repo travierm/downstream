@@ -3,29 +3,45 @@
 namespace App\Http\Controllers\API;
 
 use Auth;
+use Carbon\Carbon;
 use App\Models\UserMediaPlays;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AnalyticsController extends Controller
 {
-    function __construct() 
-    {
-        $this->middleware('auth:api');
+    public function getStats() {
+        $playsToday = UserMediaPlays::whereDate('created_at', Carbon::today())->count();
+        $playsThisWeek = UserMediaPlays::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->count();
+        $playsThisMonth = UserMediaPlays::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->count();
+        $playsThisYear = UserMediaPlays::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
+            ->count();
+
+        return response()->json([
+            'plays' => [
+                'today' => $playsToday,
+                'week' => $playsThisWeek,
+                'month' => $playsThisMonth,
+                'year' => $playsThisYear,
+            ]
+        ]);
     }
 
-    public function recordUserPlay(Request $request)
+    public function recordUserPlay($mediaId = false)
     {
-        if(!Auth::user()->id) {
+        $userId = Auth::user()->id;
+
+        if(!$userId || !$mediaId) {
             return response()->json([
                 'code' => 400,
-                'message' => "Bad user_id"
+                'message' => "Bad params given"
             ]);
         }
 
         $created = UserMediaPlays::create([
-            'user_id' => Auth::user()->id,
-            'media_id' => $request->media_id
+            'user_id' => $userId,
+            'media_id' => $mediaId
         ]);
 
         if($created) {

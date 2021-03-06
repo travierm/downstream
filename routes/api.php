@@ -16,9 +16,12 @@ use App\Http\Controllers\API\Auth\LoginController;
 
 // Controllers in the API Folder only
 Route::namespace('API')->group(function () {
+    
     Route::get('/ping', function() {
         return "pong";
     });
+
+    Route::get('/ana/media/stats', 'AnalyticsController@getStats');
     
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
 
@@ -47,6 +50,10 @@ Route::namespace('API')->group(function () {
         Route::get('/playlist/{playlistId}', 'PlaylistController@getListItems');
         Route::post('/playlist/add', 'PlaylistController@addItem');
         Route::delete('/playlist/{playlistId}/delete/{mediaId}', 'PlaylistController@deleteItem');
+
+        // Analytics
+        Route::get('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');
+
     });
 
     /*
