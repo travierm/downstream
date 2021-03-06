@@ -31,7 +31,7 @@
     </v-row>
 
     <v-row v-else>
-      <CardCol v-for="item in collection" :key="item.id">
+      <CardCol v-for="item in collection" :key="item.guid">
         <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
           <YoutubeCard
             :item="item"
@@ -41,6 +41,7 @@
             :videoId="item.index"
             :thumbnail="item.thumbnail"
             :collected="item.collected"
+            :key="searchQueryUpdates"
           ></YoutubeCard>
         </v-lazy>
       </CardCol>
@@ -73,6 +74,7 @@ export default {
     ...mapGetters({
       guidIndex: 'collection/guidIndex',
       collection: 'collection/collectionSearchResults',
+      searchQueryUpdates: 'collection/searchQueryUpdates',
     }),
     mobileBreakpoint() {
       return this.$vuetify.breakpoint.mobile

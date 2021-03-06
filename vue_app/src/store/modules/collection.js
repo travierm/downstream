@@ -5,6 +5,7 @@ export const namespaced = true
 export const state = {
   shuffled: false,
   searchQuery: '',
+  searchQueryUpdates: 0,
   hash: window.localStorage.getItem('collectionHash'),
   collection: JSON.parse(window.localStorage.getItem('collection')),
 }
@@ -12,6 +13,7 @@ export const state = {
 export const mutations = {
   SET_SEARCH_QUERY(state, query) {
     state.searchQuery = query
+    state.searchQueryUpdates++
   },
   SHUFFLE_COLLECTION(state) {
     state.shuffled = true
@@ -32,6 +34,9 @@ export const mutations = {
 }
 
 export const getters = {
+  searchQueryUpdates() {
+    return state.searchQueryUpdates
+  },
   guidIndex(state) {
     if (!state.collection) {
       return []
