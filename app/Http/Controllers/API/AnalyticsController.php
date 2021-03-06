@@ -4,28 +4,24 @@ namespace App\Http\Controllers\API;
 
 use Auth;
 use App\Models\UserMediaPlays;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AnalyticsController extends Controller
 {
-    function __construct() 
+    public function recordUserPlay($mediaId = false)
     {
-        $this->middleware('auth:api');
-    }
+        $userId = Auth::user()->id;
 
-    public function recordUserPlay(Request $request)
-    {
-        if(!Auth::user()->id) {
+        if(!$userId || !$mediaId) {
             return response()->json([
                 'code' => 400,
-                'message' => "Bad user_id"
+                'message' => "Bad params given"
             ]);
         }
 
         $created = UserMediaPlays::create([
-            'user_id' => Auth::user()->id,
-            'media_id' => $request->media_id
+            'user_id' => $userId,
+            'media_id' => $mediaId
         ]);
 
         if($created) {
