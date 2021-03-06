@@ -121,7 +121,9 @@ export default {
 
       // Register events so we can update our view on player state changes
       this.cardPlayer.on('play', () => {
-        Analytics.playedMedia(this.mediaId)
+        if (this.mediaId) {
+          Analytics.playedMedia(this.mediaId)
+        }
 
         this.handleVideoPlay()
       })

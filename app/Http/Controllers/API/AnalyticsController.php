@@ -3,11 +3,31 @@
 namespace App\Http\Controllers\API;
 
 use Auth;
+use Carbon\Carbon;
 use App\Models\UserMediaPlays;
 use App\Http\Controllers\Controller;
 
 class AnalyticsController extends Controller
 {
+    public function getStats() {
+        $playsToday = UserMediaPlays::whereDate('created_at', Carbon::today())->count();
+        $playsThisWeek = UserMediaPlays::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->count();
+        $playsThisMonth = UserMediaPlays::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->count();
+        $playsThisYear = UserMediaPlays::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
+            ->count();
+
+        return response()->json([
+            'plays' => [
+                'today' => $playsToday,
+                'week' => $playsThisWeek,
+                'month' => $playsThisMonth,
+                'year' => $playsThisYear,
+            ]
+        ]);
+    }
+
     public function recordUserPlay($mediaId = false)
     {
         $userId = Auth::user()->id;
