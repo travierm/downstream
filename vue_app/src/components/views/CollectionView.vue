@@ -16,8 +16,6 @@
             Playlists</v-btn
           >
         </div>
-
-        <PlaylistDrawer />
       </v-col>
     </v-row>
 
@@ -57,7 +55,6 @@ import { mapGetters } from 'vuex'
 import { mdiPlaylistMusic } from '@mdi/js'
 import CardCol from '@/components/CardCol'
 import BottomBar from '@/components/BottomBar'
-import PlaylistDrawer from '@/components/PlaylistDrawer'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
 import CollectionBar from '@/components/Collection/CollectionBar'
 
@@ -68,7 +65,6 @@ export default {
     BottomBar,
     YoutubeCard,
     CollectionBar,
-    PlaylistDrawer,
   },
   computed: {
     ...mapGetters({

@@ -2,6 +2,10 @@
   <v-app>
     <NavBar />
 
+    <div class="position: absolute;">
+      <PlaylistDrawer />
+    </div>
+
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -9,14 +13,16 @@
 </template>
 
 <script>
-import { fetchInitUserData } from '@/store/events';
+import { fetchInitUserData } from '@/store/events'
 import NavBar from '@/components/Shared/NavBar.vue'
+import PlaylistDrawer from './components/PlaylistDrawer'
 
 export default {
   name: 'App',
 
   components: {
-    NavBar
+    NavBar,
+    PlaylistDrawer,
   },
   mounted() {
     fetchInitUserData()
@@ -24,5 +30,5 @@ export default {
   data: () => ({
     //
   }),
-};
+}
 </script>

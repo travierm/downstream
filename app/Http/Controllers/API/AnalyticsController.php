@@ -23,7 +23,7 @@ class AnalyticsController extends Controller
                 'today' => $playsToday,
                 'week' => $playsThisWeek,
                 'month' => $playsThisMonth,
-                'year' => $playsThisYear,
+                'year' => $playsThisYear - 1,
             ]
         ]);
     }
