@@ -1,13 +1,23 @@
 stages:
-  - test
+  - test-backend
+  - test-frontend
   - deploy
 
+deploy:
+  image: php:7.4
+  stage: deploy
+  only:
+    refs:
+      - master
+  script:
+    - sudo apt-get install curl
+
 test-backend:
-  stage: test
+  stage: test-backend
   # This file is a template, and might need editing before it works on your project.
   # Official framework image. Look for the different tagged releases at:
   # https://hub.docker.com/r/library/php
-  image: bitnami/laravel:latest
+  image: php:7.4
 
   # Pick zero or more services to be used on all builds.
   # Only needed when using a docker container to run your tests in.
@@ -16,8 +26,12 @@ test-backend:
     - mysql:latest
 
   variables:
+    DB_HOST: mysql
     MYSQL_DATABASE: ds_main
+    MYSQL_USER: ci_user
+    MYSQL_PASSWORD: secret
     MYSQL_ROOT_PASSWORD: secret
+    YOUTUBE_KEY: $YOUTUBE_KEY
 
   # This folder is cached between builds
   # http://docs.gitlab.com/ee/ci/yaml/README.html#cache
@@ -29,8 +43,18 @@ test-backend:
   # This is a basic example for a gem or script which doesn't use
   # services such as redis or postgres
   script:
+    # Wait for MySQL service to boot
+    - sleep 5
     # Update packages
     - apt-get update -yqq
+    - apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev
+    - apt-get clean
+    # Install php extensions
+    - docker-php-ext-install pdo_mysql zip
+
+    # Install & enable Xdebug for code coverage reports
+    - pecl install xdebug
+    - docker-php-ext-enable xdebug
     # Install Composer and project dependencies.
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install
@@ -44,13 +68,81 @@ test-backend:
     - php artisan db:seed
     - php vendor/bin/phpunit --coverage-text
 
-deploy_production:
-  stage: deploy
+test-frontend:
+  stage: test-frontend
+  # This file is a template, and might need editing before it works on your project.
+  # Official framework image. Look for the different tagged releases at:
+  # https://hub.docker.com/r/library/php
+  image: php:7.4
+
+  # Pick zero or more services to be used on all builds.
+  # Only needed when using a docker container to run your tests in.
+  # Check out: http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
+  services:
+    - mysql:latest
+
+  variables:
+    DB_HOST: mysql
+    MYSQL_DATABASE: ds_main
+    MYSQL_USER: ci_user
+    MYSQL_PASSWORD: secret
+    MYSQL_ROOT_PASSWORD: secret
+    YOUTUBE_KEY: $YOUTUBE_KEY
+
+  # This folder is cached between builds
+  # http://docs.gitlab.com/ee/ci/yaml/README.html#cache
+  cache:
+    paths:
+      - vendor/
+      - node_modules/
+      - .yarn
+
+  # This is a basic example for a gem or script which doesn't use
+  # services such as redis or postgres
+  before_script:
+    # Wait for MySQL service to boot
+    - sleep 5
+
+    # Update packages
+    - apt-get update -yqq
+    - apt-get install -qq git curl wget xvfb libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev ibgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth
+
+    # Install NVM & Node
+    - wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash #install nvm
+    - export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use
+    - eval "[ -f .nvmrc ] && nvm install || nvm install stable"
+
+    # Install Yarn
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    - apt-get clean
+
+    # Install php extensions
+    - docker-php-ext-install pdo_mysql zip
+
+    # Install & enable Xdebug for code coverage reports
+    - pecl install xdebug
+    - docker-php-ext-enable xdebug
+    # Install Composer and project dependencies.
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install
+    - cp .env.ci .env
   script:
-    - echo 'test'
-  environment:
-    name: production
-    url: http://192.168.1.1
-  when: manual
-  only:
-    - master
+    # Generate an application key. Re-cache.
+    - php artisan key:generate
+    - php artisan config:cache
+    # Run database migrations.
+    - php artisan migrate
+    # Run database seed
+    - php artisan db:seed
+    - php artisan serve --quiet & APP_PID=$!
+    - nvm install stable
+    # Install Frontend Deps
+    - cd vue_app/ && yarn
+    # Disable Audio
+    - echo -e 'pcm.!default {\n type hw\n card 0\n}\n\nctl.!default {\n type hw\n card 0\n}' > ~/.asoundrc
+    # Run frontend tests
+    - yarn test:unit
+    - yarn test:e2e-ci
+  after_script:
+    - kill $APP_PID
