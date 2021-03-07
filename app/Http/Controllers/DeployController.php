@@ -12,7 +12,7 @@ class DeployController extends Controller
         ini_set('max_execution_time', 180);
 
         $localToken = config('app.deploy_secret');
-        $senderToken = $request->header('X-Hub-Signature');
+        $senderToken = $request->get('token');
 
         if ($localToken === $senderToken) {
             $root_path = base_path();
