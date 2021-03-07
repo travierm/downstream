@@ -8,14 +8,12 @@ deploy:
   stage: deploy
   variables:
     DEPLOY_TOKEN: $DEPLOY_TOKEN
-  when: manual
   only:
     refs:
       - master
   script:
     - apt-get install curl
-    - curl -H 'Content-Type: application/x-www-form-urlencoded' -H 'X-Hub-Signature: $DEPLOY_TOKEN' -X POST https://downstream.us/app/deploy
-
+    - curl -X GET https://downstream.us/app/deploy?token=$DEPLOY_TOKEN
 
 test-backend:
   stage: test-backend
