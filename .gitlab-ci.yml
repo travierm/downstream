@@ -28,7 +28,7 @@ test-backend:
 
   # This is a basic example for a gem or script which doesn't use
   # services such as redis or postgres
-  before_script:
+  script:
     # Update packages
     - apt-get update -yqq
     # Prep for Node
@@ -67,11 +67,7 @@ test-backend:
     - php artisan migrate
     # Run database seed
     - php artisan db:seed
-
-  test:
-    script:
-      # run laravel tests
-      - php vendor/bin/phpunit --coverage-text --colors=never
+    - php vendor/bin/phpunit --coverage-text
 
 deploy_production:
   stage: deploy
