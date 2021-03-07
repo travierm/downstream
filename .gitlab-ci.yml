@@ -6,11 +6,14 @@ stages:
 deploy:
   image: php:7.4
   stage: deploy
+  variables:
+    DEPLOY_TOKEN: $DEPLOY_TOKEN
   only:
     refs:
       - master
   script:
-    - sudo apt-get install curl
+    - apt-get install curl
+    - curl -X GET https://downstream.us/app/deploy?token=$DEPLOY_TOKEN
 
 test-backend:
   stage: test-backend
