@@ -22,7 +22,7 @@ class DeployController extends Controller
                 echo $buffer;
             });
         }else{
-            echo "Failure hash mismatch";
+            echo "Failure bad token";
             exit;
         }
     }
