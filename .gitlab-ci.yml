@@ -1,6 +1,5 @@
 stages:
-  - test-backend
-  - test-frontend
+  - test
   - deploy
 
 deploy:
@@ -17,7 +16,7 @@ deploy:
     - curl -X POST "https://downstream.us/app/deploy?token=$DEPLOY_TOKEN"
 
 test-backend:
-  stage: test-backend
+  stage: test
   # This file is a template, and might need editing before it works on your project.
   # Official framework image. Look for the different tagged releases at:
   # https://hub.docker.com/r/library/php
@@ -73,7 +72,7 @@ test-backend:
     - php vendor/bin/phpunit --coverage-text
 
 test-frontend:
-  stage: test-frontend
+  stage: test
   # This file is a template, and might need editing before it works on your project.
   # Official framework image. Look for the different tagged releases at:
   # https://hub.docker.com/r/library/php
