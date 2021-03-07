@@ -13,7 +13,7 @@ deploy:
       - master
   script:
     - apt-get install curl
-    - curl -X GET https://downstream.us/app/deploy?token=$DEPLOY_TOKEN
+    - curl -X POST https://downstream.us/app/deploy?token=$DEPLOY_TOKEN
 
 test-backend:
   stage: test-backend
