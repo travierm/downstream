@@ -14,7 +14,7 @@ deploy:
       - master
   script:
     - apt-get install curl
-    - curl -X POST https://downstream.us/app/deploy?token=$DEPLOY_TOKEN
+    - curl -X POST "https://downstream.us/app/deploy?token=$DEPLOY_TOKEN"
 
 test-backend:
   stage: test-backend
@@ -98,7 +98,7 @@ test-frontend:
   cache:
     paths:
       - vendor/
-      - node_modules/
+      - vue_app/node_modules/
       - .yarn
 
   # This is a basic example for a gem or script which doesn't use
