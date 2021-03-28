@@ -24,10 +24,10 @@
 }
 
 :80 {
-    root * /srv/app/vue_app/dist/
-    redir /index.html / 308
-
-    file_server
-    log
+    handle {
+        root * /srv/app/vue_app/dist/
+        try_files {path} /index.html
+        file_server
+    }
 }
 
