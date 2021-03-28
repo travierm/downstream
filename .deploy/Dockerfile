@@ -39,12 +39,13 @@ RUN chown -R $NON_ROOT_USER:$NON_ROOT_GROUP /etc/crontabs/$NON_ROOT_USER && setc
 
 # Install NVM and Node
 RUN mkdir vue_app
+COPY .env.example ./.env
 COPY package*.json ./
 COPY vue_app ./vue_app
-RUN ls -la
 
 RUN apk add --update nodejs npm
-RUN cd vue_app/ && npm install && npm run build
+RUN npm install -g yarn
+RUN cd vue_app/ && yarn && yarn build
 
 COPY composer.json composer.lock ./
 RUN chown -R $NON_ROOT_USER:$NON_ROOT_GROUP $LARAVEL_PATH
@@ -96,6 +97,10 @@ ARG PUSHER_APP_ID=${PUSHER_APP_ID}
 ARG PUSHER_APP_KEY=${PUSHER_APP_KEY}
 ARG PUSHER_APP_SECRET=${PUSHER_APP_SECRET}
 ARG PUSHER_APP_CLUSTER=${PUSHER_APP_CLUSTER}
+
+RUN echo ${DB_HOST}
+RUN echo ${DB_USERNAME}
+RUN echo ${DB_PASSWORD}
 
 # Start app
 EXPOSE 80
