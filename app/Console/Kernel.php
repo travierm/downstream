@@ -26,19 +26,19 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {   
         // Continuously loop through media collection and autofix videos
-        $schedule->command('youtube:autofix-queue')
+        /*($schedule->command('youtube:autofix-queue')
            ->everyMinute()
-           ->appendOutputTo(storage_path('logs/autofix.log'));
+           ->appendOutputTo(storage_path('logs/autofix.log'));*/
 
         // Discover new items for users based on media they already collected
-        $schedule->command('spotify:recommendations')
+        /*$schedule->command('spotify:recommendations')
            ->everyTenMinutes()
-           ->appendOutputTo(storage_path('logs/discovery.log'));
+           ->appendOutputTo(storage_path('logs/discovery.log'));*/
         
         // Import new tracks found in a user's DS Import playlist on Spotify
-        $schedule->command('spotify:import')
+        /*$schedule->command('spotify:import')
            ->everyMinute()
-           ->appendOutputTo(storage_path('logs/spotify-import.log'));
+           ->appendOutputTo(storage_path('logs/spotify-import.log'));*/
     }
 
     /**
