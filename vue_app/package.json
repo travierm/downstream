@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "@mdi/js": "^5.8.55",
+        "ackee-tracker": "^5.0.1",
         "axios": "^0.21.1",
         "core-js": "^3.6.4",
         "jquery": "^3.5.1",
