@@ -11,8 +11,6 @@
                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
-                        @honeypot
-
                         <!-- Display Name -->
                         <div class="form-group{{ $errors->has('display_name') ? ' has-error' : '' }}">
                             <label for="display_name" class="col-md-4 control-label">Display Name</label>
