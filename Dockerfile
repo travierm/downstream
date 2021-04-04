@@ -35,4 +35,4 @@ WORKDIR /home/container
 EXPOSE 80
 COPY ./.deploy/entrypoint.sh /
 
-ENTRYPOINT ["/bin/ash", "/entrypoint.sh"]
+ENTRYPOINT ["sh", "/entrypoint.sh"]

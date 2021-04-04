@@ -1,5 +1,5 @@
-#!/bin/ash
-cd /home/container || exit
+#!/bin/bash
+cd /home/container/downstream || exit
 
 # Make internal Docker IP address available to processes.
 INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
@@ -9,15 +9,14 @@ export INTERNAL_IP
 MODIFIED_STARTUP=$(eval echo "$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g')")
 echo ":/home/container$ ${MODIFIED_STARTUP}"
 
-git clone https://gitlab.com/tmoorlag/downstream.git .
-cd downstream
-cp .env.example .env
 
 composer install
 php artisan key:generate
+
 cd vue_app/
-yarn
-yarn build production
+
+yarn --prod
+yarn build
 cd ..
 
 # Run the Server
