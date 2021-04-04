@@ -49,6 +49,7 @@ RUN cd vue_app/ && yarn && yarn build
 
 COPY composer.json composer.lock ./
 RUN chown -R $NON_ROOT_USER:$NON_ROOT_GROUP $LARAVEL_PATH
+
 USER $NON_ROOT_USER
 RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader
 RUN rm -rf /home/$NON_ROOT_USER/.composer
@@ -56,6 +57,9 @@ RUN rm -rf /home/$NON_ROOT_USER/.composer
 # Copy app
 COPY --chown=$NON_ROOT_USER:$NON_ROOT_GROUP . $LARAVEL_PATH/
 COPY ./.deploy/config/php/local.ini /usr/local/etc/php/conf.d/local.ini
+
+USER $NON_ROOT_USER
+RUN chmod -R 777 storage 
 
 # Set any ENVs
 ARG APP_KEY=${APP_KEY}
