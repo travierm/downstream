@@ -15,7 +15,7 @@ php artisan key:generate
 
 cd vue_app/
 
-yarn --prod
+yarn install --production --frozen-lockfile
 yarn build
 cd ..
 
