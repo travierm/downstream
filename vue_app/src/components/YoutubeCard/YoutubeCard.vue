@@ -13,6 +13,9 @@
       <v-card-actions v-if="!hideActions">
         <v-spacer></v-spacer>
 
+        <v-btn icon>
+          <v-icon class="ml-1" color="primary">{{ mdiRadio }}</v-icon>
+        </v-btn>
         <PushAction v-if="collected" :mediaId="mediaId" />
         <PlaylistAction v-if="collected" :mediaId="mediaId" />
         <CollectAction
@@ -56,6 +59,8 @@ import PlaylistAction from './PlaylistAction'
 import Analytics from '../../services/api/AnalyticsService'
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 
+import { mdiRadio } from '@mdi/js'
+
 window.$showCardGuids = false
 
 export default {
@@ -95,6 +100,7 @@ export default {
   },
   data() {
     return {
+      mdiRadio,
       showThumbnail: true,
     }
   },

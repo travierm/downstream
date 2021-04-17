@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Cache;
-use App\MediaTempItem;
-use App\Media;
+use App\Models\MediaTempItem;
+use App\Models\Media;
+use App\Data\TrackTitleFilters;
 use Illuminate\Console\Command;
 
 class filterRunner extends Command
@@ -42,7 +42,7 @@ class filterRunner extends Command
     {
         //Title Runner
         $this->info("Booting title filter runner...");
-        $filters = Cache::get('filters.title', []);
+        $filters = TrackTitleFilters::$items;
 
         if(!$filters) {
             $this->error("No filters found");
@@ -53,13 +53,20 @@ class filterRunner extends Command
         $media = Media::all();
 
         foreach($media as $item) {
-            $title = $item->getMeta()->title;
+            $title = @$item->getMeta()->title;
+            if(!$title) {
+                continue;
+            }
+
             $filteredTitle = $this->applyFilters($title, $filters);
 
             if($title !== $filteredTitle) {
                 $meta = $item->getMeta();
                 $meta->title = trim($filteredTitle);
+
                 $item->meta = json_encode($meta);
+                $item->title = $filteredTitle;
+
                 $good = $item->save();
 
                 if($good) {
