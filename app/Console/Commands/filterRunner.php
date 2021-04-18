@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\MediaTempItem;
 use App\Models\Media;
-use App\Data\TrackTitleFilters;
+use App\Models\MediaTempItem;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class filterRunner extends Command
 {
@@ -14,7 +14,7 @@ class filterRunner extends Command
      *
      * @var string
      */
-    protected $signature = 'filter:runner';
+    protected $signature = 'filter:run';
 
     /**
      * The console command description.
@@ -40,37 +40,32 @@ class filterRunner extends Command
      */
     public function handle()
     {
-        //Title Runner
-        $this->info("Booting title filter runner...");
-        $filters = TrackTitleFilters::$items;
-
+        $filters = DB::table('title_filters')->pluck('value');
         if(!$filters) {
             $this->error("No filters found");
             return;
         }
 
-        $this->info("Found " . count($filters) . " filter definitions");
+        $this->info("Found " . count($filters) . " active filters");
         $media = Media::all();
 
         foreach($media as $item) {
-            $title = @$item->getMeta()->title;
+            $title = @$item->title;
             if(!$title) {
                 continue;
             }
 
-            $filteredTitle = $this->applyFilters($title, $filters);
+            $filteredTitle = trim($this->applyFilters($title, $filters));
 
             if($title !== $filteredTitle) {
-                $meta = $item->getMeta();
-                $meta->title = trim($filteredTitle);
 
-                $item->meta = json_encode($meta);
-                $item->title = $filteredTitle;
-
-                $good = $item->save();
-
-                if($good) {
-                    $this->info("updated $title => $filteredTitle");
+                $success = Media::where('id', $item->id)->update([
+                    'title' => $filteredTitle,
+                    'meta->title' => $filteredTitle
+                ]);
+            
+                if($success) {
+                    $this->info("updated {$item->id} $title => $filteredTitle");
                 }
             }
         }

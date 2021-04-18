@@ -13,9 +13,15 @@
       <v-card-actions v-if="!hideActions">
         <v-spacer></v-spacer>
 
-        <v-btn icon>
-          <v-icon class="ml-1" color="primary">{{ mdiRadio }}</v-icon>
-        </v-btn>
+        <router-link
+          :to="{ path: `/discover/track/${videoId}` }"
+          target="_blank"
+        >
+          <v-btn icon @click="handleDiscoverTrackClick">
+            <v-icon class="ml-1" color="primary">{{ mdiRadio }}</v-icon>
+          </v-btn>
+        </router-link>
+
         <PushAction v-if="collected" :mediaId="mediaId" />
         <PlaylistAction v-if="collected" :mediaId="mediaId" />
         <CollectAction
@@ -108,6 +114,9 @@ export default {
     this.registerCardPlayer()
   },
   methods: {
+    handleDiscoverTrackClick() {
+      this.$store.dispatch('player/stopPlayingCurrentCard')
+    },
     handleVideoPlay() {
       this.showThumbnail = false
 
