@@ -31,7 +31,7 @@ class DiscoverTrackTest extends TestCase
   {
     global $user;
     
-    $response = $this->actingAs($user)->get('/api/discover/track/sIfTD2i50s8');
+    $response = $this->actingAs($user)->get('/api/discover/track/asd');
     $response->assertStatus(500);
   }
 }

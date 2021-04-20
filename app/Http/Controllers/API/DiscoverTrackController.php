@@ -12,6 +12,12 @@ class DiscoverTrackController extends Controller
     {
         $media = Media::where('index', $videoId)->first();
 
-     //   dd($media);
+        if(!$media) {
+            return response()->json([
+                'message' => 'Bad video id given'
+            ], 500);
+        }
+
+        return response()->json([], 200);
     }
 }
