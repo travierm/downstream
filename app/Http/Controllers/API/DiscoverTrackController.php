@@ -12,6 +12,6 @@ class DiscoverTrackController extends Controller
     {
         $media = Media::where('index', $videoId)->first();
 
-        dd($media);
+     //   dd($media);
     }
 }

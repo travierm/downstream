@@ -13,18 +13,22 @@ class SpotifyAPI {
 	private static $scopes = [
 		'user-top-read',
 		'user-read-private',
-        'playlist-read-private',
-        'playlist-modify-private',
+    'playlist-read-private',
+    'playlist-modify-private',
 		'playlist-modify-public',
 	];
 
 	public static function getAuthorizeUrl() {
-        $session = self::getSession();
+    $session = self::getSession();
 
-        $options = ['scope' => self::$scopes];
+    $options = ['scope' => self::$scopes];
 
-        return $session->getAuthorizeUrl($options);
-    }
+		if(!$session) {
+			return false;
+		}
+
+    return $session->getAuthorizeUrl($options);
+	}
 
 	public static function getSession() {
 		if(!self::$booted) {
@@ -69,7 +73,6 @@ class SpotifyAPI {
 		return $accessToken;
 	}
 
-
 	private static function boot() 
 	{
 		$clientId = env('SPOTIFY_CLIENT_ID');
@@ -79,26 +82,25 @@ class SpotifyAPI {
 			return false;
 		}
 
-
 		$session = new SpotifyWebAPI\Session(
-            env('SPOTIFY_CLIENT_ID'),
+    	env('SPOTIFY_CLIENT_ID'),
 			env('SPOTIFY_CLIENT_SECRET'),
 			'https://downstream.us/spotify/connect'
-        );
+    );
 
-        $session->requestCredentialsToken();
-        $accessToken = $session->getAccessToken();
+		$session->requestCredentialsToken();
+		$accessToken = $session->getAccessToken();
 
-        $api = new SpotifyWebAPI\SpotifyWebAPI();
-        $api->setAccessToken($accessToken);
+		$api = new SpotifyWebAPI\SpotifyWebAPI();
+		$api->setAccessToken($accessToken);
 
-        self::$api = $api;
+    self::$api = $api;
 		self::$session = $session;
 		
 		if($api && $session) {
 			self::$booted = true;
 		}
 
-        return true;
+    return true;
 	}
 }
