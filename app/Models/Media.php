@@ -7,6 +7,7 @@ use App\Models\MediaMeta;
 use App\Models\UserMedia;
 use App\MediaRemoteReference;
 use App\MediaType\YoutubeVideo;
+use App\Services\Sources\SpotifyTrack;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -67,6 +68,25 @@ class Media extends Model
     }
 
     return $rows;
+  }
+
+  public function getOrFindSpotifyId()
+  {
+    if($this->spotify_id) {
+      return $this->spotify_id;
+    }
+
+    $spotifyId = SpotifyTrack::findIdByTitle($this->title);
+
+    // spotify_id becomes id of first item found when searching by title
+    if($spotifyId) {
+      $this->spotify_id = $spotifyId;
+      $this->save();
+    }else{
+      return false;
+    }
+
+    return $this->spotify_id;
   }
 
   public function getReferences()

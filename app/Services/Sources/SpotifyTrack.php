@@ -5,6 +5,18 @@ use Log;
 use App\Services\SpotifyAPI;
 
 class SpotifyTrack {
+  public static function findIdByTitle(String $title)
+  {
+    $tracks = self::findByTitle($title);
+
+    
+    if(@$tracks[0]) {
+      return $tracks[0]->id;
+    }
+
+    return false;
+  }
+
   public static function findByTitle(String $title)
   {
     $api = SpotifyAPI::getInstance();
@@ -26,13 +38,13 @@ class SpotifyTrack {
     return count($responseItems) >= 1 ? $responseItems : false;
   }
 
-  public static function getSeedTracksByIds(Array $ids = []) {
+  public static function getSeedTracksByIds(Array $ids = [], $limit = 8) {
     $api = SpotifyAPI::getInstance();
 
     $results = false;
     try {
       $results = $api->getRecommendations([
-        'limit' => 8,
+        'limit' => $limit,
         'seed_tracks' => $ids
       ]);
     } catch(\Exception $e) {

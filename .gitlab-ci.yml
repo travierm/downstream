@@ -59,6 +59,8 @@ test:
     # Update packages
     - apt-get update -yqq
     - apt-get install -qq git curl wget xvfb libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev ibgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth
+    - pecl install xdebug
+    - docker-php-ext-enable xdebug
 
     # Install NVM & Node
     - wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash #install nvm

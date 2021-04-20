@@ -57,7 +57,7 @@
   },
   "scripts": {
     "test": [
-      "vendor/phpunit/phpunit/phpunit --colors --testdox"
+      "vendor/phpunit/phpunit/phpunit --colors --testdox --coverage-text"
     ],
     "post-root-package-install": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

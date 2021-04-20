@@ -1,17 +1,40 @@
 <?php
 namespace App\Services\Discovery;
 
+use App\Media\YouTube;
+use App\Models\Media;
+use App\Services\YoutubeService;
+use App\Services\Sources\SpotifyTrack;
+use App\MediaType\Transformer\SpotifyTrackTransformer;
 class SimilarTracks {
-  public static function similarByTrackName(string $trackName)
+  public static function similarTracksByMedia(Media $media)
   {
-    $similarTracks = [
-      'track_name' => 'Low Life',
-      'track_artist' => 'Future'
-    ];
-    // search Last FM API for track names plus arts
-    // search Spotify API for tracks
-    // run similar tracks through youtube matcher
-    // return youtube media type
-    // look at search controller for reference
+    $similarTracks = [];
+
+    // Get Spotify ID of Track
+    $spotifyId = $media->getOrFindSpotifyId();
+  
+    if(!$spotifyId) {
+      throw new \Exception("Could not find spotify_id for media item");
+
+      return false;
+    }
+    
+    // Use given track as a seed to find similar tracks on Spotify
+    $seedTracks = SpotifyTrack::getSeedTracksByIds([$spotifyId]);
+    foreach($seedTracks as $track) {
+
+      // Convert Spotfy results to array of data
+      $trackData = SpotifyTrackTransformer::transform($track);
+
+      // Search for YouTube Video by title of Spotify Track
+      $youtubeSearchResults = YouTubeService::searchByQuery($trackData['title'], 1);
+      if($youtubeSearchResults[0]) {
+        // Add first search result to the array of similar tracks
+        $similarTracks[] = $youtubeSearchResults[0];
+      }
+    }
+    
+    return $similarTracks;
   }
 }

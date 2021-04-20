@@ -34,4 +34,20 @@ class DiscoverTrackTest extends TestCase
     $response = $this->actingAs($user)->get('/api/discover/track/asd');
     $response->assertStatus(500);
   }
+
+  public function testCanGetSimilarTrackResults()
+  {
+    global $user;
+
+    // Kodak Black - Calling my Spirit
+    $videoId = "ppSY98RGyBU";
+
+    $response = $this->actingAs($user)->get("/api/discover/track/{$videoId}");
+    $response->assertStatus(200);
+
+    $results = $response->json();
+
+    $this->assertTrue(array_key_exists('items', $results), 'response has items key');
+    $this->assertTrue(count($results['items']) >= 1, 'One or more items returns');
+  }
 }

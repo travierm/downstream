@@ -28,14 +28,14 @@ class CypressTestSeeder extends Seeder
             ]);
         }
 
-        /*$mediaId = DB::table('media')->where('index', '8kUNIXRY9io')->pluck('id')->first();
+        $mediaId = DB::table('media')->where('index', 'ppSY98RGyBU')->pluck('id')->first();
         if(!$mediaId) {
             $mediaId = DB::table('media')->insertGetId([
-                'index' => '8kUNIXRY9io',
+                'index' => 'ppSY98RGyBU',
                 'type' => 'youtube',
                 'subtype' => 'video',
                 'origin' => 'youtube#search',
-                'title' => 'Kid Cudi - Mr. Solo Dolo III (Official Visualizer)',
+                'title' => 'Kodak Black - Calling My Spirit',
                 'thumbnail' => 'https://i.ytimg.com/vi/8kUNIXRY9io/sddefault.jpg',
                 'meta' => json_encode([]),
                 'user_id' => $userId
@@ -45,6 +45,6 @@ class CypressTestSeeder extends Seeder
         DB::table('user_media')->insert([
             'user_id' => $userId,
             'media_id' => $mediaId
-        ]);*/
+        ]);
     }
 }
