@@ -90,6 +90,7 @@ test:
     # Run database seed
     - php artisan db:seed
     # Run Laravel Unit Tests
+    - XDEBUG_MODE=coverage
     - php composer.phar run test
     - php artisan serve --quiet & APP_PID=$!
     # Install Frontend Deps

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use DB;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -100,6 +101,8 @@ class MediaCollectionTest extends TestCase
     public function testCanSeeCollectedItemAtTopOfCollection()
     {
         global $user;
+
+        DB::table('user_media')->where('user_id', $user->id)->delete();
 
         $this->actingAs($user)->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
