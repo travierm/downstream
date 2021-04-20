@@ -35,6 +35,8 @@ test:
     MYSQL_PASSWORD: secret
     MYSQL_ROOT_PASSWORD: secret
     YOUTUBE_KEY: $YOUTUBE_KEY
+    SPOTIFY_CLIENT_ID: $SPOTIFY_CLIENT_ID
+    SPOTIFY_CLIENT_SECRET: $SPOTIFY_CLIENT_SECRET
     CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
 
   # This folder is cached between builds
