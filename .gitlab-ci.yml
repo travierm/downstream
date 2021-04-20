@@ -98,5 +98,5 @@ test:
     # Disable Audio
     - echo -e 'pcm.!default {\n type hw\n card 0\n}\n\nctl.!default {\n type hw\n card 0\n}' > ~/.asoundrc
     # Run frontend tests
-    - yarn test:e2e-ci
+    # - yarn test:e2e-ci
     - yarn test:unit
