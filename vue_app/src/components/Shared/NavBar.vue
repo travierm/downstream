@@ -5,7 +5,7 @@
       v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
     >
       <router-link tag="div" to="/">
-        <v-toolbar-title class="navbar-brand">downstream</v-toolbar-title>
+        <v-toolbar-title class="navbar-brand">Downstream</v-toolbar-title>
       </router-link>
 
       <v-btn
@@ -21,7 +21,9 @@
 
     <v-spacer v-if="$vuetify.breakpoint.smAndUp || !loggedIn" />
 
-    <template v-if="$vuetify.breakpoint.smAndUp && loggedIn">
+    <template
+      v-if="$vuetify.breakpoint.smAndUp && loggedIn && mediaStats.plays"
+    >
       <v-toolbar-title>Plays</v-toolbar-title>
       <v-chip class="ma-2" color="secondary" text-color="white">
         Today: {{ mediaStats.plays.today }}

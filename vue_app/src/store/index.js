@@ -7,7 +7,9 @@ import * as auth from './modules/auth'
 import * as player from './modules/player'
 import * as search from './modules/search'
 import * as playlist from './modules/playlist'
+import * as discover from './modules/discover'
 import * as collection from './modules/collection'
+
 import Analytics from '../services/api/AnalyticsService'
 
 export default new Vuex.Store({
@@ -47,6 +49,7 @@ export default new Vuex.Store({
     player,
     search,
     playlist,
+    discover,
     collection,
   },
 })

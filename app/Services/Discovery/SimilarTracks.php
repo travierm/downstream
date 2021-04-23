@@ -6,7 +6,7 @@ use App\Services\YoutubeService;
 use App\Services\Sources\SpotifyTrack;
 use App\MediaType\Transformer\SpotifyTrackTransformer;
 class SimilarTracks {
-  public static function similarTracksByMedia(Media $media)
+  public static function similarTracksByMedia(Media $media, $limit = 24)
   {
     $similarTracks = [];
 
@@ -20,7 +20,7 @@ class SimilarTracks {
     }
     
     // Use given track as a seed to find similar tracks on Spotify
-    $seedTracks = SpotifyTrack::getSeedTracksByIds([$spotifyId]);
+    $seedTracks = SpotifyTrack::getSeedTracksByIds([$spotifyId], $limit);
     foreach($seedTracks as $track) {
 
       // Convert Spotify results to array of data
