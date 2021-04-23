@@ -12,4 +12,8 @@ async function playedMedia(mediaId = false) {
   }
 }
 
-export default { playedMedia }
+async function getMediaStats() {
+  return http.get('/ana/media/stats')
+}
+
+export default { playedMedia, getMediaStats }

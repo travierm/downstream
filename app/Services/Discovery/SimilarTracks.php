@@ -1,7 +1,6 @@
 <?php
 namespace App\Services\Discovery;
 
-use App\Media\YouTube;
 use App\Models\Media;
 use App\Services\YoutubeService;
 use App\Services\Sources\SpotifyTrack;
@@ -24,7 +23,7 @@ class SimilarTracks {
     $seedTracks = SpotifyTrack::getSeedTracksByIds([$spotifyId]);
     foreach($seedTracks as $track) {
 
-      // Convert Spotfy results to array of data
+      // Convert Spotify results to array of data
       $trackData = SpotifyTrackTransformer::transform($track);
 
       // Search for YouTube Video by title of Spotify Track

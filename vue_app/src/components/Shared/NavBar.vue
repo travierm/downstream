@@ -21,6 +21,21 @@
 
     <v-spacer v-if="$vuetify.breakpoint.smAndUp || !loggedIn" />
 
+    <template v-if="$vuetify.breakpoint.smAndUp && loggedIn">
+      <v-toolbar-title>Plays</v-toolbar-title>
+      <v-chip class="ma-2" color="secondary" text-color="white">
+        Today: {{ mediaStats.plays.today }}
+      </v-chip>
+
+      <v-chip class="ma-2" color="secondary" text-color="white">
+        Week: {{ mediaStats.plays.week }}
+      </v-chip>
+
+      <v-chip class="ma-2 mr-4" color="secondary" text-color="white">
+        Month: {{ mediaStats.plays.month }}
+      </v-chip>
+    </template>
+
     <v-btn to="/login" outlined v-if="!loggedIn">Login</v-btn>
 
     <SearchBar v-if="loggedIn" class="mt-1" />
@@ -133,7 +148,7 @@ export default {
     SearchBar,
   },
   computed: {
-    ...mapState(['showLoadingBar']),
+    ...mapState(['showLoadingBar', 'mediaStats']),
     ...mapGetters({
       loggedIn: 'auth/loggedIn',
     }),
