@@ -30,6 +30,22 @@ class Media extends Model
     'created_at'
   ];
 
+  public function meta() {
+    return $this->hasOne(MediaMeta::class);
+  }
+
+  public static function boot() {
+    parent::boot();
+
+    static::created(function($media) {
+
+    });
+
+    static::deleted(function($media) { // before delete() method call this
+         $media->meta()->delete();
+    });
+  }
+
   public static function findByType($type, $index)
   {
     return self::where('type', $type)

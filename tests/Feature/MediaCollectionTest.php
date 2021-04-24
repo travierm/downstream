@@ -5,7 +5,8 @@ namespace Tests\Feature;
 use DB;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Media;
+use Tests\Helper\MediaHelper;
 
 global $user;
 
@@ -32,6 +33,11 @@ class MediaCollectionTest extends TestCase
     public function testCanCollectItem()
     {
         global $user;
+
+        $testVideoId = 'lZcRSy0sk5w';
+
+        MediaHelper::deleteByIndex($testVideoId);
+
         // Collect
         $response = $this->actingAs($user)->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
@@ -39,8 +45,14 @@ class MediaCollectionTest extends TestCase
         ]);
 
         $mediaId = $response->json()['mediaId'];
+
         $this->assertNotEmpty($mediaId, 'Got mediaId back from route');
         $response->assertStatus(200);
+
+        // Make sure meta gets set
+        $media = Media::find($mediaId);
+        $this->assertNotNull($media->meta, "Media object has meta");
+        $this->assertTrue($media->title === $media->meta->title, "media->title matches media->meta->title");
 
         return $mediaId;
     }
