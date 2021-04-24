@@ -23,7 +23,6 @@ class Media extends Model
     'subtype', 
     'title',
     'thumbnail',
-    'meta', 
     'user_id'
   ];
 
@@ -47,8 +46,7 @@ class Media extends Model
       'index' => $video->videoId,
       'title' => $video->title,
       'thumbnail' => $video->thumbnail,
-      'user_id' => $meta['user_id'],
-      'meta' => json_encode([])
+      'user_id' => $meta['user_id']
     ];
 
     $media = self::findByType('youtube', $video->videoId);
