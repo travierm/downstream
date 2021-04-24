@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Services\Discovery\LastFM;
+use App\Services\Sources\SpotifyTrack;
 
 class TestService extends Command
 {
@@ -38,6 +39,12 @@ class TestService extends Command
      */
     public function handle()
     {
-        LastFM::similarTracks('pnau', 'solid gold');
+        $this->info('TEST');
+
+
+        $results = LastFM::trackSearch('Panu - Solid Gold');
+        //$results = SpotifyTrack::findIdByTitle('SOLID GOLD');
+
+        //dd($results);
     }
 }

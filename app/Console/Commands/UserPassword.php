@@ -6,7 +6,7 @@ use Hash;
 use App\User;
 use Illuminate\Console\Command;
 
-class userPassword extends Command
+class UserPassword extends Command
 {
     /**
      * The name and signature of the console command.

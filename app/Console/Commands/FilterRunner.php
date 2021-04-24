@@ -7,7 +7,7 @@ use App\Models\MediaTempItem;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class filterRunner extends Command
+class FilterRunner extends Command
 {
     /**
      * The name and signature of the console command.

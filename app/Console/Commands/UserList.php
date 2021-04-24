@@ -2,25 +2,24 @@
 
 namespace App\Console\Commands;
 
-use App\Media;
-use App\UserMedia;
+use App\User;
 use Illuminate\Console\Command;
 
-class clearMedia extends Command
+class UserList extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'media:clear';
+    protected $signature = 'user:list';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Clear Media and UserMedia';
+    protected $description = 'List of users id and name';
 
     /**
      * Create a new command instance.
@@ -39,10 +38,9 @@ class clearMedia extends Command
      */
     public function handle()
     {
-      $this->info('Deleting ' . Media::all()->count() . ' Media tracks');
-      Media::truncate();
+        $users = User::select('id', 'display_name', 'email')->orderBy("created_at", "ASC")->get();
 
-      $this->info('Deleting ' . UserMedia::all()->count() . ' User Media Collectables');
-      UserMedia::truncate();
+        $headers = ["ID", "Display Name", "Email"];
+        $this->table($headers, $users);
     }
 }
