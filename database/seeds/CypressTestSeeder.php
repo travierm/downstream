@@ -37,7 +37,6 @@ class CypressTestSeeder extends Seeder
                 'origin' => 'youtube#search',
                 'title' => 'Kodak Black - Calling My Spirit',
                 'thumbnail' => 'https://i.ytimg.com/vi/8kUNIXRY9io/sddefault.jpg',
-                'meta' => json_encode([]),
                 'user_id' => $userId
             ]);
         }    
