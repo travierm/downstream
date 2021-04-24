@@ -65,7 +65,7 @@ test:
     # Install NVM & Node
     - wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash #install nvm
     - export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use
-    - eval "[ -f .nvmrc ] && nvm install || nvm install stable"
+    - eval "[ -f .nvmrc ] && nvm install || nvm install 14.16.1"
 
     # Install Yarn
     - curl -o- -L https://yarnpkg.com/install.sh | bash

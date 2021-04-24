@@ -2,6 +2,7 @@
   "name": "vue_app",
   "version": "0.1.0",
   "private": true,
+  "engines" : { "node" : ">=14.16.1" },
   "scripts": {
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build --no-clean",
