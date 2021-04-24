@@ -38,11 +38,20 @@ class Media extends Model
     parent::boot();
 
     static::created(function($media) {
+      $meta = MediaMeta::find($media->id);
 
+      if(!$meta) {
+        $meta = new MediaMeta();
+        $meta->media_id = $media->id;
+      }
+
+      $meta->title = $media->title;
+      $meta->thumbnail = $media->thumbnail;
+      $meta->save();
     });
 
     static::deleted(function($media) { // before delete() method call this
-         $media->meta()->delete();
+      $media->meta()->delete();
     });
   }
 

@@ -19,6 +19,14 @@ class AddMediaTableIndexes extends Migration
             $table->index('user_id');
             $table->index('spotify_id');
         });
+
+        Schema::table('media_meta', function($table) {
+            $table->primary('media_id');
+            $table->index('title');
+            $table->index('album_id');
+            $table->index('artist_id');
+            $table->index('spotify_id');
+        });
     }
 
     /**
@@ -28,11 +36,19 @@ class AddMediaTableIndexes extends Migration
      */
     public function down()
     {
-        Schema::table('media', function($table) {
+        /*Schema::table('media', function($table) {
             $table->dropUnique('index');
             $table->dropIndex('title');
             $table->dropIndex('user_id');
             $table->dropIndex('spotify_id');
         });
+
+        Schema::table('media_meta', function($table) {
+            $table->dropPrimary('media_id');
+            $table->dropIndex('title');
+            $table->dropIndex('album_id');
+            $table->dropIndex('artist_id');
+            $table->dropIndex('spotify_id');
+        });*/
     }
 }
