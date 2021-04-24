@@ -21,6 +21,8 @@ class AddMediaTableIndexes extends Migration
         });
 
         Schema::table('media_meta', function($table) {
+            $table->dropColumn('spotify_id');
+            
             $table->primary('media_id');
             $table->index('title');
             $table->index('album_id');
