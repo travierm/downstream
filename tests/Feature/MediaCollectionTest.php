@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use DB;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Media;
+use Tests\Helper\MediaHelper;
 
 global $user;
 
@@ -31,6 +33,11 @@ class MediaCollectionTest extends TestCase
     public function testCanCollectItem()
     {
         global $user;
+
+        $testVideoId = 'lZcRSy0sk5w';
+
+        MediaHelper::deleteByIndex($testVideoId);
+
         // Collect
         $response = $this->actingAs($user)->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
@@ -38,8 +45,14 @@ class MediaCollectionTest extends TestCase
         ]);
 
         $mediaId = $response->json()['mediaId'];
+
         $this->assertNotEmpty($mediaId, 'Got mediaId back from route');
         $response->assertStatus(200);
+
+        // Make sure meta gets set
+        $media = Media::find($mediaId);
+        $this->assertNotNull($media->meta, "Media object has meta");
+        $this->assertTrue($media->title === $media->meta->title, "media->title matches media->meta->title");
 
         return $mediaId;
     }
@@ -73,39 +86,47 @@ class MediaCollectionTest extends TestCase
     {
         global $user;
 
-        $response = $this->actingAs($user)->delete('/api/media/collection/' . $mediaId);
-        $response->assertStatus(200);
-    }
-
-    /**
-     * @depends testCanRemoveItemFromCollection
-     */
-    public function testCollectionIsEmpty($mediaId)
-    {
-        global $user;
-
+        // Get collection count
         $response = $this->actingAs($user)->get('/api/collection/');
         $response->assertStatus(200);
 
         $collection = $response->json();
-        $this->assertTrue(count($collection['items']) == 0);
+        $collectionCount = count($collection['items']);
+
+        
+        $this->assertTrue($collectionCount >= 1, 'collection has more 1 or more items');
+
+        // delete item from collection
+        $response = $this->actingAs($user)->delete('/api/media/collection/' . $mediaId);
+        $response->assertStatus(200);
+
+        // assert collection count is one less
+        $response = $this->actingAs($user)->get('/api/collection/');
+        $response->assertStatus(200);
+
+        $updatedCollection = $response->json();
+        $updatedCollectionCount = count($updatedCollection['items']);
+
+        $this->assertTrue($updatedCollectionCount == $collectionCount - 1, "collect count is one less then before");
     }
 
     public function testCanSeeCollectedItemAtTopOfCollection()
     {
         global $user;
 
+        DB::table('user_media')->where('user_id', $user->id)->delete();
+
         $this->actingAs($user)->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
             'videoId' => 'lZcRSy0sk5w'
-        ]);
+        ])->assertStatus(200);
 
         sleep(1);
 
         $this->actingAs($user)->post('/api/media/collect', [
             // Drake - Laugh Now Cry Later 
             'videoId' => 'JFm7YDVlqnI'
-        ]);
+        ])->assertStatus(200);
 
         $response = $this->actingAs($user)->get('/api/collection/');
         $response->assertStatus(200);

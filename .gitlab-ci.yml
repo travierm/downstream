@@ -13,7 +13,7 @@ deploy:
       - master
   script:
     - apt-get install curl
-    - curl -X POST "https://downstream.us/app/deploy?token=$DEPLOY_TOKEN"
+    - curl -X POST "https://api.downstream.us/api/deploy?token=$DEPLOY_TOKEN"
 
 test:
   stage: test
@@ -35,6 +35,8 @@ test:
     MYSQL_PASSWORD: secret
     MYSQL_ROOT_PASSWORD: secret
     YOUTUBE_KEY: $YOUTUBE_KEY
+    SPOTIFY_CLIENT_ID: $SPOTIFY_CLIENT_ID
+    SPOTIFY_CLIENT_SECRET: $SPOTIFY_CLIENT_SECRET
     CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
 
   # This folder is cached between builds
@@ -57,11 +59,13 @@ test:
     # Update packages
     - apt-get update -yqq
     - apt-get install -qq git curl wget xvfb libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev ibgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth
+    - pecl install xdebug
+    - docker-php-ext-enable xdebug
 
     # Install NVM & Node
     - wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash #install nvm
     - export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use
-    - eval "[ -f .nvmrc ] && nvm install || nvm install stable"
+    - eval "[ -f .nvmrc ] && nvm install || nvm install 14.16.1"
 
     # Install Yarn
     - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -86,12 +90,12 @@ test:
     # Run database seed
     - php artisan db:seed
     # Run Laravel Unit Tests
-    - php composer.phar run test
-    - php artisan serve --quiet & APP_PID=$!
+    - XDEBUG_MODE=coverage php composer.phar run test
+    # - php artisan serve --quiet & APP_PID=$!
     # Install Frontend Deps
     - cd vue_app/ && yarn
     # Disable Audio
     - echo -e 'pcm.!default {\n type hw\n card 0\n}\n\nctl.!default {\n type hw\n card 0\n}' > ~/.asoundrc
     # Run frontend tests
-    - yarn test:e2e-ci
+    # - yarn test:e2e-ci
     - yarn test:unit

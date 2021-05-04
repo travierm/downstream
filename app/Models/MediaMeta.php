@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaMeta extends Model
 {
+    protected $table = 'media_meta';
     protected $primaryKey = 'media_id';
-    protected $table = "media_meta";
 
     public static function findAndFormat($mediaId) 
     {

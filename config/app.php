@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Detroit',
 
     /*
     |--------------------------------------------------------------------------
@@ -128,6 +128,7 @@ return [
 
     // Git Webhook Deploy Secret
     'deploy_secret' => env('APP_DEPLOY_SECRET'),
+    'last_fm_api' => env('LAST_FM_API'),
 
     /*
     |--------------------------------------------------------------------------

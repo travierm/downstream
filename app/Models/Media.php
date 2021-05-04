@@ -7,6 +7,7 @@ use App\Models\MediaMeta;
 use App\Models\UserMedia;
 use App\MediaRemoteReference;
 use App\MediaType\YoutubeVideo;
+use App\Services\Sources\SpotifyTrack;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,13 +23,37 @@ class Media extends Model
     'subtype', 
     'title',
     'thumbnail',
-    'meta', 
     'user_id'
   ];
 
   protected $hidden = [
     'created_at'
   ];
+
+  public function meta() {
+    return $this->hasOne(MediaMeta::class);
+  }
+
+  public static function boot() {
+    parent::boot();
+
+    static::created(function($media) {
+      $meta = MediaMeta::find($media->id);
+
+      if(!$meta) {
+        $meta = new MediaMeta();
+        $meta->media_id = $media->id;
+      }
+
+      $meta->title = $media->title;
+      $meta->thumbnail = $media->thumbnail;
+      $meta->save();
+    });
+
+    static::deleted(function($media) { // before delete() method call this
+      $media->meta()->delete();
+    });
+  }
 
   public static function findByType($type, $index)
   {
@@ -46,8 +71,7 @@ class Media extends Model
       'index' => $video->videoId,
       'title' => $video->title,
       'thumbnail' => $video->thumbnail,
-      'user_id' => $meta['user_id'],
-      'meta' => json_encode([])
+      'user_id' => $meta['user_id']
     ];
 
     $media = self::findByType('youtube', $video->videoId);
@@ -67,6 +91,25 @@ class Media extends Model
     }
 
     return $rows;
+  }
+
+  public function getOrFindSpotifyId()
+  {
+    if($this->spotify_id) {
+      return $this->spotify_id;
+    }
+
+    $spotifyId = SpotifyTrack::findIdByTitle($this->title);
+
+    // spotify_id becomes id of first item found when searching by title
+    if($spotifyId) {
+      $this->spotify_id = $spotifyId;
+      $this->save();
+    }else{
+      return false;
+    }
+
+    return $this->spotify_id;
   }
 
   public function getReferences()

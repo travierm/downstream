@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\UserShow;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {   
+        $schedule->command('filter:run')->hourly();
+
         // Continuously loop through media collection and autofix videos
         /*($schedule->command('youtube:autofix-queue')
            ->everyMinute()

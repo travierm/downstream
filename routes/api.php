@@ -34,6 +34,9 @@ Route::namespace('API')->group(function () {
         Route::get('/search/{query}', 'SearchController@getResults');
         Route::get('/search/autocomplete/{query}', "SearchAutocompleteController@getResults");
 
+        // Discover
+        Route::get('/discover/track/{videoId}', 'DiscoverTrackController@similarTracks');
+
         // User Collection
         Route::get('/collection', "CollectionController@getCollection");
 

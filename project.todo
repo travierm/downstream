@@ -1,20 +1,14 @@
 -- Project TODO --
 Active:
-    ☐ Mood Lists
-        ☐ Backend
-            ☐ Soft delete items from lists unless the entire list is deleted
-                Allows items to get back original created_at ( or added to list date )
-
-    ✔ Push to Top @done(21-02-15 23:17)
-    ☐ Improve Collection Search
-    ✔ Collection Shuffle @done(21-02-15 23:17)
-    ☐ Radio Feature
+    ☐ Discover Feature @started(21-04-19 22:27)
+        ☐ Discovery should run in the background
+        ☐ Need a way to save results
+            ☐ When sending to user check collected field again
+    ☐ Make sure api stats count uses Detroit Timezone
     ☐ Collection Links & Stats
     ☐ Clear users collection besides test media before running e2e tests   
     
 Bugs:
-    ✔ Redirect to HTTPS automatically @done(21-02-15 21:00)
-    ✔ Remove popup only shows up once @done(21-02-14 20:11)
     ☐ Shuffling multiple times with cause play manager to act weird
     ☐ updating volume of card when shuffled
     ☐ Keyboard stays up after loading search route on mobile ( focus issue )
@@ -65,6 +59,15 @@ Experiments:
     ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
 
 Archive:  
+  ✔ Mood Lists @done(21-04-19 22:27) @project(Active)
+  ✔ Backend @done(21-04-19 22:27) @project(Active)
+  ✔ Soft delete items from lists unless the entire list is deleted @done(21-04-19 22:27) @project(Active)
+    Allows items to get back original created_at ( or added to list date )
+  ✔ Push to Top @done(21-02-15 23:17) @project(Active)
+  ✔ Improve Collection Search @done(21-04-19 22:27) @project(Active)
+  ✔ Collection Shuffle @done(21-02-15 23:17) @project(Active)
+  ✔ Redirect to HTTPS automatically @done(21-02-15 21:00) @project(Bugs)
+  ✔ Remove popup only shows up once @done(21-02-14 20:11) @project(Bugs)
   ✔ Removing an item resets the guidIndex but keeps playing song @done(21-02-14 12:18) @project(Bugs)
   ✔ Focus & Volume Bar @done(21-01-02 00:18) @project(Active)
   ✔ Login Card on mobile @done(21-01-02 12:16) @project(Bugs)
