@@ -1,5 +1,4 @@
 #!/bin/bash
-cd /home/container/downstream || exit
 
 # Make internal Docker IP address available to processes.
 INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
@@ -21,4 +20,4 @@ yarn build
 cd ..
 
 # Run the Server
-eval "${MODIFIED_STARTUP}"
+supervisord -c .deploy/config/supervisor.conf
