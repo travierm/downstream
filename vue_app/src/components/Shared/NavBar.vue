@@ -21,7 +21,7 @@
 
     <v-spacer v-if="$vuetify.breakpoint.smAndUp || !loggedIn" />
 
-    <template
+    <!-- <template
       v-if="$vuetify.breakpoint.smAndUp && loggedIn && mediaStats.plays"
     >
       <v-toolbar-title>Plays</v-toolbar-title>
@@ -36,7 +36,7 @@
       <v-chip class="ma-2 mr-4" color="secondary" text-color="white">
         Month: {{ mediaStats.plays.month }}
       </v-chip>
-    </template>
+    </template> -->
 
     <v-btn to="/login" outlined v-if="!loggedIn">Login</v-btn>
 
