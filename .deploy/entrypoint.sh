@@ -5,19 +5,12 @@ INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
 export INTERNAL_IP
 
 # Replace Startup Variables
-MODIFIED_STARTUP=$(eval echo "$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g')")
-echo ":/home/container$ ${MODIFIED_STARTUP}"
+# MODIFIED_STARTUP=$(eval echo "$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g')")
+# echo ":/home/container$ ${MODIFIED_STARTUP}"
 
 
-composer install
 php artisan key:generate
 
-cd vue_app/
-
-echo "running yarn install --production --frozen-lockfile"
-yarn install --production --frozen-lockfile
-yarn build
-cd ..
 
 # Run the Server
 supervisord -c .deploy/config/supervisor.conf
