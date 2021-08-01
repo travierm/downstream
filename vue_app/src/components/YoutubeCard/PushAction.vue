@@ -35,18 +35,9 @@ export default {
   },
   methods: {
     pushItem() {
-      CollectionService.pushItem(this.mediaId)
-        .then(async () => {
-
-          if(!this.$store.state.collection.shuffled) {
-            await this.$store.dispatch('collection/fetchCollection')
-
-            this.$store.dispatch('collection/updateGuidIndex')
-          }          
-        })
-        .catch(() => {
-          dd('Failed to push item', this.mediaId)
-        })
+      CollectionService.pushItem(this.mediaId).catch(() => {
+        dd('Failed to push item', this.mediaId)
+      })
     },
   },
 }
