@@ -11,6 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ci
+    env:
+        YOUTUBE_KEY: ${{ secrets.YOUTUBE_KEY }}
+        SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+        SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+        LAST_FM_API: ${{ secrets.LAST_FM_API }}
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -32,11 +39,4 @@ jobs:
       run: |
         php artisan migrate
     - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        YOUTUBE_KEY: ${{ secrets.YOUTUBE_KEY }}
-        SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-        SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-        LAST_FM_API: ${{ secrets.LAST_FM_API }}
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
