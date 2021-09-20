@@ -30,8 +30,8 @@ export const getters = {
 
 export const actions = {
   getSimilarTracks(context, videoId) {
+    /*
     const cachedTracks = discoverSimilarTrackStorage.get(videoId)
-
     if (cachedTracks) {
       console.log(`Using cached similar tracks for video_id ${videoId}`)
 
@@ -51,20 +51,18 @@ export const actions = {
       )
 
       return
-    }
+    }*/
 
     context.dispatch('setLoadingBarState', true, { root: true })
     return DiscoverService.getSimilarTracksByVideoId(videoId)
       .then(response => {
-        context.dispatch('setLoadingBarState', false, { root: true })
-
         // Clear error message
         context.commit('SET_ERROR_MESSAGE', false)
         if (response.data?.items) {
-          discoverSimilarTrackStorage.set(
+          /*discoverSimilarTrackStorage.set(
             videoId,
             JSON.stringify(response.data.items)
-          )
+          )*/
           context.commit('SET_SIMILAR_TRACKS', {
             videoId,
             items: response.data.items,
@@ -78,6 +76,8 @@ export const actions = {
             { root: true }
           )
         }
+
+        context.dispatch('setLoadingBarState', false, { root: true })
       })
       .catch(response => {
         context.dispatch('setLoadingBarState', false, { root: true })
