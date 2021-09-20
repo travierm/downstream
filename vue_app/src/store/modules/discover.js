@@ -43,8 +43,11 @@ export const actions = {
       return
     }
 
+    dispatch('setLoadingBarState', true, { root: true })
     return DiscoverService.getSimilarTracksByVideoId(videoId)
       .then(response => {
+        dispatch('setLoadingBarState', false, { root: true })
+
         // Clear error message
         context.commit('SET_ERROR_MESSAGE', false)
         if (response.data?.items) {
@@ -59,6 +62,7 @@ export const actions = {
         }
       })
       .catch(response => {
+        dispatch('setLoadingBarState', false, { root: true })
         if (response.status == 500) {
           context.commit('SET_ERROR_MESSAGE', response.data.message)
           return

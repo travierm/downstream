@@ -74,19 +74,14 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('setLoadingBarState', true)
     getMediaByVideoIndex(this.$route.params.videoId).then(response => {
       this.media = response.data.item
     })
 
-    this.$store
-      .dispatch('discover/getSimilarTracks', this.$route.params.videoId)
-      .then(() => {
-        this.$store.dispatch('setLoadingBarState', false)
-      })
-      .catch(() => {
-        this.$store.dispatch('setLoadingBarState', false)
-      })
+    this.$store.dispatch(
+      'discover/getSimilarTracks',
+      this.$route.params.videoId
+    )
   },
 }
 </script>
