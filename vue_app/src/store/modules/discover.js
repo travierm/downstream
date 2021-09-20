@@ -29,7 +29,7 @@ export const getters = {
 }
 
 export const actions = {
-  getSimilarTracks(context, videoId) {
+  getSimilarTracks({ dispatch, context }, videoId) {
     const cachedTracks = discoverSimilarTrackStorage.get(videoId)
 
     if (cachedTracks) {
