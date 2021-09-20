@@ -43,7 +43,7 @@ class AddTitleFilter extends Command
 
         $filterValue = $this->ask("What filter would you like to add?");
 
-        $exists = DB::table('title_filters')->where('value', trim($filterValue))->exists();
+        $exists = DB::table('title_filters')->where(DB::raw('BINARY `value`'), $filterValue)->exists();
         if($exists) {
             $this->error('Filter already exists');
             return;

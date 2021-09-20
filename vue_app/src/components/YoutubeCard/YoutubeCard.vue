@@ -14,6 +14,7 @@
         <v-spacer></v-spacer>
 
         <router-link
+          v-if="mediaId"
           :to="{ path: `/discover/track/${videoId}` }"
           target="_blank"
         >

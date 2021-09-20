@@ -1,12 +1,12 @@
 <?php
 namespace App\Services;
 
-use Cache;
-
+use DB;
 class Filter {
     public static function title($string)
     {
-        $filters = Cache::get('filters.title', []);
+
+        $filters = DB::table('title_filters')->pluck('value');
 
         foreach($filters as $filter) {
             $string = str_replace($filter, "", $string);

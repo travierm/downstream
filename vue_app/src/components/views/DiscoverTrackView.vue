@@ -1,8 +1,19 @@
 <template>
   <v-container fluid>
-    <v-row v-if="errorMessage">
+    <v-row>
       <v-col>
-        <h3>{{ errorMessage }}</h3>
+        <h2 class="font-weight-bold">
+          Discovered items of
+          <span class="ml-1" style="color: #7C4DFF;">{{ media.title }}</span>
+        </h2>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="errorMessage">
+      <v-col lg="3">
+        <v-alert dense outlined type="error">
+          {{ errorMessage }}
+        </v-alert>
       </v-col>
     </v-row>
 
@@ -21,6 +32,12 @@
         </v-lazy>
       </CardCol>
     </v-row>
+
+    <v-row v-if="!items && !errorMessage">
+      <v-col>
+        <h3 style="color: #1DE9B6;">Finding similar media...</h3>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -28,6 +45,7 @@
 import { mapGetters, mapState } from 'vuex'
 import CardCol from '@/components/CardCol'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
+import { getMediaByVideoIndex } from '../../services/api/MediaService'
 
 export default {
   name: 'DiscoverTrackView',
@@ -42,21 +60,34 @@ export default {
     routeVideoId() {
       return this.$route.params.videoId
     },
+    routeVideoTitle() {
+      return this.$route.params.title
+    },
   },
   components: {
     CardCol,
     YoutubeCard,
   },
   data: () => {
-    return {}
+    return {
+      media: {},
+    }
   },
   mounted() {
-    this.$store.dispatch(
-      'discover/getSimilarTracks',
-      this.$route.params.videoId
-    )
+    this.$store.dispatch('setLoadingBarState', true)
+    getMediaByVideoIndex(this.$route.params.videoId).then(response => {
+      this.media = response.data.item
+    })
+
+    this.$store
+      .dispatch('discover/getSimilarTracks', this.$route.params.videoId)
+      .then(() => {
+        this.$store.dispatch('setLoadingBarState', false)
+      })
+      .catch(() => {
+        this.$store.dispatch('setLoadingBarState', false)
+      })
   },
-  methods: {},
 }
 </script>
 

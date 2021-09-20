@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Media;
+use App\Models\MediaMeta;
 use App\Models\MediaTempItem;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -57,12 +58,19 @@ class FilterRunner extends Command
 
             $filteredTitle = trim($this->applyFilters($title, $filters));
 
-            if($title !== $filteredTitle) {
+            $mediaMeta = MediaMeta::find($item->id);
+
+            if($title !== $filteredTitle || ($mediaMeta && $mediaMeta->title !== $filteredTitle)) {
 
                 $success = Media::where('id', $item->id)->update([
-                    'title' => $filteredTitle,
-                    'meta->title' => $filteredTitle
+                    'title' => $filteredTitle
                 ]);
+
+                $mediaMeta = MediaMeta::find($item->id);
+                if($mediaMeta) {
+                    $mediaMeta->title = $filteredTitle;
+                    $mediaMeta->save();
+                }
             
                 if($success) {
                     $this->info("updated {$item->id} $title => $filteredTitle");

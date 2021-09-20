@@ -40,6 +40,9 @@ Route::namespace('API')->group(function () {
         // User Collection
         Route::get('/collection', "CollectionController@getCollection");
 
+
+        Route::get('/video/{videoId}', 'MediaController@getVideoByIndex');
+
         Route::post('/media/push/{mediaId}', 'MediaCollectionController@pushItem');
         Route::post('/media/collect', 'MediaCollectionController@postCollectItem');
         Route::delete('/media/collection/{itemId}', 'MediaCollectionController@removeItemFromCollection');

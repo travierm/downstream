@@ -14,7 +14,7 @@ class SimilarTracks {
     $spotifyId = $media->getOrFindSpotifyId();
   
     if(!$spotifyId) {
-      throw new \Exception("Could not find spotify_id for media item");
+      throw new \Exception("Could not match video_id to discovery services");
 
       return false;
     }

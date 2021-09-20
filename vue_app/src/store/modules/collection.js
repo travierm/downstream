@@ -7,7 +7,8 @@ export const state = {
   searchQuery: '',
   searchQueryUpdates: 0,
   hash: window.localStorage.getItem('collectionHash'),
-  collection: JSON.parse(window.localStorage.getItem('collection')),
+  // collection: JSON.parse(window.localStorage.getItem('collection')),
+  collection: [],
 }
 
 export const mutations = {
@@ -87,12 +88,14 @@ export const actions = {
     }
 
     const response = await CollectionService.fetchCollection(playlistId)
+
     if (response.data) {
-      if (response.data.hash !== state.hash) {
+      commit('UPDATE_COLLECTION', response.data)
+      /*if (response.data.hash !== state.hash) {
         console.log('Collection hash does not match. Updating local state!')
 
         commit('UPDATE_COLLECTION', response.data)
-      }
+      }*/
     }
   },
 }

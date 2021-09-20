@@ -2,6 +2,7 @@
 
 namespace App\MediaType;
 
+use App\Services\Filter;
 use Illuminate\Support\Str;
 use App\MediaType\Transformer\YoutubeSearchResult;
 
@@ -18,6 +19,8 @@ class YoutubeVideo {
 
         $youtubeVideo = new self();
         $youtubeVideo->title = html_entity_decode(htmlspecialchars_decode($data['title']), ENT_QUOTES, 'UTF-8');
+        $youtubeVideo->title = Filter::title($youtubeVideo->title);
+        
         $youtubeVideo->videoId = $data['videoId'];
         $youtubeVideo->thumbnail = $data['thumbnail'];
         $youtubeVideo->guid = "guid_" . Str::random(35);

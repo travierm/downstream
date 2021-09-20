@@ -1,5 +1,9 @@
 import Vue from 'vue'
+import Cache from '../../services/Cache'
 import DiscoverService from '../../services/api/DiscoverService'
+
+const discoverSimilarTrackStorage = new Cache(true)
+discoverSimilarTrackStorage.setStoragePrefix('discover_video_')
 
 export const namespaced = true
 export const state = {
@@ -26,11 +30,28 @@ export const getters = {
 
 export const actions = {
   getSimilarTracks(context, videoId) {
-    DiscoverService.getSimilarTracksByVideoId(videoId)
+    const cachedTracks = discoverSimilarTrackStorage.get(videoId)
+
+    if (cachedTracks) {
+      console.log(`Using cached similar tracks for video_id ${videoId}`)
+
+      context.commit('SET_SIMILAR_TRACKS', {
+        videoId,
+        items: JSON.parse(cachedTracks),
+      })
+
+      return
+    }
+
+    return DiscoverService.getSimilarTracksByVideoId(videoId)
       .then(response => {
         // Clear error message
         context.commit('SET_ERROR_MESSAGE', false)
         if (response.data?.items) {
+          discoverSimilarTrackStorage.set(
+            videoId,
+            JSON.stringify(response.data.items)
+          )
           context.commit('SET_SIMILAR_TRACKS', {
             videoId,
             items: response.data.items,
