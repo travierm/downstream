@@ -18,9 +18,21 @@
           :to="{ path: `/discover/track/${videoId}` }"
           target="_blank"
         >
-          <v-btn icon @click="handleDiscoverTrackClick">
-            <v-icon class="ml-1" color="primary">{{ mdiRadio }}</v-icon>
-          </v-btn>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-on="on"
+                v-bind="attrs"
+                icon
+                @click="handleDiscoverTrackClick"
+              >
+                <v-icon class="ml-1" color="deep-purple accent-2">{{
+                  mdiLayersSearch
+                }}</v-icon>
+              </v-btn>
+            </template>
+            <span>Discover similar media</span>
+          </v-tooltip>
         </router-link>
 
         <PushAction v-if="collected" :mediaId="mediaId" />
@@ -66,7 +78,7 @@ import PlaylistAction from './PlaylistAction'
 import Analytics from '../../services/api/AnalyticsService'
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 
-import { mdiRadio } from '@mdi/js'
+import { mdiLayersSearch } from '@mdi/js'
 
 window.$showCardGuids = false
 
@@ -107,7 +119,7 @@ export default {
   },
   data() {
     return {
-      mdiRadio,
+      mdiLayersSearch,
       showThumbnail: true,
     }
   },

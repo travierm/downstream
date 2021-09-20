@@ -82,20 +82,28 @@ export const actions = {
       context.dispatch('player/setGuidIndex', guidIndex, { root: true })
     }
   },
-  async fetchCollection({ commit, rootState, state }, playlistId = false) {
+  async fetchCollection({ commit, rootState, dispatch }, playlistId = false) {
     if (!rootState.auth.token) {
       return
     }
 
-    const response = await CollectionService.fetchCollection(playlistId)
+    dispatch('setLoadingBarState', true, { root: true })
 
-    if (response.data) {
-      commit('UPDATE_COLLECTION', response.data)
-      /*if (response.data.hash !== state.hash) {
+    return CollectionService.fetchCollection(playlistId)
+      .then(response => {
+        dispatch('setLoadingBarState', false, { root: true })
+        commit('UPDATE_COLLECTION', response.data)
+      })
+      .catch(() => {
+        dispatch('setLoadingBarState', false, { root: true })
+      })
+
+    /*if (response.data) {
+      if (response.data.hash !== state.hash) {
         console.log('Collection hash does not match. Updating local state!')
 
         commit('UPDATE_COLLECTION', response.data)
-      }*/
-    }
+      }
+    }*/
   },
 }

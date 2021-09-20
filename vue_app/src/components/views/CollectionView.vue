@@ -19,16 +19,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="collection == undefined || collection.length <= 0">
-      <v-col>
-        <v-progress-circular
-          indeterminate
-          color="primary"
-        ></v-progress-circular>
-      </v-col>
-    </v-row>
-
-    <v-row v-else>
+    <v-row>
       <CardCol v-for="item in collection" :key="item.guid">
         <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
           <YoutubeCard
