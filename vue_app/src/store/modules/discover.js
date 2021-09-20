@@ -35,10 +35,20 @@ export const actions = {
     if (cachedTracks) {
       console.log(`Using cached similar tracks for video_id ${videoId}`)
 
+      const items = JSON.parse(cachedTracks)
+
       context.commit('SET_SIMILAR_TRACKS', {
         videoId,
-        items: JSON.parse(cachedTracks),
+        items,
       })
+
+      context.dispatch(
+        'player/setGuidIndex',
+        items.map(item => {
+          return item.guid
+        }),
+        { root: true }
+      )
 
       return
     }
@@ -59,6 +69,14 @@ export const actions = {
             videoId,
             items: response.data.items,
           })
+
+          context.dispatch(
+            'player/setGuidIndex',
+            response.data.items.map(item => {
+              return item.guid
+            }),
+            { root: true }
+          )
         }
       })
       .catch(response => {
