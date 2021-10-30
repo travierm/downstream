@@ -93,6 +93,7 @@ export const actions = {
       .then(response => {
         dispatch('setLoadingBarState', false, { root: true })
         commit('UPDATE_COLLECTION', response.data)
+        dispatch('updateGuidIndex')
       })
       .catch(() => {
         dispatch('setLoadingBarState', false, { root: true })

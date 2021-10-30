@@ -72,10 +72,5 @@ export default {
       mdiPlaylistMusic,
     }
   },
-  mounted() {
-    if (this.guidIndex.length >= 1) {
-      this.$store.dispatch('collection/updateGuidIndex')
-    }
-  },
 }
 </script>
