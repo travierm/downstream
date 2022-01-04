@@ -41,7 +41,7 @@ jobs:
       env:
         DB_CONNECTION: mysql
         DB_HOST: localhost
-        DB_USER: app
+        DB_USERNAME: app
         DB_PASSWORD: testing123
         DB_DATABASE: ds_main
       run: vendor/bin/phpunit
