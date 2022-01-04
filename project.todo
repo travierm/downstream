@@ -1,12 +1,6 @@
 -- Project TODO --
 Active:
     ☐ MAKE SURE ITEMS FOUND OFF SPOTIFY GET PROPER ID SAVED
-    ☐ Discover Feature @started(21-04-19 22:27)
-        ☐ Discovery should run in the background
-        ☐ Need a way to save results
-            ☐ When sending to user check collected field again
-    ☐ Make sure api stats count uses Detroit Timezone
-    ☐ Collection Links & Stats
     ☐ Clear users collection besides test media before running e2e tests   
     
 Bugs:
