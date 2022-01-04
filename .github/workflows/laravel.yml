@@ -41,7 +41,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: Run Database Migrations
         run: php artisan migrate
-        env: |
+        env:
           DB_DATABASE: test_db
           DB_USERNAME: user
           DB_PASSWORD: secret
