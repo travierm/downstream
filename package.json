@@ -5,9 +5,6 @@
         "build": "cd vue_app/ && yarn build",
         "test:e2e": "cd vue_app/ && yarn test:e2e"
     },
-    "devDependencies": {
-    },
-    "dependencies": {
-       
-    }
+    "devDependencies": {},
+    "dependencies": {}
 }
