@@ -42,9 +42,9 @@ jobs:
       - name: Run Database Migrations
         run: php artisan migrate
         env: |
-          DB_DATABASE=test_db
-          DB_USERNAME=user
-          DB_PASSWORD=secret
-          DB_HOST=127.0.0.1
+          DB_DATABASE: test_db
+          DB_USERNAME: user
+          DB_PASSWORD: secret
+          DB_HOST: 127.0.0.1
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
