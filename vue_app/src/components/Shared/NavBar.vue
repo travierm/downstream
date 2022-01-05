@@ -69,7 +69,22 @@
         to="/collection"
         rounded
         text
-        >Collection</v-btn
+      >
+        <v-icon color="deep-purple accent-2" class="mr-1"
+          >mdi-playlist-music</v-icon
+        >
+        Collection</v-btn
+      >
+
+      <v-btn
+        v-if="$vuetify.breakpoint.smAndUp && loggedIn"
+        class="ml-4 mr-2"
+        to="/collection"
+        rounded
+        text
+      >
+        <v-icon color="green" class="mr-1">mdi-spotify</v-icon>
+        Spotify Sync</v-btn
       >
 
       <!-- Discover -->
