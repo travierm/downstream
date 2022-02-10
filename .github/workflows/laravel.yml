@@ -9,9 +9,6 @@ on:
 jobs:
   laravel-unit-tests:
     runs-on: self-hosted
-    container:
-      image: kirschbaumdevelopment/laravel-test-runner:7.3
-
     services:
       mysql:
         image: mysql:5.7
