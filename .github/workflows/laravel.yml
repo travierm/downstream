@@ -14,13 +14,17 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_DATABASE: test_db
-          MYSQL_ROOT_PASSWORD: secretroot
+          MYSQL_ROOT_PASSWORD: password
         ports:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v2
+      - name: Verify MySQL connection
+        run: |
+          mysql --version
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e "SHOW DATABASES"
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
       - name: Install Dependencies
