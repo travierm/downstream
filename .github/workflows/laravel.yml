@@ -9,6 +9,7 @@ on:
 jobs:
   laravel-unit-tests:
     runs-on: self-hosted
+    environment: ci
     services:
       mysql:
         image: mysql:5.7
@@ -32,8 +33,4 @@ jobs:
       - name: Run Database Migrations
         run: php artisan migrate
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-          YOUTUBE_KEY: ${{ secrets.YOUTUBE_KEY }}
-          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
         run: vendor/bin/phpunit
