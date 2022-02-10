@@ -1,4 +1,5 @@
 name: Laravel
+runs-on: self-hosted
 
 on:
   push:
