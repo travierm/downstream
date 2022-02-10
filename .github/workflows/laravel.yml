@@ -33,7 +33,7 @@ jobs:
       - name: Run Database Migrations
         run: php artisan migrate
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: YOUTUBE_KEY=$YOUTUBE_KEY vendor/bin/phpunit
+        run: YOUTUBE_KEY=$YOUTUBE_KEY && echo $YOUTUBE_KEY && vendor/bin/phpunit
         env:
           YOUTUBE_KEY: ${{ env.YOUTUBE_KEY }}
           SPOTIFY_CLIENT_ID: ${{ env.SPOTIFY_CLIENT_ID }}
