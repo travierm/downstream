@@ -8,7 +8,7 @@ on:
 
 jobs:
   laravel-unit-tests:
-    runs-on: [self-hosted, ubuntu-latest]
+    runs-on: self-hosted
     container:
       image: kirschbaumdevelopment/laravel-test-runner:7.3
 
