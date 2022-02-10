@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Laravel Backend",
+      "request": "launch",
+      "runtimeArgs": ["artisan", "serve"],
+      "runtimeExecutable": "php",
+      "skipFiles": ["<node_internals>/**", "vendor/"],
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Vue App",
+      "request": "launch",
+      "runtimeArgs": ["run-script", "serve"],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}/vue_app"
+    }
+  ]
+}
