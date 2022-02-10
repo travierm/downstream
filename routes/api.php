@@ -22,8 +22,11 @@ Route::namespace('API')->group(function () {
     });
 
     Route::get('/ana/media/stats', 'AnalyticsController@getStats');
-    
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
+
+    // Spotify
+    Route::get('/spotify/url', 'SpotifyController@getAuthorizeUrl');
+    Route::get('/spotify/disable', 'SpotifyController@disableAccess');
 
     /* Authenticated routes only */
     Route::middleware('auth:sanctum')->group(function () {
@@ -62,6 +65,8 @@ Route::namespace('API')->group(function () {
 
     });
 
+
+
     /*
     // Analytics
     Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
@@ -73,10 +78,6 @@ Route::namespace('API')->group(function () {
 
     // Playlist
     Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');;
-
-    // Spotify
-    Route::get('/spotify/url', 'SpotifyController@getAuthorizeUrl');
-    Route::get('/spotify/disable', 'SpotifyController@disableAccess');
 
     // Demo
     Route::get('/demo/search', 'DemoController@searchQuery');

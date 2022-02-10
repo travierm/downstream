@@ -8,6 +8,7 @@ import LoginView from '@/components/views/Auth/LoginView'
 import LandingView from '@/components/views/LandingView'
 import CollectionView from '@/components/views/CollectionView'
 import DiscoverTrackView from '../components/views/DiscoverTrackView'
+import SpotifyView from '../components/views/spotify/setup'
 
 import { applyMiddleware } from './middleware'
 
@@ -39,6 +40,15 @@ const routes = [
     path: '/discover/track/:videoId',
     name: 'DiscoverTrack',
     component: DiscoverTrackView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  // Spotify
+  {
+    path: '/spotify/setup',
+    name: 'SpotifySetup',
+    component: SpotifyView,
     meta: {
       requiresAuth: true,
     },

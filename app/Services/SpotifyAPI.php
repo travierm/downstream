@@ -1,13 +1,12 @@
 <?php
 namespace App\Services;
 
-use App\UserSpotifyToken;
 use SpotifyWebAPI;
 
 class SpotifyAPI {
 
-	private static $booted = false;
 	private static $api = false;
+	private static $booted = false;
 	private static $session = false;
 
 	private static $scopes = [
@@ -38,7 +37,7 @@ class SpotifyAPI {
 		return self::$session;
 	}
 
-	public static function getInstanceWithToken(UserSpotifyToken $token) {
+	public static function getInstanceWithToken($token) {
 
 		$api = new SpotifyWebAPI\SpotifyWebAPI();
 		$session = self::getSession();

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use Auth;
+use App\Http\Controllers\Controller;
 use App\Models\UserSpotifyToken;
 use App\Services\SpotifyAPI;
-use App\Http\Controllers\Controller;
+use Auth;
 
 class SpotifyController extends Controller
 {
@@ -14,25 +14,34 @@ class SpotifyController extends Controller
         'user-read-private',
         'playlist-read-private',
         'playlist-modify-private',
-        'playlist-modify-public'
+        'playlist-modify-public',
     ];
 
-    function __construct() 
+    public function getAuthorizeUrl()
     {
-        $this->middleware('auth:api');
+        $url = SpotifyAPI::getAuthorizeUrl();
+
+        if (!$url) {
+            return response()->json([
+                'code' => 500,
+                'message' => "Could not fetch Authorization URL",
+            ]);
+        }
+
+        return response()->json([
+            'code' => 200,
+            'url' => $url,
+        ]);
     }
 
-    public function getAuthorizeUrl() {
-        return SpotifyAPI::getAuthorizeUrl();
-    }
-
-    public function disableAccess() {
+    public function disableAccess()
+    {
         $userId = Auth::user()->id;
 
-        if(!$userId) {
+        if (!$userId) {
             return response()->json([
                 'code' => 400,
-                'message' => "Bad user_id"
+                'message' => "Bad user_id",
             ]);
         }
 
@@ -40,7 +49,7 @@ class SpotifyController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' => "Successfully disabled access to Spotify"
+            'message' => "Successfully disabled access to Spotify",
         ]);
     }
 }
