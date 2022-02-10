@@ -51,7 +51,7 @@ https://github.com/travierm/downstream/wiki/Common-Setup-Issues
 
 **Discovery** No items exist on Downstream until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on Downstream until a user collects them and they will be processed as an official media item.
 
-text change for CI
+text change for CI - version 1
 
 <h3>Powered By:</h3>
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
