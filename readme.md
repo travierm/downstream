@@ -3,11 +3,12 @@
 
 https://downstream.us
 
-
 ## Development Setup
+
 ### Requirements
+
 - PHP 7.0 or greater & Composer package manager
-- Database: MySQL, Sqlite, Postgres, MariaDB (choose one) 
+- Database: MySQL, Sqlite, Postgres, MariaDB (choose one)
 - Latest NodeJS & npm (Yarn currently not compatible)
 - YouTube API key for search **required**
 - Spotify API key for recommendations and discovery **not required**
@@ -37,6 +38,7 @@ npm run hot // or 'npm run prod' to make static js,css files with cache busting
 ```
 
 ### Check the Wiki for fixes to common setup issues
+
 https://github.com/travierm/downstream/wiki/Common-Setup-Issues
 
 ## References
@@ -48,6 +50,8 @@ https://github.com/travierm/downstream/wiki/Common-Setup-Issues
 **Tossing** Tossing items remove them from a users collections but will keep the item for others to collect.
 
 **Discovery** No items exist on Downstream until a user "discovers" an item through search. From there DS will recommend other items to the user using the Spotify API. These recommended items are temporary on Downstream until a user collects them and they will be processed as an official media item.
+
+text change for CI
 
 <h3>Powered By:</h3>
 <p><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
