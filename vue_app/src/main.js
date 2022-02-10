@@ -1,19 +1,37 @@
 import Vue from 'vue'
+import * as Sentry from '@sentry/vue'
+import { Integrations } from '@sentry/tracing'
+
 import App from './App.vue'
 import router from './router'
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify'
 import store from './store'
 
 Vue.config.productionTip = false
 
-const loggedIn = store.getters["auth/loggedIn"]
+Sentry.init({
+  Vue,
+  dsn: 'http://608fff25e78545b390980762fdc08c8c@tecdrip.com:9000/1',
+  integrations: [
+    new Integrations.BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ['localhost', 'my-site-url.com', /^\//],
+    }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+})
+
+const loggedIn = store.getters['auth/loggedIn']
 if (!loggedIn && store.state.auth.token) {
-    store.dispatch("auth/getUser")
+  store.dispatch('auth/getUser')
 }
 
-if(process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV == 'development') {
   window.dd = console.log
-}else {
+} else {
   window.dd = () => {}
 }
 
@@ -21,5 +39,5 @@ new Vue({
   router,
   vuetify,
   store,
-  render: h => h(App)
+  render: h => h(App),
 }).$mount('#app')
