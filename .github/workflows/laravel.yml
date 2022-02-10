@@ -21,10 +21,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Verify MySQL connection
-        run: |
-          mysql --version
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e "SHOW DATABASES"
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
       - name: Install Dependencies
