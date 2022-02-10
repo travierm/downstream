@@ -8,6 +8,7 @@ on:
 
 jobs:
   laravel-unit-tests:
+    name: Laravel Unit Tests
     runs-on: self-hosted
     environment: ci
     services:
