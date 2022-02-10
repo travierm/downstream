@@ -8,15 +8,15 @@ on:
 
 jobs:
   laravel-unit-tests:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    container:
+      image: kirschbaumdevelopment/laravel-test-runner:7.3
 
     services:
       mysql:
         image: mysql:5.7
         env:
           MYSQL_DATABASE: test_db
-          MYSQL_USER: user
-          MYSQL_PASSWORD: secret
           MYSQL_ROOT_PASSWORD: secretroot
         ports:
           - 33306:3306
