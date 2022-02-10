@@ -1,5 +1,4 @@
 name: Laravel
-runs-on: self-hosted
 
 on:
   push:
@@ -9,7 +8,7 @@ on:
 
 jobs:
   laravel-unit-tests:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, ubuntu-latest]
     container:
       image: kirschbaumdevelopment/laravel-test-runner:7.3
 
