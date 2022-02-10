@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Laravel Backend",
+      "name": "API",
       "request": "launch",
       "runtimeArgs": ["artisan", "serve"],
       "runtimeExecutable": "php",
@@ -11,7 +11,7 @@
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "Vue App",
+      "name": "Frontend",
       "request": "launch",
       "runtimeArgs": ["run-script", "serve"],
       "runtimeExecutable": "npm",
