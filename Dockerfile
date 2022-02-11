@@ -36,7 +36,8 @@ RUN apk add --no-cache \
   supervisor
 
 RUN docker-php-ext-install mysqli && \
-    docker-php-ext-install pdo_mysql
+    docker-php-ext-install pdo_mysql && \
+    docker-php-ext-install pdo
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php8 /usr/bin/php
