@@ -55,6 +55,10 @@ COPY --chown=nobody . /var/www/html/
 # Expose the port nginx is reachable on
 EXPOSE 8080
 
+# Run Composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN composer install --optimize-autoloader --no-interaction --no-progress
+
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
