@@ -55,6 +55,7 @@ USER nobody
 
 # Add application
 COPY --chown=nobody . /var/www/html/
+COPY .env.prod /var/www/html/.env
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
