@@ -1,5 +1,6 @@
 ARG ALPINE_VERSION=3.14
-FROM alpine:${ALPINE_VERSION}
+# FROM alpine:${ALPINE_VERSION}
+FROM php:8.0-fpm-alpine
 
 LABEL Maintainer="Travier Moorlag"
 LABEL Description="Lightweight container for running Laravel API's"
@@ -34,6 +35,9 @@ RUN apk add --no-cache \
   php8-pdo \
   supervisor
 
+RUN docker-php-ext-install mysqli && \
+    docker-php-ext-install pdo_mysql
+
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php8 /usr/bin/php
 
@@ -63,6 +67,7 @@ EXPOSE 8080
 # Run Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer install --optimize-autoloader --no-interaction --no-progress
+RUN php -v
 
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
