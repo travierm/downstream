@@ -20,6 +20,7 @@ RUN apk add --no-cache \
   php8-intl \
   php8-json \
   php8-mbstring \
+  php8-mysql \
   php8-mysqli \
   php8-opcache \
   php8-openssl \
