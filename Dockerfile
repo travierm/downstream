@@ -28,6 +28,10 @@ RUN apk add --no-cache \
   php8-xml \
   php8-xmlreader \
   php8-zlib \
+  php8-fileinfo \
+  php8-tokenizer \
+  php8-xmlwriter \
+  php8-pdo \
   supervisor
 
 # Create symlink so programs depending on `php` still function
