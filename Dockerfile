@@ -33,6 +33,7 @@ RUN apk add --no-cache \
   php8-tokenizer \
   php8-xmlwriter \
   php8-pdo \
+  php8-pdo_mysql \
   supervisor
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql
