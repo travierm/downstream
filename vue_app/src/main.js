@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import * as Sentry from '@sentry/vue'
-import { Integrations } from '@sentry/tracing'
+import { BrowserTracing } from '@sentry/tracing'
 
 import App from './App.vue'
 import router from './router'
@@ -16,7 +16,7 @@ Sentry.init({
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ['localhost', 'my-site-url.com', /^\//],
+      tracingOrigins: ['downstream.us', /^\//],
     }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%
