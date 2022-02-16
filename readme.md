@@ -14,13 +14,13 @@ https://downstream.us
 - Spotify API key for recommendations and discovery **not required**
 
 ### Pre-setup requirements
-```bash
+```php
 // install PHP's composer dependency manager
 wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
 ```
 
 ### Setting up the application
-```bash
+```php
 //clone downstream repo
 git clone https://github.com/Travier/downstream downstream
 cd downstream
