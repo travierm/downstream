@@ -13,13 +13,13 @@ https://downstream.us
 - YouTube API key for search **required**
 - Spotify API key for recommendations and discovery **not required**
 
-Pre-setup requirements
+### Pre-setup requirements
 ```bash
 // install PHP's composer dependency manager
 wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
 ```
 
-Repo Setup
+### Setting up the application
 ```bash
 //clone downstream repo
 git clone https://github.com/Travier/downstream downstream
