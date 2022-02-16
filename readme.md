@@ -9,7 +9,7 @@ https://downstream.us
 
 - PHP 7.0 or greater & Composer package manager
 - Database: MySQL, Sqlite, Postgres, MariaDB (choose one)
-- Latest NodeJS & npm (Yarn currently not compatible)
+- Latest NodeJS & Yarn
 - YouTube API key for search **required**
 - Spotify API key for recommendations and discovery **not required**
 
