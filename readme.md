@@ -33,8 +33,10 @@ php artisan migrate
 //start php dev server
 php artisan serve
 
-// start javascipt hot reload and babel compiler
-npm run hot // or 'npm run prod' to make static js,css files with cache busting
+// setup vue app frontend
+cd vue_app/
+yarn
+yarn serve
 ```
 
 ### Check the Wiki for fixes to common setup issues
