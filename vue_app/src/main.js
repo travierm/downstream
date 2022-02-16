@@ -16,13 +16,14 @@ Sentry.init({
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ['downstream.us', /^\//],
+      tracingOrigins: ['api.downstream.us', /^\//],
     }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
+  enabled: process.env.NODE_ENV !== 'development',
 })
 
 const loggedIn = store.getters['auth/loggedIn']

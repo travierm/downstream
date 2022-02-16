@@ -13,8 +13,8 @@
     {
       "name": "Frontend",
       "request": "launch",
-      "runtimeArgs": ["run-script", "serve"],
-      "runtimeExecutable": "npm",
+      "runtimeArgs": ["serve"],
+      "runtimeExecutable": "yarn",
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node",
       "cwd": "${workspaceFolder}/vue_app"

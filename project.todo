@@ -1,4 +1,28 @@
+
 -- Project TODO --
+
+v1.4 Features
+☐ Invitation / Registration Page
+    ☐ Allows users to register their email and wait for approval
+        ☐ Users with an invitation code head straight to the registation page
+            ☐ "Do you have an invite code or would you like to be put on the waiting list?"
+        ☐ Use Captcha Service
+☐ Follow other users
+    ☐ Find / Follow other users
+        ☐ See what your friends are listening too
+        ☐ View your friends profile
+    ☐ Make your account hidden
+        ☐ Other can't see what you're listening to
+        ☐ You can't be found in User Search
+    ☐ Make your account private
+        ☐ You can only be added by using friend code
+    ☐ Make your account public
+        ☐ You can be seeing in leaderboards and in user lists
+☐ Spotify Sync
+    ☐ Import songs from your DS Import playlist on click
+☐ Bug Fixes
+
+
 Active:
     ☐ MAKE SURE ITEMS FOUND OFF SPOTIFY GET PROPER ID SAVED
     ☐ Discover Feature @started(21-04-19 22:27)
@@ -7,7 +31,9 @@ Active:
             ☐ When sending to user check collected field again
     ☐ Make sure api stats count uses Detroit Timezone
     ☐ Collection Links & Stats
-    ☐ Clear users collection besides test media before running e2e tests   
+    ☐ Clear users collection besides test media before running e2e tests
+    ☐ Give feedback when push to top is clicked
+        ☐ Like a toast message!
     
 Bugs:
     ☐ Shuffling multiple times with cause play manager to act weird
