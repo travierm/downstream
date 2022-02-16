@@ -7,7 +7,7 @@ https://downstream.us
 
 ### Requirements
 
-- PHP 7.0 or greater & Composer package manager
+- PHP 7.4 or greater & Composer package manager
 - Database: MySQL, Sqlite, Postgres, MariaDB (choose one)
 - Latest NodeJS & Yarn
 - YouTube API key for search **required**
