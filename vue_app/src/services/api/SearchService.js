@@ -1,4 +1,3 @@
-import Axios from "axios"
 import { ajax } from "jquery"
 import http from "./Client"
 
@@ -12,13 +11,13 @@ export function getAutocompleteResults(query, callback) {
         success: function(data) {
             let items = []
             const responseItems = data[1]
-            
+
             if(responseItems) {
                 items = responseItems.map((item) => {
                     return item[0]
                 })
             }
-            
+
             callback(items)
         },
     })

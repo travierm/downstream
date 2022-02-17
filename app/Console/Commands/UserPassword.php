@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Hash;
-use App\User;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class UserPassword extends Command
@@ -54,13 +54,13 @@ class UserPassword extends Command
 
             $password = $this->secret('New password?');
             $confirmPassword = $this->secret('Confirm new password?');
-    
+
             if($confirmPassword === $password) {
                 $this->info("Password matched!");
                 $confirmedPassword = true;
             }else{
                 $this->error("Passwords do not match!");
-            }            
+            }
         } while($confirmedPassword == false);
 
         if($this->confirm("Are you sure you want to change $user->display_name password?")) {
