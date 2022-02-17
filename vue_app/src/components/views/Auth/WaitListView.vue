@@ -11,11 +11,16 @@
         <!-- Login Header Text -->
         <v-row class="mt-2">
           <v-col>
-            <h1>Login</h1>
+            <h1>Wait List</h1>
 
-            <v-alert v-if="error" type="error" class="mt-2 mb-0">
-              Email or Password is incorrect!
-            </v-alert>
+            <div class="text-body-1">
+              Downstream is not currently open to registration without an invite
+              code.
+            </div>
+            <div class="text-body-1 mt-2">
+              Please sign up on the wait list and will get you an account as
+              soon as possible.
+            </div>
           </v-col>
         </v-row>
 
@@ -42,7 +47,6 @@
                 :rules="[(v) => !!v || 'Password is required']"
                 required
               ></v-text-field>
-
               <v-checkbox v-model="rememberMe" label="Remember Me"></v-checkbox>
 
               <!-- Login Form Actions -->
@@ -64,7 +68,7 @@ import { mapState } from 'vuex'
 const afterLoginRoute = '/collection'
 
 export default {
-  name: 'LoginView',
+  name: 'WaitListView',
   components: {},
   computed: {
     ...mapState('auth', ['error']),

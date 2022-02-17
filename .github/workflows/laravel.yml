@@ -1,4 +1,4 @@
-name: Laravel
+name: Downstream CI
 
 on:
   push:
@@ -7,10 +7,40 @@ on:
     branches: [master]
 
 jobs:
-  laravel-unit-tests:
-    name: Laravel Unit Tests
+  deployment:
+    name: Deploy
+    environment: prod
     runs-on: ubuntu-latest
-    environment: ci
+    needs: api-unit-test
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build Laravel API
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/downstream-api:latest
+      - name: Build Vue App
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./vue_app/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/downstream-app:latest
+  api-unit-test:
+    name: Laravel API Tests
+    runs-on: ubuntu-latest
+    environment: dev
     services:
       mysql:
         image: mysql:5.7
