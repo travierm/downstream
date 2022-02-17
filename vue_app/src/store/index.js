@@ -16,6 +16,7 @@ export default new Vuex.Store({
   state: {
     showLoadingBar: false,
     playlistDrawerStatus: false,
+    navDrawerStatus: false,
     mediaStats: {},
   },
   mutations: {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     SET_LOADING_BAR_STATE(state, boolean) {
       state.showLoadingBar = boolean
+    },
+    TOGGLE_NAV_DRAWER_STATUS(state) {
+      state.navDrawerStatus = !state.navDrawerStatus
     },
   },
   actions: {
@@ -43,6 +47,9 @@ export default new Vuex.Store({
     setLoadingBarState(context, boolean) {
       context.commit('SET_LOADING_BAR_STATE', boolean)
     },
+    toggleNavDrawerStatus(context) {
+      context.commit('TOGGLE_NAV_DRAWER_STATUS')
+    }
   },
   modules: {
     auth,

@@ -7,7 +7,8 @@ import SearchView from '@/components/views/SearchView'
 import LoginView from '@/components/views/Auth/LoginView'
 import LandingView from '@/components/views/LandingView'
 import CollectionView from '@/components/views/CollectionView'
-import DiscoverTrackView from '../components/views/DiscoverTrackView'
+import DiscoverTrackView from '@/components/views/DiscoverTrackView'
+import FollowingView from '@/components/views/FollowingView'
 
 import { applyMiddleware } from './middleware'
 
@@ -19,6 +20,8 @@ const routes = [
     path: '/',
     component: LandingView,
   },
+
+  // In App Routes
   {
     path: '/activity',
     name: 'Activity',
@@ -47,6 +50,14 @@ const routes = [
     path: '/search',
     name: 'Search',
     component: SearchView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/following',
+    name: 'Following',
+    component: FollowingView,
     meta: {
       requiresAuth: true,
     },
