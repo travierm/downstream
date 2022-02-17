@@ -2,12 +2,11 @@
 
 namespace Tests;
 
-use App\Models\User;
 use App\Models\Playlist;
-use App\Models\UserMedia;
-use App\Exceptions\Handler;
-
 use App\Models\PlaylistItem;
+use App\Models\User;
+use App\Models\UserMedia;
+use App\Models\UserWaitList;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -24,10 +23,9 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         $this->withoutExceptionHandling();
 
-        if(!$setupAlreadyRan) {
+        if (!$setupAlreadyRan) {
             $this->runOnce();
         }
-
 
         $setupAlreadyRan = true;
     }
@@ -36,7 +34,9 @@ abstract class TestCase extends BaseTestCase
     {
         $testUsers = User::where('display_name', 'LIKE', 'ds_test_user_%');
 
-        foreach($testUsers as $user) {
+        UserWaitList::truncate();
+
+        foreach ($testUsers as $user) {
             $userId = $user->id;
 
             UserMedia::where('user_id', $userId)->delete();

@@ -16,16 +16,14 @@ class UserRegistrationController extends Controller
 
         if (UserWaitList::emailAlreadySignedUp($email)) {
             return response()->json([
-                'code' => 400,
-                'message' => "Email already signed up",
-            ]);
+                'message' => "Email already signed up.",
+            ], 400);
         }
 
         UserWaitList::createSignup($email, $textQuestion, $textResponse);
 
         return response()->json([
-            'code' => 200,
             'message' => "You are now signed up on the wait list!",
-        ]);
+        ], 200);
     }
 }
