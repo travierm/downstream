@@ -1,4 +1,4 @@
-name: Downstream Test & Deploy
+name: Downstream CI
 
 on:
   push:
