@@ -1,4 +1,4 @@
-name: Laravel
+name: Downstream CI
 
 on:
   push:
@@ -7,10 +7,25 @@ on:
     branches: [master]
 
 jobs:
-  laravel-unit-tests:
-    name: Laravel Unit Tests
+  deployment:
+    name: Deploy
+    environment: prod
     runs-on: ubuntu-latest
-    environment: ci
+    needs: api-unit-test
+    continue-on-error: true
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Trigger Downstream API Build
+        run: |
+          /usr/bin/curl --output /dev/null --silent -H "Content-Type: application/json" -X POST "${{ secrets.DOCKER_HUB_API_TRIGGER_ROUTE }}"
+      - name: Trigger Downstream App Build
+        run: |
+          /usr/bin/curl --output /dev/null --silent -H "Content-Type: application/json" -X POST "${{ secrets.DOCKER_HUB_APP_TRIGGER_ROUTE }}"
+  api-unit-test:
+    name: Laravel API Tests
+    runs-on: ubuntu-latest
     services:
       mysql:
         image: mysql:5.7
