@@ -12,6 +12,7 @@ jobs:
     environment: prod
     runs-on: ubuntu-latest
     needs: api-unit-test
+    continue-on-error: true
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout
