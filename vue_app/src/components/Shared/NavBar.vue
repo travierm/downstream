@@ -42,6 +42,12 @@
 
     <SearchBar v-if="loggedIn" class="mt-1" />
 
+    <v-app-bar-nav-icon
+      v-if="loggedIn && $vuetify.breakpoint.smAndUp"
+      @click.stop="$store.dispatch('toggleNavDrawerStatus')"
+      class="ml-2"
+    ></v-app-bar-nav-icon>
+
     <!-- Loading Bar -->
     <v-progress-linear
       :active="showLoadingBar"
@@ -50,99 +56,12 @@
       bottom
       color="deep-purple accent-4"
     ></v-progress-linear>
-
-    <div v-if="loggedIn">
-      <!-- Activity -->
-      <!--<v-btn class="mr-2 ml-2" to="/activity" rounded text>
-                Activity
-                <v-badge
-                    content="6"
-                    class="ml-2 mr-2"
-                    color="#1E1E1E"
-                ></v-badge>
-            </v-btn>-->
-
-      <!-- Collection -->
-      <v-btn
-        v-if="$vuetify.breakpoint.smAndUp && loggedIn"
-        class="ml-4 mr-2"
-        to="/collection"
-        rounded
-        text
-        >Collection</v-btn
-      >
-
-      <!-- Discover -->
-      <!-- <v-btn class="mr-2 ml-2" rounded text>
-                Discover
-                <v-badge
-                    content="2"
-                    class="ml-2 mr-2"
-                    color="#1E1E1E"
-                ></v-badge>
-            </v-btn> -->
-    </div>
-
-    <v-menu left bottom v-if="$vuetify.breakpoint.xsOnly && loggedIn">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </template>
-
-      <v-list>
-        <v-list-item
-          v-for="link in mobileLinks"
-          :key="link.url"
-          @click="$router.push(link.url)"
-        >
-          <v-list-item-title>{{ link.text }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-
-    <v-menu offset-y v-if="$vuetify.breakpoint.smAndUp && loggedIn">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" v-on="on" rounded text>
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
-      </template>
-      <v-list class="pa-2">
-        <!--<v-list-item>
-                    <v-icon class="pr-4">mdi-account-circle-outline</v-icon>
-                    <v-list-item-title>Profile</v-list-item-title>
-                </v-list-item>-->
-
-        <!-- <v-list-item>
-                    <v-icon class="pr-4">mdi-cog</v-icon>
-                    <v-list-item-title>Settings</v-list-item-title>
-                </v-list-item> -->
-
-        <v-list-item>
-          <v-icon class="pr-4">mdi-logout</v-icon>
-          <v-list-item-title>
-            <router-link to="/logout">Logout</router-link>
-          </v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
   </v-app-bar>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
 import SearchBar from '@/components/SearchBar'
-
-const mobileLinks = [
-  {
-    text: 'Collection',
-    url: '/collection',
-  },
-  {
-    text: 'Logout',
-    url: '/logout',
-  },
-]
 
 export default {
   name: 'NavBar',
@@ -160,7 +79,8 @@ export default {
       mobileLinks,
     }
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {},
 }
 </script>

@@ -4,7 +4,7 @@ import AuthService from "@/services/api/AuthService"
 
 export const namespaced = true
 export const state = {
-    user: window.localStorage.getItem("user"),
+    user: JSON.parse(window.localStorage.getItem("user")), //- TODO: Look into a better place to store this?
     error: false,
     loading: false,
     token: window.localStorage.getItem("token"),
@@ -23,7 +23,7 @@ export const mutations = {
     },
     SET_USER(state, user) {
         state.user = user
-        window.localStorage.setItem("user", user)
+        window.localStorage.setItem("user", JSON.stringify(user))
     },
     CLEAR_USER() {
         state.user = false
