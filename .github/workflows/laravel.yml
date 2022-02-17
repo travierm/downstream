@@ -66,7 +66,7 @@ jobs:
           node-version: v16.14.0
       - name: Yarn Install
         working-directory: vue_app
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Build Vue App
         working-directory: vue_app
         run: yarn build
