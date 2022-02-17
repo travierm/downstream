@@ -11,7 +11,7 @@
         <!-- Login Header Text -->
         <v-row class="mt-2">
           <v-col>
-            <h1>Wait List</h1>
+            <h1 class="mb-2">Sign up for our Waiting List</h1>
 
             <div class="text-body-1">
               Downstream is not currently open to registration without an invite
@@ -24,11 +24,10 @@
           </v-col>
         </v-row>
 
-        <!-- Login Form -->
+        <!-- Waiting List Signup -->
         <v-row class="mb-2">
-          <v-col>
-            <v-form ref="loginForm" v-model="valid">
-              <!-- Login Form Inputs -->
+          <v-col align="center" justify="center">
+            <v-form ref="waitListForm" v-model="valid">
               <v-text-field
                 name="email"
                 outlined
@@ -38,23 +37,38 @@
                 required
               ></v-text-field>
 
-              <v-text-field
-                name="password"
+              <v-textarea
+                name="input-7-1"
                 outlined
-                v-model="password"
-                type="password"
-                label="Password"
-                :rules="[(v) => !!v || 'Password is required']"
-                required
-              ></v-text-field>
-              <v-checkbox v-model="rememberMe" label="Remember Me"></v-checkbox>
+                v-model="textResponse"
+                rows="3"
+                label="What kind of music do you like?"
+                :rules="[(v) => !!v || 'A response is required']"
+              ></v-textarea>
 
-              <!-- Login Form Actions -->
-              <v-btn class="loginBtn" @click="login">Login</v-btn>
-              <v-btn class="ml-2" small text color="primary"
-                >Forgot Password?</v-btn
-              >
+              <div>
+                <vue-recaptcha
+                  :loadRecaptchaScript="true"
+                  sitekey="6LdXKYUeAAAAAAuBfqXR3mpHMGxQw8NRUlTVcHT_"
+                >
+                  <v-btn large class="loginBtn" @click="signup">Sign up</v-btn>
+                </vue-recaptcha>
+              </div>
             </v-form>
+          </v-col>
+        </v-row>
+
+        <v-row class="mt-2">
+          <v-col>
+            <h1 class="text-center">Or</h1>
+          </v-col>
+        </v-row>
+
+        <v-row class="mt-2 mb-2">
+          <v-col align="center" justify="center">
+            <v-btn large class="loginBtn" @click=""
+              >Register with Invitation Code</v-btn
+            >
           </v-col>
         </v-row>
       </div>
@@ -63,43 +77,35 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
-const afterLoginRoute = '/collection'
+import { VueRecaptcha } from 'vue-recaptcha'
+import { createWaitListSignup } from '@/services/api/WaitListService'
 
 export default {
   name: 'WaitListView',
-  components: {},
+  components: {
+    VueRecaptcha,
+  },
   computed: {
-    ...mapState('auth', ['error']),
     sheetWidth() {
       return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%)'
     },
   },
   data: () => {
     return {
-      email: '',
-      password: '',
-      rememberMe: false,
       valid: false,
-      failedLogin: false,
+      email: '',
+      textResponse: '',
     }
   },
   methods: {
-    login() {
-      if (!this.$refs.loginForm.validate()) {
+    signup() {
+      if (!this.$refs.waitListForm.validate()) {
         return
       }
 
-      const params = {
-        email: this.email,
-        password: this.password,
-      }
-      this.$store.dispatch('auth/login', params).then(() => {
-        if (!this.error) {
-          this.$router.push(afterLoginRoute)
-        }
-      })
+      createWaitListSignup(this.email, this.textResponse)
+        .then(() => {})
+        .catch(() => {})
     },
   },
 }
