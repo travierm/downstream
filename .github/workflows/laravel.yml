@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  deploy:
+  deployment:
     name: Deploy
     environment: prod
     runs-on: ubuntu-latest
