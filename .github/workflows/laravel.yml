@@ -40,7 +40,6 @@ jobs:
   api-unit-test:
     name: Laravel API Tests
     runs-on: ubuntu-latest
-    environment: dev
     services:
       mysql:
         image: mysql:5.7
