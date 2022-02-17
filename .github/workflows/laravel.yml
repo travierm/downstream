@@ -18,9 +18,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Trigger Downstream API Build
-        run: chpst -u nobody:nogroup /usr/bin/curl --output /dev/null --silent -H "Content-Type: application/json" --data '{"build": true}' -X POST "${{ secrets.DOCKER_HUB_API_TRIGGER_ROUTE }}"
+        run: chpst -u nobody:nogroup /usr/bin/curl --output /dev/null --silent -H "Content-Type: application/json" -X POST "${{ secrets.DOCKER_HUB_API_TRIGGER_ROUTE }}"
       - name: Trigger Downstream App Build
-        run: chpst -u nobody:nogroup /usr/bin/curl --output /dev/null --silent -H "Content-Type: application/json" --data '{"build": true}' -X POST "${{ secrets.DOCKER_HUB_APP_TRIGGER_ROUTE }}"
+        run: chpst -u nobody:nogroup /usr/bin/curl --output /dev/null --silent -H "Content-Type: application/json" -X POST "${{ secrets.DOCKER_HUB_APP_TRIGGER_ROUTE }}"
   api-unit-test:
     name: Laravel API Tests
     runs-on: ubuntu-latest
