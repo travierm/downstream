@@ -9,7 +9,7 @@ on:
 jobs:
   laravel-unit-tests:
     name: Laravel Unit Tests
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     environment: ci
     services:
       mysql:
