@@ -9,6 +9,7 @@ on:
 jobs:
   laravel-unit-tests:
     name: Laravel Unit Tests
+    php: ['7.4']
     runs-on: ubuntu-latest
     environment: ci
     services:
