@@ -57,20 +57,23 @@ jobs:
   vue-app-tests:
     runs-on: ubuntu-latest
     needs: api-unit-test
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup NodeJs 16
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-      - run: npm test
+          node-version: [16.x]
+      - name: Yarn INstall
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install --frozen-lockfile
+      - name: Build App
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
+      - name: Unit Test
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: test:unit
         env:
           CI: true
