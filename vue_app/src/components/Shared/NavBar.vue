@@ -5,7 +5,7 @@
       v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
     >
       <router-link tag="div" to="/">
-        <v-toolbar-title class="navbar-brand">Downstream2</v-toolbar-title>
+        <v-toolbar-title class="navbar-brand">Downstream</v-toolbar-title>
       </router-link>
 
       <v-btn
