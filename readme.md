@@ -69,8 +69,6 @@ No item exists on Downstream until a user discovers an item through search. That
 
 These discovered items are temporary on Downstream until a user collects them and then they become a discovered media item on the site.
 
-<br />
-
 ### **Powered By**
 
 <img src="https://laravel.com/assets/img/components/logo-laravel.svg">
