@@ -41,7 +41,7 @@ class UserRegistrationControllerTest extends TestCase
 
         $this->assertEquals($signup->email, 'test@gmail.com');
         $this->assertEquals($signup->text_response, 'i like kid cudi');
-        $this->assertEquals("You are now signed up on the wait list!", $jsonData['message'], "The proper response message is returned");
+        $this->assertEquals("You have successfully joined the waiting list!", $jsonData['message'], "The proper response message is returned");
 
         // Make sure we can't duplicate sign ups and get proper response
         $response = $this->actingAs($user)->post('/api/waitlist/signup', [
@@ -54,6 +54,6 @@ class UserRegistrationControllerTest extends TestCase
         $count = UserWaitList::count();
 
         $this->assertEquals(1, $count, "only one sign up exists on the wait list");
-        $this->assertEquals("Email already signed up.", $jsonData['message'], "The proper response message is returned");
+        $this->assertEquals("You have already joined the waiting list", $jsonData['message'], "The proper response message is returned");
     }
 }

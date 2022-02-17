@@ -22,7 +22,9 @@ Route::namespace ('API')->group(function () {
 
     Route::get('/ana/media/stats', 'AnalyticsController@getStats');
 
+    // Auth & User Routes
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
+    Route::post('/waitlist/signup', 'User\UserRegistrationController@createWaitListSignup');
 
     /* Authenticated routes only */
     Route::middleware('auth:sanctum')->group(function () {
@@ -57,9 +59,6 @@ Route::namespace ('API')->group(function () {
 
         // Analytics
         Route::get('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');
-
-        // Wait List
-        Route::post('/waitlist/signup', 'User\UserRegistrationController@createWaitListSignup');
     });
 
     /*
