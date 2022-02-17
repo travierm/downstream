@@ -1,4 +1,4 @@
-name: Laravel
+name: Downstream Test & Deploy
 
 on:
   push:
