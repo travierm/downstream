@@ -6,7 +6,7 @@
 
         <h3 class="mt-2">This site is under active developement.</h3>
 
-        <h3 class="mb-2">
+        <h3>
           App Version:
           <v-chip label class="ma-2" color="orange" text-color="white">{{
             getAppVersion()
