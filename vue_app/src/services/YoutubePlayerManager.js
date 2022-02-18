@@ -1,152 +1,157 @@
-import _ from "lodash"
+import _ from 'lodash'
 import Cache from '../services/Cache'
 
 const _DEBUG = true
 
 class YoutubePlayerManager {
-    constructor() {
-        this.localCache = new Cache(true)
-        this.localCache.setStoragePrefix('player_manager_')
+  constructor() {
+    this.localCache = new Cache(true)
+    this.localCache.setStoragePrefix('player_manager_')
 
-        this.volume = this.localCache.get('volume', 100)
-        this.guidIndex = []
-        this.guidQueue = []
-        this.registeredCards = []
-        this.currentPlayingGuid = false
+    this.volume = this.localCache.get('volume', 100)
+    this.guidIndex = []
+    this.guidQueue = []
+    this.registeredCards = []
+    this.currentPlayingGuid = false
+  }
+
+  getPlayingCardId() {
+    return this.currentPlayingGuid
+  }
+
+  getPlayingCard() {
+    if (!this.currentPlayingGuid) {
+      return false
     }
 
-    getPlayingCardId() {
-        return this.currentPlayingGuid
+    return this.findCardByGuid(this.currentPlayingGuid)
+  }
+
+  getNextCard(currentGuid) {
+    const nextGuid = this.getNextGuid(currentGuid)
+
+    return this.findCardByGuid(nextGuid)
+  }
+
+  getNextGuid(currentGuid) {
+    const guidIndexLength = this.guidIndex.length - 1
+    const currentIndex = this.findIndexByGuid(currentGuid)
+
+    const nextIndex = currentIndex >= guidIndexLength ? 0 : currentIndex + 1
+
+    return this.guidIndex[nextIndex]
+  }
+
+  findIndexByGuid(guid) {
+    return this.guidIndex.indexOf(guid)
+  }
+
+  findCardByGuid(guid) {
+    if (!guid) {
+      throw Error('guid not passed')
     }
 
-    getPlayingCard() {
-        if (!this.currentPlayingGuid) {
-            return false
-        }
+    return _.find(this.registeredCards, { guid })
+  }
 
-        return this.findCardByGuid(this.currentPlayingGuid)
+  registerCardPlayer(player) {
+    if (this.findCardByGuid(player.guid)) {
+      console.info('Stop duplicate card registration ' + player.guid)
+      return
     }
 
-    getNextCard(currentGuid) {
-        const nextGuid = this.getNextGuid(currentGuid)
+    this.registeredCards.push(player)
+  }
 
-        return this.findCardByGuid(nextGuid)
+  setGuidIndex(index) {
+    // Stop playing current card so it doesn't get lost when the index is updated
+    if (this.currentPlayingGuid) {
+      this.stopPlayingCard(this.currentPlayingGuid)
     }
 
-    getNextGuid(currentGuid) {
-        const guidIndexLength = this.guidIndex.length - 1
-        const currentIndex = this.findIndexByGuid(currentGuid)
+    this.guidIndex = index
+    this.registeredCards = []
+    this.currentPlayingGuid = false
+  }
 
-        const nextIndex = currentIndex >= guidIndexLength ? 0 : currentIndex + 1
+  getVolume() {
+    return this.volume
+  }
 
-        return this.guidIndex[nextIndex]
+  setVolume(value) {
+    this.volume = value
+    this.localCache.set('volume', value)
+
+    const playingVideo = this.getPlayingCard()
+
+    if (playingVideo) {
+      playingVideo.setVolume(value)
+    }
+  }
+
+  // Large Methods
+  removeCard(guid) {
+    _.remove(this.guidIndex, guid)
+    _.remove(this.registeredCards, {
+      guid,
+    })
+  }
+
+  // Add a guid to be queued to play next
+  queueNextCard(guid) {
+    if (typeof guid === 'string') {
+      this.guidQueue.push(guid)
+    }
+  }
+
+  playNextCard() {
+    if (this.guidIndex.length <= 0) {
+      throw Error('Can not play next card since guidIndex is empty')
     }
 
-    findIndexByGuid(guid) {
-        return this.guidIndex.indexOf(guid)
+    let nextCard = false
+    if (this.guidQueue.length >= 1) {
+      const guid = this.guidQueue.shift()
+
+      // We have songs queued up to play
+      nextCard = this.findCardByGuid(guid)
+    } else {
+      nextCard = this.getNextCard(this.currentPlayingGuid)
     }
 
-    findCardByGuid(guid) {
-
-        if(!guid) {
-            throw Error('guid not passed')
-        }
-
-        return _.find(this.registeredCards, { guid })
+    if (!nextCard) {
+      throw Error(
+        'Failed to find nextCard after guid ' + this.currentPlayingGuid
+      )
     }
 
-    registerCardPlayer(player) {
-        if(this.findCardByGuid(player.guid)) {
-            console.info("Stop duplicate card registration " + player.guid)
-            return
-        }
+    nextCard.setVolume(this.volume)
+    nextCard.play()
+  }
 
-        this.registeredCards.push(player)
+  stopPlayingCard(guid) {
+    const yotubeCardPlayer = this.findCardByGuid(guid)
+
+    if (yotubeCardPlayer) {
+      yotubeCardPlayer._player.stop()
+      yotubeCardPlayer._player.destroy()
+      console.log('stopped playing card')
+    }
+  }
+
+  triggerPlayEvent(guid) {
+    const previousPlayingGuid = _.clone(this.currentPlayingGuid)
+
+    console.log('previousGuid', previousPlayingGuid)
+
+    if (previousPlayingGuid) {
+      // Stop playing previous card because a new one would like to play
+      this.stopPlayingCard(previousPlayingGuid)
     }
 
-    setGuidIndex(index) {
-        // Stop playing current card so it doesn't get lost when the index is updated
-        if(this.currentPlayingGuid) {
-            this.stopPlayingCard(this.currentPlayingGuid);
-        }
-
-        this.guidIndex = index
-        this.registeredCards = []
-        this.currentPlayingGuid = false
-    }
-
-    getVolume() {
-        return this.volume
-    }
-
-    setVolume(value) {
-        this.volume = value
-        this.localCache.set('volume', value)
-
-        const playingVideo = this.getPlayingCard()
-
-        if (playingVideo) {
-            playingVideo.setVolume(value)
-        }
-    }
-
-    // Large Methods
-    removeCard(guid) {
-        _.remove(this.guidIndex, guid)
-        _.remove(this.registeredCards, {
-            guid
-        })
-    }
-
-    // Add a guid to be queued to play next
-    queueNextCard(guid) {
-        if(typeof guid === 'string') {
-            this.guidQueue.push(guid)
-        }
-    }
-
-    playNextCard() {
-        if (this.guidIndex.length <= 0) {
-            throw Error("Can not play next card since guidIndex is empty")
-        }
-
-        let nextCard = false
-        if(this.guidQueue.length >= 1) {
-            const guid = this.guidQueue.shift()
-
-            // We have songs queued up to play
-            nextCard = this.findCardByGuid(guid)
-        }else{
-            nextCard = this.getNextCard(this.currentPlayingGuid)
-        }
-
-        if(!nextCard) {
-            throw Error('Failed to find nextCard after guid ' + this.currentPlayingGuid)
-        }
-
-        nextCard.setVolume(this.volume)
-        nextCard.play()
-    }
-
-    stopPlayingCard(guid) {
-        const playingCard = this.findCardByGuid(guid)
-
-        if (playingCard) {
-            playingCard.stop()
-        }
-    }
-
-    triggerPlayEvent(guid) {
-        // const previousPlayingGuid = _.clone(this.currentPlayingGuid)
-
-        // if (previousPlayingGuid) {
-            // Stop playing previous card because a new one would like to play
-            // this.stopPlayingCard(previousPlayingGuid)
-        // }
-
-        // Update current playing card id
-        this.currentPlayingGuid = guid
-    }
+    // Update current playing card id
+    this.currentPlayingGuid = guid
+  }
 }
 
 const $manager = new YoutubePlayerManager()

@@ -3,7 +3,10 @@
     <v-container>
       <v-row no-gutters class="justify-left">
         <v-col cols="auto" class="mr-1">
-          <div class="video-instance embed-responsive" :id="manager.currentPlayingGuid"></div>
+          <div
+            class="video-instance embed-responsive"
+            id="downstream-video-container"
+          ></div>
         </v-col>
 
         <v-col cols="auto" class="mr-1">
