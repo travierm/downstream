@@ -35,7 +35,7 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: prod
-          version: ${{ steps.get-latest-tag.outputs.tag  }} - ${{ github.sha }}
+          version: ${{ github.sha }}
 
   api-unit-test:
     name: Laravel API Tests
