@@ -24,16 +24,18 @@
     "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.3.0",
     "@vue/cli-service": "~4.2.0",
-    "ackee-tracker": "^5.0.1",
+    "@vue/composition-api": "^1.4.6",
     "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "jquery": "^3.5.1",
     "lodash": "^4.17.15",
-    "sass": "^1.19.0",
+    "sass": "~1.32.12",
     "sass-loader": "^8.0.0",
     "vue": "^2.6.11",
     "vue-cli-plugin-vuetify": "~2.0.5",
+    "vue-demi": "^0.12.1",
     "vue-glow": "^1.4.2",
+    "vue-recaptcha": "^2.0.1",
     "vue-router": "^3.1.5",
     "vue-template-compiler": "^2.6.11",
     "vuetify": "^2.2.11",
@@ -48,6 +50,9 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2"
+  },
+  "resolutions": {
+    "vue-demi": "0.11.4"
   },
   "eslintConfig": {
     "root": true,

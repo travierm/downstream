@@ -79,8 +79,7 @@ export default {
       mobileLinks,
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {},
 }
 </script>
