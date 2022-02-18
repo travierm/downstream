@@ -75,9 +75,7 @@ export default {
     }),
   },
   data: () => {
-    return {
-      mobileLinks,
-    }
+    return {}
   },
   mounted() {},
   methods: {},
