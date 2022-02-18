@@ -67,7 +67,7 @@ export default class YouTubeCardPlayer {
             console.error(
                 "Trying to stop video that was never loaded " + this.guid
             )
-            
+
             return
         }
 
@@ -86,14 +86,15 @@ export default class YouTubeCardPlayer {
     }
 
     play(triggerEvent = true) {
-        if (!this._player) {
-            this.loadVideo()
-        }
-
+        console.log("HEHEHEHEHEHHEHE")
         if (triggerEvent) {
             // Let the player know we started playing
             YoutubePlayerManager.triggerPlayEvent(this.guid)
         }
+
+        // if (!this._player) {
+            this.loadVideo()
+        // }
 
         this.onPlayCallbacks.forEach((callback) => {
             callback()

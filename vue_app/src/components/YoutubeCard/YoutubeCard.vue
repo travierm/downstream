@@ -50,7 +50,6 @@
         :src="thumbnail"
         :height="dense ? '250px' : '435px'"
         @click="handleThumbnailClick"
-        v-if="showThumbnail"
       >
         <div
           style="width: 90%;"
@@ -60,7 +59,7 @@
         </div>
       </v-img>
 
-      <div class="video-instance embed-responsive" :id="guid"></div>
+      <!-- <div class="video-instance embed-responsive" :id="guid"></div> -->
     </v-card>
   </VueGlow>
 </template>

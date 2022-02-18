@@ -29,7 +29,7 @@ class YoutubePlayerManager {
 
     getNextCard(currentGuid) {
         const nextGuid = this.getNextGuid(currentGuid)
-        
+
         return this.findCardByGuid(nextGuid)
     }
 
@@ -119,7 +119,7 @@ class YoutubePlayerManager {
         }else{
             nextCard = this.getNextCard(this.currentPlayingGuid)
         }
-        
+
         if(!nextCard) {
             throw Error('Failed to find nextCard after guid ' + this.currentPlayingGuid)
         }
@@ -137,12 +137,12 @@ class YoutubePlayerManager {
     }
 
     triggerPlayEvent(guid) {
-        const previousPlayingGuid = _.clone(this.currentPlayingGuid)
+        // const previousPlayingGuid = _.clone(this.currentPlayingGuid)
 
-        if (previousPlayingGuid) {
+        // if (previousPlayingGuid) {
             // Stop playing previous card because a new one would like to play
-            this.stopPlayingCard(previousPlayingGuid)
-        }
+            // this.stopPlayingCard(previousPlayingGuid)
+        // }
 
         // Update current playing card id
         this.currentPlayingGuid = guid
