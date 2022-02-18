@@ -2,12 +2,15 @@
   <v-container fluid class="landingViewContent">
     <v-row justify="center">
       <v-col cols="12">
-        <h2>Welcome to downstream</h2>
+        <h2>Welcome to Downstream</h2>
 
-        <h3 class="mt-2">
-          This site is currently under developement and in an alpha state.
+        <h3 class="mt-2">This site is under active developement.</h3>
 
-          {{ getAppVersion() }}
+        <h3 class="mb-2">
+          App Version:
+          <v-chip label class="ma-2" color="orange" text-color="white">{{
+            getAppVersion()
+          }}</v-chip>
         </h3>
 
         <v-btn color="primary" to="/login" class="mt-4 mb-4" large>
@@ -82,7 +85,6 @@ export default {
       }
 
       const rng = this.getRandomInt(0, this.demoMediaItems.length - 1)
-      console.log(rng)
 
       return this.demoMediaItems[rng]
     },
