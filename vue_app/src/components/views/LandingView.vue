@@ -2,13 +2,31 @@
   <v-container fluid class="landingViewContent">
     <v-row justify="center">
       <v-col cols="12">
-        <h2>Welcome to downstream</h2>
+        <h2>Welcome to Downstream</h2>
 
-        <h3 class="mt-2">This site is currently under development.</h3>
+        <h3 class="mt-2">This site is under active developement.</h3>
 
-        <v-btn to="/login" class="mt-4 mb-4" large outlined>
+        <h3 class="mb-2">
+          App Version:
+          <v-chip label class="ma-2" color="orange" text-color="white">{{
+            getAppVersion()
+          }}</v-chip>
+        </h3>
+
+        <v-btn color="primary" to="/login" class="mt-4 mb-4" large>
           Login
         </v-btn>
+
+        <v-btn
+          color="primary"
+          to="/waitlist"
+          class="mt-4 mb-4 ml-2 text-dark"
+          large
+          >Join our waiting list</v-btn
+        >
+        <v-btn color="primary" to="/waitlist" class="mt-4 mb-4 ml-2" large
+          >Signup with Invite Code</v-btn
+        >
       </v-col>
 
       <CardCol class="text-xs-center">
@@ -26,6 +44,7 @@
 
 <script>
 import CardCol from '../CardCol'
+import { getAppVersion } from '@/services/GlobalFunctions'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
 
 const demoMediaItems = [
@@ -66,7 +85,6 @@ export default {
       }
 
       const rng = this.getRandomInt(0, this.demoMediaItems.length - 1)
-      console.log(rng)
 
       return this.demoMediaItems[rng]
     },
@@ -77,6 +95,7 @@ export default {
     }
   },
   methods: {
+    getAppVersion,
     getRandomInt(min, max) {
       min = Math.ceil(min)
       max = Math.floor(max)

@@ -22,7 +22,7 @@
           <v-btn
             v-if="onCollectionRoute"
             @click="shuffleCollection"
-            color="secondary"
+            color="primary"
             class="focusBtn ml-2"
             ><v-icon>mdi-shuffle-variant</v-icon></v-btn
           >

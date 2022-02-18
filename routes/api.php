@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,18 +11,20 @@ use App\Http\Controllers\API\Auth\LoginController;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 // Controllers in the API Folder only
-Route::namespace('API')->group(function () {
-    
-    Route::get('/ping', function() {
+Route::namespace ('API')->group(function () {
+
+    Route::get('/ping', function () {
         return "pong";
     });
 
     Route::get('/ana/media/stats', 'AnalyticsController@getStats');
-    
+
+    // Auth & User Routes
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
+    Route::post('/waitlist/signup', 'User\UserRegistrationController@createWaitListSignup');
 
     /* Authenticated routes only */
     Route::middleware('auth:sanctum')->group(function () {
@@ -40,7 +41,6 @@ Route::namespace('API')->group(function () {
         // User Collection
         Route::get('/collection', "CollectionController@getCollection");
 
-
         Route::get('/video/{videoId}', 'MediaController@getVideoByIndex');
 
         Route::post('/media/push/{mediaId}', 'MediaCollectionController@pushItem');
@@ -51,7 +51,7 @@ Route::namespace('API')->group(function () {
         Route::get('/playlist/all', 'PlaylistController@getAllLists');
         Route::post('/playlist/create', 'PlaylistController@createList');
         Route::delete('/playlist/delete/{playlistId}', 'PlaylistController@deleteList');
-        
+
         // Item Routes
         Route::get('/playlist/{playlistId}', 'PlaylistController@getListItems');
         Route::post('/playlist/add', 'PlaylistController@addItem');
@@ -59,28 +59,26 @@ Route::namespace('API')->group(function () {
 
         // Analytics
         Route::get('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');
-
     });
 
     /*
-    // Analytics
-    Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
+// Analytics
+Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
 
-    // Following API
-    Route::get('/follow/{follow_id}', "FollowerController@follow");
-    Route::get('/unfollow/{follow_id}', "FollowerController@unfollow");
-    Route::get('/followers', "FollowerController@getFollowers");
+// Following API
+Route::get('/follow/{follow_id}', "FollowerController@follow");
+Route::get('/unfollow/{follow_id}', "FollowerController@unfollow");
+Route::get('/followers', "FollowerController@getFollowers");
 
-    // Playlist
-    Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');;
+// Playlist
+Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');;
 
-    // Spotify
-    Route::get('/spotify/url', 'SpotifyController@getAuthorizeUrl');
-    Route::get('/spotify/disable', 'SpotifyController@disableAccess');
+// Spotify
+Route::get('/spotify/url', 'SpotifyController@getAuthorizeUrl');
+Route::get('/spotify/disable', 'SpotifyController@disableAccess');
 
-    // Demo
-    Route::get('/demo/search', 'DemoController@searchQuery');
-    
-    */
+// Demo
+Route::get('/demo/search', 'DemoController@searchQuery');
+
+ */
 });
-
