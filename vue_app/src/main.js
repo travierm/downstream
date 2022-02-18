@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { sync } from 'vuex-router-sync'
 import * as Sentry from '@sentry/vue'
 import { BrowserTracing } from '@sentry/tracing'
 
@@ -9,10 +10,11 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+const unsync = sync(store, router)
+
 Sentry.init({
   Vue,
-  dsn:
-    'https://f24b1b8189b74b0c89c082f81f99fddd@o1142461.ingest.sentry.io/6201485',
+  dsn: 'https://f24b1b8189b74b0c89c082f81f99fddd@o1142461.ingest.sentry.io/6201485',
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
@@ -41,5 +43,5 @@ new Vue({
   router,
   vuetify,
   store,
-  render: h => h(App),
+  render: (h) => h(App),
 }).$mount('#app')

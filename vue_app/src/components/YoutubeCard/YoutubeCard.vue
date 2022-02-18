@@ -50,23 +50,21 @@
         :src="thumbnail"
         :height="dense ? '250px' : '435px'"
         @click="handleThumbnailClick"
-        v-if="showThumbnail"
       >
         <div
-          style="width: 90%;"
+          style="width: 90%"
           class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
         >
           {{ cardTitle }}
         </div>
       </v-img>
 
-      <div class="video-instance embed-responsive" :id="guid"></div>
+      <!-- <div class="video-instance embed-responsive" :id="guid"></div> -->
     </v-card>
   </VueGlow>
 </template>
 
 <script>
-import $ from 'jquery'
 import VueGlow from 'vue-glow'
 
 // Components
@@ -76,7 +74,6 @@ import PlaylistAction from './PlaylistAction'
 
 // Services
 import Analytics from '../../services/api/AnalyticsService'
-import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 
 import { mdiLayersSearch } from '@mdi/js'
 
@@ -123,54 +120,12 @@ export default {
       showThumbnail: true,
     }
   },
-  mounted() {
-    this.registerCardPlayer()
-  },
   methods: {
     handleDiscoverTrackClick() {
       this.$store.dispatch('player/stopPlayingCurrentCard')
     },
-    handleVideoPlay() {
-      this.showThumbnail = false
-
-      $('#' + this.guid).show()
-      this.$set(this, 'showThumbnail', false)
-    },
-    handleVideoStop() {
-      this.showThumbnail = true
-
-      $('#' + this.guid).hide()
-    },
     handleThumbnailClick() {
-      this.cardPlayer.play()
-    },
-    registerCardPlayer() {
-      this.cardPlayer = new YouTubeCardPlayer(this.guid, this.videoId)
-
-      // Register events so we can update our view on player state changes
-      this.cardPlayer.on('play', () => {
-        if (this.mediaId) {
-          Analytics.playedMedia(this.mediaId)
-        }
-
-        this.handleVideoPlay()
-      })
-
-      // Reset video once it stops
-      this.cardPlayer.on('ended', () => {
-        this.handleVideoStop()
-      })
-
-      this.cardPlayer.on('stopped_by_manager', () => {
-        this.handleVideoStop()
-      })
-
-      this.cardPlayer.on('paused', () => {})
-
-      // When an error happens show the thumbnauk
-      this.cardPlayer.on('unplayable', () => {
-        this.handleVideoStop()
-      })
+      this.$store.dispatch('player/playGuid', this.guid)
     },
   },
 }

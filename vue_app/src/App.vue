@@ -10,6 +10,8 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+
+    <BottomBar />
   </v-app>
 </template>
 
@@ -18,11 +20,13 @@ import { fetchInitUserData } from '@/store/events'
 import NavBar from '@/components/Shared/NavBar.vue'
 import PlaylistDrawer from '@/components/PlaylistDrawer'
 import NavDrawer from '@/components/Shared/NavDrawer.vue'
+import BottomBar from "@/components/BottomBar"
 
 export default {
   name: 'App',
 
   components: {
+    BottomBar,
     NavBar,
     NavDrawer,
     PlaylistDrawer,
