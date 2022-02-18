@@ -125,7 +125,6 @@ export default {
       this.$store.dispatch('player/stopPlayingCurrentCard')
     },
     handleThumbnailClick() {
-      console.log('thumbnail click')
       this.$store.dispatch('player/playGuid', this.guid)
     },
   },

@@ -10,9 +10,7 @@
     <v-list>
       <v-list-item link>
         <v-list-item-content>
-          <v-list-item-title class="title">
-            Playlists
-          </v-list-item-title>
+          <v-list-item-title class="title"> Playlists </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -61,11 +59,11 @@ export default {
   components: {},
   computed: {
     ...mapState({
-      playlistDrawerStatus: state => state.playlistDrawerStatus,
-      playlists: state => state.playlist.playlists,
+      playlistDrawerStatus: (state) => state.playlistDrawerStatus,
+      playlists: (state) => state.playlist.playlists,
     }),
     playlistsWithCounts() {
-      return this.playlists.filter(list => {
+      return this.playlists.filter((list) => {
         return list.count >= 1
       })
     },
@@ -80,7 +78,7 @@ export default {
   },
   mounted() {},
   watch: {
-    playlistDrawerStatus: function(val) {
+    playlistDrawerStatus: function (val) {
       this.drawerOpen = val
     },
     drawerOpen(val) {
@@ -106,6 +104,11 @@ export default {
       this.selectedPlaylist = playlist
 
       if (this.selectedPlaylist) {
+        this.$router.push({
+          path: '/collection',
+          query: { playlist_id: this.selectedPlaylist.id },
+        })
+
         this.$store.dispatch(
           'playlist/setSelectedPlaylist',
           this.selectedPlaylist.id
@@ -115,13 +118,11 @@ export default {
           'collection/fetchCollection',
           this.selectedPlaylist.id
         )
-        this.$store.dispatch('collection/updateGuidIndex')
       } else {
         this.selectedPlaylist = false
         this.$store.dispatch('playlist/setSelectedPlaylist', false)
 
         await this.$store.dispatch('collection/fetchCollection')
-        this.$store.dispatch('collection/updateGuidIndex')
       }
 
       this.closeDrawer()

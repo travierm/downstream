@@ -91,10 +91,14 @@ export const actions = {
 
     return CollectionService.fetchCollection(playlistId)
       .then((response) => {
+        const guidIndexKey = playlistId
+          ? `/collection?playlist_id=${playlistId}`
+          : '/collection'
+
         commit('UPDATE_COLLECTION', response.data)
         dispatch(
           'player/updateGuidData',
-          { guidIndexKey: '/collection', mediaItems: response.data.items },
+          { guidIndexKey, mediaItems: response.data.items },
           { root: true }
         )
 
