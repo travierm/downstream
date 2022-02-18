@@ -33,7 +33,7 @@ class YoutubePlayerManager {
     const currentIndex = this.findIndexByGuid(currentGuid)
 
     // if we can find our current index just start over
-    if (!currentIndex) {
+    if (currentIndex == undefined) {
       return 0
     }
 

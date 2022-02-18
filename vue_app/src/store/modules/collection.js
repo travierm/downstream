@@ -92,7 +92,11 @@ export const actions = {
     return CollectionService.fetchCollection(playlistId)
       .then((response) => {
         commit('UPDATE_COLLECTION', response.data)
-        dispatch('player/updateGuidData', response.data.items, { root: true })
+        dispatch(
+          'player/updateGuidData',
+          { guidIndexKey: '/collection', mediaItems: response.data.items },
+          { root: true }
+        )
 
         dispatch('setLoadingBarState', false, { root: true })
       })

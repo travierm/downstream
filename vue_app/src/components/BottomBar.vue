@@ -42,7 +42,7 @@
           >
         </v-col>
 
-        <v-col cols="auto">
+        <v-col cols="auto" v-if="false">
           <v-btn
             @click="focusOnPlayingCard"
             color="secondary"

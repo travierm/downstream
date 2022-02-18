@@ -55,7 +55,10 @@ export default {
 
           if (response.data.results) {
             this.results = response.data.results
-            this.$store.dispatch('player/updateGuidData', response.data.results)
+            this.$store.dispatch('player/updateGuidData', {
+              guidIndexKey: this.$route.fullPath,
+              mediaItems: response.data.results,
+            })
           }
         })
         .catch(() => {
