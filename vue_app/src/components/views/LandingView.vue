@@ -4,11 +4,26 @@
       <v-col cols="12">
         <h2>Welcome to downstream</h2>
 
-        <h3 class="mt-2">This site is currently under development.</h3>
+        <h3 class="mt-2">
+          This site is currently under developement and in an alpha state.
 
-        <v-btn to="/login" class="mt-4 mb-4" large outlined>
+          {{ getAppVersion() }}
+        </h3>
+
+        <v-btn color="primary" to="/login" class="mt-4 mb-4" large>
           Login
         </v-btn>
+
+        <v-btn
+          color="primary"
+          to="/waitlist"
+          class="mt-4 mb-4 ml-2 text-dark"
+          large
+          >Join our waiting list</v-btn
+        >
+        <v-btn color="primary" to="/waitlist" class="mt-4 mb-4 ml-2" large
+          >Signup with Invite Code</v-btn
+        >
       </v-col>
 
       <CardCol class="text-xs-center">
@@ -26,6 +41,7 @@
 
 <script>
 import CardCol from '../CardCol'
+import { getAppVersion } from '@/services/GlobalFunctions'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
 
 const demoMediaItems = [
@@ -77,6 +93,7 @@ export default {
     }
   },
   methods: {
+    getAppVersion,
     getRandomInt(min, max) {
       min = Math.ceil(min)
       max = Math.floor(max)

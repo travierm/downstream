@@ -25,7 +25,7 @@
 
         <v-row class="mt-2">
           <v-col align="center" justify="center">
-            <v-btn large class="loginBtn" @click=""
+            <v-btn large class="loginBtn" color="primary" @click=""
               >Register with Invitation Code</v-btn
             >
           </v-col>
@@ -79,7 +79,9 @@
                   :loadRecaptchaScript="true"
                   sitekey="6LdXKYUeAAAAAAuBfqXR3mpHMGxQw8NRUlTVcHT_"
                 >
-                  <v-btn large class="loginBtn">Join the Wait List</v-btn>
+                  <v-btn large class="loginBtn" color="primary"
+                    >Join the Wait List</v-btn
+                  >
                 </vue-recaptcha>
               </div>
             </v-form>
@@ -104,7 +106,7 @@ export default {
   },
   computed: {
     sheetWidth() {
-      return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%)'
+      return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%'
     },
   },
   data: () => {
