@@ -55,12 +55,7 @@ export default {
 
           if (response.data.results) {
             this.results = response.data.results
-
-            const guidIndex = this.results.map((item) => {
-              return item.guid
-            })
-
-            this.$store.dispatch('player/setGuidIndex', guidIndex)
+            this.$store.dispatch('player/updateGuidData', response.data.results)
           }
         })
         .catch(() => {

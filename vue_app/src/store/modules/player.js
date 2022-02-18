@@ -25,4 +25,21 @@ export const actions = {
   updateGuidVideoMap({}, map) {
     YoutubePlayerManager.updateGuidVideoMap(map)
   },
+  updateGuidData({ dispatch }, mediaItems) {
+    const guidIndex = YoutubePlayerManager.guidIndex
+    const guidVideoMap = YoutubePlayerManager.guidVideoMap
+
+    mediaItems.forEach((item) => {
+      guidIndex.push(item.guid)
+
+      guidVideoMap[item.guid] = {
+        videoId: item.index ?? item.videoId,
+        title: item.title,
+        thumbnail: item.thumbnail,
+      }
+    })
+
+    dispatch('setGuidIndex', guidIndex)
+    dispatch('updateGuidVideoMap', guidVideoMap)
+  },
 }

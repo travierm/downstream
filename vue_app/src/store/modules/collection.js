@@ -91,25 +91,10 @@ export const actions = {
 
     return CollectionService.fetchCollection(playlistId)
       .then((response) => {
-        dispatch('setLoadingBarState', false, { root: true })
-
         commit('UPDATE_COLLECTION', response.data)
+        dispatch('player/updateGuidData', response.data.items, { root: true })
 
-        const guidIndex = []
-        const guidVideoMap = {}
-        response.data.items.forEach((item) => {
-          guidIndex.push(item.guid)
-
-          guidVideoMap[item.guid] = {
-            mediaId: item.media_id,
-            videoId: item.index,
-            title: item.title,
-            thumbnail: item.thumbnail,
-          }
-        })
-
-        dispatch('player/setGuidIndex', guidIndex, { root: true })
-        dispatch('player/updateGuidVideoMap', guidVideoMap, { root: true })
+        dispatch('setLoadingBarState', false, { root: true })
       })
       .catch(() => {
         dispatch('setLoadingBarState', false, { root: true })
