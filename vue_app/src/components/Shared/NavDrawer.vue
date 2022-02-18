@@ -6,6 +6,7 @@
     class="ds-nav-drawer mt-16"
     style="height: calc(100vh - 112px)"
     v-if="loggedIn && navDrawerStatus"
+    v-click-outside="clickedOutOfNavDrawer"
   >
     <!-- ^ height is 100vh - (top nav + bottom bar) -->
     <template v-slot:prepend>
@@ -79,7 +80,27 @@ export default {
       ],
     }
   },
-  methods: {},
+  directives: {
+    "click-outside": {
+      bind(el, binding, vnode) {
+        el.clickOutsideEvent = (event) => {
+          if (!(el == event.target || el.contains(event.target))) {
+            vnode.context[binding.expression](event);
+          }
+        };
+
+        document.body.addEventListener('click', el.clickOutsideEvent)
+      },
+      unbind(el) {
+        document.body.removeEventListener('click', el.clickOutsideEvent)
+      },
+    }
+  },
+  methods: {
+    clickedOutOfNavDrawer () {
+      this.$store.dispatch('toggleNavDrawerStatus')
+    }
+  },
 }
 </script>
 
