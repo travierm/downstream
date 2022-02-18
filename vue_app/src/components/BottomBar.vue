@@ -1,14 +1,11 @@
 <template>
   <v-app-bar app color="grey darken-4" dense dark fixed bottom>
+    <div class="video-container rounded-lg">
+      <div class="video-instance" id="downstream-video-container"></div>
+    </div>
+
     <v-container>
       <v-row no-gutters class="justify-left">
-        <v-col cols="auto" class="mr-1">
-          <div
-            class="video-instance embed-responsive"
-            id="downstream-video-container"
-          ></div>
-        </v-col>
-
         <v-col cols="auto" class="mr-1">
           <span>{{ playerQueueCount }}</span>
           <v-btn
@@ -134,9 +131,23 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .bottom-bar {
-  position: fixed;
+  position: absolute;
   background-color: #4a52e8;
   /* background-color: white; */
   bottom: 0%;
+}
+
+.video-container {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  bottom: 150px;
+  left: -16px;
+  background-color: black;
+  display: flex;
+  visibility: hidden;
+}
+
+.video-instance {
 }
 </style>

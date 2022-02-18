@@ -17,15 +17,11 @@
           <v-list-item-title>{{ user.display_name }}</v-list-item-title>
           <div class="d-flex justify-space-between">
             <span>
-              <small>
-                Logged In
-              </small>
+              <small> Logged In </small>
             </span>
 
             <span>
-              <v-btn text x-small to="/logout">
-                Logout
-              </v-btn>
+              <v-btn text x-small to="/logout"> Logout </v-btn>
             </span>
           </div>
         </v-list-item-content>
@@ -62,8 +58,8 @@ export default {
   components: {},
   computed: {
     ...mapState({
-      navDrawerStatus: state => state.navDrawerStatus,
-      user: state => state.auth.user,
+      navDrawerStatus: (state) => state.navDrawerStatus,
+      user: (state) => state.auth.user,
     }),
     ...mapGetters({
       loggedIn: 'auth/loggedIn',
@@ -73,31 +69,31 @@ export default {
     return {
       navLinks: [
         { icon: 'mdi-album', title: 'Collection', to: '/collection' },
-        // { icon: 'mdi-account-multiple', title: 'Following', to: '/following' },
+        { icon: 'mdi-account-multiple', title: 'Following', to: '/following' },
         // {icon: 'mdi-account', title: 'Account', to: ''},
       ],
     }
   },
   directives: {
-    "click-outside": {
+    'click-outside': {
       bind(el, binding, vnode) {
         el.clickOutsideEvent = (event) => {
           if (!(el == event.target || el.contains(event.target))) {
-            vnode.context[binding.expression](event);
+            vnode.context[binding.expression](event)
           }
-        };
+        }
 
         document.body.addEventListener('click', el.clickOutsideEvent)
       },
       unbind(el) {
         document.body.removeEventListener('click', el.clickOutsideEvent)
       },
-    }
+    },
   },
   methods: {
-    clickedOutOfNavDrawer () {
+    clickedOutOfNavDrawer() {
       this.$store.dispatch('toggleNavDrawerStatus')
-    }
+    },
   },
 }
 </script>

@@ -35,8 +35,6 @@
         </v-lazy>
       </CardCol>
     </v-row>
-
-    <BottomBar />
   </v-container>
 </template>
 

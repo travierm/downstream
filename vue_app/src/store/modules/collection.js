@@ -43,7 +43,7 @@ export const getters = {
       return []
     }
 
-    return state.collection.map(item => {
+    return state.collection.map((item) => {
       return item.guid
     })
   },
@@ -54,7 +54,7 @@ export const getters = {
       return state.collection
     }
 
-    return state.collection.filter(video => {
+    return state.collection.filter((video) => {
       return video.title.toLowerCase().includes(searchQuery.toLowerCase())
     })
   },
@@ -90,21 +90,29 @@ export const actions = {
     dispatch('setLoadingBarState', true, { root: true })
 
     return CollectionService.fetchCollection(playlistId)
-      .then(response => {
+      .then((response) => {
         dispatch('setLoadingBarState', false, { root: true })
+
         commit('UPDATE_COLLECTION', response.data)
-        dispatch('updateGuidIndex')
+
+        const guidIndex = []
+        const guidVideoMap = {}
+        response.data.items.forEach((item) => {
+          guidIndex.push(item.guid)
+
+          guidVideoMap[item.guid] = {
+            mediaId: item.media_id,
+            videoId: item.index,
+            title: item.title,
+            thumbnail: item.thumbnail,
+          }
+        })
+
+        dispatch('player/setGuidIndex', guidIndex, { root: true })
+        dispatch('player/updateGuidVideoMap', guidVideoMap, { root: true })
       })
       .catch(() => {
         dispatch('setLoadingBarState', false, { root: true })
       })
-
-    /*if (response.data) {
-      if (response.data.hash !== state.hash) {
-        console.log('Collection hash does not match. Updating local state!')
-
-        commit('UPDATE_COLLECTION', response.data)
-      }
-    }*/
   },
 }

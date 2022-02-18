@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import YTPlayer from 'yt-player'
 import Cache from '../services/Cache'
 
 const _DEBUG = true
@@ -9,28 +10,22 @@ class YoutubePlayerManager {
     this.localCache.setStoragePrefix('player_manager_')
 
     this.volume = this.localCache.get('volume', 100)
+
+    // All guids available to the manager
     this.guidIndex = []
+    // A map of guid to video information
+    this.guidVideoMap = {}
+    // Queued guids used when repeating a video
     this.guidQueue = []
+
     this.registeredCards = []
     this.currentPlayingGuid = false
+
+    this.videoPlayerInstance = false
   }
 
-  getPlayingCardId() {
+  getPlayingGuid() {
     return this.currentPlayingGuid
-  }
-
-  getPlayingCard() {
-    if (!this.currentPlayingGuid) {
-      return false
-    }
-
-    return this.findCardByGuid(this.currentPlayingGuid)
-  }
-
-  getNextCard(currentGuid) {
-    const nextGuid = this.getNextGuid(currentGuid)
-
-    return this.findCardByGuid(nextGuid)
   }
 
   getNextGuid(currentGuid) {
@@ -46,32 +41,21 @@ class YoutubePlayerManager {
     return this.guidIndex.indexOf(guid)
   }
 
-  findCardByGuid(guid) {
-    if (!guid) {
-      throw Error('guid not passed')
-    }
-
-    return _.find(this.registeredCards, { guid })
-  }
-
-  registerCardPlayer(player) {
-    if (this.findCardByGuid(player.guid)) {
-      console.info('Stop duplicate card registration ' + player.guid)
-      return
-    }
-
-    this.registeredCards.push(player)
+  findVideoByGuid(guid) {
+    return this.guidVideoMap[guid]
   }
 
   setGuidIndex(index) {
     // Stop playing current card so it doesn't get lost when the index is updated
     if (this.currentPlayingGuid) {
-      this.stopPlayingCard(this.currentPlayingGuid)
+      this.stopPlayingGuid(this.currentPlayingGuid)
     }
 
     this.guidIndex = index
-    this.registeredCards = []
-    this.currentPlayingGuid = false
+  }
+
+  updateGuidVideoMap(mapData) {
+    this.guidVideoMap = { ...this.guidVideoMap, ...mapData }
   }
 
   getVolume() {
@@ -90,67 +74,102 @@ class YoutubePlayerManager {
   }
 
   // Large Methods
-  removeCard(guid) {
+  removeGuid(guid) {
     _.remove(this.guidIndex, guid)
-    _.remove(this.registeredCards, {
-      guid,
-    })
   }
 
   // Add a guid to be queued to play next
-  queueNextCard(guid) {
+  queueNextGuid(guid) {
     if (typeof guid === 'string') {
       this.guidQueue.push(guid)
     }
   }
 
-  playNextCard() {
+  playNext() {
     if (this.guidIndex.length <= 0) {
       throw Error('Can not play next card since guidIndex is empty')
     }
 
-    let nextCard = false
+    let nextGuid
     if (this.guidQueue.length >= 1) {
       const guid = this.guidQueue.shift()
 
       // We have songs queued up to play
-      nextCard = this.findCardByGuid(guid)
+      nextGuid = guid
     } else {
-      nextCard = this.getNextCard(this.currentPlayingGuid)
+      nextGuid = this.getNextGuid(this.currentPlayingGuid)
     }
 
-    if (!nextCard) {
+    if (!nextGuid) {
       throw Error(
         'Failed to find nextCard after guid ' + this.currentPlayingGuid
       )
     }
 
-    nextCard.setVolume(this.volume)
-    nextCard.play()
+    this.playGuid(nextGuid)
   }
 
-  stopPlayingCard(guid) {
-    const yotubeCardPlayer = this.findCardByGuid(guid)
+  hideVideoElement() {
+    var element = document.getElementById('downstream-video-container')
+    element.style.visibility = 'hidden'
+  }
 
-    if (yotubeCardPlayer) {
-      yotubeCardPlayer._player.stop()
-      yotubeCardPlayer._player.destroy()
-      console.log('stopped playing card')
+  showVideoElement() {
+    var element = document.getElementById('downstream-video-container')
+    element.style.visibility = 'visible'
+  }
+
+  stopPlayingGuid(guid) {
+    if (this.videoPlayerInstance) {
+      this.videoPlayerInstance.stop()
+      this.videoPlayerInstance.destroy()
+
+      //this.hideVideoElement()
     }
   }
 
-  triggerPlayEvent(guid) {
-    const previousPlayingGuid = _.clone(this.currentPlayingGuid)
+  loadVideo(videoId) {
+    const options = {
+      volume: 5,
+      fullscreen: true,
+      playsinline: true,
+      controls: false,
+      height: '350px',
+      width: '350px',
+    }
 
-    console.log('previousGuid', previousPlayingGuid)
+    let videoPlayerInstance
+    try {
+      this.showVideoElement()
+      videoPlayerInstance = new YTPlayer('#downstream-video-container', options)
+
+      videoPlayerInstance.setVolume(this.volume)
+      videoPlayerInstance.load(videoId)
+      videoPlayerInstance.play()
+
+      videoPlayerInstance.on('ended', () => {
+        this.playNext()
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+    this.videoPlayerInstance = videoPlayerInstance
+  }
+
+  playGuid(guid) {
+    const guidVideo = this.findVideoByGuid(guid)
+    const previousPlayingGuid = _.clone(this.currentPlayingGuid)
 
     if (previousPlayingGuid) {
       // Stop playing previous card because a new one would like to play
-      this.stopPlayingCard(previousPlayingGuid)
+      this.stopPlayingGuid(guid)
     }
 
     // Update current playing card id
     this.currentPlayingGuid = guid
+
+    this.loadVideo(guidVideo.videoId)
   }
 }
 
