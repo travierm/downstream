@@ -1,26 +1,21 @@
 <template>
-    <v-container fluid>
-        <h1>Following View</h1>
-        <BottomBar />
-    </v-container>
+  <v-container fluid>
+    <h1>Following View</h1>
+  </v-container>
 </template>
 
 <script>
-import BottomBar from "@/components/BottomBar"
+import BottomBar from '@/components/BottomBar'
 
 export default {
-    name: "FollowingView",
-    components: {
-        BottomBar,
-    },
-    data: () => ({
-    }),
-    computed: {
-    },
-    methods: {
-    },
-    watch: {
-    },
+  name: 'FollowingView',
+  components: {
+    BottomBar,
+  },
+  data: () => ({}),
+  computed: {},
+  methods: {},
+  watch: {},
 }
 </script>
 

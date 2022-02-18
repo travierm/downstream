@@ -5,7 +5,7 @@
         <CollectionBar />
 
         <!-- Mobile Playlist Button -->
-        <div class="mt-2 mr-4 ml-4">
+        <div class="mr-4 ml-4">
           <v-btn
             v-if="mobileBreakpoint"
             color="primary"
@@ -35,8 +35,6 @@
         </v-lazy>
       </CardCol>
     </v-row>
-
-    <BottomBar />
   </v-container>
 </template>
 

@@ -1,10 +1,8 @@
 <template>
   <v-navigation-drawer
     absolute
-    permanent
     right
     class="ds-nav-drawer mt-16"
-    style="height: calc(100vh - 112px)"
     v-if="loggedIn && navDrawerStatus"
     v-click-outside="clickedOutOfNavDrawer"
   >
@@ -104,6 +102,7 @@ export default {
 .ds-nav-drawer {
   height: calc(100vh - 112px) !important;
   background: #1e1e1e !important;
+  position: fixed;
 
   .ds-nav-drawer-item {
     &:hover {
