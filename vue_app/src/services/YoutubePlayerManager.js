@@ -66,10 +66,8 @@ class YoutubePlayerManager {
     this.volume = value
     this.localCache.set('volume', value)
 
-    const playingVideo = this.getPlayingCard()
-
-    if (playingVideo) {
-      playingVideo.setVolume(value)
+    if (this.videoPlayerInstance) {
+      this.videoPlayerInstance.setVolume(value)
     }
   }
 
