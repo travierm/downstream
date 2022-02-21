@@ -25,7 +25,7 @@
 
         <v-row class="mt-2">
           <v-col align="center" justify="center">
-            <v-btn large class="loginBtn" color="primary" @click=""
+            <v-btn large class="loginBtn" color="primary" to="/register"
               >Register with Invitation Code</v-btn
             >
           </v-col>
