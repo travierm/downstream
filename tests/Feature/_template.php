@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 global $user;
 
-class SearchTest extends TestCase
+class _template extends TestCase
 {
     public function setUp(): void
     {

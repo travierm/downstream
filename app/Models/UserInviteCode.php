@@ -37,7 +37,7 @@ class UserInviteCode extends Model
             return false;
         }
 
-        $invite = self::where('invite_code', $inviteCode);
+        $invite = self::where('invite_code', $inviteCode)->first();
         $invite->used_by = $usedBy;
         $invite->used_at = now();
 

@@ -24,6 +24,7 @@ Route::namespace ('API')->group(function () {
 
     // Auth & User Routes
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
+    Route::post('/user/register', 'User\UserRegistrationController@registerUser');
     Route::post('/waitlist/signup', 'User\UserRegistrationController@createWaitListSignup');
 
     /* Authenticated routes only */

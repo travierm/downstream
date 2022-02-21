@@ -16,7 +16,7 @@ class CreateUserInviteCodesTable extends Migration
         Schema::create('user_invite_codes', function (Blueprint $table) {
             $table->id();
             $table->string('invite_code');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('used_by')->nullable();
             $table->dateTime('used_at')->nullable();
