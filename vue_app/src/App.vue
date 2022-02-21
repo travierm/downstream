@@ -44,7 +44,7 @@ export default {
     }),
   },
   data: () => ({
-    authRoutes: ['/', '/login', '/waitlist'],
+    authRoutes: ['/', '/login', '/waitlist', '/register'],
   }),
 }
 </script>

@@ -82,7 +82,6 @@ class UserRegistrationControllerTest extends TestCase
             'email' => $testEmail,
             'display_name' => 'test_account_123',
             'password' => 'test12345',
-            'password_confirmation' => 'test12345',
             'invite_code' => $inviteCode,
         ])->assertStatus(200);
 
@@ -98,7 +97,6 @@ class UserRegistrationControllerTest extends TestCase
             'email' => $testEmail,
             'display_name' => 'test_account_123',
             'password' => 'test123',
-            'password_confirmation' => 'test123',
             'invite_code' => 'deff_not_an_invite_code',
         ])->assertStatus(400);
     }

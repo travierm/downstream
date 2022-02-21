@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\UserInviteCode;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\URL;
 
 class CreateInviteCode extends Command
 {
@@ -50,7 +49,7 @@ class CreateInviteCode extends Command
             $invite = UserInviteCode::createInvite(null, $note);
 
             $this->info("Invite Code: " . $invite->invite_code);
-            $this->info('Link: ' . URL::to('/register?invite=' . $invite->invite_code));
+            $this->info('Link: ' . env('APP_LINK_URL') . '/register?invite=' . $invite->invite_code);
         }
     }
 }

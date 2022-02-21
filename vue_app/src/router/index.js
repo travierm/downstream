@@ -10,6 +10,7 @@ import CollectionView from '@/components/views/CollectionView'
 import DiscoverTrackView from '@/components/views/DiscoverTrackView'
 import WaitListView from '@/components/views/Auth/WaitListView'
 import FollowingView from '@/components/views/FollowingView'
+import RegisterView from '@/components/views/Auth/RegisterView'
 
 import { applyMiddleware } from './middleware'
 
@@ -72,8 +73,13 @@ const routes = [
   },
   {
     path: '/waitlist',
-    name: 'Login',
+    name: 'Wait List',
     component: WaitListView,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView,
   },
   {
     path: '/logout',

@@ -18,7 +18,7 @@ class UserRegistrationController extends Controller
             'invite_code' => 'required',
             'email' => 'required',
             'display_name' => 'required',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|min:6',
         ]);
 
         $input = $request->input();
