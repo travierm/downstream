@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class UserRegistrationController extends Controller
 {
+    public function registerUser(Request $request)
+    {
+        $request->validate([
+            'invite_code' => 'required',
+            'email' => 'required',
+            'username' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ]);
+    }
+
     public function createWaitListSignup(Request $request)
     {
         $email = $request->input('email');
