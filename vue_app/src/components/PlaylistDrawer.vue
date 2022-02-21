@@ -5,7 +5,7 @@
     fixed
     temporary
     dark
-    color="dark"
+    color="#1e1e1e"
   >
     <v-list>
       <v-list-item link>
@@ -42,7 +42,7 @@
       </v-list-item>
 
       <v-list-item link @click="showCollection"
-        ><v-list-item-icon><v-icon>mdi-all-inclusive</v-icon></v-list-item-icon>
+        ><v-list-item-icon><v-icon>mdi-album</v-icon></v-list-item-icon>
         <v-list-item-title>View Collection</v-list-item-title>
       </v-list-item>
     </v-list>

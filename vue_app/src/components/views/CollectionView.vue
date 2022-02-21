@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col>
-        <CollectionBar />
+        <CollectionBar v-if="hasCollectionItems" />
 
         <!-- Mobile Playlist Button -->
         <div class="mr-4 ml-4">
@@ -19,7 +19,7 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row v-if="hasCollectionItems">
       <CardCol v-for="item in collection" :key="item.guid">
         <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
           <YoutubeCard
@@ -34,6 +34,19 @@
           ></YoutubeCard>
         </v-lazy>
       </CardCol>
+    </v-row>
+
+    <v-row v-if="!hasCollectionItems" class="justify-center mb-6">
+      <h1>Search for a song you like above to start your collection!</h1>
+    </v-row>
+
+    <v-row v-if="!hasCollectionItems" class="justify-center">
+      <img
+        class="rounded mt-6"
+        src="https://media.giphy.com/media/6uGhT1O4sxpi8/giphy.gif"
+        width="480"
+        height="240"
+      />
     </v-row>
   </v-container>
 </template>
@@ -56,6 +69,9 @@ export default {
     CollectionBar,
   },
   computed: {
+    hasCollectionItems() {
+      return this.collection.length >= 1
+    },
     ...mapGetters({
       guidIndex: 'collection/guidIndex',
       collection: 'collection/collectionSearchResults',
