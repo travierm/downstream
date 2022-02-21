@@ -13,9 +13,17 @@ class UserWaitList extends Model
 
     protected $fillable = [
         'email',
+        'created_account',
         'text_question',
         'text_response',
     ];
+
+    public static function signupEmail($email)
+    {
+        self::where('email', $email)->update([
+            'created_account' => 1,
+        ]);
+    }
 
     public static function emailAlreadySignedUp($email)
     {

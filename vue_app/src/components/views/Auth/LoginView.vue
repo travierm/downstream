@@ -1,9 +1,13 @@
 <template>
-  <v-container class="d-flex flex-wrap justify-center" @keyup.enter="login()">
+  <v-container
+    rounded
+    class="d-flex flex-wrap justify-center"
+    @keyup.enter="login()"
+  >
     <!-- Login Sheet -->
     <v-sheet
       elevation="2"
-      class="pl-10 pr-10"
+      class="pl-10 pr-10 rounded"
       :width="sheetWidth"
       style="min-width: 250px"
     >

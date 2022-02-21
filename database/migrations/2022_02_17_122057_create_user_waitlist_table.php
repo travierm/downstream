@@ -18,6 +18,7 @@ class CreateUserWaitlistTable extends Migration
             $table->string('email')->unique();
             $table->string('text_question');
             $table->string('text_response');
+            $table->integer('created_account')->default(0);
             $table->timestamps();
         });
     }

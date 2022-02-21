@@ -60,8 +60,8 @@ jobs:
         run: php artisan key:generate
       #- name: Set Directory Permissions
       #  run: chmod -R 777 storage bootstrap/cache
-      - name: Run Database Migrations
-        run: php artisan migrate
+      #- name: Run Database Migrations
+      #  run: php artisan migrate
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
         env:
