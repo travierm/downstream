@@ -22,6 +22,7 @@ class UserRegistrationController extends Controller
         ]);
 
         $input = $request->input();
+        $email = $input['email'];
         $inviteCode = $input['invite_code'];
 
         // Check that invite code is valid
@@ -31,12 +32,19 @@ class UserRegistrationController extends Controller
             ], 400);
         }
 
+        $dupeUser = User::where('email', $email)->exists();
+        if ($dupeUser) {
+            return response()->json([
+                'message' => "Invalid email or account already exists",
+            ], 400);
+        }
+
         // Create the user account
         $user = User::create([
             'hash' => Str::random(40),
             'display_name' => $input['display_name'],
             'password' => Hash::make($input['password']),
-            'email' => $input['email'],
+            'email' => $email,
             'api_token' => Str::random(60),
         ]);
 
@@ -47,7 +55,7 @@ class UserRegistrationController extends Controller
         }
 
         // Mark user email as signed up on the waiting list
-        UserWaitList::signupEmail($input['email']);
+        UserWaitList::signupEmail($email);
         // Update the invite code to be used by our created user
         UserInviteCode::useInvite($user->id, $inviteCode);
 
