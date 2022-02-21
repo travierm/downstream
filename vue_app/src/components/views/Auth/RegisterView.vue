@@ -5,12 +5,18 @@
         <v-col>
           <h1>Create an account on Downstream</h1>
           <h3>We're excited to have you join us!</h3>
+
+          <alert-list
+            style="margin-bottom: 0px"
+            class="mt-2"
+            ref="alertList"
+          ></alert-list>
         </v-col>
       </v-row>
 
       <v-row class="mb-2">
         <v-col>
-          <v-form ref="loginForm" v-model="valid">
+          <v-form ref="registerForm" v-model="valid">
             <v-text-field
               name="email"
               outlined
@@ -78,6 +84,8 @@
 </template>
 
 <script>
+import { registerUser } from '../../../services/api/UserRegistrationService'
+
 export default {
   name: 'RegisterView',
   computed: {
@@ -97,7 +105,32 @@ export default {
   },
   mounted() {},
   methods: {
-    register() {},
+    register() {
+      if (!this.$refs.registerForm.validate()) {
+        return
+      }
+
+      registerUser(
+        this.display_name,
+        this.email,
+        this.password,
+        this.invite_code
+      )
+        .then((response) => {
+          this.$refs.alertList.create('success', response.data.message)
+
+          const params = {
+            email: this.email,
+            password: this.password,
+          }
+          this.$store.dispatch('auth/login', params).then(() => {
+            this.$router.push('/collection')
+          })
+        })
+        .catch((response) => {
+          this.$refs.alertList.create('error', response.data.message)
+        })
+    },
   },
 }
 </script>

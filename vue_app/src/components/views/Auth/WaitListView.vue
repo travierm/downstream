@@ -94,14 +94,11 @@
 
 <script>
 import { VueRecaptcha } from 'vue-recaptcha'
-
-import AlertList from '@/components/AlertList'
-import { createWaitListSignup } from '@/services/api/WaitListService'
+import { createWaitListSignup } from '@/services/api/UserRegistrationService'
 
 export default {
   name: 'WaitListView',
   components: {
-    AlertList,
     VueRecaptcha,
   },
   computed: {

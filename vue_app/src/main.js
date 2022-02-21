@@ -7,6 +7,7 @@ import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
 import store from './store'
+import loadGlobalComponents from './global_components'
 
 Vue.config.productionTip = false
 
@@ -38,6 +39,8 @@ if (process.env.NODE_ENV == 'development') {
 } else {
   window.dd = () => {}
 }
+
+loadGlobalComponents(Vue)
 
 new Vue({
   router,

@@ -28,7 +28,7 @@ class UserRegistrationController extends Controller
         // Check that invite code is valid
         if (!UserInviteCode::codeIsValid($inviteCode)) {
             return response()->json([
-                'message' => "Invalid or used invite code",
+                'message' => "Invalid invite code",
             ], 400);
         }
 
