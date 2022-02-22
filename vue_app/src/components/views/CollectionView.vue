@@ -36,11 +36,14 @@
       </CardCol>
     </v-row>
 
-    <v-row v-if="!hasCollectionItems" class="justify-center mb-6">
+    <v-row
+      v-if="!hasCollectionItems && !showLoadingBar"
+      class="justify-center mb-6"
+    >
       <h1>Search for a song you like above to start your collection!</h1>
     </v-row>
 
-    <v-row v-if="!hasCollectionItems" class="justify-center">
+    <v-row v-if="!hasCollectionItems && !showLoadingBar" class="justify-center">
       <img
         class="rounded mt-6"
         src="https://media.giphy.com/media/6uGhT1O4sxpi8/giphy.gif"
@@ -52,7 +55,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import { mdiPlaylistMusic } from '@mdi/js'
 import CardCol from '@/components/CardCol'
@@ -69,6 +72,7 @@ export default {
     CollectionBar,
   },
   computed: {
+    ...mapState(['showLoadingBar']),
     hasCollectionItems() {
       return this.collection.length >= 1
     },
