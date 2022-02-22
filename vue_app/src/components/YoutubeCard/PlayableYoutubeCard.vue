@@ -76,6 +76,7 @@ import PlaylistAction from './PlaylistAction'
 import Analytics from '../../services/api/AnalyticsService'
 import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 import { mdiLayersSearch } from '@mdi/js'
+
 window.$showCardGuids = false
 export default {
   name: 'YoutubeCard',

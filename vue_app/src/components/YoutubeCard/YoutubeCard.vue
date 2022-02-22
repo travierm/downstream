@@ -16,7 +16,6 @@
         <router-link
           v-if="mediaId"
           :to="{ path: `/discover/track/${videoId}` }"
-          target="_blank"
         >
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
@@ -121,9 +120,7 @@ export default {
     }
   },
   methods: {
-    handleDiscoverTrackClick() {
-      this.$store.dispatch('player/stopPlayingCurrentCard')
-    },
+    handleDiscoverTrackClick() {},
     handleThumbnailClick() {
       this.$store.dispatch('player/playGuid', this.guid)
     },
