@@ -5,8 +5,8 @@ export const namespaced = true
 export const state = {
   guidIndexMap: {},
   currentIndexKey: false,
+  currentPlayingGuid: false,
 }
-export const getters = {}
 
 export const mutations = {
   SET_CURRENT_INDEX_KEY(state, guidIndexKey) {
@@ -33,6 +33,12 @@ export const actions = {
     }
 
     YoutubePlayerManager.playGuid(guid)
+  },
+  stop() {
+    YoutubePlayerManager.stopPlayingGuid()
+  },
+  setCurrentIndex({ commit }, guidIndexKey) {
+    commit('SET_CURRENT_INDEX_KEY', guidIndexKey)
   },
   updateGuidIndex({ commit }, { guidIndexKey, guidIndex }) {
     commit('UPDATE_GUID_INDEX', { guidIndexKey, guidIndex })

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import router from '../../router'
 import CollectionService from '@/services/api/CollectionService'
 
 export const namespaced = true
@@ -63,8 +64,21 @@ export const getters = {
 export const actions = {
   shuffle(context) {
     context.commit('SHUFFLE_COLLECTION')
-    context.dispatch('player/setGuidIndex', context.getters.guidIndex, {
-      root: true,
+
+    context.dispatch(
+      'player/updateGuidIndex',
+      {
+        guidIndexKey: '/collection?shuffled=1',
+        guidIndex: context.getters.guidIndex,
+      },
+      {
+        root: true,
+      }
+    )
+
+    router.push({
+      path: '/collection',
+      query: { shuffled: 1 },
     })
   },
   collectItem(commit, videoId) {

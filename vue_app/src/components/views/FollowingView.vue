@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <h1>Following View</h1>
+    <h1>This feature is under active development</h1>
   </v-container>
 </template>
 

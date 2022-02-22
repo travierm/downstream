@@ -1,6 +1,6 @@
 <template>
   <VueGlow
-    :disabled="!canShowGlow"
+    :disabled="showThumbnail"
     color="#FF0000"
     mode="hex"
     fade
@@ -16,6 +16,7 @@
         <router-link
           v-if="mediaId"
           :to="{ path: `/discover/track/${videoId}` }"
+          target="_blank"
         >
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
@@ -49,6 +50,7 @@
         :src="thumbnail"
         :height="dense ? '250px' : '435px'"
         @click="handleThumbnailClick"
+        v-if="showThumbnail"
       >
         <div
           style="width: 90%"
@@ -58,27 +60,24 @@
         </div>
       </v-img>
 
-      <!-- <div class="video-instance embed-responsive" :id="guid"></div> -->
+      <div class="video-instance embed-responsive" :id="guid"></div>
     </v-card>
   </VueGlow>
 </template>
 
 <script>
+import $ from 'jquery'
 import VueGlow from 'vue-glow'
-
 // Components
 import PushAction from './PushAction'
 import CollectAction from './CollectAction'
 import PlaylistAction from './PlaylistAction'
-
 // Services
 import Analytics from '../../services/api/AnalyticsService'
-import YoutubePlayerManager from '../../services/YoutubePlayerManager'
-
+import YouTubeCardPlayer from '../../services/YouTubeCardPlayer'
 import { mdiLayersSearch } from '@mdi/js'
 
 window.$showCardGuids = false
-
 export default {
   name: 'YoutubeCard',
   components: {
@@ -113,9 +112,6 @@ export default {
     cardTitle() {
       return window.$showCardGuids ? this.guid : this.title
     },
-    canShowGlow() {
-      return YoutubePlayerManager.currentPlayingGuid === this.guid
-    },
   },
   data() {
     return {
@@ -123,12 +119,46 @@ export default {
       showThumbnail: true,
     }
   },
+  mounted() {
+    this.registerCardPlayer()
+  },
   methods: {
-    handleDiscoverTrackClick() {},
+    handleDiscoverTrackClick() {
+      this.$store.dispatch('player/stopPlayingCurrentCard')
+    },
+    handleVideoPlay() {
+      this.showThumbnail = false
+      $('#' + this.guid).show()
+      this.$set(this, 'showThumbnail', false)
+    },
+    handleVideoStop() {
+      this.showThumbnail = true
+      $('#' + this.guid).hide()
+
+      this.cardPlayer.stop()
+    },
     handleThumbnailClick() {
-      // debugger
-      this.$store.dispatch('player/playGuid', this.guid)
-      Analytics.playedMedia(this.mediaId)
+      this.cardPlayer.play()
+    },
+    registerCardPlayer() {
+      this.cardPlayer = new YouTubeCardPlayer(this.guid, this.videoId)
+
+      // Register events so we can update our view on player state changes
+      this.cardPlayer.on('play', () => {
+        if (this.mediaId) {
+          Analytics.playedMedia(this.mediaId)
+        }
+        this.handleVideoPlay()
+      })
+      // Reset video once it stops
+      this.cardPlayer.on('ended', () => {
+        this.handleVideoStop()
+      })
+      this.cardPlayer.on('paused', () => {})
+      // When an error happens show the thumbnauk
+      this.cardPlayer.on('unplayable', () => {
+        this.handleVideoStop()
+      })
     },
   },
 }
@@ -138,12 +168,10 @@ export default {
 .youtubeCardTitle {
   text-align: left;
 }
-
 .glowing-border {
   border: 2px solid #dadada;
   border-radius: 7px;
 }
-
 .glowing-border:focus {
   outline: none;
   border-color: #9ecaed;

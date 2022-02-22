@@ -117,7 +117,7 @@ class YoutubePlayerManager {
     element.style.visibility = 'visible'
   }
 
-  stopPlayingGuid(guid) {
+  stopPlayingGuid() {
     if (this.videoPlayerInstance) {
       this.videoPlayerInstance.stop()
       this.videoPlayerInstance.destroy()
