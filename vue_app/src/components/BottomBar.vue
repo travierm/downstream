@@ -42,10 +42,10 @@
           >
         </v-col>
 
-        <v-col cols="auto" v-if="false">
+        <v-col cols="auto">
           <v-btn
             @click="focusOnPlayingCard"
-            color="secondary"
+            color="primary"
             class="focusBtn ml-2"
             ><v-icon class="pr-1" v-if="$vuetify.breakpoint.smAndUp"
               >mdi-magnify</v-icon
@@ -103,10 +103,10 @@ export default {
       })
     },
     focusOnPlayingCard() {
-      const playingCardGuid = YoutubePlayerManager.getPlayingCardId()
+      const playingCardGuid = YoutubePlayerManager.getPlayingGuid()
 
       if (playingCardGuid) {
-        this.$vuetify.goTo('#' + playingCardGuid, {
+        this.$vuetify.goTo('#' + playingCardGuid + '_media', {
           offset: 150,
           duration: 800,
           easing: 'easeInOutCubic',

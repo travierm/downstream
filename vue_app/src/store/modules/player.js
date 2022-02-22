@@ -5,8 +5,8 @@ export const namespaced = true
 export const state = {
   guidIndexMap: {},
   currentIndexKey: false,
+  currentPlayingGuid: false,
 }
-export const getters = {}
 
 export const mutations = {
   SET_CURRENT_INDEX_KEY(state, guidIndexKey) {

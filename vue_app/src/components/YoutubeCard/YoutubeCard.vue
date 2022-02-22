@@ -1,6 +1,6 @@
 <template>
   <VueGlow
-    :disabled="showThumbnail"
+    :disabled="!canShowGlow"
     color="#FF0000"
     mode="hex"
     fade
@@ -73,6 +73,7 @@ import PlaylistAction from './PlaylistAction'
 
 // Services
 import Analytics from '../../services/api/AnalyticsService'
+import YoutubePlayerManager from '../../services/YoutubePlayerManager'
 
 import { mdiLayersSearch } from '@mdi/js'
 
@@ -112,6 +113,9 @@ export default {
     cardTitle() {
       return window.$showCardGuids ? this.guid : this.title
     },
+    canShowGlow() {
+      return YoutubePlayerManager.currentPlayingGuid === this.guid
+    },
   },
   data() {
     return {
@@ -122,7 +126,9 @@ export default {
   methods: {
     handleDiscoverTrackClick() {},
     handleThumbnailClick() {
+      // debugger
       this.$store.dispatch('player/playGuid', this.guid)
+      Analytics.playedMedia(this.mediaId)
     },
   },
 }
