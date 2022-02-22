@@ -1,17 +1,15 @@
 import $ from 'jquery'
 import YTPlayer from 'yt-player'
-import YoutubePlayerManager from './YoutubePlayerManager'
 
 export default class YouTubeCardPlayer {
   constructor(guid, videoId) {
     this.guid = guid
     this.videoId = videoId
     this._player = false
+    this.loadedVideo = false
 
     this.onPlayCallbacks = []
     this.eventCallbacks = []
-
-    YoutubePlayerManager.registerCardPlayer(this)
   }
 
   applyEventCallbacks() {
@@ -38,25 +36,28 @@ export default class YouTubeCardPlayer {
 
   handlePlayerEvents() {
     this._player.on('ended', () => {
-      this._player.seek(0)
-      this._player.pause()
-
-      YoutubePlayerManager.playNextCard()
+      //this._player.seek(0)
+      // this._player.pause()
     })
   }
 
   loadVideo() {
+    if (this.loadedVideo) {
+      return
+    }
+
     const guid = '#' + this.guid
     const options = {
       volume: 5,
       fullscreen: true,
       playsinline: true,
-      height: '250px',
-      width: '250px',
+      height: $(`${guid}_media`).height(),
+      width: $(`${guid}_media`).width(),
     }
 
-    this._player = new YTPlayer('#downstream-video-container', options)
+    this._player = new YTPlayer(guid, options)
     this._player.load(this.videoId)
+    this.loadedVideo = true
 
     this.applyEventCallbacks()
     this.handlePlayerEvents()
@@ -83,22 +84,14 @@ export default class YouTubeCardPlayer {
     }
   }
 
-  play(triggerEvent = true) {
-    console.log('play youtube card')
-
+  play() {
     this.loadVideo()
-
-    if (triggerEvent) {
-      // Let the player know we started playing
-      console.log('triggering play event')
-      YoutubePlayerManager.triggerPlayEvent(this.guid)
-    }
 
     this.onPlayCallbacks.forEach((callback) => {
       callback()
     })
 
-    this._player.setVolume(YoutubePlayerManager.getVolume())
+    this._player.setVolume(50)
     this._player.play()
   }
 }

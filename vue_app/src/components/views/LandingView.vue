@@ -2,9 +2,10 @@
   <v-container fluid class="landingViewContent">
     <v-row justify="center">
       <v-col cols="12">
-        <h2>Welcome to Downstream</h2>
+        <h1>Downstream</h1>
+        <h2>A private music collection service</h2>
 
-        <h3 class="mt-2">This site is under active developement.</h3>
+        <h3 class="mt-8">This site is under active development.</h3>
 
         <h3>
           App Version:
@@ -30,13 +31,13 @@
       </v-col>
 
       <CardCol class="text-xs-center">
-        <YoutubeCard
+        <PlayableYoutubeCard
           :guid="'m_' + selectedMedia.videoId"
           :videoId="selectedMedia.videoId"
           :title="selectedMedia.title"
           :thumbnail="selectedMedia.thumbnail"
           :hide-actions="true"
-        ></YoutubeCard>
+        ></PlayableYoutubeCard>
       </CardCol>
     </v-row>
   </v-container>
@@ -45,7 +46,7 @@
 <script>
 import CardCol from '../CardCol'
 import { getAppVersion } from '@/services/GlobalFunctions'
-import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
+import PlayableYoutubeCard from '@/components/YoutubeCard/PlayableYoutubeCard'
 
 const demoMediaItems = [
   {
@@ -59,14 +60,19 @@ const demoMediaItems = [
     thumbnail: 'https://i.ytimg.com/vi/m_qlgFQs7E4/sddefault.jpg',
   },
   {
-    videoId: '6CJ6kKEXHyA',
-    title: 'Hectorino Martinez - You Say',
-    thumbnail: 'https://i.ytimg.com/vi/6CJ6kKEXHyA/hqdefault.jpg',
-  },
-  {
     videoId: '6wi1nJWk-QE',
     title: 'lofi.samurai - water',
     thumbnail: 'https://i.ytimg.com/vi/6wi1nJWk-QE/hqdefault.jpg',
+  },
+  {
+    videoId: 'a0muICdfyPc',
+    title: 'KOVEN - Gold',
+    thumbnail: 'https://i.ytimg.com/vi/a0muICdfyPc/hqdefault.jpg',
+  },
+  {
+    title: 'Dreweybear - The Rise (Ft. Ashley Apollodor)',
+    videoId: '1mEQcaURtws',
+    thumbnail: 'https://i.ytimg.com/vi/1mEQcaURtws/hqdefault.jpg',
   },
 ]
 
@@ -76,7 +82,7 @@ export default {
   name: 'LandingView',
   components: {
     CardCol,
-    YoutubeCard,
+    PlayableYoutubeCard,
   },
   computed: {
     selectedMedia() {
