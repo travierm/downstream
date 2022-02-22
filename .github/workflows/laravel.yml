@@ -11,7 +11,7 @@ jobs:
     name: Deploy
     environment: prod
     runs-on: ubuntu-latest
-    needs: vue-app-tests
+    needs: api-unit-test
     continue-on-error: true
     if: github.ref == 'refs/heads/master'
     steps:
@@ -68,22 +68,22 @@ jobs:
           YOUTUBE_KEY: ${{ secrets.YOUTUBE_KEY }}
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-  vue-app-tests:
-    name: Vue App Tests
-    runs-on: ubuntu-latest
-    needs: api-unit-test
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node v16.14.0
-        uses: actions/setup-node@v1
-        with:
-          node-version: v16.14.0
-      - name: Yarn Install
-        working-directory: vue_app
-        run: yarn install
-      - name: Build Vue App
-        working-directory: vue_app
-        run: yarn build
-      - name: Run Unit Tests
-        working-directory: vue_app
-        run: yarn test:unit
+  #vue-app-tests:
+  #  name: Vue App Tests
+  #  runs-on: ubuntu-latest
+  #  needs: api-unit-test
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Setup Node v16.14.0
+  #      uses: actions/setup-node@v1
+  #      with:
+  #        node-version: v16.14.0
+  #    - name: Yarn Install
+  #      working-directory: vue_app
+  #      run: yarn install
+  #    - name: Build Vue App
+  #      working-directory: vue_app
+  #      run: yarn build
+  #    - name: Run Unit Tests
+  #      working-directory: vue_app
+  #      run: yarn test:unit
