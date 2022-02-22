@@ -34,6 +34,9 @@ export const actions = {
 
     YoutubePlayerManager.playGuid(guid)
   },
+  setCurrentIndex({ commit }, guidIndexKey) {
+    commit('SET_CURRENT_INDEX_KEY', guidIndexKey)
+  },
   updateGuidIndex({ commit }, { guidIndexKey, guidIndex }) {
     commit('UPDATE_GUID_INDEX', { guidIndexKey, guidIndex })
   },
