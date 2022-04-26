@@ -17,26 +17,17 @@
       >
         <v-icon>mdi-github</v-icon>
       </v-btn>
+
+      <template
+        v-if="$vuetify.breakpoint.smAndUp && loggedIn && mediaStats.plays"
+      >
+        <v-toolbar-title class="ml-2 text-subtitle-1"
+          >{{ mediaStats.plays.year }} videos played this year</v-toolbar-title
+        >
+      </template>
     </div>
 
     <v-spacer v-if="$vuetify.breakpoint.smAndUp || !loggedIn" />
-
-    <!-- <template
-      v-if="$vuetify.breakpoint.smAndUp && loggedIn && mediaStats.plays"
-    >
-      <v-toolbar-title>Plays</v-toolbar-title>
-      <v-chip class="ma-2" color="secondary" text-color="white">
-        Today: {{ mediaStats.plays.today }}
-      </v-chip>
-
-      <v-chip class="ma-2" color="secondary" text-color="white">
-        Week: {{ mediaStats.plays.week }}
-      </v-chip>
-
-      <v-chip class="ma-2 mr-4" color="secondary" text-color="white">
-        Month: {{ mediaStats.plays.month }}
-      </v-chip>
-    </template> -->
 
     <v-btn to="/login" outlined v-if="!loggedIn">Login</v-btn>
 

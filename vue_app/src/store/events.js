@@ -5,3 +5,9 @@ export async function fetchInitUserData() {
   store.dispatch('collection/fetchCollection')
   store.dispatch('getMediaStats')
 }
+
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible') {
+    store.dispatch('getMediaStats')
+  }
+})
