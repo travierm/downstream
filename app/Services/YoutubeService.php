@@ -1,9 +1,9 @@
 <?php
 namespace App\Services;
 
-use App\MediaType\YoutubeVideo;
 use App\Models\Media;
 use App\Models\UserMedia;
+use App\MediaType\YoutubeVideo;
 use Madcoda\Youtube\Facades\Youtube;
 
 class YoutubeService
@@ -49,7 +49,7 @@ class YoutubeService
         return $updatedVideos;
     }
 
-    public static function searchByQuery($query, $maxResults = 12)
+    public static function searchByQuery(string $query, int $maxResults = 12)
     {
         $results = Youtube::searchAdvanced([
             'q' => $query,

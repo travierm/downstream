@@ -5,7 +5,7 @@
       v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
     >
       <router-link tag="div" to="/">
-        <v-toolbar-title class="navbar-brand">Downstream</v-toolbar-title>
+        <v-toolbar-title class="navbar-brand navbar-text">downstream</v-toolbar-title>
       </router-link>
 
       <v-btn
@@ -82,5 +82,15 @@ export default {
 
 .main-search {
   padding-top: 22px !important;
+}
+
+.navbar-text {
+  background: #24B6FF;
+background: -webkit-linear-gradient(to bottom right, #24B6FF 0%, #7C4DFF 100%);
+background: -moz-linear-gradient(to bottom right, #24B6FF 0%, #7C4DFF 100%);
+background: linear-gradient(to bottom right, #24B6FF 0%, #7C4DFF 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
 }
 </style>
