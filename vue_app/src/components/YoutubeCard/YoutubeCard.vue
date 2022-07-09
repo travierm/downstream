@@ -51,8 +51,8 @@
         @click="handleThumbnailClick"
       >
         <div
-          style="width: 90%"
-          class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
+          style="width: 100%"
+          class="black text-subtitle-1 pl-4 pt-4 pb-3 d-inline-block text-truncate youtubeCardTitle"
         >
           {{ cardTitle }}
         </div>
