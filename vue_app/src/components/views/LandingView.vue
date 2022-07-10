@@ -2,7 +2,7 @@
   <v-container fluid class="landingViewContent">
     <v-row justify="center">
       <v-col cols="12">
-        <h1>Downstream</h1>
+        <h1 class="ds-gradient">downstream</h1>
         <h2>A private music collection service</h2>
 
         <h3 class="mt-8">This site is under active development.</h3>
