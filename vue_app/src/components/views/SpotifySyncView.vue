@@ -21,14 +21,58 @@
     >
       Connect Spotify Account
     </v-btn>
+
+    <!-- Import Graph -->
+    <apexchart
+      ref="chart"
+      class="mt-2"
+      height="250"
+      type="line"
+      :options="chart.options"
+      :series="chart.series"
+    ></apexchart>
   </v-container>
 </template>
 
 <script>
+import http from '../../services/api/Client'
 import { mapState } from 'vuex'
 import { mdiSpotify } from '@mdi/js'
 import BottomBar from '@/components/BottomBar'
 import { getAuthorizeUrl } from '../../services/api/spotify'
+
+const defaultOptions = {
+  theme: {
+    mode: 'dark',
+    palette: 'palette4',
+  },
+  chart: {
+    height: 350,
+    type: 'line',
+    zoom: {
+      enabled: false,
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  stroke: {
+    curve: 'straight',
+  },
+  title: {
+    text: 'Spotify Sync History',
+    align: 'left',
+  },
+  grid: {
+    row: {
+      colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      opacity: 0.2,
+    },
+  },
+  xaxis: {
+    categories: [],
+  },
+}
 
 export default {
   name: 'SpotifySyncView',
@@ -37,13 +81,46 @@ export default {
   },
   data: () => ({
     mdiSpotify,
+    chart: {
+      series: [
+        {
+          name: 'Synced Items',
+          data: [],
+        },
+      ],
+      options: {
+        ...defaultOptions,
+      },
+    },
   }),
   computed: {
     ...mapState({
       hasSpotifyConnection: (state) => state.auth.user.has_spotify_connection,
     }),
   },
+  mounted() {
+    this.getImportStats()
+  },
   methods: {
+    getImportStats() {
+      http.get('/spotify/stats').then((resp) => {
+        console.log(resp.data.data)
+        this.chart.series[0].data = resp.data.data
+        this.chart.options.xaxis = {
+          categories: resp.data.categories,
+        }
+
+        console.log(this.$refs.chart)
+        this.$refs.chart.updateOptions({
+          ...defaultOptions,
+          xaxis: {
+            categories: resp.data.categories,
+          },
+        })
+
+        console.log(this.chart.options.xaxis.categories)
+      })
+    },
     getAuthorizeUrl() {
       getAuthorizeUrl()
         .then((resp) => {

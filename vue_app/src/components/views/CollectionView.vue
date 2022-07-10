@@ -28,6 +28,7 @@
             :title="item.title"
             :mediaId="item.media_id"
             :videoId="item.index"
+            :spotifyId="item.spotify_id"
             :thumbnail="item.thumbnail"
             :collected="item.collected"
             :key="searchQueryUpdates"

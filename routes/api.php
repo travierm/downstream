@@ -63,9 +63,9 @@ Route::namespace('API')->group(function () {
         Route::get('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');
 
         // Spotify
-
-        Route::get('/spotify/authorize', 'SpotifyController@getAuthorizeUrl');
+        Route::get('/spotify/stats', 'SpotifyController@getUserStats');
         Route::post('/spotify/connect', 'SpotifyController@getConnect');
+        Route::get('/spotify/authorize', 'SpotifyController@getAuthorizeUrl');
     });
 
     /*

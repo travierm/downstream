@@ -35,7 +35,7 @@
         v-for="item in navLinks"
         :key="item.title"
         class="ds-nav-drawer-item"
-        :to="item.to"
+        @click="handleNavClick(item.to)"
       >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
@@ -51,6 +51,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import router from '../../router'
 
 export default {
   name: 'NavDrawer',
@@ -91,6 +92,10 @@ export default {
     },
   },
   methods: {
+    handleNavClick(path) {
+      this.$router.push(path)
+      this.$store.dispatch('toggleNavDrawerStatus')
+    },
     clickedOutOfNavDrawer() {
       this.$store.dispatch('toggleNavDrawerStatus')
     },

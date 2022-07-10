@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Repos\SpotifyRepo;
 use App\Services\SpotifyAPI;
 use Illuminate\Http\Request;
 use App\Models\UserSpotifyToken;
@@ -10,9 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class SpotifyController extends Controller
 {
+    public function __construct(public SpotifyRepo $spotifyRepo)
+    {
+    }
+
     public function getAuthorizeUrl()
     {
         return SpotifyAPI::getAuthorizeUrl();
+    }
+
+    public function getUserStats()
+    {
+        return response()->json($this->spotifyRepo->getImportStats(Auth::user()->id), 200);
     }
 
     public function getConnect(Request $request)
