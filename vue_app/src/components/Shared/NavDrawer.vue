@@ -69,7 +69,7 @@ export default {
     return {
       navLinks: [
         { icon: 'mdi-album', title: 'Collection', to: '/collection' },
-        { icon: 'mdi-account-multiple', title: 'Following', to: '/following' },
+        { icon: 'mdi-spotify', title: 'Spotify', to: '/spotify' },
         // {icon: 'mdi-account', title: 'Account', to: ''},
       ],
     }

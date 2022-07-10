@@ -1,15 +1,15 @@
 <?php
 namespace App\Services;
 
-use SpotifyWebAPI;
 use SpotifyWebAPI\Session;
 use App\Models\UserSpotifyToken;
+use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifyAPI
 {
-    private static $api = false;
     private static $booted = false;
     private static Session $session;
+    private static SpotifyWebAPI $api;
 
     private static $scopes = [
         'user-top-read',
@@ -19,7 +19,7 @@ class SpotifyAPI
         'playlist-modify-public',
     ];
 
-    public static function getAuthorizeUrl()
+    public static function getAuthorizeUrl(): string
     {
         $session = self::getSession();
         if (!$session) {
@@ -45,19 +45,43 @@ class SpotifyAPI
         return self::$session;
     }
 
-    public static function getInstanceWithToken(UserSpotifyToken $token)
+    public static function getInstanceWithToken(UserSpotifyToken $token): SpotifyWebAPI
     {
-        $api = new SpotifyWebAPI\SpotifyWebAPI();
-        $session = self::getSession();
+        $session = new Session(
+            env('SPOTIFY_CLIENT_ID'),
+            env('SPOTIFY_CLIENT_SECRET'),
+            env('SPOTIFY_CONNECT_URL')
+        );
 
-        $accessToken = self::refreshAccessToken($token->refresh_token);
-        // Fetch the saved access token from somewhere. A database for example.
-        $api->setAccessToken($accessToken);
+        $newAccessToken = $session->getAccessToken();
+        $newRefreshToken = $session->getRefreshToken();
+
+        if ($token) {
+            $session->setAccessToken($token->access_token);
+            $session->setRefreshToken($token->refresh_token);
+        }
+
+        $options = [
+            'auto_refresh' => true,
+        ];
+
+        $api = new SpotifyWebAPI($options, $session);
+
+        // check for refresh
+        $newAccessToken = $session->getAccessToken();
+        $newRefreshToken = $session->getRefreshToken();
+
+        if ($token->access_token !== $newAccessToken) {
+            echo "updating token";
+            $token->access_token = $newAccessToken;
+            $token->refresh_token = $newRefreshToken;
+            $token->save();
+        }
 
         return $api;
     }
 
-    public static function getInstance()
+    public static function getInstance(): SpotifyWebAPI
     {
         if (!self::$booted) {
             self::boot();
@@ -66,7 +90,7 @@ class SpotifyAPI
         return self::$api;
     }
 
-    private static function boot()
+    private static function boot(): bool
     {
         $clientId = env('SPOTIFY_CLIENT_ID');
         $clientSecret = env('SPOTIFY_CLIENT_SECRET');
@@ -75,7 +99,7 @@ class SpotifyAPI
             return false;
         }
 
-        $session = new SpotifyWebAPI\Session(
+        $session = new Session(
             env('SPOTIFY_CLIENT_ID'),
             env('SPOTIFY_CLIENT_SECRET'),
             env('SPOTIFY_CONNECT_URL')
@@ -84,7 +108,7 @@ class SpotifyAPI
         $session->requestCredentialsToken();
         $accessToken = $session->getAccessToken();
 
-        $api = new SpotifyWebAPI\SpotifyWebAPI();
+        $api = new SpotifyWebAPI([], $session);
         $api->setAccessToken($accessToken);
 
         self::$api = $api;
