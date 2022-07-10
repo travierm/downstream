@@ -52,5 +52,7 @@ class SpotifySync extends Command
         foreach ($spotifyTokens as $token) {
             $this->spotifySyncService->syncByToken($token);
         }
+
+        $this->call("spotify:sync-clean");
     }
 }

@@ -140,12 +140,12 @@ class SpotifySyncService
                 'user_id' => $userId
               ]);
 
+
+
             return true;
         }
 
         $importRecord = $this->spotifyRepo->createSpotifyImport($userId, $trackName, $trackArtist, $trackSearchQuery);
-
-
         //Find youtube video to create media from
         $videos = YoutubeService::searchByQuery($trackSearchQuery);
         if (!$videos && $videos[0]) {
@@ -157,6 +157,7 @@ class SpotifySyncService
         $videoIndex = $video->videoId;
 
         $media = Media::where('index', $videoIndex)->first();
+
         if (!$media) {
             $media = Media::firstOrCreate([
                 'origin' => 'spotify#import',
@@ -170,7 +171,7 @@ class SpotifySyncService
               ]);
         }
 
-        if (!$media->spotify_id) {
+        if (!$media->spotify_id || $media->spotify_id !== $trackId) {
             $media->spotify_id = $trackId;
             $media->save();
         }
