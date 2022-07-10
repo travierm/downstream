@@ -2,34 +2,75 @@
 
 namespace App\Http\Controllers\API;
 
-use Auth;
-use App\Models\UserSpotifyToken;
+use App\Repos\SpotifyRepo;
 use App\Services\SpotifyAPI;
+use Illuminate\Http\Request;
+use App\Models\UserSpotifyToken;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SpotifyController extends Controller
 {
-    public $scopes = [
-        'user-top-read',
-        'user-read-private',
-        'playlist-read-private',
-        'playlist-modify-private',
-        'playlist-modify-public'
-    ];
-
-    function __construct() 
+    public function __construct(public SpotifyRepo $spotifyRepo)
     {
-        $this->middleware('auth:api');
     }
 
-    public function getAuthorizeUrl() {
+    public function getDisable()
+    {
+        UserSpotifyToken::where('user_id', Auth::user()->id)->delete();
+
+        return response()->json([], 200);
+    }
+
+    public function getAuthorizeUrl()
+    {
         return SpotifyAPI::getAuthorizeUrl();
     }
 
-    public function disableAccess() {
+    public function getUserStats()
+    {
+        return response()->json($this->spotifyRepo->getImportStats(Auth::user()->id), 200);
+    }
+
+    public function getConnect(Request $request)
+    {
+        $code = $request->input('code');
+
+        $session = SpotifyAPI::getSession();
+
+        $session->requestAccessToken($code);
+
+        $accessToken = $session->getAccessToken();
+        $refreshToken = $session->getRefreshToken();
+
         $userId = Auth::user()->id;
 
-        if(!$userId) {
+        $token = UserSpotifyToken::where('user_id', $userId);
+        if ($token) {
+            //delete existing tokens
+            $token = UserSpotifyToken::where('user_id', $userId)->delete();
+        }
+
+        $token = new UserSpotifyToken();
+        $token->access_token = $accessToken;
+        $token->refresh_token = $refreshToken;
+        $token->user_id = $userId;
+        $token->save();
+
+        if ($token) {
+            $success = true;
+        } else {
+            $success = false;
+        }
+
+        return response()->json([], 200);
+    }
+
+    public function disableAccess()
+    {
+        $userId = Auth::user()->id;
+
+        if (!$userId) {
             return response()->json([
                 'code' => 400,
                 'message' => "Bad user_id"

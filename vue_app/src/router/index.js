@@ -11,8 +11,10 @@ import DiscoverTrackView from '@/components/views/DiscoverTrackView'
 import WaitListView from '@/components/views/Auth/WaitListView'
 import FollowingView from '@/components/views/FollowingView'
 import RegisterView from '@/components/views/Auth/RegisterView'
+import SpotifySyncView from '@/components/views/SpotifySyncView'
 
 import { applyMiddleware } from './middleware'
+import { connectSpotify } from '../services/api/spotify'
 
 Vue.use(VueRouter)
 
@@ -62,6 +64,29 @@ const routes = [
     component: FollowingView,
     meta: {
       requiresAuth: true,
+    },
+  },
+  {
+    path: '/spotify',
+    name: 'Spotify',
+    component: SpotifySyncView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+
+  {
+    path: '/spotify/connect',
+    name: 'Spotify Connect',
+    meta: {
+      requiresAuth: true,
+    },
+    beforeEnter(to, from, next) {
+      console.log(to)
+
+      connectSpotify(to.query.code, to.query.state).finally(() => {
+        router.push('/spotify')
+      })
     },
   },
 

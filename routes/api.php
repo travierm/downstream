@@ -14,8 +14,7 @@ use Illuminate\Http\Request;
  */
 
 // Controllers in the API Folder only
-Route::namespace ('API')->group(function () {
-
+Route::namespace('API')->group(function () {
     Route::get('/ping', function () {
         return "pong";
     });
@@ -26,6 +25,8 @@ Route::namespace ('API')->group(function () {
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
     Route::post('/user/register', 'User\UserRegistrationController@registerUser');
     Route::post('/waitlist/signup', 'User\UserRegistrationController@createWaitListSignup');
+
+
 
     /* Authenticated routes only */
     Route::middleware('auth:sanctum')->group(function () {
@@ -60,6 +61,12 @@ Route::namespace ('API')->group(function () {
 
         // Analytics
         Route::get('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');
+
+        // Spotify
+        Route::get('/spotify/stats', 'SpotifyController@getUserStats');
+        Route::post('/spotify/connect', 'SpotifyController@getConnect');
+        Route::get('/spotify/authorize', 'SpotifyController@getAuthorizeUrl');
+        Route::get('/spotify/disable', 'SpotifyController@getDisable');
     });
 
     /*

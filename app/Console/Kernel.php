@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {   
+    {
         $schedule->command('filter:run')->hourly();
 
         // Continuously loop through media collection and autofix videos
@@ -35,11 +35,11 @@ class Kernel extends ConsoleKernel
         /*$schedule->command('spotify:recommendations')
            ->everyTenMinutes()
            ->appendOutputTo(storage_path('logs/discovery.log'));*/
-        
+
         // Import new tracks found in a user's DS Import playlist on Spotify
-        /*$schedule->command('spotify:import')
-           ->everyMinute()
-           ->appendOutputTo(storage_path('logs/spotify-import.log'));*/
+        $schedule->command('spotify:sync')
+           ->everyFifteenMinutes()
+           ->appendOutputTo(storage_path('logs/spotify-import.log'));
     }
 
     /**

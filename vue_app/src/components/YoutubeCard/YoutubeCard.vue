@@ -11,6 +11,16 @@
   >
     <v-card class="ma-auto">
       <v-card-actions v-if="!hideActions">
+        <!-- Spotify Tag -->
+        <v-tooltip top v-if="spotifyId">
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon v-bind="attrs" v-on="on" class="float-left" color="green">{{
+              mdiSpotify
+            }}</v-icon>
+          </template>
+          <span>Video was imported from Spotify</span>
+        </v-tooltip>
+
         <v-spacer></v-spacer>
 
         <router-link
@@ -75,7 +85,7 @@ import PlaylistAction from './PlaylistAction'
 import Analytics from '../../services/api/AnalyticsService'
 import YoutubePlayerManager from '../../services/YoutubePlayerManager'
 
-import { mdiLayersSearch } from '@mdi/js'
+import { mdiSpotify, mdiLayersSearch } from '@mdi/js'
 
 window.$showCardGuids = false
 
@@ -92,7 +102,12 @@ export default {
     title: String,
     mediaId: Number,
     videoId: String,
+    spotifyId: {
+      type: String,
+      required: false,
+    },
     thumbnail: String,
+
     hideActions: {
       default: false,
     },
@@ -119,6 +134,7 @@ export default {
   },
   data() {
     return {
+      mdiSpotify,
       mdiLayersSearch,
       showThumbnail: true,
     }
