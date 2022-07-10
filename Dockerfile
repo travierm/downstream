@@ -41,7 +41,7 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN docker-php-ext-enable mysqli
 
 # Create symlink so programs depending on `php` still function
-RUN ln -s /usr/bin/php8 /usr/bin/php
+# RUN ln -s /usr/bin/php8 /usr/bin/php
 
 # Configure nginx
 COPY .deploy/config/nginx.conf /etc/nginx/nginx.conf
