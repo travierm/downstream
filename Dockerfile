@@ -69,6 +69,7 @@ EXPOSE 8080
 # Run Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer install --optimize-autoloader --no-interaction --no-progress
+RUN php artisan migrate
 RUN php -v
 
 # Let supervisord start nginx & php-fpm
