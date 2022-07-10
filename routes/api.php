@@ -66,6 +66,7 @@ Route::namespace('API')->group(function () {
         Route::get('/spotify/stats', 'SpotifyController@getUserStats');
         Route::post('/spotify/connect', 'SpotifyController@getConnect');
         Route::get('/spotify/authorize', 'SpotifyController@getAuthorizeUrl');
+        Route::get('/spotify/disable', 'SpotifyController@getDisable');
     });
 
     /*

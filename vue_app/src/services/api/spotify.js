@@ -1,5 +1,9 @@
 import http from './Client'
 
+export function getDisable() {
+  return http.get('/spotify/disable')
+}
+
 export function getAuthorizeUrl() {
   return http.get('/spotify/authorize')
 }

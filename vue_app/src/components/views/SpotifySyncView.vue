@@ -15,7 +15,7 @@
     <v-btn
       v-if="!hasSpotifyConnection"
       @click="getAuthorizeUrl()"
-      class="mt-2"
+      class="mt-2 mb-2"
       depressed
       color="primary"
     >
@@ -31,6 +31,16 @@
       :options="chart.options"
       :series="chart.series"
     ></apexchart>
+
+    <v-btn
+      v-if="hasSpotifyConnection"
+      @click="disableAccess()"
+      class="mt-2"
+      depressed
+      color="warning"
+    >
+      Disconnect Spotify Account
+    </v-btn>
   </v-container>
 </template>
 
@@ -39,7 +49,7 @@ import http from '../../services/api/Client'
 import { mapState } from 'vuex'
 import { mdiSpotify } from '@mdi/js'
 import BottomBar from '@/components/BottomBar'
-import { getAuthorizeUrl } from '../../services/api/spotify'
+import { getAuthorizeUrl, getDisable } from '../../services/api/spotify'
 
 const defaultOptions = {
   theme: {
@@ -104,22 +114,22 @@ export default {
   methods: {
     getImportStats() {
       http.get('/spotify/stats').then((resp) => {
-        console.log(resp.data.data)
         this.chart.series[0].data = resp.data.data
         this.chart.options.xaxis = {
           categories: resp.data.categories,
         }
 
-        console.log(this.$refs.chart)
         this.$refs.chart.updateOptions({
           ...defaultOptions,
           xaxis: {
             categories: resp.data.categories,
           },
         })
-
-        console.log(this.chart.options.xaxis.categories)
       })
+    },
+    async disableAccess() {
+      getDisable()
+      this.$store.dispatch('auth/getUser')
     },
     getAuthorizeUrl() {
       getAuthorizeUrl()
