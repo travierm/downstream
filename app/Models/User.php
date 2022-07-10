@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Follow;
+use DB;
+use Auth;
+use Hash;
 use App\Theme;
 use App\UserLike;
 use App\YouTubeVideo;
-use Auth;
-use DB;
-use Hash;
+use App\Models\Follow;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -39,6 +39,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'api_token',
     ];
+
+    protected $appends = [
+        'has_spotify_connection'
+    ];
+
+    public function getHasSpotifyConnectionAttribute()
+    {
+        return UserSpotifyToken::where('user_id', $this->id)->exists();
+    }
 
     // This function allows us to get a list of users following us
     public function followers()
@@ -82,7 +91,6 @@ class User extends Authenticatable
 
     public function getRecentDiscoveredItemsCount()
     {
-
         $date = \Carbon\Carbon::today()->subDays(14);
 
         return DB::table('user_media')
@@ -142,7 +150,6 @@ class User extends Authenticatable
 
     public function getSettings()
     {
-
         if (!$this->settings) {
             $this->setDefaultSettings();
         }
