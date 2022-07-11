@@ -1,25 +1,19 @@
 <template>
   <v-container fluid :class="containerClass" class="mt-2">
-    <v-sheet color="grey darken-4" elevation="1" v-if="!mobileBreakpoint">
-      <v-row class="ml-1">
-        <!-- <v-col cols="auto">
-                    <v-btn color="primary">Playlists</v-btn>
-                </v-col> -->
+    <v-row v-if="!mobileBreakpoint">
+      <v-col :cols="mobileBreakpoint ? '12' : '4'">
+        <CollectionSearchInput
+          :collection-count="collection.length"
+          :class="mobileBreakpoint ? 'mr-4' : ''"
+        />
+      </v-col>
+    </v-row>
 
-        <v-col :cols="mobileBreakpoint ? '12' : 'auto'">
-          <CollectionSearchInput :class="mobileBreakpoint ? 'mr-4' : ''" />
-        </v-col>
-
-        <v-col cols="auto" v-if="!mobileBreakpoint">
-          <div class="title">Collection Size: {{ collection.length }}</div>
-        </v-col>
-
-        <!-- <v-col cols="auto">
-                    <div class="title">Playlists: {{ 0 }}</div>
-                </v-col> -->
-      </v-row>
-    </v-sheet>
-    <CollectionSearchInput v-else class="ml-4 mr-4" />
+    <CollectionSearchInput
+      :collection-count="collection.length"
+      v-else
+      class="ml-4 mr-4"
+    />
   </v-container>
 </template>
 
@@ -27,7 +21,6 @@
 import { mapState } from 'vuex'
 import { mdiPlaylistMusic } from '@mdi/js'
 import PlaylistSelect from '../PlaylistSelect'
-
 import CollectionSearchInput from '@/components/Collection/CollectionSearchInput'
 
 export default {

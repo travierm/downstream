@@ -5,7 +5,7 @@
     solo
     dense
     flat
-    label="Search Collection...."
+    :label="labelText"
     clearable
     hide-details
     hide-selected
@@ -17,10 +17,14 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'CollectionSearchInput',
+  props: ['collectionCount'],
   computed: {
     ...mapGetters({
       collection: 'collection/collectionSearchResults',
     }),
+    labelText() {
+      return `Search ${this.collectionCount} items in your collection`
+    },
   },
   data: () => {
     return {
@@ -32,7 +36,7 @@ export default {
   mounted() {},
   methods: {},
   watch: {
-    query: function(val) {
+    query: function (val) {
       this.$store.commit('collection/SET_SEARCH_QUERY', val)
 
       let indexes = _.map(this.collection, 'guid')

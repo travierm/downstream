@@ -62,6 +62,9 @@ export default {
     SearchBar,
   },
   computed: {
+    ...mapState({
+      collection: (state) => state.collection.collection,
+    }),
     ...mapState(['showLoadingBar', 'mediaStats']),
     ...mapGetters({
       loggedIn: 'auth/loggedIn',
