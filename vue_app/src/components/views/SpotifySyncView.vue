@@ -130,6 +130,7 @@ export default {
     async disableAccess() {
       getDisable()
       this.$store.dispatch('auth/getUser')
+      location.reload()
     },
     getAuthorizeUrl() {
       getAuthorizeUrl()
