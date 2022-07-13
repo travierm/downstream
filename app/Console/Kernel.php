@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
 
         // Import new tracks found in a user's DS Import playlist on Spotify
         $schedule->command('spotify:sync')
-           ->everyFiveMinutes();
+           ->everyThirtyMinutes();
     }
 
     /**
