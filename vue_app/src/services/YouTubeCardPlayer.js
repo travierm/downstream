@@ -1,5 +1,5 @@
-import $ from 'jquery'
-import YTPlayer from 'yt-player'
+import $ from 'jquery';
+import YTPlayer from 'yt-player';
 
 export default class YouTubeCardPlayer {
   constructor(guid, videoId) {
@@ -91,7 +91,7 @@ export default class YouTubeCardPlayer {
       callback()
     })
 
-    this._player.setVolume(50)
+    this._player.setVolume(100)
     this._player.play()
   }
 }
