@@ -22,6 +22,16 @@
       Connect Spotify Account
     </v-btn>
 
+    <v-btn
+      v-if="hasSpotifyConnection"
+      @click="runSpotifySync()"
+      class="mt-2 mb-2"
+      depressed
+      color="success"
+    >
+      Sync Now
+    </v-btn>
+
     <!-- Import Graph -->
     <apexchart
       ref="chart"
@@ -49,7 +59,11 @@ import http from '../../services/api/Client'
 import { mapState } from 'vuex'
 import { mdiSpotify } from '@mdi/js'
 import BottomBar from '@/components/BottomBar'
-import { getAuthorizeUrl, getDisable } from '../../services/api/spotify'
+import {
+  getAuthorizeUrl,
+  getDisable,
+  runSpotifySync,
+} from '../../services/api/spotify'
 
 const defaultOptions = {
   theme: {
@@ -91,6 +105,7 @@ export default {
   },
   data: () => ({
     mdiSpotify,
+    runSpotifySync,
     chart: {
       series: [
         {
@@ -132,6 +147,7 @@ export default {
       this.$store.dispatch('auth/getUser')
       location.reload()
     },
+
     getAuthorizeUrl() {
       getAuthorizeUrl()
         .then((resp) => {

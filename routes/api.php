@@ -67,6 +67,7 @@ Route::namespace('API')->group(function () {
         Route::post('/spotify/connect', 'SpotifyController@getConnect');
         Route::get('/spotify/authorize', 'SpotifyController@getAuthorizeUrl');
         Route::get('/spotify/disable', 'SpotifyController@getDisable');
+        Route::get('/spotify/run-sync', 'SpotifyController@runSpotifySync');
     });
 
     /*

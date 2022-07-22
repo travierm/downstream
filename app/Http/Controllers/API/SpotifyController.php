@@ -8,11 +8,28 @@ use Illuminate\Http\Request;
 use App\Models\UserSpotifyToken;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
+use App\Services\Spotify\SpotifySyncService;
 
 class SpotifyController extends Controller
 {
-    public function __construct(public SpotifyRepo $spotifyRepo)
+    public function __construct(public SpotifyRepo $spotifyRepo, public SpotifySyncService $spotifySyncService)
     {
+    }
+
+    public function runSpotifySync()
+    {
+        $spotifyToken = UserSpotifyToken::where('user_id', Auth::user()->id)->first();
+
+        try {
+            $this->spotifySyncService->syncByToken($spotifyToken);
+        } catch (\Exception $e) {
+            return response()->json([], 500);
+        }
+
+        Artisan::call('spotify:sync-clean');
+
+        return response()->json([], 200);
     }
 
     public function getDisable()
