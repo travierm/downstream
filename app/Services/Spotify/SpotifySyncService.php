@@ -135,12 +135,21 @@ class SpotifySyncService
         if (@$media->media_id) {
             $this->lc->info("import already exists in media table");
 
-            UserMedia::firstOrCreate([
+            $userMediaData = [
                 'media_id' => $media->media_id,
                 'user_id' => $userId
-              ]);
+            ];
 
+            $userMedia = UserMedia::where($userMediaData);
 
+            if ($userMedia) {
+                $this->lc->info('pushing item since it already existed in users collection');
+                $userMedia->pushed_at = now();
+                $userMedia->save();
+            } else {
+                $this->lc->info('adding item to users collection');
+                UserMedia::create($userMediaData);
+            }
 
             return true;
         }
