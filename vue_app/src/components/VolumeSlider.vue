@@ -5,7 +5,8 @@
     max="100"
     min="0"
     hide-details
-    prepend-icon="mdi-volume-high"
+    @click:prepend="toggleMute"
+    :prepend-icon="volumeIcon"
   ></v-slider>
 </template>
 
@@ -16,14 +17,30 @@ import YoutubePlayerManager from '../services/YoutubePlayerManager'
 export default {
   name: 'VolumeSlider',
   components: {},
+  mounted() {
+    YoutubePlayerManager.onVolumeChange(this.volmueChangeHandler)
+  },
   data: () => {
     return {
-      value: YoutubePlayerManager.getVolume(),
+      value: YoutubePlayerManager.volume,
     }
+  },
+  computed: {
+    volumeIcon() {
+      return this.value !== 0 ? 'mdi-volume-high' : 'mdi-volume-variant-off'
+    },
+  },
+  methods: {
+    volmueChangeHandler(volume) {
+      this.value = volume
+    },
+    toggleMute() {
+      YoutubePlayerManager.toggleMute()
+    },
   },
   watch: {
     value(newValue) {
-      this.$emit('update', newValue)
+      YoutubePlayerManager.setVolume(newValue)
     },
   },
 }
