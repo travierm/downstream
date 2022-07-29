@@ -23,7 +23,6 @@ export default {
   data: () => {
     return {
       value: YoutubePlayerManager.volume,
-      playerValue: YoutubePlayerManager.volume,
     }
   },
   computed: {
@@ -32,9 +31,7 @@ export default {
     },
   },
   methods: {
-    getIcon(value) {},
     volmueChangeHandler(volume) {
-      this.playerValue = volume
       this.value = volume
     },
     toggleMute() {
