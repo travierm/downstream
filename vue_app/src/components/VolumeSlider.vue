@@ -5,7 +5,8 @@
     max="100"
     min="0"
     hide-details
-    prepend-icon="mdi-volume-high"
+    @click:prepend="toggleMute"
+    :prepend-icon="volumeIcon"
   ></v-slider>
 </template>
 
@@ -13,18 +14,11 @@
 import _ from 'lodash'
 import YoutubePlayerManager from '../services/YoutubePlayerManager'
 
-// TODO WHEN MUTED IT TOGGLES BACK TO FULL VOLUME NEED A WAY TO CHECK IF THE PLAYER IS MUTED
-
 export default {
   name: 'VolumeSlider',
   components: {},
   mounted() {
-    const volmueChangeHandler = (volume) => {
-      this.playerValue = volume
-      this.value = volume
-    }
-
-    YoutubePlayerManager.onVolumeChange(volmueChangeHandler)
+    YoutubePlayerManager.onVolumeChange(this.volmueChangeHandler)
   },
   data: () => {
     return {
@@ -32,11 +26,24 @@ export default {
       playerValue: YoutubePlayerManager.volume,
     }
   },
+  computed: {
+    volumeIcon() {
+      return this.value !== 0 ? 'mdi-volume-high' : 'mdi-volume-variant-off'
+    },
+  },
+  methods: {
+    getIcon(value) {},
+    volmueChangeHandler(volume) {
+      this.playerValue = volume
+      this.value = volume
+    },
+    toggleMute() {
+      YoutubePlayerManager.toggleMute()
+    },
+  },
   watch: {
     value(newValue) {
-      if (this.playerValue != this.value) {
-        YoutubePlayerManager.setVolume(newValue)
-      }
+      YoutubePlayerManager.setVolume(newValue)
     },
   },
 }

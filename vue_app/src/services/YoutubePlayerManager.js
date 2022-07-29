@@ -65,11 +65,16 @@ class YoutubePlayerManager {
   }
 
   setVolume(value) {
-    this.volume = value
-    this.localCache.set('volume', value)
+    if (this.volume !== value) {
+      this.volume = value
+      this.localCache.set('volume', value)
+    }
 
     if (this.videoPlayerInstance) {
-      if (this.videoPlayerInstance.getVolume() !== value) {
+      if (
+        this.videoPlayerInstance.getVolume() !== value &&
+        !this.getIsMuted()
+      ) {
         this.videoPlayerInstance.setVolume(value)
       }
     }
@@ -201,16 +206,49 @@ class YoutubePlayerManager {
       const playerVolume = this.videoPlayerInstance.getVolume()
 
       if (appVolume !== playerVolume && !this.getIsMuted()) {
-        this.volume = playerVolume
-        this.localCache.set('volume', playerVolume)
+        // When not muted and the player changes volume adjust the manager volume
+        this.setVolume(playerVolume)
         this.volumeChangeListener.forEach((cb) => cb(playerVolume))
+      } else if (
+        this.getIsMuted() &&
+        appVolume === playerVolume &&
+        appVolume !== 0
+      ) {
+        // When the player is muted, the player will go to the last known volume that is not 0
+        // So we override our volume in the manager to be 0 so it looks the same as the player
+        this.setVolume(0)
+        this.volumeChangeListener.forEach((cb) => cb(0))
+      } else if (this.getIsMuted() && appVolume !== 0) {
+        // The player is muted, and the app volume is going up, adjust the player volume and unmute
+        this.videoPlayerInstance.setVolume(appVolume)
+        this.toggleMute()
       }
-    }, 250)
+    }, 50)
   }
 
   getIsMuted() {
-    if (!this.videoPlayerInstance) return false
+    if (
+      !this.videoPlayerInstance ||
+      !this.videoPlayerInstance._player ||
+      !this.videoPlayerInstance._player.isMuted
+    ) {
+      return false
+    }
+
     return this.videoPlayerInstance._player.isMuted()
+  }
+
+  toggleMute() {
+    if (!this.videoPlayerInstance) {
+      return
+    }
+
+    if (this.getIsMuted()) {
+      this.videoPlayerInstance.unMute()
+      return
+    }
+
+    this.videoPlayerInstance.mute()
   }
 }
 
