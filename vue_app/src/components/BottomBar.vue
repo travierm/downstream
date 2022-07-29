@@ -54,7 +54,7 @@
         </v-col>
 
         <v-col lg="2" v-if="$vuetify.breakpoint.smAndUp">
-          <VolumeSlider v-on:update="changeVolume" class="ml-4" />
+          <VolumeSlider class="ml-4" />
         </v-col>
       </v-row>
     </v-container>
@@ -118,11 +118,6 @@ export default {
           easing: 'easeInOutCubic',
         })
       }
-    },
-    changeVolume(value) {
-      _.debounce(() => {
-        YoutubePlayerManager.setVolume(value)
-      }, 450)()
     },
   },
 }

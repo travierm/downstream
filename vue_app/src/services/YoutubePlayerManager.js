@@ -22,6 +22,8 @@ class YoutubePlayerManager {
     this.currentPlayingGuid = false
 
     this.videoPlayerInstance = false
+
+    this.volumeChangeListener = []
   }
 
   getPlayingGuid() {
@@ -67,7 +69,9 @@ class YoutubePlayerManager {
     this.localCache.set('volume', value)
 
     if (this.videoPlayerInstance) {
-      this.videoPlayerInstance.setVolume(value)
+      if (this.videoPlayerInstance.getVolume() !== value) {
+        this.videoPlayerInstance.setVolume(value)
+      }
     }
   }
 
@@ -153,6 +157,8 @@ class YoutubePlayerManager {
     }
 
     this.videoPlayerInstance = videoPlayerInstance
+
+    this.playerVolumeChangeWatcher()
   }
 
   playGuid(guid) {
@@ -168,6 +174,43 @@ class YoutubePlayerManager {
     this.currentPlayingGuid = guid
 
     this.loadVideo(guidVideo.videoId)
+  }
+
+  onVolumeChange(listener) {
+    if (typeof listener !== 'function') {
+      console.error('onVolumeChange must be passed a function')
+      return
+    }
+
+    this.volumeChangeListener.push(listener)
+  }
+
+  removeVolumeChangeListeners(listenerToRemove) {
+    this.volumeChangeListener = this.volumeChangeListener.filter(
+      (listener) => listener !== listenerToRemove
+    )
+  }
+
+  playerVolumeChangeWatcher() {
+    if (this.volumeInterval) {
+      clearInterval(this.volumeInterval)
+    }
+
+    this.volumeInterval = setInterval(() => {
+      const appVolume = this.getVolume()
+      const playerVolume = this.videoPlayerInstance.getVolume()
+
+      if (appVolume !== playerVolume && !this.getIsMuted()) {
+        this.volume = playerVolume
+        this.localCache.set('volume', playerVolume)
+        this.volumeChangeListener.forEach((cb) => cb(playerVolume))
+      }
+    }, 250)
+  }
+
+  getIsMuted() {
+    if (!this.videoPlayerInstance) return false
+    return this.videoPlayerInstance._player.isMuted()
   }
 }
 

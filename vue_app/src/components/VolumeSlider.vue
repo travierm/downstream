@@ -13,17 +13,30 @@
 import _ from 'lodash'
 import YoutubePlayerManager from '../services/YoutubePlayerManager'
 
+// TODO WHEN MUTED IT TOGGLES BACK TO FULL VOLUME NEED A WAY TO CHECK IF THE PLAYER IS MUTED
+
 export default {
   name: 'VolumeSlider',
   components: {},
+  mounted() {
+    const volmueChangeHandler = (volume) => {
+      this.playerValue = volume
+      this.value = volume
+    }
+
+    YoutubePlayerManager.onVolumeChange(volmueChangeHandler)
+  },
   data: () => {
     return {
-      value: YoutubePlayerManager.getVolume(),
+      value: YoutubePlayerManager.volume,
+      playerValue: YoutubePlayerManager.volume,
     }
   },
   watch: {
     value(newValue) {
-      this.$emit('update', newValue)
+      if (this.playerValue != this.value) {
+        YoutubePlayerManager.setVolume(newValue)
+      }
     },
   },
 }

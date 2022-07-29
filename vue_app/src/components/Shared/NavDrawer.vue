@@ -52,7 +52,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import router from '../../router'
-
 export default {
   name: 'NavDrawer',
   props: [],
@@ -108,6 +107,7 @@ export default {
   height: calc(100vh - 112px) !important;
   background: #1e1e1e !important;
   position: fixed;
+  z-index: 999;
 
   .ds-nav-drawer-item {
     &:hover {
