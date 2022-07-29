@@ -20,7 +20,7 @@
     </v-row>
 
     <v-row v-if="hasCollectionItems">
-      <CardCol v-for="item in collection" :key="item.guid">
+      <CardCol v-for="item in collectionOrFilteredCollection" :key="item.guid">
         <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
           <YoutubeCard
             :item="item"
@@ -35,6 +35,15 @@
           ></YoutubeCard>
         </v-lazy>
       </CardCol>
+    </v-row>
+
+    <v-row
+      v-if="
+        hasCollectionItems && !showLoadingBar && filteredCollection.length === 0
+      "
+      class="justify-center mb-6"
+    >
+      <h1>No results found in your collection!</h1>
     </v-row>
 
     <v-row
@@ -73,17 +82,23 @@ export default {
     CollectionBar,
   },
   computed: {
-    ...mapState(['showLoadingBar']),
+    ...mapState({
+      showLoadingBar: (store) => store.showLoadingBar,
+      collection: (store) => store.collection.collection,
+    }),
     hasCollectionItems() {
       return this.collection.length >= 1
     },
     ...mapGetters({
       guidIndex: 'collection/guidIndex',
-      collection: 'collection/collectionSearchResults',
+      filteredCollection: 'collection/collectionSearchResults',
       searchQueryUpdates: 'collection/searchQueryUpdates',
     }),
     mobileBreakpoint() {
       return this.$vuetify.breakpoint.mobile
+    },
+    collectionOrFilteredCollection() {
+      return this.filteredCollection || this.collection
     },
   },
   data() {
