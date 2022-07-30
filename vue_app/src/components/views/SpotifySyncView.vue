@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <h1>
-      <v-icon x-large class="mr-1 mb-2" color="green">{{ mdiSpotify }}</v-icon
-      >Spotify Sync
+      <v-icon x-large class="mr-1 mb-2" color="green">{{ mdiSpotify }}</v-icon>
+      Spotify Sync
     </h1>
 
     <h3 v-if="hasSpotifyConnection" class="green--text">
@@ -24,10 +24,11 @@
 
     <v-btn
       v-if="hasSpotifyConnection"
-      @click="runSpotifySync()"
+      @click="clickSyncNow"
       class="mt-2 mb-2"
       depressed
       color="success"
+      :loading="syncing"
     >
       Sync Now
     </v-btn>
@@ -55,13 +56,13 @@
 </template>
 
 <script>
-import http from '../../services/api/Client'
 import { mapState } from 'vuex'
 import { mdiSpotify } from '@mdi/js'
 import BottomBar from '@/components/BottomBar'
 import {
   getAuthorizeUrl,
   getDisable,
+  getImportStats,
   runSpotifySync,
 } from '../../services/api/spotify'
 
@@ -105,7 +106,6 @@ export default {
   },
   data: () => ({
     mdiSpotify,
-    runSpotifySync,
     chart: {
       series: [
         {
@@ -117,6 +117,7 @@ export default {
         ...defaultOptions,
       },
     },
+    syncing: false,
   }),
   computed: {
     ...mapState({
@@ -124,11 +125,28 @@ export default {
     }),
   },
   mounted() {
-    this.getImportStats()
+    this.fetchImportStats()
   },
   methods: {
-    getImportStats() {
-      http.get('/spotify/stats').then((resp) => {
+    async clickSyncNow() {
+      if (this.syncing) {
+        return
+      }
+
+      try {
+        this.syncing = true
+        await runSpotifySync()
+        await this.fetchImportStats()
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.syncing = false
+      }
+    },
+    async fetchImportStats() {
+      try {
+        const resp = await getImportStats()
+
         this.chart.series[0].data = resp.data.data
         this.chart.options.xaxis = {
           categories: resp.data.categories,
@@ -140,10 +158,13 @@ export default {
             categories: resp.data.categories,
           },
         })
-      })
+      } catch (error) {
+        console.log(error)
+      }
     },
+
     async disableAccess() {
-      getDisable()
+      await getDisable()
       this.$store.dispatch('auth/getUser')
       location.reload()
     },

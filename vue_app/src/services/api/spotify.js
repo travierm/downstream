@@ -8,6 +8,10 @@ export function getAuthorizeUrl() {
   return http.get('/spotify/authorize')
 }
 
+export function getImportStats() {
+  return http.get('/spotify/stats')
+}
+
 export function runSpotifySync() {
   return http.get('/spotify/run-sync')
 }
