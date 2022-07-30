@@ -52,6 +52,12 @@
     >
       Disconnect Spotify Account
     </v-btn>
+    <ConfirmDialog
+      message="Are you sure you want to disconnect your spotify account?"
+      :show="showDisableConfirmation"
+      @confirmed="disableAccess"
+      @closed="showDisableConfirmation = false"
+    />
   </v-container>
 </template>
 
@@ -65,6 +71,7 @@ import {
   getImportStats,
   runSpotifySync,
 } from '../../services/api/spotify'
+import ConfirmDialog from '../Shared/ConfirmDialog.vue'
 
 const defaultOptions = {
   theme: {
@@ -103,6 +110,7 @@ export default {
   name: 'SpotifySyncView',
   components: {
     BottomBar,
+    ConfirmDialog,
   },
   data: () => ({
     mdiSpotify,
@@ -118,6 +126,7 @@ export default {
       },
     },
     syncing: false,
+    showDisableConfirmation: false,
   }),
   computed: {
     ...mapState({
@@ -138,7 +147,7 @@ export default {
         await runSpotifySync()
         await this.fetchImportStats()
       } catch (error) {
-        console.log(error)
+        console.error(error)
       } finally {
         this.syncing = false
       }
@@ -159,14 +168,24 @@ export default {
           },
         })
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
 
-    async disableAccess() {
-      await getDisable()
-      this.$store.dispatch('auth/getUser')
-      location.reload()
+    async disableAccess(confirmed) {
+      if (!confirmed) {
+        this.showDisableConfirmation = true
+        return
+      }
+
+      try {
+        this.showDisableConfirmation = false
+        await getDisable()
+        this.$store.dispatch('auth/getUser')
+        location.reload()
+      } catch (error) {
+        console.error(error)
+      }
     },
 
     getAuthorizeUrl() {
