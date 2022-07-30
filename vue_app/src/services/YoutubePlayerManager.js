@@ -10,6 +10,7 @@ class YoutubePlayerManager {
     this.localCache.setStoragePrefix('player_manager_')
 
     this.volume = this.localCache.get('volume', 100)
+    this.muted = false
 
     // All guids available to the manager
     this.guidIndex = []
@@ -205,7 +206,12 @@ class YoutubePlayerManager {
       const appVolume = this.getVolume()
       const playerVolume = this.videoPlayerInstance.getVolume()
 
-      if (appVolume !== playerVolume && !this.getIsMuted()) {
+      if (this.getIsMuted() !== this.muted) {
+        const cahceVolume = this.localCache.get('volume', 100)
+        this.setVolume(cahceVolume)
+        this.videoPlayerInstance.setVolume(cahceVolume)
+        this.toggleMute()
+      } else if (appVolume !== playerVolume && !this.getIsMuted()) {
         // When not muted and the player changes volume adjust the manager volume
         this.setVolume(playerVolume)
         this.volumeChangeListener.forEach((cb) => cb(playerVolume))
@@ -245,9 +251,11 @@ class YoutubePlayerManager {
 
     if (this.getIsMuted()) {
       this.videoPlayerInstance.unMute()
+      this.muted = false
       return
     }
 
+    this.muted = true
     this.videoPlayerInstance.mute()
   }
 }
