@@ -134,9 +134,9 @@ export default {
 
 .video-container {
   position: relative;
-  width: 350px;
-  height: 350px;
-  bottom: 150px;
+  width: 200px;
+  height: 200px;
+  bottom: 76px;
   left: -16px;
   background-color: black;
   display: flex;

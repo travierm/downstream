@@ -141,8 +141,8 @@ class YoutubePlayerManager {
       fullscreen: true,
       playsinline: true,
       controls: false,
-      height: '350px',
-      width: '350px',
+      height: '200px',
+      width: '200px',
     }
 
     let videoPlayerInstance
