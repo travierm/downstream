@@ -1,15 +1,6 @@
 <template>
-  <VueGlow
-    :disabled="!canShowGlow"
-    color="#FF0000"
-    mode="hex"
-    fade
-    interval="20"
-    intense
-    rounded
-    tile
-  >
-    <v-card class="ma-auto">
+  <div :class="{ 'glow-border': true, 'glow-active': canShowGlow }">
+    <v-card class="ma-auto" style="z-index: 1">
       <v-card-actions v-if="!hideActions">
         <!-- Spotify Tag -->
         <v-tooltip top v-if="spotifyId">
@@ -70,7 +61,7 @@
 
       <!-- <div class="video-instance embed-responsive" :id="guid"></div> -->
     </v-card>
-  </VueGlow>
+  </div>
 </template>
 
 <script>
@@ -150,19 +141,64 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .youtubeCardTitle {
   text-align: left;
 }
 
-.glowing-border {
-  border: 2px solid #dadada;
-  border-radius: 7px;
+.glow-border {
+  position: relative;
+
+  &.glow-active::before {
+    opacity: 0.6;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    background-size: 200%;
+    z-index: 0;
+    filter: blur(5px);
+    animation: glowing 10s linear infinite;
+    opacity: 0;
+    border-radius: 8px;
+
+    // Control the size of the glow
+    top: -6px;
+    left: -6px;
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+  }
 }
 
-.glowing-border:focus {
-  outline: none;
-  border-color: #9ecaed;
-  box-shadow: 0 0 10px #9ecaed;
+@keyframes glowing {
+  0% {
+    background-color: #dd00f3;
+  }
+  12.5% {
+    background-color: #ff2400;
+  }
+  25% {
+    background-color: #e81d1d;
+  }
+  37.5% {
+    background-color: #e8b71d;
+  }
+  50% {
+    background-color: #e3e81d;
+  }
+  62.5% {
+    background-color: #1de840;
+  }
+  75% {
+    background-color: #1ddde8;
+  }
+  87.5% {
+    background-color: #2b1de8;
+  }
+  100% {
+    background-color: #dd00f3;
+  }
 }
 </style>
+<!-- https://dev.to/mysticza/beautiful-chase-rgb-glow-effect-css-1h2p -->
