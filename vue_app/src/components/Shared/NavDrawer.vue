@@ -10,7 +10,7 @@
     <template v-slot:prepend>
       <v-list-item two-line>
         <v-list-item-avatar>
-          <v-icon>mdi-account</v-icon>
+          <div class="userIcon" v-html="userIcon"></div>
         </v-list-item-avatar>
 
         <v-list-item-content>
@@ -51,7 +51,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import router from '../../router'
+import { identicon } from 'minidenticons'
+
 export default {
   name: 'NavDrawer',
   props: [],
@@ -64,6 +65,9 @@ export default {
     ...mapGetters({
       loggedIn: 'auth/loggedIn',
     }),
+    userIcon() {
+      return identicon(this.user.display_name)
+    },
   },
   data() {
     return {
@@ -113,6 +117,12 @@ export default {
     &:hover {
       background: #363636;
     }
+  }
+
+  .userIcon {
+    width: 100%;
+    height: 100%;
+    background-color: #272727;
   }
 }
 </style>
