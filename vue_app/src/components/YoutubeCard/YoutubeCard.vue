@@ -609,4 +609,3 @@ export default {
   }
 }
 </style>
-<!-- https://dev.to/mysticza/beautiful-chase-rgb-glow-effect-css-1h2p -->
