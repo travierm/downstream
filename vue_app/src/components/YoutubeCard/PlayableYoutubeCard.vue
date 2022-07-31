@@ -1,73 +1,61 @@
 <template>
-  <VueGlow
-    :disabled="showThumbnail"
-    color="#FF0000"
-    mode="hex"
-    fade
-    interval="20"
-    intense
-    rounded
-    tile
-  >
-    <v-card class="ma-auto">
-      <v-card-actions v-if="!hideActions">
-        <v-spacer></v-spacer>
+  <v-card class="ma-auto">
+    <v-card-actions v-if="!hideActions">
+      <v-spacer></v-spacer>
 
-        <router-link
-          v-if="mediaId"
-          :to="{ path: `/discover/track/${videoId}` }"
-          target="_blank"
-        >
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                v-on="on"
-                v-bind="attrs"
-                icon
-                @click="handleDiscoverTrackClick"
-              >
-                <v-icon class="ml-1" color="deep-purple accent-2">{{
-                  mdiLayersSearch
-                }}</v-icon>
-              </v-btn>
-            </template>
-            <span>Discover similar media</span>
-          </v-tooltip>
-        </router-link>
-
-        <PushAction v-if="collected" :mediaId="mediaId" />
-        <PlaylistAction v-if="collected" :mediaId="mediaId" />
-        <CollectAction
-          :videoId="videoId"
-          :mediaId="mediaId"
-          :collected="collected"
-        />
-      </v-card-actions>
-
-      <v-img
-        :id="this.guid + '_media'"
-        class="youtubeCardThumbnail"
-        :src="thumbnail"
-        :height="dense ? '250px' : '435px'"
-        @click="handleThumbnailClick"
-        v-if="showThumbnail"
+      <router-link
+        v-if="mediaId"
+        :to="{ path: `/discover/track/${videoId}` }"
+        target="_blank"
       >
-        <div
-          style="width: 90%"
-          class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
-        >
-          {{ cardTitle }}
-        </div>
-      </v-img>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-on="on"
+              v-bind="attrs"
+              icon
+              @click="handleDiscoverTrackClick"
+            >
+              <v-icon class="ml-1" color="deep-purple accent-2">{{
+                mdiLayersSearch
+              }}</v-icon>
+            </v-btn>
+          </template>
+          <span>Discover similar media</span>
+        </v-tooltip>
+      </router-link>
 
-      <div class="video-instance embed-responsive" :id="guid"></div>
-    </v-card>
-  </VueGlow>
+      <PushAction v-if="collected" :mediaId="mediaId" />
+      <PlaylistAction v-if="collected" :mediaId="mediaId" />
+      <CollectAction
+        :videoId="videoId"
+        :mediaId="mediaId"
+        :collected="collected"
+      />
+    </v-card-actions>
+
+    <v-img
+      :id="this.guid + '_media'"
+      class="youtubeCardThumbnail"
+      :src="thumbnail"
+      :height="dense ? '250px' : '435px'"
+      @click="handleThumbnailClick"
+      v-if="showThumbnail"
+    >
+      <div
+        style="width: 90%"
+        class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
+      >
+        {{ cardTitle }}
+      </div>
+    </v-img>
+
+    <div class="video-instance embed-responsive" :id="guid"></div>
+  </v-card>
 </template>
 
 <script>
 import $ from 'jquery'
-import VueGlow from 'vue-glow'
 // Components
 import PushAction from './PushAction'
 import CollectAction from './CollectAction'
@@ -81,7 +69,6 @@ window.$showCardGuids = false
 export default {
   name: 'YoutubeCard',
   components: {
-    VueGlow,
     PushAction,
     CollectAction,
     PlaylistAction,

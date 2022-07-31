@@ -65,8 +65,6 @@
 </template>
 
 <script>
-import VueGlow from 'vue-glow'
-
 // Components
 import PushAction from './PushAction'
 import CollectAction from './CollectAction'
@@ -83,7 +81,6 @@ window.$showCardGuids = false
 export default {
   name: 'YoutubeCard',
   components: {
-    VueGlow,
     PushAction,
     CollectAction,
     PlaylistAction,
