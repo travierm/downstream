@@ -8,8 +8,8 @@
   },
   "scripts": {
     "lint": "vue-cli-service lint",
-    "build": "vue-cli-service build",
-    "serve": "vue-cli-service serve --mode development",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
+    "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve --mode development",
     "test:unit": "vue-cli-service test:unit --coverage",
     "test:unit-watch": "vue-cli-service test:unit --watch",
     "test:e2e": "vue-cli-service test:e2e --mode development",
@@ -38,7 +38,6 @@
     "vue-apexcharts": "^1.6.2",
     "vue-cli-plugin-vuetify": "~2.0.5",
     "vue-demi": "^0.12.1",
-    "vue-glow": "^1.4.2",
     "vue-recaptcha": "^2.0.1",
     "vue-router": "^3.1.5",
     "vue-template-compiler": "^2.6.11",

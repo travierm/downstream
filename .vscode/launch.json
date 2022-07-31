@@ -7,7 +7,7 @@
       "runtimeArgs": ["artisan", "serve"],
       "runtimeExecutable": "php",
       "skipFiles": ["<node_internals>/**", "vendor/"],
-      "type": "pwa-node",
+      "type": "node",
       "cwd": "${workspaceFolder}"
     },
     {
@@ -16,7 +16,7 @@
       "runtimeArgs": ["serve"],
       "runtimeExecutable": "yarn",
       "skipFiles": ["<node_internals>/**"],
-      "type": "pwa-node",
+      "type": "node",
       "cwd": "${workspaceFolder}/vue_app"
     }
   ]
