@@ -4,7 +4,7 @@
       <v-col>
         <h2 class="font-weight-bold">
           Discovered items of
-          <span class="ml-1" style="color: #7C4DFF;">{{ media.title }}</span>
+          <span class="ml-1" style="color: #7c4dff">{{ media.title }}</span>
         </h2>
       </v-col>
     </v-row>
@@ -24,7 +24,7 @@
             :item="item"
             :guid="item.guid"
             :title="item.title"
-            :mediaId="item.media_id"
+            :mediaId="item.mediaId"
             :videoId="item.videoId"
             :thumbnail="item.thumbnail"
             :collected="item.collected"
@@ -35,7 +35,7 @@
 
     <v-row v-if="!items && !errorMessage">
       <v-col>
-        <h3 style="color: #1DE9B6;">Finding similar media...</h3>
+        <h3 style="color: #1de9b6">Finding similar media...</h3>
       </v-col>
     </v-row>
   </v-container>
@@ -74,7 +74,7 @@ export default {
     }
   },
   mounted() {
-    getMediaByVideoIndex(this.$route.params.videoId).then(response => {
+    getMediaByVideoIndex(this.$route.params.videoId).then((response) => {
       this.media = response.data.item
     })
 
