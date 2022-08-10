@@ -12,6 +12,22 @@
           <span>Video was imported from Spotify</span>
         </v-tooltip>
 
+        <!-- Repeat Button -->
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-on="on"
+              v-bind="attrs"
+              icon
+              color="blue accent-3"
+              @click="handleThumbnailClick"
+            >
+              <v-icon>{{ mdiRepeat }}</v-icon>
+            </v-btn>
+          </template>
+          <span>Restart the video </span>
+        </v-tooltip>
+
         <v-spacer></v-spacer>
 
         <router-link
@@ -74,7 +90,7 @@ import PlaylistAction from './PlaylistAction'
 import Analytics from '../../services/api/AnalyticsService'
 import YoutubePlayerManager from '../../services/YoutubePlayerManager'
 
-import { mdiSpotify, mdiLayersSearch } from '@mdi/js'
+import { mdiSpotify, mdiLayersSearch, mdiRepeat } from '@mdi/js'
 
 window.$showCardGuids = false
 
@@ -124,6 +140,7 @@ export default {
     return {
       mdiSpotify,
       mdiLayersSearch,
+      mdiRepeat,
       showThumbnail: true,
     }
   },
