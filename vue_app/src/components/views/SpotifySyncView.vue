@@ -49,6 +49,7 @@
       class="mt-2"
       depressed
       color="warning"
+      :loading="disabling"
     >
       Disconnect Spotify Account
     </v-btn>
@@ -126,6 +127,7 @@ export default {
       },
     },
     syncing: false,
+    disabling: false,
     showDisableConfirmation: false,
   }),
   computed: {
@@ -152,6 +154,7 @@ export default {
         this.syncing = false
       }
     },
+
     async fetchImportStats() {
       try {
         const resp = await getImportStats()
@@ -173,6 +176,11 @@ export default {
     },
 
     async disableAccess(confirmed) {
+      if (this.disabling) {
+        this.showDisableConfirmation = true
+        return
+      }
+
       if (!confirmed) {
         this.showDisableConfirmation = true
         return
@@ -191,6 +199,7 @@ export default {
     getAuthorizeUrl() {
       getAuthorizeUrl()
         .then((resp) => {
+          debugger
           window.open(resp.data, '_self')
         })
         .catch((err) => {

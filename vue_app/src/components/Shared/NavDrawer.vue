@@ -68,15 +68,20 @@ export default {
     userIcon() {
       return identicon(this.user.display_name)
     },
-  },
-  data() {
-    return {
-      navLinks: [
+    navLinks() {
+      return [
         { icon: 'mdi-album', title: 'Collection', to: '/collection' },
         { icon: 'mdi-spotify', title: 'Spotify', to: '/spotify' },
-        // {icon: 'mdi-account', title: 'Account', to: ''},
-      ],
-    }
+        {
+          icon: 'mdi-account',
+          title: 'My Profile',
+          to: `/profile/${this.user.hash}`,
+        },
+      ]
+    },
+  },
+  data() {
+    return {}
   },
   directives: {
     'click-outside': {
@@ -103,6 +108,7 @@ export default {
       this.$store.dispatch('toggleNavDrawerStatus')
     },
   },
+  watch: {},
 }
 </script>
 

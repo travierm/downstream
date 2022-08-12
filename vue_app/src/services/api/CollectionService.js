@@ -1,9 +1,9 @@
 import http from './Client'
 
-async function fetchCollection(playlistId = false) {
-  const playlistParam = (playlistId ? '?playlist_id=' + playlistId : '')
-
-  return http.get('/collection' + playlistParam)
+async function fetchCollection(playlistId = false, userHash) {
+  const playlistParam = playlistId ? '?playlist_id=' + playlistId : ''
+  const userHashParam = userHash ? `/${userHash}` : ''
+  return http.get('/collection' + userHashParam + playlistParam)
 }
 
 async function collectItem(videoId) {

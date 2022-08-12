@@ -12,6 +12,7 @@ import WaitListView from '@/components/views/Auth/WaitListView'
 import FollowingView from '@/components/views/FollowingView'
 import RegisterView from '@/components/views/Auth/RegisterView'
 import SpotifySyncView from '@/components/views/SpotifySyncView'
+import ProfileView from '@/components/views/ProfileView'
 
 import { applyMiddleware } from './middleware'
 import { connectSpotify } from '../services/api/spotify'
@@ -51,14 +52,6 @@ const routes = [
     },
   },
   {
-    path: '/search',
-    name: 'Search',
-    component: SearchView,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: '/following',
     name: 'Following',
     component: FollowingView,
@@ -67,6 +60,24 @@ const routes = [
     },
   },
   {
+    path: '/profile/:profileId',
+    name: 'Profile',
+    component: ProfileView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: SearchView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+
+  // Spotify Views
+  {
     path: '/spotify',
     name: 'Spotify',
     component: SpotifySyncView,
@@ -74,7 +85,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-
   {
     path: '/spotify/connect',
     name: 'Spotify Connect',

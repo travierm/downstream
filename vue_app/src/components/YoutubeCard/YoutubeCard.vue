@@ -1,6 +1,9 @@
 <template>
   <div :class="{ 'glow-border': true, 'glow-active': canShowGlow }">
-    <v-card class="ma-auto" style="z-index: 1">
+    <v-card
+      :class="{ 'ma-auto': true, 'youtube-card': true, light: this.light }"
+      style="z-index: 1"
+    >
       <v-card-actions v-if="!hideActions">
         <!-- Spotify Tag -->
         <v-tooltip top v-if="spotifyId">
@@ -127,6 +130,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    light: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     cardTitle() {
@@ -158,6 +165,12 @@ export default {
 <style lang="scss">
 .youtubeCardTitle {
   text-align: left;
+}
+
+.youtube-card {
+  &.light {
+    background-color: #424242;
+  }
 }
 
 .glow-border {
