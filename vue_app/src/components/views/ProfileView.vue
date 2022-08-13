@@ -135,6 +135,11 @@ export default {
       this.collectionTop20 = collection
       this.profileOwner = result.data.user
       this.profileIcon = identicon(result.data.user.display_name)
+
+      this.$store.dispatch('player/updateGuidData', {
+        guidIndexKey: this.routerProfileId,
+        mediaItems: collection,
+      })
     },
   },
   watch: {
