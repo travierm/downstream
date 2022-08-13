@@ -26,22 +26,21 @@
                 </div>
 
                 <!-- Profile actions -->
-                <div>
-                  <v-btn
-                    v-if="user.hash != profileOwner.hash"
-                    class="mt-2 mb-2"
-                    depressed
-                    color="primary"
-                  >
+                <!-- <div class="mt-n2">
+                  <v-btn v-if="!isViewingSelf" depressed color="primary">
                     Follow
                   </v-btn>
-                </div>
+                </div> -->
               </v-row>
             </v-sheet>
 
             <!-- Profile Top 8 Songs -->
             <v-row>
-              <CardCol v-for="item in collectionTop20" :key="item.guid">
+              <!-- TODO - Currently force reloading card when collected status is changed... There is a better way to handle this -->
+              <CardCol
+                v-for="item in collectionTop20"
+                :key="item.guid + item.collected"
+              >
                 <v-lazy
                   :options="{ threshold: 0.5 }"
                   transition="fade-transition"
@@ -84,9 +83,13 @@ export default {
     CardCol,
     YoutubeCard,
   },
-  data: () => ({
-    collectionTop20: [],
-  }),
+  data() {
+    return {
+      collectionTop20: [],
+      profileOwner: {},
+      profileIcon: undefined,
+    }
+  },
   mounted() {
     this.getCollectionTop20()
   },
@@ -94,26 +97,26 @@ export default {
     user() {
       return this.$store.state.auth.user
     },
-    profileOwner() {
-      if (this.$route.params.profileId === this.user.hash) {
-        return this.user
-      }
-
-      console.log('Going to view another profile')
-      // TODO pull user info based off the hash
-      return this.user
+    userCollection() {
+      return this.$store.state.collection.collection
     },
-    profileIcon() {
-      return identicon(this.profileOwner.display_name)
+    routerProfileId() {
+      return this.$route.params.profileId
+    },
+    isViewingSelf() {
+      return this.$route.params.profileId == this.user.hash
     },
   },
   methods: {
     async getCollectionTop20() {
-      if (this.$route.params.profileId == this.user.hash) {
-        const collection = this.$store.state.collection.collection
+      // current user
+      if (this.isViewingSelf) {
         const collectionLength =
-          collection.length >= 20 ? 20 : collection.length
-        this.collectionTop20 = collection.slice(0, collectionLength)
+          this.userCollection.length >= 20 ? 20 : this.userCollection.length
+        this.collectionTop20 = this.userCollection.slice(0, collectionLength)
+        this.profileOwner = this.user
+        this.profileIcon = identicon(this.user.display_name)
+        return
       }
 
       const result = await CollectionService.fetchCollection(
@@ -121,12 +124,41 @@ export default {
         this.$route.params.profileId
       )
 
-      const collection = result.data.items
-      const collectionLength = collection.length >= 20 ? 20 : collection.length
-      this.collectionTop20 = collection.slice(0, collectionLength)
+      const collection = result.data.items.map((item) => {
+        const found = this.userCollection.find(
+          (c) => c.media_id == item.media_id
+        )
+
+        item.collected = !!found
+        return item
+      })
+      this.collectionTop20 = collection
+      this.profileOwner = result.data.user
+      this.profileIcon = identicon(result.data.user.display_name)
     },
   },
-  watch: {},
+  watch: {
+    userCollection(newCollection) {
+      if (this.isViewingSelf) {
+        // if the logged in users collection is changes update the page
+        this.getCollectionTop20()
+      } else {
+        // if the logged in user collects an item or remove a collected item
+        this.collectionTop20 = this.collectionTop20.map((item) => {
+          const found = newCollection.find((c) => c.media_id == item.media_id)
+
+          item.collected = !!found
+          return item
+        })
+      }
+    },
+    $route(to, from) {
+      // If the user changes the profile update the page
+      if (to.params.profileId != from.params.profileId) {
+        this.getCollectionTop20()
+      }
+    },
+  },
 }
 </script>
 

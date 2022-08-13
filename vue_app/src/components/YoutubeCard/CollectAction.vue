@@ -1,5 +1,11 @@
 <template>
-  <v-btn icon color="green accent-3" class="collectBtn" v-if="!inCollection" @click="collectItem">
+  <v-btn
+    icon
+    color="green accent-3"
+    class="collectBtn"
+    v-if="!inCollection"
+    @click="collectItem"
+  >
     <v-icon class="ml-1">{{ mdiMusicNotePlus }}</v-icon>
   </v-btn>
 

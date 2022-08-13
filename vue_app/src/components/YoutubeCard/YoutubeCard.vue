@@ -114,8 +114,8 @@ export default {
       required: false,
     },
     thumbnail: String,
-
     hideActions: {
+      type: Boolean,
       default: false,
     },
     guid: {
@@ -154,7 +154,6 @@ export default {
   methods: {
     handleDiscoverTrackClick() {},
     handleThumbnailClick() {
-      // debugger
       this.$store.dispatch('player/playGuid', this.guid)
       Analytics.playedMedia(this.mediaId)
     },

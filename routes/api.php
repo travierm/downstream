@@ -42,7 +42,7 @@ Route::namespace('API')->group(function () {
 
         // User Collection
         Route::get('/collection', "CollectionController@getCollection");
-        Route::get('/collection/{userHash}', "CollectionController@getCollection");
+        Route::get('/collection/{userHash}', "CollectionController@getCollectionByHash");
 
         Route::get('/video/{videoId}', 'MediaController@getVideoByIndex');
 
