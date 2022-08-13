@@ -108,7 +108,7 @@ class CollectionController extends Controller
         }
 
         if ($userHash && !$isViewingSelf) {
-            $viewUser = User::select('id', 'display_name')->where('hash', $userHash)->first();
+            $viewUser = User::select('id', 'display_name', 'hash')->where('hash', $userHash)->first();
             $userId = $viewUser->id;
         }
 
@@ -151,13 +151,10 @@ class CollectionController extends Controller
 
         $collectionItemsHash = md5(serialize($mediaIds));
 
-        $simpleUser = new \stdClass();
-        $simpleUser->display_name = $viewUser->display_name;
-
         return response()->json([
             'hash' => $collectionItemsHash,
             'items' => $collection,
-            'user' => $simpleUser,
+            'user' => $viewUser,
         ], 200);
     }
 }

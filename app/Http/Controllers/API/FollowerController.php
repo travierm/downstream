@@ -4,24 +4,21 @@ namespace App\Http\Controllers\API;
 
 use DB;
 use Auth;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 
 class FollowerController extends Controller
 {
-    function __construct() 
-    {
-        $this->middleware('auth:api');
-    }
-
-    public function follow($followId)
+    public function follow(Request $request)
     {
         $user = Auth::user();
-        //$followId = $request->input('follow_id');
-        
+        $followId = $request->input('follow_id');
+
         if($user->isFollowing($followId)) {
             return response()->json([
-                'code' => 401,
+                'code' => 400,
                 'message' => "Already following user"
             ], 401);
         }
@@ -29,7 +26,7 @@ class FollowerController extends Controller
         $followUser = User::find($followId);
         if(!$followUser) {
             return response()->json([
-                'code' => 401,
+                'code' => 400,
                 'message' => "Can not follow unknown user"
             ], 401);
         }
@@ -42,9 +39,10 @@ class FollowerController extends Controller
         ], 200);
     }
 
-    public function unfollow($followId)
+    public function unfollow(Request $request)
     {
         $user = Auth::user();
+        $followId = $request->input('follow_id');
 
         if($user->isFollowing($followId)) {
 
@@ -54,19 +52,48 @@ class FollowerController extends Controller
                 ->delete();
 
             return response()->json([
-                'code' => 401,
+                'code' => 400,
                 'message' => "Unfollowed user"
             ], 200);
         }
 
          return response()->json([
-                'code' => 401,
+                'code' => 400,
                 'message' => "Media not found or not owned by this user"
             ], 401);
     }
 
-    public function getFollowers()
+    public function getFollowage()
     {
-        return response()->json(Auth::user()->following());
+        $viewUser = Auth::user();
+
+        $user_followers = $viewUser->followers()->get();
+        $followers = [];
+        foreach($user_followers as $follower) {
+            $result = new \stdClass();
+            $result->id = $follower->id;
+            $result->hash = $follower->hash;
+            $result->display_name = $follower->display_name;
+            $result->guid = "guid_" . Str::random(35);
+
+            $followers[] = $result;
+        }
+
+        $user_following = $viewUser->followers()->get();
+        $following = [];
+        foreach($user_following as $follower) {
+            $result = new \stdClass();
+            $result->id = $follower->id;
+            $result->hash = $follower->hash;
+            $result->display_name = $follower->display_name;
+            $result->guid = "guid_" . Str::random(35);
+
+            $following[] = $result;
+        }
+
+        return response()->json([
+         'followers' => $followers,
+         'following' => $following,
+        ]);
     }
 }
