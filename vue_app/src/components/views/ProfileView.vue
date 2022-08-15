@@ -26,11 +26,17 @@
                 </div>
 
                 <!-- Profile actions -->
-                <!-- <div class="mt-n2">
-                  <v-btn v-if="!isViewingSelf" depressed color="primary">
-                    Follow
+                <div class="mt-n2">
+                  <v-btn
+                    v-if="!isViewingSelf && followingUser !== undefined"
+                    depressed
+                    color="primary"
+                    :loading="followLoading"
+                    @click="toggleFollow"
+                  >
+                    {{ followingUser === false ? 'Follow' : 'Unfollow' }}
                   </v-btn>
-                </div> -->
+                </div>
               </v-row>
             </v-sheet>
 
@@ -69,6 +75,7 @@
 
 <script>
 import { identicon } from 'minidenticons'
+import { mapGetters } from 'vuex'
 
 import BottomBar from '@/components/BottomBar'
 import CardCol from '@/components/CardCol'
@@ -88,12 +95,16 @@ export default {
       collectionTop20: [],
       profileOwner: {},
       profileIcon: undefined,
+      followLoading: false,
     }
   },
   mounted() {
     this.getCollectionTop20()
   },
   computed: {
+    ...mapGetters({
+      isFollowing: 'follower/isFollowing',
+    }),
     user() {
       return this.$store.state.auth.user
     },
@@ -105,6 +116,9 @@ export default {
     },
     isViewingSelf() {
       return this.$route.params.profileId == this.user.hash
+    },
+    followingUser() {
+      return this.isFollowing(this.routerProfileId)
     },
   },
   methods: {
@@ -140,6 +154,26 @@ export default {
         guidIndexKey: this.routerProfileId,
         mediaItems: collection,
       })
+    },
+    async toggleFollow() {
+      if (this.followLoading) {
+        return
+      }
+
+      try {
+        this.followLoading = true
+
+        if (this.followingUser) {
+          await this.$store.dispatch('follower/unfollow', this.profileOwner.id)
+          return
+        }
+
+        await this.$store.dispatch('follower/follow', this.profileOwner.id)
+      } catch (error) {
+        console.error('Error Following User', error)
+      } finally {
+        this.followLoading = false
+      }
     },
   },
   watch: {

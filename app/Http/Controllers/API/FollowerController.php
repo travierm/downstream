@@ -13,61 +13,69 @@ class FollowerController extends Controller
 {
     public function follow(Request $request)
     {
-        $user = Auth::user();
-        $followId = $request->input('follow_id');
+        $authUser = Auth::user();
+        $followId = $request->followId;
 
-        if($user->isFollowing($followId)) {
+        if ($authUser->id == $followId) {
             return response()->json([
-                'code' => 400,
+                'message' => "Cannot follow yourself"
+            ], 400);
+        }
+
+        if($authUser->isFollowing($followId)) {
+            return response()->json([
                 'message' => "Already following user"
-            ], 401);
+            ], 400);
         }
 
         $followUser = User::find($followId);
+        superdd($followId, $followUser);
         if(!$followUser) {
             return response()->json([
-                'code' => 400,
                 'message' => "Can not follow unknown user"
-            ], 401);
+            ], 400);
         }
 
-        $user->following()->save($followUser);
+        $authUser->following()->save($followUser);
+
+        $followedUser = new \stdClass();
+        $followedUser->id = $followUser->id;
+        $followedUser->hash = $followUser->hash;
+        $followedUser->display_name = $followUser->display_name;
+        $followedUser->guid = "guid_" . Str::random(35);
 
         return response()->json([
-                'code' => 200,
-                'message' => "You are now following the user"
+            'message' => "You are now following the user",
+            'followedUser' => $followedUser
         ], 200);
     }
 
     public function unfollow(Request $request)
     {
-        $user = Auth::user();
-        $followId = $request->input('follow_id');
+        $authUser = Auth::user();
+        $followId = $request->followId;
 
-        if($user->isFollowing($followId)) {
-
-            DB::table('followers')
-                ->where('follow_id', $followId)
-                ->where('user_id', $user->id)
-                ->delete();
-
+        if($authUser->isFollowing($followId)) {
             return response()->json([
-                'code' => 400,
-                'message' => "Unfollowed user"
-            ], 200);
+                'message' => "You are not following this user"
+            ], 400);
         }
 
-         return response()->json([
-                'code' => 400,
-                'message' => "Media not found or not owned by this user"
-            ], 401);
+        DB::table('followers')
+            ->where('follow_id', $followId)
+            ->where('user_id', $authUser->id)
+            ->delete();
+
+        return response()->json([
+            'message' => "Unfollowed user"
+        ], 200);
     }
 
     public function getFollowage()
     {
-        $viewUser = Auth::user();
+        $authUser = Auth::user();
 
-        $user_followers = $viewUser->followers()->get();
+        $user_followers = $authUser->followers()->get();
         $followers = [];
         foreach($user_followers as $follower) {
             $result = new \stdClass();
@@ -79,7 +87,7 @@ class FollowerController extends Controller
             $followers[] = $result;
         }
 
-        $user_following = $viewUser->followers()->get();
+        $user_following = $authUser->following()->get();
         $following = [];
         foreach($user_following as $follower) {
             $result = new \stdClass();

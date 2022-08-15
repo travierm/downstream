@@ -72,8 +72,8 @@ Route::namespace('API')->group(function () {
 
         // Following API
         Route::get('/followage', "FollowerController@getFollowage");
-        Route::put('/follow/{follow_id}', "FollowerController@follow");
-        Route::delete('/unfollow/{follow_id}', "FollowerController@unfollow");
+        Route::put('/follow/{followId}', "FollowerController@follow");
+        Route::delete('/unfollow/{followId}', "FollowerController@unfollow");
     });
 
     /*
