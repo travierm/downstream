@@ -5,6 +5,7 @@ export async function fetchInitUserData() {
   store.dispatch('playlist/getAll')
   store.dispatch('collection/fetchCollection')
   store.dispatch('getMediaStats')
+  store.dispatch('follower/getFollowage')
 }
 
 document.addEventListener('visibilitychange', function () {

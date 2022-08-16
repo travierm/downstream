@@ -69,16 +69,16 @@ Route::namespace('API')->group(function () {
         Route::get('/spotify/authorize', 'SpotifyController@getAuthorizeUrl');
         Route::get('/spotify/disable', 'SpotifyController@getDisable');
         Route::get('/spotify/run-sync', 'SpotifyController@runSpotifySync');
+
+        // Following API
+        Route::get('/followage', "FollowerController@getFollowage");
+        Route::put('/follow/{followId}', "FollowerController@follow");
+        Route::delete('/unfollow/{followId}', "FollowerController@unfollow");
     });
 
     /*
 // Analytics
 Route::post('/ana/media/play', 'AnalyticsController@recordUserPlay');
-
-// Following API
-Route::get('/follow/{follow_id}', "FollowerController@follow");
-Route::get('/unfollow/{follow_id}', "FollowerController@unfollow");
-Route::get('/followers', "FollowerController@getFollowers");
 
 // Playlist
 Route::get('/playlists/collection/preview', 'PlaylistController@getCollectionPreview');;

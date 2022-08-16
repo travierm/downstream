@@ -9,6 +9,7 @@ import * as search from './modules/search'
 import * as playlist from './modules/playlist'
 import * as discover from './modules/discover'
 import * as collection from './modules/collection'
+import * as follower from './modules/follower'
 
 import Analytics from '../services/api/AnalyticsService'
 
@@ -49,7 +50,7 @@ export default new Vuex.Store({
     },
     toggleNavDrawerStatus(context) {
       context.commit('TOGGLE_NAV_DRAWER_STATUS')
-    }
+    },
   },
   modules: {
     auth,
@@ -58,5 +59,6 @@ export default new Vuex.Store({
     playlist,
     discover,
     collection,
+    follower,
   },
 })

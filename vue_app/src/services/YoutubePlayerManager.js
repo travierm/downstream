@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import YTPlayer from 'yt-player'
+
 import Cache from '../services/Cache'
 
 const _DEBUG = true
@@ -198,38 +199,36 @@ class YoutubePlayerManager {
   }
 
   playerVolumeChangeWatcher() {
-    if (this.volumeInterval) {
-      clearInterval(this.volumeInterval)
-    }
-
-    this.volumeInterval = setInterval(() => {
-      const appVolume = this.getVolume()
-      const playerVolume = this.videoPlayerInstance.getVolume()
-
-      if (this.getIsMuted() !== this.muted) {
-        const cahceVolume = this.localCache.get('volume', 100)
-        this.setVolume(cahceVolume)
-        this.videoPlayerInstance.setVolume(cahceVolume)
-        this.toggleMute()
-      } else if (appVolume !== playerVolume && !this.getIsMuted()) {
-        // When not muted and the player changes volume adjust the manager volume
-        this.setVolume(playerVolume)
-        this.volumeChangeListener.forEach((cb) => cb(playerVolume))
-      } else if (
-        this.getIsMuted() &&
-        appVolume === playerVolume &&
-        appVolume !== 0
-      ) {
-        // When the player is muted, the player will go to the last known volume that is not 0
-        // So we override our volume in the manager to be 0 so it looks the same as the player
-        this.setVolume(0)
-        this.volumeChangeListener.forEach((cb) => cb(0))
-      } else if (this.getIsMuted() && appVolume !== 0) {
-        // The player is muted, and the app volume is going up, adjust the player volume and unmute
-        this.videoPlayerInstance.setVolume(appVolume)
-        this.toggleMute()
-      }
-    }, 50)
+    // if (this.volumeInterval) {
+    //   clearInterval(this.volumeInterval)
+    // }
+    // this.volumeInterval = setInterval(() => {
+    //   const appVolume = this.getVolume()
+    //   const playerVolume = this.videoPlayerInstance.getVolume()
+    //   if (this.getIsMuted() !== this.muted) {
+    //     const cahceVolume = this.localCache.get('volume', 100)
+    //     this.setVolume(cahceVolume)
+    //     this.videoPlayerInstance.setVolume(cahceVolume)
+    //     this.toggleMute()
+    //   } else if (appVolume !== playerVolume && !this.getIsMuted()) {
+    //     // When not muted and the player changes volume adjust the manager volume
+    //     this.setVolume(playerVolume)
+    //     this.volumeChangeListener.forEach((cb) => cb(playerVolume))
+    //   } else if (
+    //     this.getIsMuted() &&
+    //     appVolume === playerVolume &&
+    //     appVolume !== 0
+    //   ) {
+    //     // When the player is muted, the player will go to the last known volume that is not 0
+    //     // So we override our volume in the manager to be 0 so it looks the same as the player
+    //     this.setVolume(0)
+    //     this.volumeChangeListener.forEach((cb) => cb(0))
+    //   } else if (this.getIsMuted() && appVolume !== 0) {
+    //     // The player is muted, and the app volume is going up, adjust the player volume and unmute
+    //     this.videoPlayerInstance.setVolume(appVolume)
+    //     this.toggleMute()
+    //   }
+    // }, 50)
   }
 
   getIsMuted() {
