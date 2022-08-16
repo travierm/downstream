@@ -51,8 +51,8 @@ export const actions = {
       return
     }
 
-    const followed = await FollowerService.follow(followId)
-    context.commit('FOLLOW', followed)
+    const result = await FollowerService.follow(followId)
+    context.commit('FOLLOW', result.data.followedUser)
   },
   async unfollow(context, followId) {
     if (!context.rootState.auth.token) {

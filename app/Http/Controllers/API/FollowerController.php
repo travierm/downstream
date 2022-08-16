@@ -29,7 +29,6 @@ class FollowerController extends Controller
         }
 
         $followUser = User::find($followId);
-        superdd($followId, $followUser);
         if(!$followUser) {
             return response()->json([
                 'message' => "Can not follow unknown user"
@@ -55,7 +54,7 @@ class FollowerController extends Controller
         $authUser = Auth::user();
         $followId = $request->followId;
 
-        if($authUser->isFollowing($followId)) {
+        if(!$authUser->isFollowing($followId)) {
             return response()->json([
                 'message' => "You are not following this user"
             ], 400);
