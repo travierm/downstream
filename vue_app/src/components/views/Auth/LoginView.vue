@@ -53,9 +53,9 @@
               <v-btn color="primary" class="loginBtn" @click="login"
                 >Login</v-btn
               >
-              <v-btn color="primary" class="ml-2" to="/waitlist"
+              <!--<v-btn color="primary" class="ml-2" to="/waitlist"
                 >Join our waiting list</v-btn
-              >
+              > -->
               <!-- <v-btn class="ml-2" small text color="primary"
                 >Forgot Password?</v-btn
               > -->
