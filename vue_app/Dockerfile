@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build-stage
+FROM node:16-alpine3.15 as build-stage
 WORKDIR /vue_app
 
 COPY vue_app/package.json ./
