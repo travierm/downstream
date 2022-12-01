@@ -1,7 +1,6 @@
 import store from '@/store/index';
 import axios from 'axios';
 
-console.log(import.meta.env)
 const http = axios.create({
   withCredentials: true,
   baseURL: import.meta.env.VITE_API_URL,
