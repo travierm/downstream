@@ -1,10 +1,17 @@
-import axios from 'axios'
-import store from '@/store/index'
+import store from '@/store/index';
+import axios from 'axios';
 
+console.log(import.meta.env)
 const http = axios.create({
   withCredentials: true,
-  baseURL: process.env.VUE_APP_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
 })
+
+const viteMode = import.meta.env.MODE;
+
+if(viteMode !== 'production') {
+  console.log('vite_mode:', viteMode);
+}
 
 http.interceptors.request.use(
   function (config) {
