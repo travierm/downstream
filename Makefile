@@ -1,5 +1,10 @@
 app-dev:
 	yarn serve
 
-serve:
+api-dev:
 	php artisan serve
+
+dev : api-dev && app-dev
+
+laratail:
+	laratail storage/logs/laravel.log

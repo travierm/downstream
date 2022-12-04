@@ -1,8 +1,14 @@
 <?php
 
+use App\Global\RequestLogContext;
 use Cumulati\Monolog\LogContext;
 
-function lc(array $context): LogContext
+function getRequestLogContext(): LogContext
+{
+    return RequestLogContext::getContext();
+}
+
+function lc(array $context = []): LogContext
 {
     return new LogContext($context);
 }

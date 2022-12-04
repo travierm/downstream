@@ -29,7 +29,7 @@ Route::namespace('API')->group(function () {
 
 
     /* Authenticated routes only */
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'request.logcontext'])->group(function () {
         Route::get('/auth/user', function (Request $request) {
             return $request->user();
         });

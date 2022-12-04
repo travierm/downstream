@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-
 use DB;
 use Auth;
 use Cache;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 
 class CollectionController extends Controller
 {
@@ -17,20 +16,27 @@ class CollectionController extends Controller
 
     public function getCollection(Request $request)
     {
+        $lc = getRequestLogContext();
+
         $userId = Auth::user()->id;
         $playlistId = $request->get('playlist_id');
 
-        if(!$userId) {
+        if (!$userId) {
             return response()->json([
                 'code'      =>  401,
                 'message'   =>  "No UserID was found"
               ], 401);
-        }else{
+        } else {
             $collectionCacheKey  = 'user_collection_items_' . $userId;
             $itemHashCacheKey = 'user_collection_items_hash_' . $userId;
         }
 
-        if($this->shouldCacheCollection && !$playlistId) {
+        $lc->info('fetching user collection', [
+            'should_cache_collection' => $this->shouldCacheCollection,
+            'playlist_id' => $playlistId
+        ]);
+
+        if ($this->shouldCacheCollection && !$playlistId) {
             if (Cache::has($collectionCacheKey) && Cache::has($itemHashCacheKey)) {
                 $items = Cache::get($collectionCacheKey);
                 $itemsHash = Cache::get($itemHashCacheKey);
@@ -47,7 +53,7 @@ class CollectionController extends Controller
             ->where('user_media.user_id', $userId)
             ->whereNull('user_media.deleted_at');
 
-        if($playlistId) {
+        if ($playlistId) {
             $queryBuilder->join('playlist_items', 'playlist_items.media_id', '=', 'media.id');
             $queryBuilder->where('playlist_items.created_by', $userId);
             $queryBuilder->where('playlist_items.playlist_id', $playlistId);
@@ -55,20 +61,21 @@ class CollectionController extends Controller
         }
 
         // Add limit if needed for mobile
-        if($request->limit) {
+        if ($request->limit) {
             $queryBuilder->limit($request->limit);
         }
 
-        if($request->randomized) {
+        if ($request->randomized) {
             $queryBuilder->orderByRaw("RAND()");
-        }else{
+        } else {
             $queryBuilder->orderBy('user_media.pushed_at', 'DESC');
         }
 
         $items = $queryBuilder->get();
+        $lc->info(sprintf('fetched %s media items from database', count($items)));
 
         $collection = [];
-        foreach($items as $media) {
+        foreach ($items as $media) {
             // items in collection will always be collected
             $media->collected = true;
             $media->guid = "guid_" . Str::random(35);
@@ -76,13 +83,13 @@ class CollectionController extends Controller
             $collection[] = $media;
         }
 
-        $mediaIds = array_map(function($item) {
+        $mediaIds = array_map(function ($item) {
             return $item->id;
         }, $collection);
 
         $collectionItemsHash = md5(serialize($mediaIds));
 
-        if($this->shouldCacheCollection) {
+        if ($this->shouldCacheCollection) {
             Cache::put($collectionCacheKey, $collection);
             Cache::put($itemHashCacheKey, $collectionItemsHash);
         }
@@ -100,7 +107,7 @@ class CollectionController extends Controller
         $userHash = $request->userHash;
         $isViewingSelf = $userHash == $viewUser->hash;
 
-        if(!$userId || !$userHash) {
+        if (!$userId || !$userHash) {
             return response()->json([
                 'code'      =>  401,
                 'message'   =>  "No UserID was found"
@@ -121,7 +128,7 @@ class CollectionController extends Controller
             ->get();
 
         $collection = [];
-        foreach($items as $media) {
+        foreach ($items as $media) {
             // items in collection will always be collected
             if ($isViewingSelf) {
                 $media->collected = true;
@@ -145,7 +152,7 @@ class CollectionController extends Controller
             }
         }
 
-        $mediaIds = array_map(function($item) {
+        $mediaIds = array_map(function ($item) {
             return $item->id;
         }, $collection);
 
