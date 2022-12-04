@@ -6,8 +6,8 @@ use Cumulati\Monolog\LogContext;
 
 class RequestLogContext
 {
-    private LogContext $logContext;
-    public readonly string $requestId;
+    private static LogContext $logContext;
+    private static string $requestId;
 
     public static function startRequestLog(array $context = [])
     {
