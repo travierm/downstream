@@ -24,7 +24,7 @@ class StartRequestLogContext
             'request_method' => $request->method()
         ]);
 
-        RequestLogContext::info('started request logging');
+        RequestLogContext::info('new request');
 
         return $next($request);
     }
