@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\StartRequestLogContext;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -41,6 +42,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            StartRequestLogContext::class,
             'throttle:60,1',
             'bindings',
         ],

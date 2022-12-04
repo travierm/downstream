@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efef4cd3def830b28304ca007116beb5",
+    "content-hash": "3eae06e8a9dfc4ded0d46ccfd896ad70",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -182,6 +182,56 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "cumulati/monolog-context",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cumulati/monolog-context.git",
+                "reference": "e7a91991e824e472b8fb138d5e72024b042cb677"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cumulati/monolog-context/zipball/e7a91991e824e472b8fb138d5e72024b042cb677",
+                "reference": "e7a91991e824e472b8fb138d5e72024b042cb677",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^1.17|^2.0",
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cumulati\\Monolog\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patrick McCarren",
+                    "email": "patrick@cumulative.io"
+                }
+            ],
+            "description": "A utility to create monolog context, timers and counters.",
+            "homepage": "https://github.com/cumulati/monolog-context",
+            "keywords": [
+                "Context",
+                "counter",
+                "log",
+                "logger",
+                "monolog",
+                "timer"
+            ],
+            "support": {
+                "issues": "https://github.com/cumulati/monolog-context/issues",
+                "source": "https://github.com/cumulati/monolog-context/tree/2.0.0"
+            },
+            "time": "2022-07-12T16:57:29+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

@@ -10,6 +10,7 @@
   "require": {
     "php": ">=7.3.0",
     "asvae/laravel-api-tester": "^2.0",
+    "cumulati/monolog-context": "^2.0",
     "doctrine/dbal": "^3.3",
     "fideloper/proxy": "~4.0",
     "fruitcake/laravel-cors": "^2.0",
