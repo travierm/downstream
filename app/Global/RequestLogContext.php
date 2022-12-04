@@ -11,11 +11,12 @@ class RequestLogContext
 
     public static function startRequestLog(array $context = [])
     {
+        self::$requestId = str_random(32);
+
         $data = array_merge($context, [
              'request_id' => self::$requestId,
         ]);
 
-        self::$requestId = str_random(32);
         self::$logContext = new LogContext($data);
     }
 
