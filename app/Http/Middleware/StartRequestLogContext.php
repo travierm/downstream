@@ -18,6 +18,7 @@ class StartRequestLogContext
     public function handle(Request $request, Closure $next)
     {
         RequestLogContext::startRequestLog([
+            'user_id' => $request->user()?->id,
             'request_path' => $request->path,
             'request_method' => $request->method
         ]);
