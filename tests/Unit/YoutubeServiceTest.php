@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Services\YoutubeService;
@@ -13,10 +13,10 @@ class YoutubeServiceTest extends TestCase
      * @return void
      */
     public function testCanSearchForVideos()
-    {   
+    {
         $query = "Lil Peep - cobain";
         $videos = YoutubeService::searchByQuery($query);
-        
+
         $this->assertTrue(is_string($videos[0]->title), 'Search result has title');
         $this->assertTrue(is_string($videos[0]->videoId), 'Search result has videoId');
         $this->assertTrue(is_string($videos[0]->thumbnail), 'Search result has thumbnail');

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use DB;
-use Auth;
-use Cache;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CollectionController extends Controller
 {
