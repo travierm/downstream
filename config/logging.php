@@ -2,6 +2,7 @@
 
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\SyslogUdpHandler;
 
 return [
@@ -52,6 +53,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
+            'formatter' => JsonFormatter::class,
         ],
 
         'daily' => [
@@ -94,6 +96,10 @@ return [
             'with' => [
                 'stream' => 'php://stdout',
             ],
+            'formatter' => JsonFormatter::class,
+            // 'formatter_with' => [
+            //     'format' => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",
+            // ],
         ],
 
         'syslog' => [
