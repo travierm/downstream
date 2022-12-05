@@ -53,7 +53,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
-            'formatter' => JsonFormatter::class,
+            //'formatter' => JsonFormatter::class,
         ],
 
         'daily' => [
@@ -96,7 +96,7 @@ return [
             'with' => [
                 'stream' => 'php://stdout',
             ],
-            'formatter' => JsonFormatter::class,
+            //'formatter' => JsonFormatter::class,
             // 'formatter_with' => [
             //     'format' => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",
             // ],
