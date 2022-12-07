@@ -19,12 +19,19 @@ class SpotifyController extends Controller
 
     public function runSpotifySync()
     {
+        $lc = getRequestLogContext();
+        $lc->info('starting manual spotify sync');
+
         $spotifyToken = UserSpotifyToken::where('user_id', Auth::user()->id)->first();
 
         try {
             $this->spotifySyncService->syncByToken($spotifyToken);
         } catch (\Exception $e) {
-            return response()->json([], 500);
+            $lc->error('failed to complete spotify sync', [
+                'message' => $e->getMessage()
+            ]);
+
+            throw $e;
         }
 
         Artisan::call('spotify:sync-clean');
