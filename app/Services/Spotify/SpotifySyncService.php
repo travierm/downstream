@@ -140,7 +140,7 @@ class SpotifySyncService
                 'user_id' => $userId
             ];
 
-            $userMedia = UserMedia::where($userMediaData);
+            $userMedia = UserMedia::where($userMediaData)->get();
 
             if ($userMedia) {
                 $this->lc->info('pushing item since it already existed in users collection');
