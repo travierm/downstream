@@ -35,7 +35,7 @@
 
     <v-row v-if="!items && !errorMessage">
       <v-col>
-        <h3 style="color: #1de9b6">Finding similar media...</h3>
+        <h3 style="color: #1de9b6">Finding similar content...</h3>
       </v-col>
     </v-row>
   </v-container>

@@ -1,10 +1,8 @@
 app-dev:
-	yarn serve
+	cd vue_app/ && yarn dev
 
 api-dev:
 	php artisan serve
-
-dev : api-dev && app-dev
 
 laratail:
 	laratail storage/logs/laravel.log

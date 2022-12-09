@@ -1,15 +1,17 @@
 <?php
+
 namespace App\Services;
 
 use SpotifyWebAPI\Session;
 use App\Models\UserSpotifyToken;
+use Exception;
 use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifyAPI
 {
     private static $booted = false;
     private static Session $session;
-    private static SpotifyWebAPI $api;
+    private static ?SpotifyWebAPI $api = null;
 
     private static $scopes = [
         'user-top-read',
@@ -83,20 +85,17 @@ class SpotifyAPI
 
     public static function getInstance(): SpotifyWebAPI
     {
-        if (!self::$booted) {
-            self::boot();
-        }
-
-        return self::$api;
+        return self::$api ? self::$api : self::boot();
     }
 
-    private static function boot(): bool
+
+    private static function boot(): SpotifyWebAPI
     {
         $clientId = env('SPOTIFY_CLIENT_ID');
         $clientSecret = env('SPOTIFY_CLIENT_SECRET');
 
         if (!$clientId or !$clientSecret) {
-            return false;
+            throw \Exception('Missing Spotify secrets');
         }
 
         $session = new Session(
@@ -118,6 +117,6 @@ class SpotifyAPI
             self::$booted = true;
         }
 
-        return true;
+        return self::$api;
     }
 }

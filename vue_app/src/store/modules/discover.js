@@ -1,6 +1,7 @@
-import Vue from 'vue'
-import Cache from '../../services/Cache'
-import DiscoverService from '../../services/api/DiscoverService'
+import Vue from 'vue';
+
+import DiscoverService from '../../services/api/DiscoverService';
+import Cache from '../../services/Cache';
 
 const discoverSimilarTrackStorage = new Cache(true)
 discoverSimilarTrackStorage.setStoragePrefix('discover_video_')
@@ -69,11 +70,14 @@ export const actions = {
           })
 
           context.dispatch(
-            'player/setGuidIndex',
-            response.data.items.map(item => {
-              return item.guid
-            }),
-            { root: true }
+            'player/updateGuidData',
+            {
+              guidIndexKey: `/discover/track/${videoId}`,
+              mediaItems: response.data.items,
+            },
+            {
+              root: true,
+            }
           )
         }
 
