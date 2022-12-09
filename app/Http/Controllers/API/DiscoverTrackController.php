@@ -12,9 +12,14 @@ class DiscoverTrackController extends Controller
 {
     public function similarTracks($videoId)
     {
+        $lc = getRequestLogContext();
         $media = Media::where('index', $videoId)->first();
+        $lc->info('similarTracks request started', [
+            'videoId' => $videoId,
+            'mediaId' => $media->id
+        ]);
 
-        if(!$media) {
+        if (!$media) {
             return response()->json([
                 'message' => 'Bad video id given'
             ], 500);
@@ -22,8 +27,12 @@ class DiscoverTrackController extends Controller
 
         $items = [];
         try {
-           $items = SimilarTracks::similarTracksByMedia($media);
+            $items = SimilarTracks::similarTracksByMedia($media);
+
+            $lc->info(sprintf('found %s similar tracks', count($items)));
         } catch(\Exception $e) {
+            throw $e;
+
             return response()->json([
                 'message' => $e->getMessage()
             ], 500);
