@@ -16,7 +16,7 @@ class DiscoverTrackController extends Controller
         $media = Media::where('index', $videoId)->first();
         $lc->info('similarTracks request started', [
             'videoId' => $videoId,
-            'mediaId' => $media->id
+            'mediaId' => $media?->id
         ]);
 
         if (!$media) {
