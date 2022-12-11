@@ -8,23 +8,20 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.0.2",
     "cumulati/monolog-context": "^2.0",
     "doctrine/dbal": "^3.3",
-    "fideloper/proxy": "~4.0",
     "fruitcake/laravel-cors": "^2.0",
     "guzzlehttp/guzzle": "^7.3",
     "jwilsson/spotify-web-api-php": "5.4.0",
-    "laravel/framework": "^8.83",
+    "laravel/framework": "^9.0",
     "laravel/helpers": "^1.2",
     "laravel/sanctum": "^2.8",
     "laravel/tinker": "^2.0",
     "madcoda/php-youtube-api": "^1.2.6",
-    "symfony/process": "^5.2"
+    "nunomaduro/collision": " ^6.1"
   },
   "require-dev": {
-    "barryvdh/laravel-debugbar": "^3.1",
-    "filp/whoops": "~2.0",
     "fakerphp/faker": "^1.14.0",
     "mockery/mockery": "1.4.2",
     "phpunit/phpunit": "^9.0"

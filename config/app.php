@@ -125,9 +125,6 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
-
-    // Git Webhook Deploy Secret
-    'deploy_secret' => env('APP_DEPLOY_SECRET'),
     'last_fm_api' => env('LAST_FM_API'),
 
     /*
