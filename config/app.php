@@ -173,7 +173,6 @@ return [
          * Package Service Providers...
          */
         Madcoda\Youtube\YoutubeServiceProviderLaravel5::class,
-        Asvae\ApiTester\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -183,8 +182,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\SpotifyServiceProvider::class,
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class
+        App\Providers\SpotifyServiceProvider::class
     ],
 
     /*
