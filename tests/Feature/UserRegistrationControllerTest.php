@@ -17,10 +17,11 @@ class UserRegistrationControllerTest extends TestCase
 
         parent::setUp();
 
-        if (!$user) {
+        if (! $user) {
             $user = User::factory()->make();
         }
     }
+
     /**
      * A basic feature test example.
      *
@@ -42,7 +43,7 @@ class UserRegistrationControllerTest extends TestCase
 
         $this->assertEquals($signup->email, 'test@gmail.com');
         $this->assertEquals($signup->text_response, 'i like kid cudi');
-        $this->assertEquals("You have successfully joined the waiting list!", $jsonData['message'], "The proper response message is returned");
+        $this->assertEquals('You have successfully joined the waiting list!', $jsonData['message'], 'The proper response message is returned');
 
         // Make sure we can't duplicate sign ups and get proper response
         $response = $this->post('/api/waitlist/signup', [
@@ -54,14 +55,14 @@ class UserRegistrationControllerTest extends TestCase
 
         $count = UserWaitList::count();
 
-        $this->assertEquals(1, $count, "only one sign up exists on the wait list");
-        $this->assertEquals("You have already joined the waiting list", $jsonData['message'], "The proper response message is returned");
+        $this->assertEquals(1, $count, 'only one sign up exists on the wait list');
+        $this->assertEquals('You have already joined the waiting list', $jsonData['message'], 'The proper response message is returned');
     }
 
     public function testCanRegisterWithInviteCode()
     {
         global $user;
-        $testEmail = "test99@gmail.com";
+        $testEmail = 'test99@gmail.com';
 
         // Create a sign up
         $response = $this->actingAs($user)->post('/api/waitlist/signup', [
@@ -76,7 +77,7 @@ class UserRegistrationControllerTest extends TestCase
         $inviteCode = $invite->invite_code;
 
         $this->assertEquals($signup->email, $testEmail);
-        $this->assertEquals("You have successfully joined the waiting list!", $jsonData['message'], "The proper response message is returned");
+        $this->assertEquals('You have successfully joined the waiting list!', $jsonData['message'], 'The proper response message is returned');
 
         $this->post('/api/user/register', [
             'email' => $testEmail,

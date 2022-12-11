@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Loggers;
 
 use Illuminate\Log\Logger;
@@ -12,4 +13,4 @@ class SpotifyLogger extends BaseLogger
     {
         $this->logger = Log::withContext($context);
     }
-};
+}

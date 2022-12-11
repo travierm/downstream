@@ -1,20 +1,22 @@
 <?php
-use App\User;
+
 use App\Media;
+use App\User;
 
 $_user_display_names = [];
 
-function getUserDisplayName($userId) {
+function getUserDisplayName($userId)
+{
     global $_user_display_names;
 
-    if(@$_user_display_names[$userId]) {
+    if (@$_user_display_names[$userId]) {
         return $_user_display_names[$userId];
     }
 
     $user = User::where('id', $userId)->first();
     $displayName = $user->display_name;
 
-    if(!@$displayName) {
+    if (! @$displayName) {
         return false;
     }
 
@@ -23,20 +25,19 @@ function getUserDisplayName($userId) {
     return $displayName;
 }
 
-function getMediaByIds($ids = []) 
+function getMediaByIds($ids = [])
 {
     $items = Media::byType('youtube')
             ->whereIn('id', $ids)
             ->get();
 
-    if(Auth::check()) {
-      Media::addUserCollectedProp($items);
+    if (Auth::check()) {
+        Media::addUserCollectedProp($items);
     }
 
-    $items->map(function(&$item) {
-      $item->meta = json_decode($item->meta);
+    $items->map(function (&$item) {
+        $item->meta = json_decode($item->meta);
     }, $items);
 
     return $items;
 }
-?>

@@ -1,15 +1,15 @@
 <?php
+
 namespace App\Services\Sources;
 
-use Log;
 use App\Services\SpotifyAPI;
+use Log;
 
 class SpotifyTrack
 {
-    public static function findIdByTitle(String $title)
+    public static function findIdByTitle(string $title)
     {
         $tracks = self::findByTitle($title);
-
 
         if (@$tracks[0]) {
             return $tracks[0]->id;
@@ -18,18 +18,18 @@ class SpotifyTrack
         return false;
     }
 
-    public static function findByTitle(String $title)
+    public static function findByTitle(string $title)
     {
         $api = SpotifyAPI::getInstance();
 
-        if (!$api) {
+        if (! $api) {
             return false;
         }
 
         try {
             $response = $api->search($title, 'track', [
-        'limit' => 1
-      ]);
+                'limit' => 1,
+            ]);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -46,14 +46,14 @@ class SpotifyTrack
         $results = false;
         try {
             $results = $api->getRecommendations([
-        'limit' => $limit,
-        'seed_tracks' => $ids
-      ]);
+                'limit' => $limit,
+                'seed_tracks' => $ids,
+            ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
 
-        if (!$results) {
+        if (! $results) {
             return false;
         }
 

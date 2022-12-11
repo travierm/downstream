@@ -21,6 +21,6 @@ class SimilarTracksTest extends TestCase
         $media = Media::where('index', 'ppSY98RGyBU')->first();
         $tracks = SimilarTracks::similarTracksByMedia($media);
 
-        $this->assertTrue(count($tracks) >= 1, "can find similar tracks");
+        $this->assertTrue(count($tracks) >= 1, 'can find similar tracks');
     }
 }

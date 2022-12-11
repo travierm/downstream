@@ -10,7 +10,7 @@ class UserInviteCode extends Model
 {
     use HasFactory;
 
-    protected $table = "user_invite_codes";
+    protected $table = 'user_invite_codes';
 
     protected $fillable = [
         'invite_code', 'note', 'created_by', 'used_by', 'used_at',
@@ -33,7 +33,7 @@ class UserInviteCode extends Model
 
     public static function useInvite($usedBy, $inviteCode)
     {
-        if (!self::codeIsValid($inviteCode)) {
+        if (! self::codeIsValid($inviteCode)) {
             return false;
         }
 
@@ -51,5 +51,4 @@ class UserInviteCode extends Model
 
         return ['usedCodes' => $usedCodes, 'activeCodes' => $activeCodes];
     }
-
 }

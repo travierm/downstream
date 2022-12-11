@@ -2,18 +2,9 @@
 
 namespace App\Console\Commands;
 
-use DB;
-use Artisan;
-use App\Media;
-use App\Artist;
-use App\MediaMeta;
-use App\UserMedia;
-use App\Media\YouTube;
-use App\Media\YouTubeV2;
-use App\Services\SpotifyAPI;
-use Illuminate\Console\Command;
 use App\Models\UserSpotifyToken;
 use App\Services\Spotify\SpotifySyncService;
+use Illuminate\Console\Command;
 
 class SpotifySync extends Command
 {
@@ -53,6 +44,6 @@ class SpotifySync extends Command
             $this->spotifySyncService->syncByToken($token);
         }
 
-        $this->call("spotify:sync-clean");
+        $this->call('spotify:sync-clean');
     }
 }

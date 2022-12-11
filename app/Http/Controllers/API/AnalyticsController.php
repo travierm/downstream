@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Models\UserMediaPlays;
 use Auth;
 use Carbon\Carbon;
-use App\Models\UserMediaPlays;
-use App\Http\Controllers\Controller;
 
 class AnalyticsController extends Controller
 {
-    public function getStats() {
+    public function getStats()
+    {
         $playsToday = UserMediaPlays::whereDate('created_at', Carbon::today())->count();
         $playsThisWeek = UserMediaPlays::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->count();
@@ -24,7 +25,7 @@ class AnalyticsController extends Controller
                 'week' => $playsThisWeek,
                 'month' => $playsThisMonth,
                 'year' => $playsThisYear - 1,
-            ]
+            ],
         ]);
     }
 
@@ -32,27 +33,27 @@ class AnalyticsController extends Controller
     {
         $userId = Auth::user()->id;
 
-        if(!$userId || !$mediaId) {
+        if (! $userId || ! $mediaId) {
             return response()->json([
                 'code' => 400,
-                'message' => "Bad params given"
+                'message' => 'Bad params given',
             ]);
         }
 
         $created = UserMediaPlays::create([
             'user_id' => $userId,
-            'media_id' => $mediaId
+            'media_id' => $mediaId,
         ]);
 
-        if($created) {
+        if ($created) {
             return response()->json([
                 'code' => 200,
-                'message' => "success"
+                'message' => 'success',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'code' => 400,
-                'message' => "could not log play"
+                'message' => 'could not log play',
             ]);
         }
     }

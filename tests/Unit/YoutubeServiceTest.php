@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use App\Services\YoutubeService;
+use Tests\TestCase;
 
 class YoutubeServiceTest extends TestCase
 {
@@ -14,7 +14,7 @@ class YoutubeServiceTest extends TestCase
      */
     public function testCanSearchForVideos()
     {
-        $query = "Lil Peep - cobain";
+        $query = 'Lil Peep - cobain';
         $videos = YoutubeService::searchByQuery($query);
 
         $this->assertTrue(is_string($videos[0]->title), 'Search result has title');
@@ -25,7 +25,7 @@ class YoutubeServiceTest extends TestCase
     public function testCanGetVideoById()
     {
         //Drake - In my feelings
-        $video = YoutubeService::getVideoById("DRS_PpOrUZ4");
+        $video = YoutubeService::getVideoById('DRS_PpOrUZ4');
 
         //video should have all info filled or the api has most likely changed
         $this->assertTrue(is_string($video->title), 'Search result has title');

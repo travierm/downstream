@@ -2,12 +2,12 @@
 
 namespace App\Services\Discovery;
 
-use Carbon\Carbon;
-use App\Models\Media;
-use App\Services\YoutubeService;
-use Illuminate\Support\Facades\Cache;
-use App\Services\Sources\SpotifyTrack;
 use App\MediaType\Transformer\SpotifyTrackTransformer;
+use App\Models\Media;
+use App\Services\Sources\SpotifyTrack;
+use App\Services\YoutubeService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class SimilarTracks
 {
@@ -23,8 +23,8 @@ class SimilarTracks
         // Get Spotify ID of Track
         $spotifyId = $media->getOrFindSpotifyId();
 
-        if (!$spotifyId) {
-            throw new \Exception("Could not match video_id to discovery services");
+        if (! $spotifyId) {
+            throw new \Exception('Could not match video_id to discovery services');
 
             return false;
         }

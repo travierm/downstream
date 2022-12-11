@@ -2,9 +2,7 @@
 
 namespace App\MediaType;
 
-
 use App\Models\Media;
-use App\MediaType\YoutubeVideo;
 
 class MediaItem
 {
@@ -12,8 +10,8 @@ class MediaItem
     {
         // Search for existing media item with same videoId
         $media = Media::where('index', $video->videoId)->get();
-        
-        if($media->id) {
+
+        if ($media->id) {
             return $media;
         }
 

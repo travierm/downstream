@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateArtistGenresTable extends Migration
 {
@@ -16,14 +16,12 @@ class CreateArtistGenresTable extends Migration
         Schema::create('artist_genres', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('artist_id')->unsigned();
-            $table->string("name");
+            $table->string('name');
         });
 
-        
         Schema::table('artists', function (Blueprint $table) {
             $table->string('spotify_id')->nullable()->after('name');
         });
-
     }
 
     /**

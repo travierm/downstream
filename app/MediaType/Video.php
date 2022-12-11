@@ -8,10 +8,14 @@ use YoutubeAPI;
 class Video
 {
     public $id;
+
     public $title;
-    public $thumbnail = "";
+
+    public $thumbnail = '';
+
     public $tags = [];
-    public $categoryId = "";
+
+    public $categoryId = '';
 
     public function mediaExists()
     {
@@ -23,7 +27,7 @@ class Video
     public function allKeysFilled()
     {
         foreach ($this as $key => $value) {
-            if (!$value) {
+            if (! $value) {
                 return false;
             }
         }
@@ -34,13 +38,13 @@ class Video
 
 class YouTube
 {
-    public $name = "youtube";
+    public $name = 'youtube';
 
     public function search($query, $limit = 5)
     {
         $results = YoutubeAPI::search($query, $limit);
 
-        if (!$results) {
+        if (! $results) {
             return false;
         }
 
@@ -65,7 +69,8 @@ class YouTube
      * formatVideoInfo
      *
      * format info given from YouTube API into Video object type
-     * @param object $info
+     *
+     * @param  object  $info
      */
     private function formatVideoInfo($info)
     {
@@ -73,7 +78,6 @@ class YouTube
         $video->id = $info->id;
         $video->title = $info->snippet->title;
         $video->categoryId = $info->snippet->categoryId;
-
 
         if (@$info->snippet->tags) {
             $video->tags = $info->snippet->tags;

@@ -20,7 +20,7 @@ class DiscoverTrackTest extends TestCase
         parent::setUp();
         $this->setUpFaker();
 
-        if (!$user) {
+        if (! $user) {
             $user = User::factory()->make();
         }
 
@@ -42,7 +42,7 @@ class DiscoverTrackTest extends TestCase
         $this->markTestSkipped('needs work');
 
         // Kodak Black - Calling my Spirit
-        $videoId = "ppSY98RGyBU";
+        $videoId = 'ppSY98RGyBU';
 
         $response = $this->actingAs($user)->get("/api/discover/track/{$videoId}");
         $response->assertStatus(200);

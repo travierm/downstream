@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Cache;
 use App\Media;
-use YouTubeService;
 use App\Media\YouTubeV2;
+use Cache;
 use Illuminate\Console\Command;
+use YouTubeService;
 
 class YouTubeAutofixQueue extends Command
 {
@@ -44,39 +44,39 @@ class YouTubeAutofixQueue extends Command
         $currentMediaId = 1;
         $lastMediaId = Cache::get('youtubeAutofix.lastMediaId');
 
-        if(!Cache::get('youtubeAutofix.fixedMediaItems')) {
+        if (! Cache::get('youtubeAutofix.fixedMediaItems')) {
             Cache::set('youtubeAutofix.fixedMediaItems', 0);
         }
 
-        if($lastMediaId) {
+        if ($lastMediaId) {
             $mostRecentMediaId = Media::orderBy('created_at', 'desc')->first()->id;
 
             // Check next media id if not on last item yet
-            if($mostRecentMediaId !== $lastMediaId) {
-                $currentMediaId = $lastMediaId + 1; 
+            if ($mostRecentMediaId !== $lastMediaId) {
+                $currentMediaId = $lastMediaId + 1;
             }
         }
 
         $currentMedia = Media::find($currentMediaId);
         $mediaIsAvailable = YouTubeService::getVideoInfo($currentMedia->index);
 
-        if(!$mediaIsAvailable) {
+        if (! $mediaIsAvailable) {
             $currentMediaTitle = $currentMedia->getMeta()->title;
 
             $response = YouTubeV2::searchFirst($currentMediaTitle);
             $updatedMediaInfo = YouTubeV2::getInfo($response->vid);
 
-            if($updatedMediaInfo) {
+            if ($updatedMediaInfo) {
                 // Found replacement video
 
                 $success = YouTubeV2::updateMedia($currentMedia->id, $response->vid);
-                if($success) {
-                    $this->info("Fixed broken media with id: " . $currentMedia->id);
-                    $this->info($currentMedia->id . " updated title from [" . $currentMediaTitle . "] to [" . $updatedMediaInfo->snippet->title . "]");
+                if ($success) {
+                    $this->info('Fixed broken media with id: '.$currentMedia->id);
+                    $this->info($currentMedia->id.' updated title from ['.$currentMediaTitle.'] to ['.$updatedMediaInfo->snippet->title.']');
 
                     Cache::increment('youtubeAutofix.fixedMediaItems');
-                }else{
-                    $this->error('Failed to autofix media with id ' . $currentMedia->id);
+                } else {
+                    $this->error('Failed to autofix media with id '.$currentMedia->id);
                 }
             }
         }

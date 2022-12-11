@@ -11,20 +11,21 @@
     "php": ">=8.0.2",
     "cumulati/monolog-context": "^2.0",
     "doctrine/dbal": "^3.3",
-    "fruitcake/laravel-cors": "^2.0",
-    "guzzlehttp/guzzle": "^7.3",
+    "fruitcake/laravel-cors": "^3.0",
+    "guzzlehttp/guzzle": "^7.2",
     "jwilsson/spotify-web-api-php": "5.4.0",
     "laravel/framework": "^9.0",
     "laravel/helpers": "^1.2",
-    "laravel/sanctum": "^2.8",
-    "laravel/tinker": "^2.0",
-    "madcoda/php-youtube-api": "^1.2.6",
-    "nunomaduro/collision": " ^6.1"
+    "laravel/sanctum": "^3.0",
+    "laravel/tinker": "^2.7",
+    "madcoda/php-youtube-api": "^1.2.6"
   },
   "require-dev": {
     "fakerphp/faker": "^1.14.0",
+    "laravel/pint": "^1.2",
     "mockery/mockery": "1.4.2",
-    "phpunit/phpunit": "^9.0"
+    "nunomaduro/collision": " ^6.1",
+    "phpunit/phpunit": "^9.5.10"
   },
   "autoload": {
     "files": [

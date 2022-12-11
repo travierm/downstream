@@ -38,9 +38,9 @@ class UserList extends Command
      */
     public function handle()
     {
-        $users = User::select('id', 'display_name', 'email', 'hash')->orderBy("created_at", "ASC")->get();
+        $users = User::select('id', 'display_name', 'email', 'hash')->orderBy('created_at', 'ASC')->get();
 
-        $headers = ["ID", "Display Name", "Email", 'Hash'];
+        $headers = ['ID', 'Display Name', 'Email', 'Hash'];
         $this->table($headers, $users);
     }
 }

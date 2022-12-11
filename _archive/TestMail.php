@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Mail;
 use Illuminate\Console\Command;
+use Mail;
 
 class TestMail extends Command
 {
@@ -41,16 +41,16 @@ class TestMail extends Command
         $from = $this->argument('from');
         $to = $this->argument('to');
 
-        Mail::raw("test from downstream instance", function($message) use($from, $to) {
+        Mail::raw('test from downstream instance', function ($message) use ($from, $to) {
             $message->from($from);
             $message->to($to, 'Downstream User');
-            $message->subject("Test from Downstream Instance");
+            $message->subject('Test from Downstream Instance');
         });
 
         if (Mail::failures()) {
-            $this->error("Failed to send mail!");
-        }else{
-            $this->info("Mail sent successfully!");
+            $this->error('Failed to send mail!');
+        } else {
+            $this->info('Mail sent successfully!');
         }
     }
 }

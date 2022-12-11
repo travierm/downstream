@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Services\YoutubeService;
 use App\Http\Controllers\Controller;
+use App\Services\YoutubeService;
 use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
@@ -14,7 +14,7 @@ class SearchController extends Controller
 
         $userId = Auth::user()->id;
         $lc->info('search request started', [
-            'query' => $query
+            'query' => $query,
         ]);
 
         $videos = YoutubeService::searchByQuery($query);
@@ -24,7 +24,7 @@ class SearchController extends Controller
         $lc->info(sprintf('found %s videos results', count($videos)));
 
         return response()->json([
-            'results' => $videos
+            'results' => $videos,
         ], 200);
     }
 }

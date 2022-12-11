@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
-
+use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class PlaylistController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware(function ($request, $next) {
             $this->userId = Auth::user()->id;
@@ -33,7 +32,7 @@ class PlaylistController extends Controller
         if ($mediaId) {
             $playlistIds = PlaylistItem::where([
                 'media_id' => $mediaId,
-                'created_by' => $this->userId
+                'created_by' => $this->userId,
             ])->pluck('playlist_id')->all();
         }
 
@@ -49,7 +48,7 @@ class PlaylistController extends Controller
 
         return response()->json([
             'code' => 200,
-            'items' => $userLists
+            'items' => $userLists,
         ]);
     }
 
@@ -65,13 +64,13 @@ class PlaylistController extends Controller
         if ($mediaItems) {
             return response()->json([
                 'code' => 200,
-                'items' => $mediaItems
+                'items' => $mediaItems,
             ]);
         }
 
         return response()->json([
             'code' => 500,
-            'message' => 'could not fetch item of playlist' . $playlistId
+            'message' => 'could not fetch item of playlist'.$playlistId,
         ]);
     }
 
@@ -89,13 +88,13 @@ class PlaylistController extends Controller
             return response()->json([
                 'code' => 200,
                 'playlist_id' => $list->id,
-                'message' => "created playlist"
+                'message' => 'created playlist',
             ]);
         }
 
         return response()->json([
             'code' => 500,
-            'message' => "could not create playlist"
+            'message' => 'could not create playlist',
         ]);
     }
 
@@ -108,13 +107,13 @@ class PlaylistController extends Controller
 
             return response()->json([
                 'code' => 200,
-                'message' => "deleted playlist"
+                'message' => 'deleted playlist',
             ]);
         }
 
         return response()->json([
             'code' => 500,
-            'message' => "could not delete playlist"
+            'message' => 'could not delete playlist',
         ]);
     }
 
@@ -123,25 +122,25 @@ class PlaylistController extends Controller
         $mediaId = $request->input('media_id');
         $playlistId = $request->input('playlist_id');
 
-        if (!$playlistId) {
+        if (! $playlistId) {
             return response()->json([
                 'code' => 500,
-                'message' => "no playlist id given"
+                'message' => 'no playlist id given',
             ]);
         }
 
         $item = PlaylistItem::findOrCreate($this->userId, $playlistId, $mediaId);
 
-        if (!$item) {
+        if (! $item) {
             return response()->json([
                 'code' => 500,
-                'message' => "could not add media_id to playlist item"
+                'message' => 'could not add media_id to playlist item',
             ]);
         }
 
         return response()->json([
             'code' => 200,
-            'message' => "added media_id to playlist item"
+            'message' => 'added media_id to playlist item',
         ]);
     }
 
@@ -150,7 +149,7 @@ class PlaylistController extends Controller
         $playlistItem = PlaylistItem::where([
             'created_by' => $this->userId,
             'playlist_id' => $playlistId,
-            'media_id' => $mediaId
+            'media_id' => $mediaId,
         ]);
 
         if ($playlistItem) {
@@ -158,13 +157,13 @@ class PlaylistController extends Controller
 
             return response()->json([
                 'code' => 200,
-                'message' => "deleted playlist item"
+                'message' => 'deleted playlist item',
             ]);
         }
 
         return response()->json([
             'code' => 500,
-            'message' => "could not delete playlist ite,"
+            'message' => 'could not delete playlist ite,',
         ]);
     }
 }

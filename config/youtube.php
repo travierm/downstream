@@ -1,9 +1,9 @@
 <?php
 
-return array(
+return [
 
     /*
      *  You can set the API Key here
      */
-    'key' => env('YOUTUBE_KEY', null)
-);
+    'key' => env('YOUTUBE_KEY', null),
+];

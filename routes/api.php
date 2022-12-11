@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 // Controllers in the API Folder only
 Route::namespace('API')->group(function () {
     Route::get('/ping', function () {
-        return "pong";
+        return 'pong';
     });
 
     Route::get('/ana/media/stats', 'AnalyticsController@getStats');
@@ -26,8 +26,6 @@ Route::namespace('API')->group(function () {
     Route::post('/user/register', 'User\UserRegistrationController@registerUser');
     Route::post('/waitlist/signup', 'User\UserRegistrationController@createWaitListSignup');
 
-
-
     /* Authenticated routes only */
     Route::middleware(['auth:sanctum', 'request.logcontext'])->group(function () {
         Route::get('/auth/user', function (Request $request) {
@@ -35,14 +33,14 @@ Route::namespace('API')->group(function () {
         });
 
         Route::get('/search/{query}', 'SearchController@getResults');
-        Route::get('/search/autocomplete/{query}', "SearchAutocompleteController@getResults");
+        Route::get('/search/autocomplete/{query}', 'SearchAutocompleteController@getResults');
 
         // Discover
         Route::get('/discover/track/{videoId}', 'DiscoverTrackController@similarTracks');
 
         // User Collection
-        Route::get('/collection', "CollectionController@getCollection");
-        Route::get('/collection/{userHash}', "CollectionController@getCollectionByHash");
+        Route::get('/collection', 'CollectionController@getCollection');
+        Route::get('/collection/{userHash}', 'CollectionController@getCollectionByHash');
 
         Route::get('/video/{videoId}', 'MediaController@getVideoByIndex');
 
@@ -71,9 +69,9 @@ Route::namespace('API')->group(function () {
         Route::get('/spotify/run-sync', 'SpotifyController@runSpotifySync');
 
         // Following API
-        Route::get('/followage', "FollowerController@getFollowage");
-        Route::put('/follow/{followId}', "FollowerController@follow");
-        Route::delete('/unfollow/{followId}', "FollowerController@unfollow");
+        Route::get('/followage', 'FollowerController@getFollowage');
+        Route::put('/follow/{followId}', 'FollowerController@follow');
+        Route::delete('/unfollow/{followId}', 'FollowerController@unfollow');
     });
 
     /*

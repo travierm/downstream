@@ -2,16 +2,14 @@
 
 namespace App\Console\Commands;
 
-use Artisan;
-use DB;
 use App\Artist;
 use App\Media;
-use App\MediaMeta;
 use App\Media\YouTube;
-use App\Media\YouTubeV2;
-use App\UserMedia;
+use App\MediaMeta;
 use App\Services\SpotifyAPI;
+use App\UserMedia;
 use App\UserSpotifyToken;
+use DB;
 use Illuminate\Console\Command;
 
 class spotifyImport extends Command
@@ -49,54 +47,53 @@ class spotifyImport extends Command
     {
         $usersWithTokens = UserSpotifyToken::all();
 
-        foreach($usersWithTokens as $token) {
+        foreach ($usersWithTokens as $token) {
             $api = SpotifyAPI::getInstanceWithToken($token);
-    
+
             $spotifyUser = $api->me();
-            
+
             //get list of user playlists
             $playlists = $api->getUserPlaylists($spotifyUser->id, [
-                'limit' => 50
+                'limit' => 50,
             ]);
-            
 
             //find playlist named "DS Import"
             $syncList = false;
-            foreach($playlists->items as $playlist) {
-                if(trim($playlist->name) == "DS Import") {
+            foreach ($playlists->items as $playlist) {
+                if (trim($playlist->name) == 'DS Import') {
                     $syncList = $playlist;
                 }
             }
 
             //could not find existing playlist, create new and exit
-            if(!$syncList) {
+            if (! $syncList) {
                 $result = $api->createPlaylist([
-                    'name' => 'DS Import'
+                    'name' => 'DS Import',
                 ]);
 
                 $this->info("Created DS Import playlist for user:$userId");
-                
+
                 exit();
             }
-            
+
             //not working properly
             //$this->updatePlaylistImage($api, $syncList);
 
             $tracks = $api->getPlaylistTracks($syncList->id);
 
-            if(count($tracks->items) <= 0) {
+            if (count($tracks->items) <= 0) {
                 continue;
-            }else{
-                $this->info("Syncing " . count($tracks->items) . " tracks from playlist for user:$token->user_id");
+            } else {
+                $this->info('Syncing '.count($tracks->items)." tracks from playlist for user:$token->user_id");
             }
-            
+
             //sync tracks to user collection
-            foreach($tracks->items as $track) {
+            foreach ($tracks->items as $track) {
                 $this->syncTrack($token->user_id, $track);
-            } 
+            }
         }
-        
-        $this->call("spotify:import-clean");
+
+        $this->call('spotify:import-clean');
     }
 
     public function updatePlaylistImage($api, $playlist)
@@ -104,33 +101,32 @@ class spotifyImport extends Command
         $spotifyUser = $api->me();
         $spotifyUserId = $spotifyUser->id;
 
-        if(!$playlist->images) {
-            $imageData = base64_encode(file_get_contents(public_path("android-chrome-192x192.png")));
+        if (! $playlist->images) {
+            $imageData = base64_encode(file_get_contents(public_path('android-chrome-192x192.png')));
 
             try {
                 $success = $api->updatePlaylistImage($playlist->uri, $imageData);
                 dd($success);
             } catch (Exception $e) {
-                echo 'Spotify API Error: ' . $e->getCode(); // Will be 404
+                echo 'Spotify API Error: '.$e->getCode(); // Will be 404
             }
 
-            $this->info("Updated user playlist image");
-        }else{
+            $this->info('Updated user playlist image');
+        } else {
             dd($playlist);
         }
     }
 
     public function syncTrack($userId, $track)
     {
-        
         $trackId = $track->track->id;
         $trackName = $track->track->name;
         $trackArtist = $track->track->artists[0]->name;
         $trackArtistId = $track->track->artists[0]->id;
-        $trackSearchQuery = $trackArtist . " " . $trackName;
+        $trackSearchQuery = $trackArtist.' '.$trackName;
 
-        $this->info("Attempting to import:" . $trackSearchQuery);
-        if(!$trackId) {
+        $this->info('Attempting to import:'.$trackSearchQuery);
+        if (! $trackId) {
             $this->error('Error: Spotify track id is null');
         }
 
@@ -138,15 +134,15 @@ class spotifyImport extends Command
         $media = DB::table('media_meta')
             ->where('spotify_id', $trackId)
             ->first();
-        
+
         //found existing media so add it to users collection
-        if(@$media->media_id) {
-            $this->info("Import already exists in media table.");
+        if (@$media->media_id) {
+            $this->info('Import already exists in media table.');
 
             $userMedia = UserMedia::firstOrCreate([
                 'media_id' => $media->media_id,
-                'user_id' => $userId
-              ]);
+                'user_id' => $userId,
+            ]);
 
             return true;
         }
@@ -154,8 +150,9 @@ class spotifyImport extends Command
         //Find youtube video to create media from
         $api = new YouTube();
         $results = $api->search($trackSearchQuery);
-        if(!$results) {
+        if (! $results) {
             $this->error("Failed to find video using search query $trackSearchQuery");
+
             return false;
         }
 
@@ -163,29 +160,29 @@ class spotifyImport extends Command
         $video = $results[0];
 
         $meta = [
-            "title" => $video->title,
-            "thumbnail" => $video->thumbnail,
-            "categoryId" => $video->categoryId,
-            "tags" => $video->tags
+            'title' => $video->title,
+            'thumbnail' => $video->thumbnail,
+            'categoryId' => $video->categoryId,
+            'tags' => $video->tags,
         ];
-    
+
         $media = Media::firstOrCreate([
-          'origin' => 'spotify#import',
-          'type' => 'youtube',
-          'subtype' => 'video',
-          'index' => $video->id,
-          'user_id' => $userId,
-          'meta' => json_encode($meta)
+            'origin' => 'spotify#import',
+            'type' => 'youtube',
+            'subtype' => 'video',
+            'index' => $video->id,
+            'user_id' => $userId,
+            'meta' => json_encode($meta),
         ]);
-    
+
         $userMedia = UserMedia::firstOrCreate([
-          'media_id' => $media->id,
-          'user_id' => $userId
+            'media_id' => $media->id,
+            'user_id' => $userId,
         ]);
 
         //do media_meta check
         $row = MediaMeta::where('media_id', $media->id)->first();
-        if(!$row) {
+        if (! $row) {
             //create or find artist
             $artist = Artist::findOrCreate($trackArtist);
 
@@ -196,10 +193,8 @@ class spotifyImport extends Command
             $row->media_id = $media->id;
             $row->spotify_id = $trackId;
             $row->save();
-
-
         }
 
-        $this->info("Created new media item " . $media->id);
+        $this->info('Created new media item '.$media->id);
     }
 }

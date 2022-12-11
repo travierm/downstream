@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
 use App\GlobalQueue;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class processGlobalQueue extends Command
@@ -54,52 +54,52 @@ class processGlobalQueue extends Command
         $this->info("deleted $count items off queue");
 
         //make sure we have enough items
-        if($activeCount < $maxActiveItems) {
+        if ($activeCount < $maxActiveItems) {
             $itemsNeededCount = $maxActiveItems - $activeCount;
 
             $inactiveItems = GlobalQueue::where('active', 0)
-                ->orderBy("created_at", "DESC")
+                ->orderBy('created_at', 'DESC')
                 ->limit($itemsNeededCount)
                 ->get();
-            
-            if($inactiveItems) {
-                $this->info("activating " . count($inactiveItems) . " items");
-                foreach($inactiveItems as $item) {
+
+            if ($inactiveItems) {
+                $this->info('activating '.count($inactiveItems).' items');
+                foreach ($inactiveItems as $item) {
                     $item->active = 1;
                     $item->active_at = date('Y-m-d H:i:s');
                     $item->save();
                 }
             }
-        }else{
+        } else {
             //rotate items
             $expiredActiveItems = GlobalQueue::where('active_at', '<', Carbon::now()->subHours($activeExpireHours)->toDateTimeString())
                 ->where('active', 1)
                 ->get();
 
-            if(count($expiredActiveItems) > 0) {
-                $this->info("Expiring " . count($expiredActiveItems) . " active items");
+            if (count($expiredActiveItems) > 0) {
+                $this->info('Expiring '.count($expiredActiveItems).' active items');
 
-                foreach($expiredActiveItems as $item) {
+                foreach ($expiredActiveItems as $item) {
                     $item->active = 0;
                     $item->save();
                 }
 
                 $neededItemsCount = $maxActiveItems - GlobalQueue::where('active', 1)->count();
 
-                $leastFreshItems = GlobalQueue::orderBy('active_at', "ASC")
+                $leastFreshItems = GlobalQueue::orderBy('active_at', 'ASC')
                     ->orderBy('id', 'DESC')
                     ->limit($neededItemsCount)
                     ->get();
-    
-                $this->info(count($leastFreshItems) . " being added to queue for freshness");
-                foreach($leastFreshItems as $item) {
+
+                $this->info(count($leastFreshItems).' being added to queue for freshness');
+                foreach ($leastFreshItems as $item) {
                     $item->active = 1;
                     $item->active_at = date('Y-m-d H:i:s');
                     $item->save();
                 }
             }
-        }        
+        }
 
-        $this->info("process done");
+        $this->info('process done');
     }
 }

@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Loggers;
 
 use Illuminate\Log\Logger;
-use Illuminate\Support\Facades\Log;
 
 abstract class BaseLogger
 {
@@ -17,4 +17,4 @@ abstract class BaseLogger
     {
         $this->logger->error($message, $context);
     }
-};
+}

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\MediaTempItem;
 use App\Media\YouTubeV2;
+use App\MediaTempItem;
 use App\Services\SpotifyAPI;
 use Illuminate\Console\Command;
 
@@ -40,10 +40,10 @@ class spotifyToplist extends Command
      */
     public function handle()
     {
-
         $api = SpotifyAPI::getInstance();
-        if(!$api) {
-            $this->error("Bad Spotify Client ID or Secret");
+        if (! $api) {
+            $this->error('Bad Spotify Client ID or Secret');
+
             return;
         }
 
@@ -54,11 +54,12 @@ class spotifyToplist extends Command
         //how many toplists tracks to pull each run
         $count = 0;
         $rounds = 30;
-        foreach($tracks as $track) {
-            if($count == $rounds) {
-                $this->info("finished!");
+        foreach ($tracks as $track) {
+            if ($count == $rounds) {
+                $this->info('finished!');
+
                 return;
-            } 
+            }
 
             $count++;
 
@@ -70,11 +71,12 @@ class spotifyToplist extends Command
             $this->info($trackString);
 
             $resp = YouTubeV2::searchFirst($trackString);
-            if($resp) {
+            if ($resp) {
                 $item = MediaTempItem::where('index', $resp->vid)->exists();
-                if($item) {
+                if ($item) {
                     //already an item
-                    $this->error("already imported");
+                    $this->error('already imported');
+
                     continue;
                 }
 
@@ -83,13 +85,13 @@ class spotifyToplist extends Command
                     'source_id' => $trackId,
                     'title' => $resp->info->title,
                     'index' => $resp->vid,
-                    'thumbnail' => $resp->info->thumbnail
+                    'thumbnail' => $resp->info->thumbnail,
                 ]);
 
-                if($check) {
-                    $this->info("created");
+                if ($check) {
+                    $this->info('created');
                 }
             }
-        } 
+        }
     }
 }

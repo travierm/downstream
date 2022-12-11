@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserCreate extends Command
 {
@@ -49,7 +49,7 @@ class UserCreate extends Command
             return $this->info('the user already exists');
         }
 
-        if (!$this->confirm('do you want to create this account?')) {
+        if (! $this->confirm('do you want to create this account?')) {
             return;
         }
 

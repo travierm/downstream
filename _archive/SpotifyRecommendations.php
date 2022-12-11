@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use Cache;
-use DB;
 use App\Media;
 use App\Media\YouTubeV2;
 use App\MediaRemoteReference;
 use App\Services\SpotifyAPI;
+use Cache;
+use DB;
 use Illuminate\Console\Command;
 
 class SpotifyRecommendations extends Command
@@ -49,12 +49,12 @@ class SpotifyRecommendations extends Command
         $take = 10;
         $api = SpotifyAPI::getInstance();
         $badMediaIds = Cache::get('spotifyFailedSearchMediaIds', []);
-        $this->info("Found " . count($badMediaIds) . " bad media ids");
+        $this->info('Found '.count($badMediaIds).' bad media ids');
 
         //get non references items
         $items = DB::table('media')
             ->select('*')
-            ->whereNotIn('id', function($query) {
+            ->whereNotIn('id', function ($query) {
                 $query->select('media_id')->from('media_remote_references');
             })
             ->whereNotIn('id', $badMediaIds)
@@ -62,12 +62,13 @@ class SpotifyRecommendations extends Command
             ->limit($take)
             ->get();
 
-        if(count($items) <= 0) {
-            $this->info("No tracks need recommendations");
+        if (count($items) <= 0) {
+            $this->info('No tracks need recommendations');
+
             return true;
         }
-        
-        foreach($items as $item) {
+
+        foreach ($items as $item) {
             //loop media items
             $media = Media::find($item->id);
             $this->info($media->getMeta()->title);
@@ -75,15 +76,16 @@ class SpotifyRecommendations extends Command
             $title = $media->getMeta()->title;
             $spotifyTrackId = @$media->getMeta()->spotify_id;
 
-            if(!$spotifyTrackId) {
+            if (! $spotifyTrackId) {
                 //media doesn't have hard set spotify id so do search based on media title
                 $response = $api->search($title, 'track', [
-                    'limit' => 1
+                    'limit' => 1,
                 ]);
 
-                if(@!$response->tracks->items[0]) {
-                    $this->error("No spotify ref track found");
+                if (@! $response->tracks->items[0]) {
+                    $this->error('No spotify ref track found');
                     $badMediaIds[] = $media->id;
+
                     continue;
                 }
 
@@ -92,20 +94,20 @@ class SpotifyRecommendations extends Command
 
             $results = $api->getRecommendations([
                 'limit' => 8,
-                'seed_tracks' => [$spotifyTrackId]
+                'seed_tracks' => [$spotifyTrackId],
             ]);
 
-            if($results->tracks) {
+            if ($results->tracks) {
                 //got seed recommendations
-                foreach($results->tracks as $track) {
+                foreach ($results->tracks as $track) {
                     //search youtube for track
-                    $trackName = $track->artists[0]->name . " " . $track->name;
+                    $trackName = $track->artists[0]->name.' '.$track->name;
                     $youtubeResult = YouTubeV2::searchFirst($trackName);
 
-                    if(!@$youtubeResult->vid) {
+                    if (! @$youtubeResult->vid) {
                         continue;
                     }
-                    
+
                     $ref = new MediaRemoteReference();
                     $ref->media_id = $item->id;
                     $ref->source = 'spotify';
@@ -115,11 +117,11 @@ class SpotifyRecommendations extends Command
                     $ref->thumbnail = $youtubeResult->info->thumbnail;
                     $success = $ref->save();
 
-                    if($success) {
-                        $this->info("discovered " . $ref->title);
+                    if ($success) {
+                        $this->info('discovered '.$ref->title);
                     }
                 }
-            }else{
+            } else {
                 $badMediaIds[] = $media->id;
                 $this->error('no seed recommendations');
             }
@@ -130,14 +132,14 @@ class SpotifyRecommendations extends Command
         Cache::put('spotifyFailedSearchMediaIds', $badMediaIds, $expiresAt);
 
         $count = DB::table('media')
-            ->whereNotIn('id', function($query) {
+            ->whereNotIn('id', function ($query) {
                 $query->select('media_id')->from('media_remote_references');
             })
             ->whereNotIn('id', $badMediaIds)
             ->orderBy('id', 'ASC')
             ->limit($take)
             ->count();
-        
-        $this->info("done. " . $count . " more media items to process");
+
+        $this->info('done. '.$count.' more media items to process');
     }
 }

@@ -38,24 +38,24 @@ class UserType extends Command
      */
     public function handle()
     {
-      $userTypes = [
-        'basic',
-        'artist',
-        'admin'
-      ];
-      
-      $hash = $this->ask('User hash?');
+        $userTypes = [
+            'basic',
+            'artist',
+            'admin',
+        ];
 
-      $user = User::where('hash', $hash)->first();
-      $this->info($user->email . "[$user->type] is on file for given hash.");
-      
-      if ($this->confirm('Is this the correct user?')) {
-        $type = $this->choice('New user type?', $userTypes);
-        $user->type = $type;
-        $user->save();
-        $this->info("Updated user type to $type!");
-      }else{
-        return;
-      }
+        $hash = $this->ask('User hash?');
+
+        $user = User::where('hash', $hash)->first();
+        $this->info($user->email."[$user->type] is on file for given hash.");
+
+        if ($this->confirm('Is this the correct user?')) {
+            $type = $this->choice('New user type?', $userTypes);
+            $user->type = $type;
+            $user->save();
+            $this->info("Updated user type to $type!");
+        } else {
+            return;
+        }
     }
 }

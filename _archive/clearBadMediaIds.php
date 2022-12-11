@@ -41,6 +41,6 @@ class clearBadMediaIds extends Command
         $expiresAt = now()->addDays(3);
         Cache::put('spotifyFailedSearchMediaIds', [], $expiresAt);
 
-        $this->info("cleared bad media ids from cache");
+        $this->info('cleared bad media ids from cache');
     }
 }

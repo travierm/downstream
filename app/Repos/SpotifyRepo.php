@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repos;
 
 use App\Models\UserSpotifyImport;
@@ -16,7 +17,7 @@ class SpotifyRepo
             'user_id' => $userId,
             'track_name' => $trackName,
             'track_artist' => $trackArtist,
-            'search_query' => $searchQuery
+            'search_query' => $searchQuery,
         ]);
     }
 
@@ -44,12 +45,12 @@ class SpotifyRepo
                 ->count();
 
             $data[] = $count;
-            $categories[] = $date->shortMonthName . ' ' . $date->year;
+            $categories[] = $date->shortMonthName.' '.$date->year;
         }
 
         return [
             'data' => $data,
-            'categories' => $categories
-       ];
+            'categories' => $categories,
+        ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\UserMedia;
 use App\MediaMeta;
-use App\UserSpotifyToken;
 use App\Services\SpotifyAPI;
+use App\UserMedia;
+use App\UserSpotifyToken;
 use Illuminate\Console\Command;
 
 class spotifyImportClean extends Command
@@ -43,67 +43,66 @@ class spotifyImportClean extends Command
     {
         $usersWithTokens = UserSpotifyToken::all();
 
-        foreach($usersWithTokens as $token) {
+        foreach ($usersWithTokens as $token) {
             $api = SpotifyAPI::getInstanceWithToken($token);
-    
+
             $spotifyUser = $api->me();
 
             $playlists = $api->getUserPlaylists($spotifyUser->id, [
-                'limit' => 50
+                'limit' => 50,
             ]);
-            
+
             //find playlist named "DS Import"
             $importPlaylist = false;
-            foreach($playlists->items as $playlist) {
-                if(trim($playlist->name) == "DS Import") {
+            foreach ($playlists->items as $playlist) {
+                if (trim($playlist->name) == 'DS Import') {
                     // $this->info("Found DS_Import playlist");
                     $importPlaylist = $playlist;
                 }
             }
 
-            if(!$importPlaylist) {
+            if (! $importPlaylist) {
                 // $this->info("Could not find DS Import playlist for user:" . $token->user_id);
                 continue;
             }
 
             $track = $api->getPlaylistTracks($importPlaylist->id);
 
-            if(!$track) {
+            if (! $track) {
                 // $this->info("No tracks to clean");
                 continue;
             }
-    
 
             // $this->info("Cleaning " . count($track->items) . " tracks");
 
             $tracksForTrash = $this->cleanTracks($token->user_id, $track->items);
 
             $tracks = [
-                'tracks' => $tracksForTrash
+                'tracks' => $tracksForTrash,
             ];
-            
 
-            if(count($tracksForTrash) >= 1) {
-                $this->info("Deleting " . count($tracksForTrash) . " from users playlist");
+            if (count($tracksForTrash) >= 1) {
+                $this->info('Deleting '.count($tracksForTrash).' from users playlist');
             }
-            
+
             $api->deletePlaylistTracks($importPlaylist->id, $tracks);
         }
     }
 
-    public function cleanTracks($userId, $tracks) 
-    { 
+    public function cleanTracks($userId, $tracks)
+    {
         $trackTrashcan = [];
-        foreach($tracks as $track) {
+        foreach ($tracks as $track) {
             $trackId = $track->track->id;
             $trackName = $track->track->name;
             $trackArtist = $track->track->artists[0]->name;
-            $trackSearchQuery = $trackArtist . " " . $trackName;
+            $trackSearchQuery = $trackArtist.' '.$trackName;
             $this->info("Checking $trackSearchQuery against the meta table");
 
             $mediaMeta = MediaMeta::where('spotify_id', $trackId)->first();
-            if(!$mediaMeta) {
-                $this->info("Not a media item");
+            if (! $mediaMeta) {
+                $this->info('Not a media item');
+
                 continue;
             }
 
@@ -111,9 +110,8 @@ class spotifyImportClean extends Command
                 ->where('user_id', $userId)
                 ->first();
 
-
             //track exists in media and in users collection
-            if($mediaMeta && $userMedia) {
+            if ($mediaMeta && $userMedia) {
                 $this->info("Removing $trackSearchQuery from playlist");
                 $trackTrashcan[] = ['id' => $trackId];
             }

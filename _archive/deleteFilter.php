@@ -40,25 +40,24 @@ class deleteFilter extends Command
     {
         $newFilters = [];
         $filters = Cache::get('filters.title');
-        $filterValue = $this->ask("Filter value to remove?:", "");
+        $filterValue = $this->ask('Filter value to remove?:', '');
         $found = false;
 
-        
-        if($filterValue) {
-            foreach($filters as $filter) {
+        if ($filterValue) {
+            foreach ($filters as $filter) {
                 $check = trim(strtolower($filterValue));
 
-                if($check !== $filter) {
+                if ($check !== $filter) {
                     $newFilters[] = $filter;
-                }else{
+                } else {
                     $found = true;
                 }
             }
         }
 
-        if($found) {
+        if ($found) {
             $this->info("Deleted: $filterValue");
-        }else{
+        } else {
             $this->error("Could not delete filter: $filterValue");
         }
 

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Media;
-use App\UserMedia;
 use App\GlobalQueue;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\UserMedia;
 
 class GlobalQueueController extends Controller
 {
@@ -15,9 +13,8 @@ class GlobalQueueController extends Controller
         $items = UserMedia::collection();
 
         $collection = [];
-        foreach($items as $media) {
-
-            if($media->meta) {
+        foreach ($items as $media) {
+            if ($media->meta) {
                 $media->meta = json_decode($media->meta);
                 //collected will always be true
                 $media->collected = true;

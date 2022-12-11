@@ -1,4 +1,5 @@
 <?php
+
 namespace App\MediaType;
 
 interface MediaType
@@ -8,11 +9,11 @@ interface MediaType
 
 class Item
 {
-    public $types = ["youtube"];
+    public $types = ['youtube'];
 
     public function __construct($mediaType, $sourceId)
     {
-        if (!in_array($mediaType, $this->type)) {
+        if (! in_array($mediaType, $this->type)) {
             throw new \Exception("$mediaType is not a valid media type");
         }
     }

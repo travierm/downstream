@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Cache;
 use Carbon\Carbon;
 use DB;
-use Auth;
-use App\User;
-use App\UserMedia;
-
-use Illuminate\Http\Request;
 
 class FeedController extends Controller
 {
@@ -17,7 +13,7 @@ class FeedController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $followingUserIds = Auth::user()->following()->pluck('follow_id');
@@ -30,7 +26,7 @@ class FeedController extends Controller
             ->get();
 
         $items = [];
-        foreach($followingMedia as $userMedia) {
+        foreach ($followingMedia as $userMedia) {
             $media = getMediaByIds([$userMedia->media_id])[0];
 
             $followingName = getUserDisplayName($userMedia->user_id);
@@ -47,11 +43,11 @@ class FeedController extends Controller
         }
 
         //update activity feed last check
-        Cache::forever(Auth::user()->id . "_activity_last_check", date("Y-m-d H:i:s"));
+        Cache::forever(Auth::user()->id.'_activity_last_check', date('Y-m-d H:i:s'));
 
         return view('user.feed', [
             'items' => $items,
-            'followingCount' => count($followingUserIds)
+            'followingCount' => count($followingUserIds),
         ]);
     }
 }

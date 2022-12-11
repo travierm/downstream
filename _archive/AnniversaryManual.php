@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Mail;
-use App\User;
 use App\Mail\JoinDateAnniversary;
+use App\User;
 use Illuminate\Console\Command;
+use Mail;
 
 class AnniversaryManual extends Command
 {
@@ -42,27 +42,27 @@ class AnniversaryManual extends Command
     {
         $userIds = $this->ask("User ID's to use?");
 
-        $users = User::whereIn('id', explode(",", $userIds))
+        $users = User::whereIn('id', explode(',', $userIds))
             ->get();
 
-        if(!$users) {
-            $this->error("No users found!");
+        if (! $users) {
+            $this->error('No users found!');
             exit;
         }
-        
+
         $headers = array_keys($users->toArray()[0]);
         $this->table($headers, $users->toArray());
 
-        $confirmed = $this->confirm("Confirm to send Anniversary emails to these users");
-        if(!$confirmed) {
-            $this->info("stopped");
+        $confirmed = $this->confirm('Confirm to send Anniversary emails to these users');
+        if (! $confirmed) {
+            $this->info('stopped');
             exit;
         }
 
-        $this->info("Sending out " . count($users) . " anniversary emails for today " . date("Y-m-d"));
+        $this->info('Sending out '.count($users).' anniversary emails for today '.date('Y-m-d'));
 
-        foreach($users as $user) {
-            $this->info("Sending anniversary email for " . $user->email);
+        foreach ($users as $user) {
+            $this->info('Sending anniversary email for '.$user->email);
 
             Mail::to($user)->send(new JoinDateAnniversary($user));
         }

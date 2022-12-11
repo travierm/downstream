@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\PlaylistItem;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Playlist extends Model
 {
@@ -13,7 +12,7 @@ class Playlist extends Model
     protected $fillable = [
         'name',
         'private',
-        'created_by'
+        'created_by',
     ];
 
     public function getItemCount()
@@ -21,14 +20,15 @@ class Playlist extends Model
         return PlaylistItem::where('playlist_id', $this->id)->count();
     }
 
-    public static function findOrCreate($userId, $name) {
+    public static function findOrCreate($userId, $name)
+    {
         trim($name);
 
         $playlist = self::where([
             'name' => $name,
-            'created_by' => $userId
+            'created_by' => $userId,
         ])->first();
-        
-        return ($playlist ? $playlist : new static);
+
+        return $playlist ? $playlist : new static;
     }
 }

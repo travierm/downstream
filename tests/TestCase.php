@@ -9,7 +9,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function setUp(): Void
+    protected function setUp(): void
     {
         global $setupAlreadyRan;
         /**
@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         $this->withoutExceptionHandling();
 
-        if (!$setupAlreadyRan) {
+        if (! $setupAlreadyRan) {
             $this->runOnce();
         }
 

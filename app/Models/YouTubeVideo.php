@@ -2,51 +2,50 @@
 
 namespace App\Models;
 
-use Auth;
 use App\UserCollection;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class YouTubeVideo extends Model
 {
-  public $table = "youtube_videos";
+    public $table = 'youtube_videos';
 
-  public static function cleanSearchResults($videoIds)
-  {
-    $results = [];
-    foreach($videoIds as $vid)
+    public static function cleanSearchResults($videoIds)
     {
-      $result = new \stdClass();
-      $video = self::findByVID($vid);
+        $results = [];
+        foreach ($videoIds as $vid) {
+            $result = new \stdClass();
+            $video = self::findByVID($vid);
 
-      $result->imported = false;
-      $result->collected = false;
-      $result->vid = $vid;
-      if($video) {
-        $result->imported = true;
-        $result->collected = UserCollection::didLikeVideo($video->id);
-        $result->id = $video->id;
-      }else{
-        $result->id = uniqid();
-      }
+            $result->imported = false;
+            $result->collected = false;
+            $result->vid = $vid;
+            if ($video) {
+                $result->imported = true;
+                $result->collected = UserCollection::didLikeVideo($video->id);
+                $result->id = $video->id;
+            } else {
+                $result->id = uniqid();
+            }
 
-      $results[] = $result;
+            $results[] = $result;
+        }
+
+        return $results;
     }
 
-    return $results;
-  }
+    public static function findByVID($vid)
+    {
+        return self::where('vid', $vid)->first();
+    }
 
-  public static function findByVID($vid)
-  {
-    return self::where('vid', $vid)->first();
-  }
+    public static function isDuplicate($vid)
+    {
+        return self::where('vid', $vid)->exists();
+    }
 
-  public static function isDuplicate($vid)
-  {
-    return self::where('vid', $vid)->exists();
-  }
-
-  public static function getUserVideos()
-  {
-    return self::where('user_id', Auth::user()->id)->get();
-  }
+    public static function getUserVideos()
+    {
+        return self::where('user_id', Auth::user()->id)->get();
+    }
 }

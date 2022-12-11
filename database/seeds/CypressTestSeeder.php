@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class CypressTestSeeder extends Seeder
 {
@@ -16,9 +16,8 @@ class CypressTestSeeder extends Seeder
      */
     public function run()
     {
-
         $userId = DB::table('users')->where('email', 'test@gmail.com')->pluck('id')->first();
-        if(!$userId) {
+        if (! $userId) {
             $userId = DB::table('users')->insertGetId([
                 'display_name' => Str::random(10),
                 'email' => 'test@gmail.com',
@@ -29,7 +28,7 @@ class CypressTestSeeder extends Seeder
         }
 
         $mediaId = DB::table('media')->where('index', 'ppSY98RGyBU')->pluck('id')->first();
-        if(!$mediaId) {
+        if (! $mediaId) {
             $mediaId = DB::table('media')->insertGetId([
                 'index' => 'ppSY98RGyBU',
                 'type' => 'youtube',
@@ -37,13 +36,13 @@ class CypressTestSeeder extends Seeder
                 'origin' => 'youtube#search',
                 'title' => 'Kodak Black - Calling My Spirit',
                 'thumbnail' => 'https://i.ytimg.com/vi/8kUNIXRY9io/sddefault.jpg',
-                'user_id' => $userId
+                'user_id' => $userId,
             ]);
-        }    
+        }
 
         DB::table('user_media')->insert([
             'user_id' => $userId,
-            'media_id' => $mediaId
+            'media_id' => $mediaId,
         ]);
     }
 }

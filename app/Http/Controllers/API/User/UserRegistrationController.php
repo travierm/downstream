@@ -26,16 +26,16 @@ class UserRegistrationController extends Controller
         $inviteCode = $input['invite_code'];
 
         // Check that invite code is valid
-        if (!UserInviteCode::codeIsValid($inviteCode)) {
+        if (! UserInviteCode::codeIsValid($inviteCode)) {
             return response()->json([
-                'message' => "Invalid invite code",
+                'message' => 'Invalid invite code',
             ], 400);
         }
 
         $dupeUser = User::where('email', $email)->exists();
         if ($dupeUser) {
             return response()->json([
-                'message' => "Invalid email or account already exists",
+                'message' => 'Invalid email or account already exists',
             ], 400);
         }
 
@@ -48,9 +48,9 @@ class UserRegistrationController extends Controller
             'api_token' => Str::random(60),
         ]);
 
-        if (!$user) {
+        if (! $user) {
             return response()->json([
-                'message' => "Failed to create user account",
+                'message' => 'Failed to create user account',
             ], 500);
         }
 
@@ -60,7 +60,7 @@ class UserRegistrationController extends Controller
         UserInviteCode::useInvite($user->id, $inviteCode);
 
         return response()->json([
-            'message' => "Succesfully created your account!",
+            'message' => 'Succesfully created your account!',
         ], 200);
     }
 
@@ -68,18 +68,18 @@ class UserRegistrationController extends Controller
     {
         $email = $request->input('email');
         $textResponse = $request->input('textResponse');
-        $textQuestion = "what kind of music do you like?";
+        $textQuestion = 'what kind of music do you like?';
 
         if (UserWaitList::emailAlreadySignedUp($email)) {
             return response()->json([
-                'message' => "You have already joined the waiting list",
+                'message' => 'You have already joined the waiting list',
             ], 400);
         }
 
         UserWaitList::createSignup($email, $textQuestion, $textResponse);
 
         return response()->json([
-            'message' => "You have successfully joined the waiting list!",
+            'message' => 'You have successfully joined the waiting list!',
         ], 200);
     }
 }

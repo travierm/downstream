@@ -15,7 +15,7 @@ function lc(array $context = []): LogContext
 
 function superdd(...$vars)
 {
-    if (!in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && !headers_sent()) {
+    if (! in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && ! headers_sent()) {
         header('Access-Control-Allow-Origin: *');
         header('HTTP/1.1 500 Internal Server Error');
     }

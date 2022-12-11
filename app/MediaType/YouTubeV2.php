@@ -2,11 +2,11 @@
 
 namespace App\MediaType;
 
-use Cache;
-use DateTime;
-use DateInterval;
 use App\Media;
 use App\UserMedia;
+use Cache;
+use DateInterval;
+use DateTime;
 use YouTubeService;
 
 class YouTubeV2
@@ -29,7 +29,7 @@ class YouTubeV2
         foreach ($videos as $video) {
             $test = YouTubeService::getVideoInfo($video->index);
 
-            if (!$test) {
+            if (! $test) {
                 $ids[] = $video->index;
             }
         }
@@ -45,7 +45,7 @@ class YouTubeV2
         $media = Media::find($mediaId);
         $video = YouTubeService::getVideoInfo($videoId);
 
-        if (!$video or !$media) {
+        if (! $video or ! $media) {
             return false;
         }
 
@@ -78,7 +78,7 @@ class YouTubeV2
     {
         $results = self::search($query, 1);
 
-        if (!$results) {
+        if (! $results) {
             return false;
         }
 
@@ -95,14 +95,14 @@ class YouTubeV2
     /**
      * Discover action made by user, import a video into the main media table
      *
-     * @param integer $userId
-     * @param string $videoId
-     * @param array $meta
+     * @param  int  $userId
+     * @param  string  $videoId
+     * @param  array  $meta
      */
     public static function discover($userId, $videoId, $meta = [])
     {
         $video = YouTubeService::getVideoInfo($videoId);
-        if (!$video) {
+        if (! $video) {
             return false;
         }
 
@@ -123,17 +123,17 @@ class YouTubeV2
         $meta = json_encode($meta);
 
         $media = Media::firstOrCreate([
-          'origin' => 'youtube#search',
-          'type' => 'youtube',
-          'subtype' => 'video',
-          'index' => $videoId,
-          'user_id' => $userId,
-          'meta' => $meta
+            'origin' => 'youtube#search',
+            'type' => 'youtube',
+            'subtype' => 'video',
+            'index' => $videoId,
+            'user_id' => $userId,
+            'meta' => $meta,
         ]);
 
         $userMedia = UserMedia::firstOrCreate([
-          'media_id' => $media->id,
-          'user_id' => $userId
+            'media_id' => $media->id,
+            'user_id' => $userId,
         ]);
 
         return true;
@@ -141,21 +141,22 @@ class YouTubeV2
 
     /**
      * Search YouTube using API service
-     * @param string $query
-     * @param integer $limit
-    */
+     *
+     * @param  string  $query
+     * @param  int  $limit
+     */
     public static function search($query, $limit = 8)
     {
-        $limit +=1;
+        $limit += 1;
 
         $results = YouTubeService::search($query, $limit);
-        if (!$results) {
+        if (! $results) {
             return false;
         }
 
         $results = collect($results);
         $results = $results->filter(function ($row) {
-            return (!@is_null($row->id->videoId));
+            return ! @is_null($row->id->videoId);
         });
 
         /*$videoIds = array_map(function($row) {
@@ -167,16 +168,16 @@ class YouTubeV2
 
     public static function searchWithDuration($query, $limit = 8)
     {
-        $limit +=1;
+        $limit += 1;
 
         $results = YouTubeService::search($query, $limit);
-        if (!$results) {
+        if (! $results) {
             return false;
         }
 
         $results = collect($results);
         $results = $results->filter(function ($row) {
-            return (!@is_null($row->id->videoId));
+            return ! @is_null($row->id->videoId);
         });
 
         /*$videoIds = array_map(function($row) {
@@ -188,21 +189,22 @@ class YouTubeV2
 
     /**
      * Search YouTube for video using query, Uses searchVideo instead of search api method
-     * @param string $query
-     * @param integer $limit
+     *
+     * @param  string  $query
+     * @param  int  $limit
      */
     public static function searchVideos($query, $limit)
     {
         $limit += 1;
 
         $results = YouTubeService::searchVideos($query, $limit);
-        if (!$results) {
+        if (! $results) {
             return false;
         }
 
         $results = collect($results);
         $results = $results->filter(function ($row) {
-            return (!@is_null($row->id->videoId));
+            return ! @is_null($row->id->videoId);
         });
 
         /*$videoIds = array_map(function($row) {

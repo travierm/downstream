@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class RemoveMediaMetaColumn extends Migration
@@ -13,7 +12,7 @@ class RemoveMediaMetaColumn extends Migration
      */
     public function up()
     {
-        Schema::table('media', function($table) {
+        Schema::table('media', function ($table) {
             $table->dropColumn('meta');
         });
     }
@@ -25,7 +24,7 @@ class RemoveMediaMetaColumn extends Migration
      */
     public function down()
     {
-        Schema::table('media', function($table) {
+        Schema::table('media', function ($table) {
             $table->json('meta');
         });
     }

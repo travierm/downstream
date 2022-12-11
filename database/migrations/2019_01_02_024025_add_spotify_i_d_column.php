@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddSpotifyIDColumn extends Migration
 {
@@ -13,9 +13,9 @@ class AddSpotifyIDColumn extends Migration
      */
     public function up()
     {
-        if(!Schema::hasColumn('media_meta', 'spotify_id')) {
+        if (! Schema::hasColumn('media_meta', 'spotify_id')) {
             Schema::table('media_meta', function (Blueprint $table) {
-                $table->string('spotify_id')->nullable()->after("raw");
+                $table->string('spotify_id')->nullable()->after('raw');
             });
         }
     }

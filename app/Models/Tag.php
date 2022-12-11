@@ -8,11 +8,11 @@ class Tag extends Model
 {
     protected $fillable = ['tag_id', 'media_id'];
 
-    public static function firstOrCreate($name) 
+    public static function firstOrCreate($name)
     {
         $obj = static::where('name', $name)->first();
 
-        if(!$obj) {
+        if (! $obj) {
             $obj = new static;
             $obj->name = static::formatName($name);
             $obj->save();
@@ -21,7 +21,7 @@ class Tag extends Model
         return $obj;
     }
 
-    private static function formatName($name) 
+    private static function formatName($name)
     {
         return strtolower($name);
     }

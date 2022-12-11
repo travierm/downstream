@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Media;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class MediaController extends Controller
 {
@@ -13,15 +13,15 @@ class MediaController extends Controller
         $videoId = $request->videoId;
         $mediaItem = Media::where('index', $videoId)->first();
 
-        if(!$mediaItem) {
+        if (! $mediaItem) {
             return response()->json([
                 'message' => 'Unable to find media by video_id',
-                'videoId' => $videoId
+                'videoId' => $videoId,
             ], 500);
         }
 
         return response()->json([
-            'item' => $mediaItem
+            'item' => $mediaItem,
         ], 200);
     }
 }

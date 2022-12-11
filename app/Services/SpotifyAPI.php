@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
-use SpotifyWebAPI\Session;
 use App\Models\UserSpotifyToken;
-use Exception;
+use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifyAPI
 {
     private static $booted = false;
+
     private static Session $session;
+
     private static ?SpotifyWebAPI $api = null;
 
     private static $scopes = [
@@ -24,7 +25,7 @@ class SpotifyAPI
     public static function getAuthorizeUrl(): string
     {
         $session = self::getSession();
-        if (!$session) {
+        if (! $session) {
             return false;
         }
 
@@ -32,7 +33,7 @@ class SpotifyAPI
 
         $options = [
             'scope' => self::$scopes,
-            'state' => $state
+            'state' => $state,
         ];
 
         return $session->getAuthorizeUrl($options);
@@ -40,7 +41,7 @@ class SpotifyAPI
 
     public static function getSession(): Session
     {
-        if (!self::$booted) {
+        if (! self::$booted) {
             self::boot();
         }
 
@@ -74,7 +75,7 @@ class SpotifyAPI
         $newRefreshToken = $session->getRefreshToken();
 
         if ($token->access_token !== $newAccessToken) {
-            echo "updating token";
+            echo 'updating token';
             $token->access_token = $newAccessToken;
             $token->refresh_token = $newRefreshToken;
             $token->save();
@@ -88,13 +89,12 @@ class SpotifyAPI
         return self::$api ? self::$api : self::boot();
     }
 
-
     private static function boot(): SpotifyWebAPI
     {
         $clientId = env('SPOTIFY_CLIENT_ID');
         $clientSecret = env('SPOTIFY_CLIENT_SECRET');
 
-        if (!$clientId or !$clientSecret) {
+        if (! $clientId or ! $clientSecret) {
             throw \Exception('Missing Spotify secrets');
         }
 

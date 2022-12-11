@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use DB;
 use App\User;
+use DB;
 use Illuminate\Console\Command;
 
 class UserCount extends Command
@@ -39,7 +39,7 @@ class UserCount extends Command
      */
     public function handle()
     {
-      $this->info("Total Users " . User::count());
-      $this->info("Joined today " . User::whereDate('created_at', DB::raw('NOW()'))->count());
+        $this->info('Total Users '.User::count());
+        $this->info('Joined today '.User::whereDate('created_at', DB::raw('NOW()'))->count());
     }
 }

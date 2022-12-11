@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\GlobalQueue;
+use Illuminate\Console\Command;
 
 class flushGlobalQueue extends Command
 {

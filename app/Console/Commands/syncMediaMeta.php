@@ -2,15 +2,10 @@
 
 namespace App\Console\Commands;
 
-
-use DB;
 use App\Media;
 use App\MediaMeta;
-use App\Album;
-use App\Artist;
 use App\MediaTag;
 use App\Tag;
-
 use Illuminate\Console\Command;
 
 class syncMediaMeta extends Command
@@ -46,16 +41,16 @@ class syncMediaMeta extends Command
      */
     public function handle()
     {
-        $this->info("starting sync...");
+        $this->info('starting sync...');
 
-        $items = Media::whereNotIn('id', function($query) {
-            $query->select("media_id")
-                ->from("media_meta");
+        $items = Media::whereNotIn('id', function ($query) {
+            $query->select('media_id')
+                ->from('media_meta');
         })->get();
 
-        $this->info("syncing " . count($items) . " items with new meta tables");
+        $this->info('syncing '.count($items).' items with new meta tables');
 
-        foreach($items as $media) {
+        foreach ($items as $media) {
             $meta = $media->getMeta();
 
             //save new meta row
@@ -65,17 +60,18 @@ class syncMediaMeta extends Command
             $mediaMeta->thumbnail = $meta->thumbnail;
             $didSave = $mediaMeta->save();
 
-            if(!$didSave) {
-                $this->error("Could not create meta for " . $meta->title);
+            if (! $didSave) {
+                $this->error('Could not create meta for '.$meta->title);
+
                 continue;
-            }else{
-                $this->info("synced meta for " . $meta->title);
+            } else {
+                $this->info('synced meta for '.$meta->title);
             }
 
             //create tags
-            if(@$meta->tags) {
-                $this->info("adding " . count($meta->tags) . " tags");
-                foreach($meta->tags as $tagName) {
+            if (@$meta->tags) {
+                $this->info('adding '.count($meta->tags).' tags');
+                foreach ($meta->tags as $tagName) {
                     $tag = Tag::firstOrCreate($tagName);
 
                     //create meta => tag reference
@@ -83,7 +79,6 @@ class syncMediaMeta extends Command
                     $reference = MediaTag::firstOrCreate($tag->id, $media->id);
                 }
             }
-           
         }
     }
 }

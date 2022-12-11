@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Hash;
 use App\Models\User;
+use Hash;
 use Illuminate\Console\Command;
 
 class UserPassword extends Command
@@ -41,35 +41,34 @@ class UserPassword extends Command
     {
         $userId = $this->argument('userId');
 
-
         $user = User::find($userId);
-        if(!$user) {
+        if (! $user) {
             $this->error("Could not find user by id $userId");
+
             return false;
         }
 
         $this->info("Changing passsword for $user->display_name");
         $confirmedPassword = false;
         do {
-
             $password = $this->secret('New password?');
             $confirmPassword = $this->secret('Confirm new password?');
 
-            if($confirmPassword === $password) {
-                $this->info("Password matched!");
+            if ($confirmPassword === $password) {
+                $this->info('Password matched!');
                 $confirmedPassword = true;
-            }else{
-                $this->error("Passwords do not match!");
+            } else {
+                $this->error('Passwords do not match!');
             }
-        } while($confirmedPassword == false);
+        } while ($confirmedPassword == false);
 
-        if($this->confirm("Are you sure you want to change $user->display_name password?")) {
+        if ($this->confirm("Are you sure you want to change $user->display_name password?")) {
             $user->password = Hash::make($password);
             $user->save();
 
-            $this->info("Password changed!");
-        }else{
-            $this->info("Doing nothing.");
+            $this->info('Password changed!');
+        } else {
+            $this->info('Doing nothing.');
         }
     }
 }
