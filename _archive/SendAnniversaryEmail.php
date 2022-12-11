@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use DB;
-use Mail;
-use App\User;
 use App\Mail\JoinDateAnniversary;
+use App\User;
+use DB;
 use Illuminate\Console\Command;
+use Mail;
 
 class SendAnniversaryEmail extends Command
 {
@@ -43,26 +43,25 @@ class SendAnniversaryEmail extends Command
     {
         $user = User::find(1);
 
-        $currentDay = Date("d");
-        $currentMonth = Date("m");
-        $lastYear = Date("Y") - 1;
-        $todayLastYear = date("Y-m-d", strtotime("-1 year"));
+        $currentDay = date('d');
+        $currentMonth = date('m');
+        $lastYear = date('Y') - 1;
+        $todayLastYear = date('Y-m-d', strtotime('-1 year'));
 
-        $users = User::where(DB::raw("DAY(created_at)"), $currentDay)
-            ->where(DB::raw("MONTH(created_at)"), $currentMonth)
-            ->where(DB::raw("YEAR(created_at)"), "<=", $lastYear)
+        $users = User::where(DB::raw('DAY(created_at)'), $currentDay)
+            ->where(DB::raw('MONTH(created_at)'), $currentMonth)
+            ->where(DB::raw('YEAR(created_at)'), '<=', $lastYear)
             ->get();
 
-        if($users) {
-            $this->info("Sending out " . count($users) . " anniversary emails for today " . date("Y-m-d"));
-        }else{
-            $this->info("No user anniversary emails for today " . date("Y-m-d"));
+        if ($users) {
+            $this->info('Sending out '.count($users).' anniversary emails for today '.date('Y-m-d'));
+        } else {
+            $this->info('No user anniversary emails for today '.date('Y-m-d'));
             exit;
         }
-        
 
-        foreach($users as $user) {
-            $this->info("Sending anniversary email for " . $user->email);
+        foreach ($users as $user) {
+            $this->info('Sending anniversary email for '.$user->email);
 
             Mail::to($user)->send(new JoinDateAnniversary($user));
         }

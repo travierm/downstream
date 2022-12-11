@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Models\UserSpotifyToken;
 use App\Repos\SpotifyRepo;
+use App\Services\Spotify\SpotifySyncService;
 use App\Services\SpotifyAPI;
 use Illuminate\Http\Request;
-use App\Models\UserSpotifyToken;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use App\Services\Spotify\SpotifySyncService;
+use Illuminate\Support\Facades\Auth;
 
 class SpotifyController extends Controller
 {
@@ -28,7 +28,7 @@ class SpotifyController extends Controller
             $this->spotifySyncService->syncByToken($spotifyToken);
         } catch (\Exception $e) {
             $lc->error('failed to complete spotify sync', [
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
 
             throw $e;
@@ -94,18 +94,18 @@ class SpotifyController extends Controller
     {
         $userId = Auth::user()->id;
 
-        if (!$userId) {
+        if (! $userId) {
             return response()->json([
                 'code' => 400,
-                'message' => "Bad user_id"
+                'message' => 'Bad user_id',
             ]);
         }
 
-        UserSpotifyToken::where("user_id", $userId)->delete();
+        UserSpotifyToken::where('user_id', $userId)->delete();
 
         return response()->json([
             'code' => 200,
-            'message' => "Successfully disabled access to Spotify"
+            'message' => 'Successfully disabled access to Spotify',
         ]);
     }
 }

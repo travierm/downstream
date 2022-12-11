@@ -8,31 +8,24 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": ">=7.3.0",
-    "asvae/laravel-api-tester": "^2.0",
+    "php": ">=8.0.2",
     "cumulati/monolog-context": "^2.0",
     "doctrine/dbal": "^3.3",
-    "fideloper/proxy": "~4.0",
-    "fruitcake/laravel-cors": "^2.0",
-    "guzzlehttp/guzzle": "^7.3",
-    "jwilsson/spotify-web-api-php": "^4.3",
-    "ksubileau/color-thief-php": "^1.4",
-    "laravel/framework": "^8.83",
+    "fruitcake/laravel-cors": "^3.0",
+    "guzzlehttp/guzzle": "^7.2",
+    "jwilsson/spotify-web-api-php": "5.4.0",
+    "laravel/framework": "^9.0",
     "laravel/helpers": "^1.2",
-    "laravel/sanctum": "^2.8",
-    "laravel/tinker": "^2.0",
-    "laravel/ui": "^3.0",
-    "league/fractal": "^0.19.2",
-    "madcoda/php-youtube-api": "^1.2",
-    "rap2hpoutre/laravel-log-viewer": "^1.6",
-    "symfony/process": "^5.2"
+    "laravel/sanctum": "^3.0",
+    "laravel/tinker": "^2.7",
+    "madcoda/php-youtube-api": "^1.2.6"
   },
   "require-dev": {
-    "barryvdh/laravel-debugbar": "^3.1",
-    "filp/whoops": "~2.0",
     "fakerphp/faker": "^1.14.0",
+    "laravel/pint": "^1.2",
     "mockery/mockery": "1.4.2",
-    "phpunit/phpunit": "^9.0"
+    "nunomaduro/collision": " ^6.1",
+    "phpunit/phpunit": "^9.5.10"
   },
   "autoload": {
     "files": [

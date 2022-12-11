@@ -2,10 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use View;
 use Cache;
 use Closure;
-
+use View;
 
 class UpdateActivityCount
 {
@@ -17,10 +16,10 @@ class UpdateActivityCount
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
+    {
         $userId = @$request->user()->id;
-        if(@$userId) {
-            $lastCheck = Cache::get($userId . "_activity_last_check", false);
+        if (@$userId) {
+            $lastCheck = Cache::get($userId.'_activity_last_check', false);
 
             $count = $request->user()->getActivityFeedCount($lastCheck);
 

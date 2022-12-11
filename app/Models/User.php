@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use DB;
-use Auth;
-use Hash;
 use App\Theme;
 use App\UserLike;
 use App\YouTubeVideo;
-use App\Models\Follow;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
+use Auth;
+use DB;
+use Hash;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -41,7 +40,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'has_spotify_connection'
+        'has_spotify_connection',
     ];
 
     public function getHasSpotifyConnectionAttribute()
@@ -75,12 +74,13 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return ($this->type == 'admin');
+        return $this->type == 'admin';
     }
 
     public function getNavDisplayName()
     {
         $name = $this->display_name;
+
         return $name;
     }
 
@@ -132,7 +132,7 @@ class User extends Authenticatable
     {
         $themeValue = @$this->getSettings()->theme[$key];
 
-        if (!$themeValue) {
+        if (! $themeValue) {
             return false;
         }
 
@@ -150,7 +150,7 @@ class User extends Authenticatable
 
     public function getSettings()
     {
-        if (!$this->settings) {
+        if (! $this->settings) {
             $this->setDefaultSettings();
         }
 

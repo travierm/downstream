@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-use SpotifyWebAPI\Session;
-use SpotifyWebAPI\SpotifyWebAPI;
 use Illuminate\Support\ServiceProvider;
 
 class SpotifyServiceProvider extends ServiceProvider
-{   
+{
     //use when needed
     protected $defer = false;
+
     /**
      * Bootstrap services.
      *
@@ -27,8 +26,7 @@ class SpotifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind("App\Service\Spotify", function($app) {
-
+        $this->app->bind("App\Service\Spotify", function ($app) {
             return $api;
         });
     }

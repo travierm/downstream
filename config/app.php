@@ -1,5 +1,4 @@
 <?php
-use App\Providers\YouTubeAPIServiceProvider;
 
 return [
 
@@ -125,9 +124,6 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
-
-    // Git Webhook Deploy Secret
-    'deploy_secret' => env('APP_DEPLOY_SECRET'),
     'last_fm_api' => env('LAST_FM_API'),
 
     /*
@@ -173,7 +169,6 @@ return [
          * Package Service Providers...
          */
         Madcoda\Youtube\YoutubeServiceProviderLaravel5::class,
-        Asvae\ApiTester\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -184,7 +179,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SpotifyServiceProvider::class,
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class
     ],
 
     /*

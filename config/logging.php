@@ -1,8 +1,8 @@
 <?php
 
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
-use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\SyslogUdpHandler;
 
 return [

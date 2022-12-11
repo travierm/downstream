@@ -42,17 +42,18 @@ class FilterRunner extends Command
     public function handle()
     {
         $filters = DB::table('title_filters')->pluck('value');
-        if(!$filters) {
-            $this->error("No filters found");
+        if (! $filters) {
+            $this->error('No filters found');
+
             return;
         }
 
-        $this->info("Found " . count($filters) . " active filters");
+        $this->info('Found '.count($filters).' active filters');
         $media = Media::all();
 
-        foreach($media as $item) {
+        foreach ($media as $item) {
             $title = @$item->title;
-            if(!$title) {
+            if (! $title) {
                 continue;
             }
 
@@ -60,31 +61,30 @@ class FilterRunner extends Command
 
             $mediaMeta = MediaMeta::find($item->id);
 
-            if($title !== $filteredTitle || ($mediaMeta && $mediaMeta->title !== $filteredTitle)) {
-
+            if ($title !== $filteredTitle || ($mediaMeta && $mediaMeta->title !== $filteredTitle)) {
                 $success = Media::where('id', $item->id)->update([
-                    'title' => $filteredTitle
+                    'title' => $filteredTitle,
                 ]);
 
                 $mediaMeta = MediaMeta::find($item->id);
-                if($mediaMeta) {
+                if ($mediaMeta) {
                     $mediaMeta->title = $filteredTitle;
                     $mediaMeta->save();
                 }
-            
-                if($success) {
+
+                if ($success) {
                     $this->info("updated {$item->id} $title => $filteredTitle");
                 }
             }
         }
 
-        $this->info("doing temp items now...");
+        $this->info('doing temp items now...');
         $tempItems = MediaTempItem::all();
-        foreach($tempItems as $item) {
+        foreach ($tempItems as $item) {
             $title = $item->title;
             $filteredTitle = $this->applyFilters($title, $filters);
 
-            if($title !== $filteredTitle) {
+            if ($title !== $filteredTitle) {
                 $item->title = trim($filteredTitle);
                 $item->save();
                 $this->info("updated $title => $filteredTitle");
@@ -94,8 +94,8 @@ class FilterRunner extends Command
 
     private function applyFilters($value, $filters)
     {
-        foreach($filters as $filter) {
-            $value = str_replace($filter, "", $value);
+        foreach ($filters as $filter) {
+            $value = str_replace($filter, '', $value);
         }
 
         return $value;

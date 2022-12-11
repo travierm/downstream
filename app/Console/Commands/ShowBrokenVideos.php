@@ -41,18 +41,18 @@ class ShowBrokenVideos extends Command
     {
         $ids = YouTubeV2::getBrokenVideoIds();
 
-        if(!$ids) {
-            $this->info("No broken videos!");
+        if (! $ids) {
+            $this->info('No broken videos!');
         }
 
         $videos = Media::select(['meta', 'id', 'index'])->whereIn('index', $ids)->get();
 
         $formatted = [];
-        foreach($videos as $video) {
+        foreach ($videos as $video) {
             $formatted[] = [
                 'title' => $video->getMeta()->title,
                 'id' => $video->id,
-                'vid' => $video->index
+                'vid' => $video->index,
             ];
         }
         $this->table(['Title', 'Media ID', 'Video ID'], $formatted);

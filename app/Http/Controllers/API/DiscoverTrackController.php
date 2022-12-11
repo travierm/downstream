@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Media;
 use App\Http\Controllers\Controller;
+use App\Models\Media;
 use App\Services\Discovery\SimilarTracks;
-
-use Illuminate\Http\Request;
 
 class DiscoverTrackController extends Controller
 {
@@ -16,12 +14,12 @@ class DiscoverTrackController extends Controller
         $media = Media::where('index', $videoId)->first();
         $lc->info('similarTracks request started', [
             'videoId' => $videoId,
-            'mediaId' => $media?->id
+            'mediaId' => $media?->id,
         ]);
 
-        if (!$media) {
+        if (! $media) {
             return response()->json([
-                'message' => 'Bad video id given'
+                'message' => 'Bad video id given',
             ], 500);
         }
 
@@ -34,7 +32,7 @@ class DiscoverTrackController extends Controller
             throw $e;
 
             return response()->json([
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
 

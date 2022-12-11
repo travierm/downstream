@@ -41,52 +41,54 @@ class AutofixVideos extends Command
     {
         $ids = YouTubeV2::getBrokenVideoIds();
 
-        if(!$ids) {
-            $this->info("No broken videos!");
+        if (! $ids) {
+            $this->info('No broken videos!');
+
             return;
         }
 
         $videos = Media::select(['meta', 'id', 'index'])->whereIn('index', $ids)->get();
-        if(count($videos) <= 0) {
-            $this->error("No media could be found for broken video ids!");
+        if (count($videos) <= 0) {
+            $this->error('No media could be found for broken video ids!');
+
             return;
         }
 
         $formatted = [];
-        foreach($videos as $video) {
+        foreach ($videos as $video) {
             $formatted[] = [
                 'title' => $video->getMeta()->title,
                 'id' => $video->id,
-                'vid' => $video->index
+                'vid' => $video->index,
             ];
         }
 
-        $this->info("Broken Videos:");
+        $this->info('Broken Videos:');
         $this->table(['Title', 'Media ID', 'Video ID'], $formatted);
-        $continue = $this->confirm("Attempt Autofix?");
+        $continue = $this->confirm('Attempt Autofix?');
 
-        if(!$continue) {
+        if (! $continue) {
             return;
         }
 
         $results = [];
-        foreach($formatted as $video) {
+        foreach ($formatted as $video) {
             $result = YouTubeV2::searchFirst($video['title']);
-            
-            $info =YouTubeV2::getInfo($result->vid);
 
-            if($info) {
+            $info = YouTubeV2::getInfo($result->vid);
+
+            if ($info) {
                 //found replacement video
-                $this->info("Found Replacement!");
-                $this->error("Broken: " . $video['title']);
-                $this->info("Autofix: " . $info->snippet->title);
+                $this->info('Found Replacement!');
+                $this->error('Broken: '.$video['title']);
+                $this->info('Autofix: '.$info->snippet->title);
 
-                if($this->confirm("Update media for this broken video?")) {
+                if ($this->confirm('Update media for this broken video?')) {
                     $result = YouTubeV2::updateMedia($video['id'], $result->vid);
-                    if($result) {
-                        $this->info("successfully autofixed");
-                    }else{
-                        $this->error("error with trying to autofix");
+                    if ($result) {
+                        $this->info('successfully autofixed');
+                    } else {
+                        $this->error('error with trying to autofix');
                     }
                 }
             }

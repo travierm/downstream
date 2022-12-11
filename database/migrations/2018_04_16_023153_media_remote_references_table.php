@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class MediaRemoteReferencesTable extends Migration
 {
@@ -14,16 +14,16 @@ class MediaRemoteReferencesTable extends Migration
     public function up()
     {
         Schema::create('media_remote_references', function (Blueprint $table) {
-          $table->increments('id');
-          $table->integer('media_id')->references('id')->on('media');
-          $table->string('source');
-          $table->string('source_id');
-          $table->string('index', 150)->unqiue();
-          $table->string('title', 300);
-          $table->string('thumbnail', 500);
-          $table->softDeletes();
-          $table->timestamps();
-      });
+            $table->increments('id');
+            $table->integer('media_id')->references('id')->on('media');
+            $table->string('source');
+            $table->string('source_id');
+            $table->string('index', 150)->unqiue();
+            $table->string('title', 300);
+            $table->string('thumbnail', 500);
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**

@@ -40,16 +40,16 @@ class CreateInviteCode extends Command
     {
         $stats = UserInviteCode::getInviteCodeStats();
 
-        $this->info('Active Codes: ' . $stats['activeCodes']);
-        $this->info('Used Codes: ' . $stats['usedCodes']);
+        $this->info('Active Codes: '.$stats['activeCodes']);
+        $this->info('Used Codes: '.$stats['usedCodes']);
 
         $note = $this->ask('Do you have any notes about this invite?');
 
-        if ($this->confirm("Are you sure you want to create an invite code?")) {
+        if ($this->confirm('Are you sure you want to create an invite code?')) {
             $invite = UserInviteCode::createInvite(null, $note);
 
-            $this->info("Invite Code: " . $invite->invite_code);
-            $this->info('Link: ' . env('APP_LINK_URL') . '/register?invite=' . $invite->invite_code);
+            $this->info('Invite Code: '.$invite->invite_code);
+            $this->info('Link: '.env('APP_LINK_URL').'/register?invite='.$invite->invite_code);
         }
     }
 }

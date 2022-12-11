@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use DB;
-use Auth;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Auth;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class FollowerController extends Controller
 {
@@ -18,20 +18,20 @@ class FollowerController extends Controller
 
         if ($authUser->id == $followId) {
             return response()->json([
-                'message' => "Cannot follow yourself"
+                'message' => 'Cannot follow yourself',
             ], 400);
         }
 
-        if($authUser->isFollowing($followId)) {
+        if ($authUser->isFollowing($followId)) {
             return response()->json([
-                'message' => "Already following user"
+                'message' => 'Already following user',
             ], 400);
         }
 
         $followUser = User::find($followId);
-        if(!$followUser) {
+        if (! $followUser) {
             return response()->json([
-                'message' => "Can not follow unknown user"
+                'message' => 'Can not follow unknown user',
             ], 400);
         }
 
@@ -41,11 +41,11 @@ class FollowerController extends Controller
         $followedUser->id = $followUser->id;
         $followedUser->hash = $followUser->hash;
         $followedUser->display_name = $followUser->display_name;
-        $followedUser->guid = "guid_" . Str::random(35);
+        $followedUser->guid = 'guid_'.Str::random(35);
 
         return response()->json([
-            'message' => "You are now following the user",
-            'followedUser' => $followedUser
+            'message' => 'You are now following the user',
+            'followedUser' => $followedUser,
         ], 200);
     }
 
@@ -54,9 +54,9 @@ class FollowerController extends Controller
         $authUser = Auth::user();
         $followId = $request->followId;
 
-        if(!$authUser->isFollowing($followId)) {
+        if (! $authUser->isFollowing($followId)) {
             return response()->json([
-                'message' => "You are not following this user"
+                'message' => 'You are not following this user',
             ], 400);
         }
 
@@ -66,7 +66,7 @@ class FollowerController extends Controller
             ->delete();
 
         return response()->json([
-            'message' => "Unfollowed user"
+            'message' => 'Unfollowed user',
         ], 200);
     }
 
@@ -76,31 +76,31 @@ class FollowerController extends Controller
 
         $user_followers = $authUser->followers()->get();
         $followers = [];
-        foreach($user_followers as $follower) {
+        foreach ($user_followers as $follower) {
             $result = new \stdClass();
             $result->id = $follower->id;
             $result->hash = $follower->hash;
             $result->display_name = $follower->display_name;
-            $result->guid = "guid_" . Str::random(35);
+            $result->guid = 'guid_'.Str::random(35);
 
             $followers[] = $result;
         }
 
         $user_following = $authUser->following()->get();
         $following = [];
-        foreach($user_following as $follower) {
+        foreach ($user_following as $follower) {
             $result = new \stdClass();
             $result->id = $follower->id;
             $result->hash = $follower->hash;
             $result->display_name = $follower->display_name;
-            $result->guid = "guid_" . Str::random(35);
+            $result->guid = 'guid_'.Str::random(35);
 
             $following[] = $result;
         }
 
         return response()->json([
-         'followers' => $followers,
-         'following' => $following,
+            'followers' => $followers,
+            'following' => $following,
         ]);
     }
 }

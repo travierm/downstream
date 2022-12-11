@@ -1,9 +1,8 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
 class AddMediaTableIndexes extends Migration
 {
@@ -18,21 +17,21 @@ class AddMediaTableIndexes extends Migration
             'v-zdjCxnNpE',
             'BU_sKzSbTJk',
             'Qhnaop1cuBE',
-            'ftMnmPC82qM'
+            'ftMnmPC82qM',
         ];
 
-        foreach($duplicateMediaIndexes as $index) {
+        foreach ($duplicateMediaIndexes as $index) {
             DB::statement("DELETE FROM media WHERE `index` = '{$index}' ORDER BY created_at ASC LIMIT 1");
-        }        
+        }
 
-        Schema::table('media', function($table) {
+        Schema::table('media', function ($table) {
             $table->unique('index');
             $table->index('title');
             $table->index('user_id');
             $table->index('spotify_id');
         });
 
-        Schema::table('media_meta', function($table) {    
+        Schema::table('media_meta', function ($table) {
             $table->primary('media_id');
             $table->index('title');
             $table->index('album_id');

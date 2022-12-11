@@ -15,10 +15,11 @@ class _template extends TestCase
 
         parent::setUp();
 
-        if (!$user) {
+        if (! $user) {
             $user = User::factory()->make();
         }
     }
+
     /**
      * A basic feature test example.
      *
@@ -33,6 +34,6 @@ class _template extends TestCase
 
         $jsonData = $response->decodeResponseJson();
 
-        $this->assertGreaterThanOrEqual(3, count($jsonData['results']), "Results returned 3 or more items");
+        $this->assertGreaterThanOrEqual(3, count($jsonData['results']), 'Results returned 3 or more items');
     }
 }

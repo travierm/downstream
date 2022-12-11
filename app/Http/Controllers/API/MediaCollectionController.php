@@ -2,36 +2,37 @@
 
 namespace App\Http\Controllers\API;
 
-use Cache;
+use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\UserMedia;
-use Illuminate\Http\Request;
 use App\Services\YoutubeService;
-use App\Http\Controllers\Controller;
+use Cache;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MediaCollectionController extends Controller
 {
-    public function pushItem(Int $mediaId) {
+    public function pushItem(int $mediaId)
+    {
         $userId = Auth::user()->id;
 
         $item = UserMedia::where('user_id', $userId)
             ->where('media_id', $mediaId)
             ->first();
 
-        if($item) {
+        if ($item) {
             $item->pushed_at = now();
             $item->save();
 
             return response()->json([
                 'mediaId' => $mediaId,
-                'message' => 'Updated item pushed_at date'
+                'message' => 'Updated item pushed_at date',
             ], 200);
         }
 
         return response()->json([
             'mediaId' => $mediaId,
-            'message' => 'Failed to update pushed_at date on item'
+            'message' => 'Failed to update pushed_at date on item',
         ], 500);
     }
 
@@ -43,44 +44,43 @@ class MediaCollectionController extends Controller
      */
     public function postCollectItem(Request $request)
     {
-
         $userId = Auth::user()->id;
         $videoId = $request->videoId;
 
-        if(!$userId || !$videoId) {
+        if (! $userId || ! $videoId) {
             return response()->json([
                 'message' => 'userId or videoId not available',
                 'userId' => $userId,
-                'videoId' => $videoId
+                'videoId' => $videoId,
             ], 500);
         }
 
         $media = Media::where('index', $videoId)->first();
 
-        if(!$media) {
+        if (! $media) {
             $video = YoutubeService::getVideoById($videoId);
 
             // runs another check to make sure media exists
             $media = Media::createFromYoutubeVideo($video, [
-                'user_id' => $userId
+                'user_id' => $userId,
             ]);
 
-            if(!$media) {
+            if (! $media) {
                 return response()->json([
-                    'message' => 'Failed to create media item'
+                    'message' => 'Failed to create media item',
                 ], 500);
             }
         }
 
         $userMediaId = UserMedia::firstOrCreate([
             'media_id' => $media->id,
-            'user_id' => $userId
+            'user_id' => $userId,
         ]);
 
         // Add mediaId to users collection
-        if(!$userMediaId) {
+        if (! $userMediaId) {
             return response()->json([
-                'message' => 'Failed to add media to users collection'
+                'message' => 'Failed to add media to users collection',
             ], 500);
         }
 
@@ -88,11 +88,11 @@ class MediaCollectionController extends Controller
 
         return response()->json([
             'mediaId' => $media->id,
-            'message' => 'successfully collected media item'
+            'message' => 'successfully collected media item',
         ], 200);
     }
 
-    public function removeItemFromCollection(Int $itemId) 
+    public function removeItemFromCollection(int $itemId)
     {
         $userId = Auth::user()->id;
 
@@ -103,15 +103,15 @@ class MediaCollectionController extends Controller
         $this->clearCollectionCache($userId);
 
         return response()->json([
-            'message' => 'removed item from collection'
+            'message' => 'removed item from collection',
         ], 200);
     }
 
     private function clearCollectionCache($userId)
     {
-        $itemHashCacheKey = 'user_collection_items_hash_' . $userId;
-        $collectionCacheKey  = 'user_collection_items_' . $userId;
-        
+        $itemHashCacheKey = 'user_collection_items_hash_'.$userId;
+        $collectionCacheKey = 'user_collection_items_'.$userId;
+
         Cache::forget($itemHashCacheKey);
         Cache::forget($collectionCacheKey);
     }

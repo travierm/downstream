@@ -39,19 +39,20 @@ class AddTitleFilter extends Command
     public function handle()
     {
         $totalFilters = DB::table('title_filters')->count();
-        $this->info($totalFilters . ' active filters');
+        $this->info($totalFilters.' active filters');
 
-        $filterValue = $this->ask("What filter would you like to add?");
+        $filterValue = $this->ask('What filter would you like to add?');
 
         $exists = DB::table('title_filters')->where(DB::raw('BINARY `value`'), $filterValue)->exists();
-        if($exists) {
+        if ($exists) {
             $this->error('Filter already exists');
+
             return;
         }
 
-        if($this->confirm("Add {$filterValue} filter?")) {
+        if ($this->confirm("Add {$filterValue} filter?")) {
             DB::table('title_filters')->insert([
-                'value' => trim($filterValue)
+                'value' => trim($filterValue),
             ]);
 
             $this->call('filter:run');

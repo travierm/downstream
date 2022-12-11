@@ -4,5 +4,8 @@ app-dev:
 api-dev:
 	php artisan serve
 
+pint:
+	./vendor/bin/pint --test
+
 laratail:
 	laratail storage/logs/laravel.log

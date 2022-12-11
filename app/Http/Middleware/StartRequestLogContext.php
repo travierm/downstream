@@ -2,10 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Global\RequestLogContext;
 use Closure;
 use Illuminate\Http\Request;
-use App\Global\RequestLogContext;
-use Illuminate\Support\Facades\Log;
 
 class StartRequestLogContext
 {
@@ -21,7 +20,7 @@ class StartRequestLogContext
         RequestLogContext::startRequestLog([
             'user_id' => $request->user()->id,
             'request_path' => $request->path(),
-            'request_method' => $request->method()
+            'request_method' => $request->method(),
         ]);
 
         RequestLogContext::info('new request');

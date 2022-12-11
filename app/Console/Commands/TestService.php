@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Services\Discovery\LastFM;
 use App\Services\Sources\SpotifyTrack;
+use Illuminate\Console\Command;
 
 class TestService extends Command
 {
@@ -40,7 +40,6 @@ class TestService extends Command
     public function handle()
     {
         $this->info('TEST');
-
 
         $results = LastFM::trackSearch('Panu - Solid Gold');
         //$results = SpotifyTrack::findIdByTitle('SOLID GOLD');

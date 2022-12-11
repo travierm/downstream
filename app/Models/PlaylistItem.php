@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlaylistItem extends Model
 {
@@ -13,7 +13,7 @@ class PlaylistItem extends Model
     protected $fillable = [
         'media_id',
         'created_by',
-        'playlist_id'
+        'playlist_id',
     ];
 
     public static function findOrCreate($userId, $playlistId, $mediaId)
@@ -21,12 +21,12 @@ class PlaylistItem extends Model
         $data = [
             'created_by' => $userId,
             'playlist_id' => $playlistId,
-            'media_id' => $mediaId
+            'media_id' => $mediaId,
         ];
 
         $item = self::where($data)->first();
 
-        if (!$item) {
+        if (! $item) {
             return self::create($data);
         }
 

@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Services;
 
+use App\MediaType\YoutubeVideo;
 use App\Models\Media;
 use App\Models\UserMedia;
-use App\MediaType\YoutubeVideo;
 use Madcoda\Youtube\Facades\Youtube;
 
 class YoutubeService

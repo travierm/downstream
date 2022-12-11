@@ -38,29 +38,31 @@ class UpdateMedia extends Command
      * @return mixed
      */
     public function handle()
-    {   
-        $this->info("Lets update a media item!");
-        $mediaId = $this->ask("Media ID?");
+    {
+        $this->info('Lets update a media item!');
+        $mediaId = $this->ask('Media ID?');
 
         $media = Media::find($mediaId);
 
-        if(!$media) {
-            $this->error("Could not find media by that ID");
+        if (! $media) {
+            $this->error('Could not find media by that ID');
+
             return;
         }
-        $this->info("Found!");
+        $this->info('Found!');
         $this->comment($media->getMeta()->title);
-        $videoId = $this->ask("New Video ID to use for Media?");
+        $videoId = $this->ask('New Video ID to use for Media?');
 
         $res = YouTubeV2::updateMedia($mediaId, $videoId);
 
-        if(!$res) {
-            $this->error("Failed to update media!");
+        if (! $res) {
+            $this->error('Failed to update media!');
+
             return;
         }
 
-        $this->info("Updated media item!");
-        $this->comment("title: " . $media->getMeta()->title);
-        $this->comment('index: ' . $media->index);
+        $this->info('Updated media item!');
+        $this->comment('title: '.$media->getMeta()->title);
+        $this->comment('index: '.$media->index);
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Log\Logger;
 use Cumulati\Monolog\LogContext;
-use Monolog\Handler\StreamHandler;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Log;
-use Monolog\Formatter\LineFormatter;
 use Illuminate\Support\ServiceProvider;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
         // $logger->info('hi');
 
         //$monolog->getHandler()->setFormatter($formatter);
-
 
         LogContext::setDefaultLogger($monolog);
     }

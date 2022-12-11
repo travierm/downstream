@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artist extends Model
 {
-    public static function findOrCreate($name) {
+    public static function findOrCreate($name)
+    {
         trim($name);
 
         $obj = Artist::where('name', $name)->first();
-    
-        if(!$obj) {
+
+        if (! $obj) {
             $obj = new Artist();
             $obj->name = $name;
             $obj->save();

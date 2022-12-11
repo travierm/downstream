@@ -38,8 +38,8 @@ class UserShow extends Command
      */
     public function handle()
     {
-      $id = $this->ask('User ID?');
-      $user = User::where('id', $id)->first();
-      $this->info($user);
+        $id = $this->ask('User ID?');
+        $user = User::where('id', $id)->first();
+        $this->info($user);
     }
 }

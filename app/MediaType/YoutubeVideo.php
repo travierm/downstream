@@ -2,16 +2,20 @@
 
 namespace App\MediaType;
 
+use App\MediaType\Transformer\YoutubeSearchResult;
 use App\Services\Filter;
 use Illuminate\Support\Str;
-use App\MediaType\Transformer\YoutubeSearchResult;
 
 class YoutubeVideo
 {
     public int $mediaId = 0;
+
     public bool $collected = false;
+
     public string $title;
+
     public string $videoId;
+
     public string $thumbnail;
 
     public static function createFromSearchResult($raw): YoutubeVideo
@@ -24,7 +28,7 @@ class YoutubeVideo
 
         $youtubeVideo->videoId = $data['videoId'];
         $youtubeVideo->thumbnail = $data['thumbnail'];
-        $youtubeVideo->guid = "guid_" . Str::random(35);
+        $youtubeVideo->guid = 'guid_'.Str::random(35);
 
         return $youtubeVideo;
     }
