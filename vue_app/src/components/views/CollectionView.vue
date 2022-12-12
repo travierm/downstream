@@ -50,7 +50,7 @@
       v-if="!hasCollectionItems && !showLoadingBar"
       class="justify-center mb-6"
     >
-      <h1>Search for a song you like above to start your collection!</h1>
+      <h3>Search for a song you like above to start your collection!</h3>
     </v-row>
 
     <v-row v-if="!hasCollectionItems && !showLoadingBar" class="justify-center">
