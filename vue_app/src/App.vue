@@ -11,17 +11,17 @@
       <router-view></router-view>
     </v-main>
 
-    <BottomBar v-if="onNonAuthedRoute" />
+    <BottomBar v-if="canShowBottomBar" />
   </v-app>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { fetchInitUserData } from '@/store/events'
 import NavBar from '@/components/Shared/NavBar.vue'
 import PlaylistDrawer from '@/components/PlaylistDrawer'
 import NavDrawer from '@/components/Shared/NavDrawer.vue'
 import BottomBar from '@/components/BottomBar'
+import { fetchInitUserData } from '@/store/events'
 
 export default {
   name: 'App',
@@ -38,6 +38,9 @@ export default {
     }
   },
   computed: {
+    canShowBottomBar() {
+      return !this.onNonAuthedRoute
+    },  
     onNonAuthedRoute() {
       return this.authRoutes.includes(this.route)
     },
