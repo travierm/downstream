@@ -4,7 +4,7 @@
       class="d-flex align-center"
       v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
     >
-      <router-link tag="div" to="/">
+      <router-link to="/" class="unstyled-link">
         <v-toolbar-title class="navbar-brand ds-gradient"
           >downstream</v-toolbar-title
         >

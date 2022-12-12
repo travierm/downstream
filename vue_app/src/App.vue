@@ -11,7 +11,7 @@
       <router-view></router-view>
     </v-main>
 
-    <BottomBar v-if="canShowBottomBar" />
+    <BottomBar v-if="onNonAuthedRoute" />
   </v-app>
 </template>
 
@@ -33,11 +33,13 @@ export default {
     PlaylistDrawer,
   },
   mounted() {
-    fetchInitUserData()
+    if(!this.onNonAuthedRoute) {
+      fetchInitUserData()
+    }
   },
   computed: {
-    canShowBottomBar() {
-      return !this.authRoutes.includes(this.route)
+    onNonAuthedRoute() {
+      return this.authRoutes.includes(this.route)
     },
     ...mapState({
       route: (state) => state.route.path,

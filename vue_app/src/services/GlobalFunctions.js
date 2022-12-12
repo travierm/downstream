@@ -1,3 +1,5 @@
+import packageJson from '../../package.json';
+
 /**
  * Global Functions
  *
@@ -10,7 +12,5 @@ export function generateElementId() {
 }
 
 export function getAppVersion() {
-  const packageJson = require('../../package.json')
-
   return packageJson.version
 }
