@@ -9,3 +9,6 @@ pint:
 
 laratail:
 	laratail storage/logs/laravel.log
+
+build-api:
+	docker build -t ds_api .
