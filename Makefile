@@ -12,3 +12,5 @@ laratail:
 
 build-api:
 	docker build -t ds_api .
+run-api:
+	docker run -d -p 8080:8080 ds_api
