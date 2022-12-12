@@ -1,6 +1,6 @@
 ARG ALPINE_VERSION=3.14
 # FROM alpine:${ALPINE_VERSION}
-FROM php:8.2-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 LABEL Maintainer="Travier Moorlag"
 LABEL Description="Lightweight container for running Laravel API's"
