@@ -13,28 +13,28 @@ RUN apk add --no-cache \
   curl \
   nginx \
   mysql-client \
-  php \
-  php-ctype \
-  php-curl \
-  php-dom \
-  php-fpm \
-  php-gd \
-  php-intl \
-  php-json \
-  php-mbstring \
-  php-mysqli \
-  php-opcache \
-  php-openssl \
-  php-phar \
-  php-session \
-  php-xml \
-  php-xmlreader \
-  php-zlib \
-  php-fileinfo \
-  php-tokenizer \
-  php-xmlwriter \
-  php-pdo \
-  php-pdo_mysql \
+  php81 \
+  php81-ctype \
+  php81-curl \
+  php81-dom \
+  php81-fpm \
+  php81-gd \
+  php81-intl \
+  php81-json \
+  php81-mbstring \
+  php81-mysqli \
+  php81-opcache \
+  php81-openssl \
+  php81-phar \
+  php81-session \
+  php81-xml \
+  php81-xmlreader \
+  php81-zlib \
+  php81-fileinfo \
+  php81-tokenizer \
+  php81-xmlwriter \
+  php81-pdo \
+  php81-pdo_mysql \
   supervisor
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql
@@ -47,8 +47,8 @@ RUN docker-php-ext-enable mysqli
 COPY .deploy/config/nginx.conf /etc/nginx/nginx.conf
 
 # Configure PHP-FPM
-COPY .deploy/config/fpm-pool.conf /etc/php/php-fpm.d/www.conf
-COPY .deploy/config/php.ini /etc/php8/conf.d/custom.ini
+COPY .deploy/config/fpm-pool.conf /etc/php81/php-fpm.d/www.conf
+COPY .deploy/config/php.ini /etc/php81/conf.d/custom.ini
 
 # Configure supervisord
 COPY .deploy/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -72,7 +72,7 @@ RUN composer install --optimize-autoloader --no-interaction --no-progress
 RUN php -v
 
 # Let supervisord start nginx & php-fpm
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf", "--silent"]
 
 # Configure a healthcheck to validate that everything is up&running
 HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping
