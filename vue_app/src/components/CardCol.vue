@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" sm="6" md="6" lg="4" xl="3">
+  <v-col cols="12" sm="6" md="6" lg="3" xl="2">
     <slot></slot>
   </v-col>
 </template>
@@ -11,10 +11,12 @@ export default {
   data: () => {
     return {}
   },
-  mounted() {},
+  mounted() { },
   methods: {},
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+
+</style>
