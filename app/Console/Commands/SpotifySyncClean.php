@@ -77,21 +77,19 @@ class SpotifySyncClean extends Command
                 continue;
             }
 
-            // $this->info("Cleaning " . count($track->items) . " tracks");
-
-            $tracksForTrash = $this->cleanTracks($token->user_id, $track->items);
-
-            $tracks = [
-                'tracks' => $tracksForTrash,
-            ];
-
             try {
+                $tracksForTrash = $this->cleanTracks($token->user_id, $track->items);
+
+                $tracks = [
+                    'tracks' => $tracksForTrash,
+                ];
+
                 $lc->info('deleting '.count($tracksForTrash).' from users playlist'); 
+                
                 $api->deletePlaylistTracks($importPlaylist->id, $tracks);
             } catch(\Exception $e) {
                 $lc->info('failed to delete playlist track:' . $e->getMessage());
             }
-            
         }
     }
 
@@ -121,9 +119,7 @@ class SpotifySyncClean extends Command
 
             //track exists in media and in users collection
             if ($media && $userMedia) {
-                $this->info("Removing $trackSearchQuery from playlist", [
-                    //'track' => $track
-                ]);
+                $this->info("Removing $trackSearchQuery from playlist");
                 $trackTrashcan[] = ['id' => $trackId, 'uri' => $track->track->uri ];
             }
         }
