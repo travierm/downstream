@@ -41,7 +41,11 @@ class SpotifySyncClean extends Command
      */
     public function handle()
     {
+        $lc = lc();
+        $lc->info('starting spotify:sync-clean');
+
         $usersWithTokens = UserSpotifyToken::all();
+        $lc->info('found ' . count($usersWithTokens) . ' users to clean DS Import playlist for');
 
         foreach ($usersWithTokens as $token) {
             $api = SpotifyAPI::getInstanceWithToken($token);
@@ -62,14 +66,14 @@ class SpotifySyncClean extends Command
             }
 
             if (! $importPlaylist) {
-                // $this->info("Could not find DS Import playlist for user:" . $token->user_id);
+                $lc->info("could not find DS Import playlist for user:" . $token->user_id);
                 continue;
             }
 
             $track = $api->getPlaylistTracks($importPlaylist->id);
 
             if (! $track) {
-                // $this->info("No tracks to clean");
+                $lc->info("no tracks to clean");
                 continue;
             }
 
@@ -81,14 +85,11 @@ class SpotifySyncClean extends Command
                 'tracks' => $tracksForTrash,
             ];
 
-            if (count($tracksForTrash) >= 1) {
-                $this->info('Deleting '.count($tracksForTrash).' from users playlist');
-            }
-
             try {
+                $lc->info('deleting '.count($tracksForTrash).' from users playlist'); 
                 $api->deletePlaylistTracks($importPlaylist->id, $tracks);
             } catch(\Exception $e) {
-                $this->info('Failed to delete playlist track:' . $e->getMessage());
+                $lc->info('failed to delete playlist track:' . $e->getMessage());
             }
             
         }
