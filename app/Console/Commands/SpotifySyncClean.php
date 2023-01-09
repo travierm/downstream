@@ -121,8 +121,10 @@ class SpotifySyncClean extends Command
 
             //track exists in media and in users collection
             if ($media && $userMedia) {
-                $this->info("Removing $trackSearchQuery from playlist");
-                $trackTrashcan[] = ['id' => $trackId];
+                $this->info("Removing $trackSearchQuery from playlist", [
+                    'track' => $track
+                ]);
+                $trackTrashcan[] = ['id' => $trackId, 'uri' => $track->track->uri ];
             }
         }
 
