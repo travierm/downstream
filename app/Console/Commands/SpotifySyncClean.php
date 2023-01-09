@@ -85,7 +85,12 @@ class SpotifySyncClean extends Command
                 $this->info('Deleting '.count($tracksForTrash).' from users playlist');
             }
 
-            $api->deletePlaylistTracks($importPlaylist->id, $tracks);
+            try {
+                $api->deletePlaylistTracks($importPlaylist->id, $tracks);
+            } catch(\Exception $e) {
+                $this->info('Failed to delete playlist track:' . $e->getMessage());
+            }
+            
         }
     }
 
