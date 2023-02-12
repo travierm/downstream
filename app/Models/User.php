@@ -75,7 +75,7 @@ class User extends Authenticatable
 
     public function media()
     {
-        return $this->hasMany('App\UserMedia');
+        return $this->hasMany(UserMedia::class);
     }
 
     public function isAdmin()

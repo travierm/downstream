@@ -19,6 +19,9 @@ run-api:
 test:
 	./vendor/phpunit/phpunit/phpunit --colors --testdox --exclude-group youtube
 
+tf:
+	./vendor/phpunit/phpunit/phpunit --colors --testdox --exclude-group youtube --filter "$0"
+
 test-full:
 	composer run test
 

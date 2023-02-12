@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Route::namespace('API')->group(function () {
 
         // Discover
         Route::get('/discover/track/{videoId}', 'DiscoverTrackController@similarTracks');
+
+        // UserController
+        Route::get('/users/active', 'UserController@getActiveUsers');
 
         // User Collection
         Route::get('/collection', 'CollectionController@getCollection');
