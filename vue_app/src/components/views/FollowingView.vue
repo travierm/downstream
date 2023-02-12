@@ -1,6 +1,10 @@
 <template>
-  <v-container fluid>
-    <h1>This feature is under active development</h1>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12">
+        <h1>Active User's of Downstream</h1>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -20,4 +24,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.landingViewContent {
+  text-align: center;
+}
+</style>

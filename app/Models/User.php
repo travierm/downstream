@@ -8,6 +8,7 @@ use App\YouTubeVideo;
 use Auth;
 use DB;
 use Hash;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,6 +43,11 @@ class User extends Authenticatable
     protected $appends = [
         'has_spotify_connection',
     ];
+
+    public function scopePublic(Builder $builder)
+    {
+        return $builder->where('private', 1);
+    }
 
     public function getHasSpotifyConnectionAttribute()
     {

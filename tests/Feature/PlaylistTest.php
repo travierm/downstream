@@ -58,6 +58,7 @@ class PlaylistTest extends TestCase
     }
 
     /**
+     * @group youtube
      * @depends testCanCreateList
      */
     public function testCanAddAndRemoveItemFromList($playlistId)

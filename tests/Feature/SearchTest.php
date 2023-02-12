@@ -22,7 +22,7 @@ class SearchTest extends TestCase
 
     /**
      * A basic feature test example.
-     *
+     * @group youtube
      * @return void
      */
     public function testCanGetSearchResults()
@@ -37,6 +37,11 @@ class SearchTest extends TestCase
         $this->assertGreaterThanOrEqual(3, count($jsonData['results']), 'Results returned 3 or more items');
     }
 
+    /**
+     * @group youtube
+     *
+     * @return void
+     */
     public function testCanSeeCollectedItemInSearchResults()
     {
         global $user;

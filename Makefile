@@ -12,5 +12,15 @@ laratail:
 
 build-api:
 	docker build -t ds_api .
+
 run-api:
 	docker run -d -p 8080:8080 ds_api
+
+test:
+	./vendor/phpunit/phpunit/phpunit --colors --testdox --exclude-group youtube
+
+test-full:
+	composer run test
+
+test-migrate:
+	php artisan migrate --env testing

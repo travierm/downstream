@@ -30,6 +30,11 @@ class MediaCollectionTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * @group youtube
+     *
+     * @return void
+     */
     public function testCanCollectItem()
     {
         global $user;
@@ -109,6 +114,11 @@ class MediaCollectionTest extends TestCase
         $this->assertTrue($updatedCollectionCount == $collectionCount - 1, 'collect count is one less then before');
     }
 
+    /**
+     * @group youtube
+     *
+     * @return void
+     */
     public function testCanSeeCollectedItemAtTopOfCollection()
     {
         global $user;
