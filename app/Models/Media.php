@@ -5,12 +5,14 @@ namespace App\Models;
 use App\MediaRemoteReference;
 use App\MediaType\YoutubeVideo;
 use App\Services\Sources\SpotifyTrack;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Media extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'id',
@@ -50,7 +52,7 @@ class Media extends Model
         });
 
         static::deleted(function ($media) { // before delete() method call this
-        $media->meta()->delete();
+            $media->meta()->delete();
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserMedia extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $table = 'user_media';
 
@@ -34,7 +36,7 @@ class UserMedia extends Model
     {
         $mediaIds = self::pluckMediaIds();
 
-        $query = new Media;
+        $query = new Media();
         if ($type) {
             $query = Media::where('type', $type);
         }

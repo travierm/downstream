@@ -16,7 +16,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, HasApiTokens, Notifiable;
+    use HasFactory;
+    use HasApiTokens;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,11 +26,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'hash', 'display_name', 'email', 'password', 'api_token', 'type', 'settings',
+        'hash',
+        'display_name',
+        'email',
+        'password',
+        'api_token',
+        'type',
+        'settings',
+        'private'
     ];
 
     private $defaultSettings = [
         'theme' => 'downstream_default',
+    ];
+
+    protected $casts = [
+        'private' => 'boolean'
     ];
 
     /**
@@ -46,7 +59,7 @@ class User extends Authenticatable
 
     public function scopePublic(Builder $builder)
     {
-        return $builder->where('private', 1);
+        return $builder->where('private', 0);
     }
 
     public function getHasSpotifyConnectionAttribute()
