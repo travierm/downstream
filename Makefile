@@ -22,6 +22,9 @@ test:
 tf:
 	./vendor/phpunit/phpunit/phpunit --colors --testdox --exclude-group youtube --filter "$0"
 
+optimize:
+	php artisan optimize && composer dump-autoload
+
 test-full:
 	composer run test
 

@@ -21,7 +21,6 @@ class UserMediaFactory extends Factory
         return [
             'user_id' => fn () => User::factory()->create(),
             'media_id' => function (array $factoryModel) {
-                dump($factoryModel);
                 return Media::factory()->create([
                     'user_id' => $factoryModel['user_id']
                 ]);

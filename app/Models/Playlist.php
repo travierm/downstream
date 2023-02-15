@@ -29,6 +29,6 @@ class Playlist extends Model
             'created_by' => $userId,
         ])->first();
 
-        return $playlist ? $playlist : new static;
+        return $playlist ? $playlist : new static();
     }
 }

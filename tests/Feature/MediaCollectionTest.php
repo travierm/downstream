@@ -19,13 +19,14 @@ class MediaCollectionTest extends TestCase
         parent::setUp();
 
         if (! $user) {
-            $user = User::factory()->make();
+            $user = User::factory()->create();
         }
     }
 
     public function testCanFetchUserCollection()
     {
-        global $user;
+        $user = User::factory()->create();
+
         $response = $this->actingAs($user)->get('/api/collection');
         $response->assertStatus(200);
     }
@@ -71,11 +72,6 @@ class MediaCollectionTest extends TestCase
 
         $response = $this->actingAs($user)->get('/api/collection/');
         $response->assertStatus(200);
-
-        $collection = $response->json();
-        if (! $collection) {
-            dd($collection);
-        }
 
         $response->assertJsonFragment([
             'media_id' => $mediaId,
