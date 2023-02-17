@@ -21,13 +21,9 @@ class UserControllerTest extends TestCase
         $users = User::factory()->times(5)->create();
 
         $firstUser = $users->splice(0, 1)->first();
-        $userMedia = UserMedia::factory()->times(5)->create([
+        UserMedia::factory()->times(5)->create([
             'user_id' => $firstUser->id
         ]);
-
-        $firstUser->media()->saveMany(
-            $userMedia
-        );
 
         $response = $this->actingAs($authedUser)
             ->getJson('/api/users/active');
