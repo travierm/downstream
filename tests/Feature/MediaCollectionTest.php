@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Media;
+use App\Models\UserMedia;
 use Tests\Helper\MediaHelper;
 use Illuminate\Support\Facades\DB;
 
@@ -55,26 +56,26 @@ class MediaCollectionTest extends TestCase
         return $mediaId;
     }
 
-    /**
-     * @depends testCanCollectItem
-     */
-    public function testCanSeeCollectedItemInCollection($mediaId)
+    public function testCanSeeCollectedItemInCollection()
     {
-        $response = $this->actingAs($this->user)->get('/api/collection/');
+        $userMedia = UserMedia::factory()->create([
+            'user_id' => $this->user
+        ]);
+
+        $response = $this->actingAs($this->user)->get('/api/collection');
         $response->assertStatus(200);
 
         $response->assertJsonFragment([
-            'media_id' => $mediaId,
+            'media_id' => $userMedia->media_id,
         ]);
-
-        return $mediaId;
     }
 
-    /**
-     * @depends testCanSeeCollectedItemInCollection
-     */
-    public function testCanRemoveItemFromCollection($mediaId)
+    public function testCanRemoveItemFromCollection()
     {
+        $userMedia = UserMedia::factory()->create([
+            'user_id' => $this->user
+        ]);
+
         $this->actingAs($this->user);
 
         // Get collection count
@@ -87,7 +88,7 @@ class MediaCollectionTest extends TestCase
         $this->assertTrue($collectionCount >= 1, 'collection has more 1 or more items');
 
         // delete item from collection
-        $response = $this->delete('/api/media/collection/'.$mediaId);
+        $response = $this->delete('/api/media/collection/'.$userMedia->media_id);
         $response->assertStatus(200);
 
         // assert collection count is one less

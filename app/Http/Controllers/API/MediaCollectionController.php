@@ -45,6 +45,7 @@ class MediaCollectionController extends Controller
     public function postCollectItem(Request $request)
     {
         $userId = Auth::user()->id;
+
         $videoId = $request->videoId;
 
         if (! $userId || ! $videoId) {
