@@ -9,27 +9,23 @@ global $user;
 
 class SearchTest extends TestCase
 {
+    protected User $user;
+
     public function setUp(): void
     {
-        global $user;
-
         parent::setUp();
 
-        if (! $user) {
-            $user = User::factory()->make();
-        }
+        $this->user = User::factory()->create();
     }
 
     /**
      * A basic feature test example.
-     *
+     * @group youtube
      * @return void
      */
     public function testCanGetSearchResults()
     {
-        global $user;
-
-        $response = $this->actingAs($user)->get('/api/search/drake');
+        $response = $this->actingAs($this->user)->get('/api/search/drake');
         $response->assertStatus(200);
 
         $jsonData = $response->decodeResponseJson();
@@ -37,17 +33,27 @@ class SearchTest extends TestCase
         $this->assertGreaterThanOrEqual(3, count($jsonData['results']), 'Results returned 3 or more items');
     }
 
+    /**
+     * @group youtube
+     *
+     * @return void
+     */
     public function testCanSeeCollectedItemInSearchResults()
     {
-        global $user;
+        $this->actingAs($this->user);
+
         $testVideoId = 'lZcRSy0sk5w';
+
         // Collect
-        $collectedMediaId = $this->actingAs($user)->post('/api/media/collect', [
+        $response = $this->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
             'videoId' => $testVideoId,
-        ])->assertStatus(200)->decodeResponseJson()['mediaId'];
+        ]);
 
-        $response = $this->actingAs($user)->get('/api/search/lZcRSy0sk5w')->assertStatus(200);
+        $response->assertStatus(200);
+        $collectedMediaId = $response->decodeResponseJson()['mediaId'];
+
+        $response = $this->get('/api/search/lZcRSy0sk5w')->assertStatus(200);
 
         $jsonData = $response->decodeResponseJson();
         $results = $jsonData['results'];

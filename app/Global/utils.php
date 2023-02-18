@@ -1,7 +1,8 @@
 <?php
 
-use App\Global\RequestLogContext;
 use Cumulati\Monolog\LogContext;
+use App\Global\RequestLogContext;
+use Illuminate\Database\Eloquent\Collection;
 
 function getRequestLogContext(): LogContext
 {
@@ -25,4 +26,31 @@ function superdd(...$vars)
     }
 
     exit(1);
+}
+
+/**
+ * Dump the passed variables and exit the script but also call toArray() on any object it can and on arrays of objects passed in.
+ *
+ * @param  mixed  $args
+ * @return void
+ */
+function dda(...$args): void
+{
+    $args = array_map(function ($arg) {
+        if (is_object($arg) && method_exists($arg, 'toArray')) {
+            return $arg->toArray();
+        }
+
+        if (is_array($arg)) {
+            return array_map(function ($item) {
+                return is_object($item) && method_exists($item, 'toArray')
+                    ? $item->toArray()
+                    : $item;
+            }, $arg);
+        }
+
+        return $arg;
+    }, $args);
+
+    dd(...$args);
 }

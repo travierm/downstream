@@ -9,7 +9,7 @@ class YoutubeServiceTest extends TestCase
 {
     /**
      * A basic test example.
-     *
+     * @group youtube
      * @return void
      */
     public function testCanSearchForVideos()
@@ -22,6 +22,11 @@ class YoutubeServiceTest extends TestCase
         $this->assertTrue(is_string($videos[0]->thumbnail), 'Search result has thumbnail');
     }
 
+    /**
+     * @group youtube
+     *
+     * @return void
+     */
     public function testCanGetVideoById()
     {
         //Drake - In my feelings

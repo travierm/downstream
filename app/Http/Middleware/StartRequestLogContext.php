@@ -19,8 +19,9 @@ class StartRequestLogContext
     {
         RequestLogContext::startRequestLog([
             'user_id' => $request->user()->id,
-            'request_path' => $request->path(),
-            'request_method' => $request->method(),
+            'path' => $request->path(),
+            'method' => $request->method(),
+            'controller' => $request->route()->getAction('controller')
         ]);
 
         RequestLogContext::info('new request');

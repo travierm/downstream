@@ -2,44 +2,43 @@
 
 namespace Tests\Feature;
 
-use App\Models\Media;
-use App\Models\User;
-use DB;
-use Tests\Helper\MediaHelper;
 use Tests\TestCase;
-
-global $user;
+use App\Models\User;
+use App\Models\Media;
+use App\Models\UserMedia;
+use Tests\Helper\MediaHelper;
+use Illuminate\Support\Facades\DB;
 
 class MediaCollectionTest extends TestCase
 {
+    protected User $user;
+
     public function setUp(): void
     {
-        global $user;
-
         parent::setUp();
 
-        if (! $user) {
-            $user = User::factory()->make();
-        }
+        $this->user = User::factory()->create();
     }
 
     public function testCanFetchUserCollection()
     {
-        global $user;
-        $response = $this->actingAs($user)->get('/api/collection');
+        $response = $this->actingAs($this->user)->get('/api/collection');
         $response->assertStatus(200);
     }
 
+    /**
+     * @group youtube
+     *
+     * @return void
+     */
     public function testCanCollectItem()
     {
-        global $user;
-
         $testVideoId = 'lZcRSy0sk5w';
 
         MediaHelper::deleteByIndex($testVideoId);
 
         // Collect
-        $response = $this->actingAs($user)->post('/api/media/collect', [
+        $response = $this->actingAs($this->user)->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
             'videoId' => 'lZcRSy0sk5w',
         ]);
@@ -57,37 +56,30 @@ class MediaCollectionTest extends TestCase
         return $mediaId;
     }
 
-    /**
-     * @depends testCanCollectItem
-     */
-    public function testCanSeeCollectedItemInCollection($mediaId)
+    public function testCanSeeCollectedItemInCollection()
     {
-        global $user;
-
-        $response = $this->actingAs($user)->get('/api/collection/');
-        $response->assertStatus(200);
-
-        $collection = $response->json();
-        if (! $collection) {
-            dd($collection);
-        }
-
-        $response->assertJsonFragment([
-            'media_id' => $mediaId,
+        $userMedia = UserMedia::factory()->create([
+            'user_id' => $this->user
         ]);
 
-        return $mediaId;
+        $response = $this->actingAs($this->user)->get('/api/collection');
+        $response->assertStatus(200);
+
+        $response->assertJsonFragment([
+            'media_id' => $userMedia->media_id,
+        ]);
     }
 
-    /**
-     * @depends testCanSeeCollectedItemInCollection
-     */
-    public function testCanRemoveItemFromCollection($mediaId)
+    public function testCanRemoveItemFromCollection()
     {
-        global $user;
+        $userMedia = UserMedia::factory()->create([
+            'user_id' => $this->user
+        ]);
+
+        $this->actingAs($this->user);
 
         // Get collection count
-        $response = $this->actingAs($user)->get('/api/collection/');
+        $response = $this->get('/api/collection/');
         $response->assertStatus(200);
 
         $collection = $response->json();
@@ -96,11 +88,11 @@ class MediaCollectionTest extends TestCase
         $this->assertTrue($collectionCount >= 1, 'collection has more 1 or more items');
 
         // delete item from collection
-        $response = $this->actingAs($user)->delete('/api/media/collection/'.$mediaId);
+        $response = $this->delete('/api/media/collection/'.$userMedia->media_id);
         $response->assertStatus(200);
 
         // assert collection count is one less
-        $response = $this->actingAs($user)->get('/api/collection/');
+        $response = $this->get('/api/collection/');
         $response->assertStatus(200);
 
         $updatedCollection = $response->json();
@@ -109,13 +101,18 @@ class MediaCollectionTest extends TestCase
         $this->assertTrue($updatedCollectionCount == $collectionCount - 1, 'collect count is one less then before');
     }
 
+    /**
+     * @group youtube
+     *
+     * @return void
+     */
     public function testCanSeeCollectedItemAtTopOfCollection()
     {
-        global $user;
-
+        $user = $this->user;
         DB::table('user_media')->where('user_id', $user->id)->delete();
 
-        $this->actingAs($user)->post('/api/media/collect', [
+        $this->actingAs($user);
+        $this->post('/api/media/collect', [
             // Kid Cudi - Tequila Shots
             'videoId' => 'lZcRSy0sk5w',
         ])->assertStatus(200);
