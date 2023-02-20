@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@mdi/js": "^5.8.55",
-    "@sentry/tracing": "^6.17.6",
+    "@sentry/tracing": "^7.38.0",
     "@sentry/vue": "^6.17.6",
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/composition-api": "^1.4.6",
