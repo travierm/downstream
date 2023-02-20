@@ -28,7 +28,7 @@ jobs:
         id: get-latest-tag
         if: ${{ steps.release-label.outputs.level != null }}
       - name: Sentry Release
-        uses: getsentry/action-release@v1.1.6
+        uses: getsentry/action-release@v1.2.1
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
