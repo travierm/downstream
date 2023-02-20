@@ -16,7 +16,7 @@
     "test:e2e-ci": "vue-cli-service test:e2e --mode development --headless --record --key 100e85d3-fa07-4845-ba30-613180b2a09a"
   },
   "dependencies": {
-    "@mdi/js": "^5.8.55",
+    "@mdi/js": "^7.1.96",
     "@sentry/tracing": "^6.17.6",
     "@sentry/vue": "^6.17.6",
     "@vitejs/plugin-vue": "^1.6.1",
