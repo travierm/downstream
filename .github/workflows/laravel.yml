@@ -16,7 +16,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Trigger Downstream API Build
         run: |
           /usr/bin/curl --output /dev/null --silent -H "Content-Type: application/json" -X POST "${{ secrets.DOCKER_HUB_API_TRIGGER_ROUTE }}"
@@ -51,7 +51,7 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
       - name: Install Dependencies
@@ -73,7 +73,7 @@ jobs:
   #  runs-on: ubuntu-latest
   #  needs: api-unit-test
   #  steps:
-  #    - uses: actions/checkout@v2
+  #    - uses: actions/checkout@v3
   #    - name: Setup Node v16.14.0
   #      uses: actions/setup-node@v1
   #      with:
