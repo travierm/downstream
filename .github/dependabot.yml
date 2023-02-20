@@ -10,13 +10,13 @@ updates:
     schedule:
       interval: "weekly"
 
-  # Maintain dependencies for npm
+  # Maintain dependencies for Composer
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
       interval: "weekly"
 
-  # Maintain dependencies for Composer
+  # Maintain dependencies for Vue App
   - package-ecosystem: "npm"
     directory: "/vue_app"
     schedule:
