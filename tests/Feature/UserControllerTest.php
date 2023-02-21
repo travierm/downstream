@@ -30,7 +30,7 @@ class UserControllerTest extends TestCase
 
         $json = $response->decodeResponseJson();
 
-        $this->assertCount(5, $json);
+        $this->assertCount(6, $json);
         $this->assertEquals($firstUser->id, $json[0]['id'], "first user in list has most items collected");
     }
 }
