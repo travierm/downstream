@@ -1,11 +1,6 @@
 <template>
-  <v-navigation-drawer
-    absolute
-    right
-    class="ds-nav-drawer mt-16"
-    v-if="loggedIn && navDrawerStatus"
-    v-click-outside="clickedOutOfNavDrawer"
-  >
+  <v-navigation-drawer absolute right class="ds-nav-drawer mt-16" v-if="loggedIn && navDrawerStatus"
+    v-click-outside="clickedOutOfNavDrawer">
     <!-- ^ height is 100vh - (top nav + bottom bar) -->
     <template v-slot:prepend>
       <v-list-item two-line>
@@ -31,12 +26,7 @@
     <v-divider></v-divider>
 
     <v-list dense class="pt-0">
-      <v-list-item
-        v-for="item in navLinks"
-        :key="item.title"
-        class="ds-nav-drawer-item"
-        @click="handleNavClick(item.to)"
-      >
+      <v-list-item v-for="item in navLinks" :key="item.title" class="ds-nav-drawer-item" @click="handleNavClick(item.to)">
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -73,10 +63,16 @@ export default {
         { icon: 'mdi-album', title: 'Collection', to: '/collection' },
         { icon: 'mdi-spotify', title: 'Spotify', to: '/spotify' },
         {
+          icon: 'mdi-star-circle',
+          title: 'Top Users',
+          to: `/users`
+        },
+        {
           icon: 'mdi-account',
           title: 'My Profile',
           to: `/profile/${this.user.hash}`,
         },
+
       ]
     },
   },

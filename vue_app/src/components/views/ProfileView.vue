@@ -27,13 +27,8 @@
 
                 <!-- Profile actions -->
                 <div class="mt-n2">
-                  <v-btn
-                    v-if="!isViewingSelf && followingUser !== undefined"
-                    depressed
-                    color="primary"
-                    :loading="followLoading"
-                    @click="toggleFollow"
-                  >
+                  <v-btn v-if="!isViewingSelf && followingUser !== undefined" depressed color="primary"
+                    :loading="followLoading" @click="toggleFollow">
                     {{ followingUser === false ? 'Follow' : 'Unfollow' }}
                   </v-btn>
                 </div>
@@ -43,26 +38,11 @@
             <!-- Profile Top 8 Songs -->
             <v-row>
               <!-- TODO - Currently force reloading card when collected status is changed... There is a better way to handle this -->
-              <CardCol
-                v-for="item in collectionTop20"
-                :key="item.guid + item.collected"
-              >
-                <v-lazy
-                  :options="{ threshold: 0.5 }"
-                  transition="fade-transition"
-                >
-                  <YoutubeCard
-                    :item="item"
-                    :guid="item.guid"
-                    :title="item.title"
-                    :mediaId="item.media_id"
-                    :videoId="item.index"
-                    :thumbnail="item.thumbnail"
-                    :collected="item.collected"
-                    :key="item.guid"
-                    dense
-                    light
-                  ></YoutubeCard>
+              <CardCol v-for="item in collectionTop20" :key="item.guid + item.collected">
+                <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
+                  <YoutubeCard :item="item" :guid="item.guid" :title="item.title" :mediaId="item.media_id"
+                    :videoId="item.index" :thumbnail="item.thumbnail" :collected="item.collected" :key="item.guid" dense
+                    light></YoutubeCard>
                 </v-lazy>
               </CardCol>
             </v-row>
@@ -151,7 +131,7 @@ export default {
       this.profileIcon = identicon(result.data.user.display_name)
 
       this.$store.dispatch('player/updateGuidData', {
-        guidIndexKey: this.routerProfileId,
+        guidIndexKey: this.$route.fullPath,
         mediaItems: collection,
       })
     },

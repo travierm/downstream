@@ -18,8 +18,9 @@ class UserController extends Controller
     {
         return User::withCount('media')
             ->public()
-            ->whereNot('id', Auth::user()->id)
+            //->whereNot('id', Auth::user()->id)
             ->orderBy('media_count', 'desc')
+            ->limit(9)
             ->get();
     }
 }
