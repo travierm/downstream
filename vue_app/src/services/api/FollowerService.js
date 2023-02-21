@@ -12,4 +12,8 @@ function follow(followerId) {
   return http.put(`/follow/${followerId}`)
 }
 
-export default { fetchFollowage, follow, unFollow }
+function getActiveUsers() {
+  return http.get(`/users/active`)
+}
+
+export default { fetchFollowage, follow, unFollow, getActiveUsers }
