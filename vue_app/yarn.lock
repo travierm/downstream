@@ -2354,10 +2354,10 @@ mimic-fn@^2.1.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
-minidenticons@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/minidenticons/-/minidenticons-1.0.4.tgz#d36f550b9bd1baa7188314bacca1a519ac0b16d4"
-  integrity sha512-TeXLFS/vloiyjmUp4bD6FnZY3kkddY9WAPnI3BtfZi2AGBTFTsdcP+NHJ+f8eIkYROpvlOB9DhTt29m+sggWdw==
+minidenticons@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/minidenticons/-/minidenticons-3.1.2.tgz#f96a6df7cfd320a94117ebcbe1c952390302b88d"
+  integrity sha512-UKMFgjagF6kZvGTV/SuMFLqvqvcnylBKLFRgpX3/1emp8zjLswZPaFbdslN81D+GsYNxwjxUkWRIo71cM3W0uA==
 
 minimatch@^3.0.4, minimatch@^3.1.1:
   version "3.1.2"
