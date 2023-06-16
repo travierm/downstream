@@ -32,3 +32,9 @@ export function deleteUrlParam(param) {
   let newUrl = currentUrl.toString()
   window.history.replaceState({}, document.title, newUrl)
 }
+
+export function getUrlParam(param) {
+  let currentUrl = new URL(window.location.href)
+
+  return currentUrl.searchParams.get(param)
+}
