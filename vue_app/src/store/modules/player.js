@@ -1,3 +1,5 @@
+import { getCurrentPathFromURL } from '@/services/GlobalFunctions';
+
 import YoutubePlayerManager from '../../services/YoutubePlayerManager';
 
 export const namespaced = true
@@ -18,7 +20,8 @@ export const mutations = {
 
 export const actions = {
   playGuid({ state, rootState, commit, dispatch }, guid) {
-    const currentPath = rootState.route.fullPath
+    //const currentPath = rootState.route.fullPath
+    const currentPath = getCurrentPathFromURL()
     const pathGuidIndex = state.guidIndexMap[currentPath]
 
     if (currentPath !== state.currentIndexKey && pathGuidIndex) {
@@ -67,3 +70,4 @@ export const actions = {
     dispatch('updateGuidVideoMap', guidVideoMap)
   },
 }
+

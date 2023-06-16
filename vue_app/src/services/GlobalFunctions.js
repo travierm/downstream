@@ -38,3 +38,13 @@ export function getUrlParam(param) {
 
   return currentUrl.searchParams.get(param)
 }
+
+export function getCurrentPathFromURL() {
+  var url = window.location.href
+
+  // Use regular expression to match everything after the first slash following the domain or port
+  var result = url.match(/\/\/[^/]+\/(.*)/)[1]
+
+  // Output the result
+  return result
+}
