@@ -103,7 +103,7 @@ export default {
   },
   computed: {
     sheetWidth() {
-      return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%'
+      return this.$vuetify.display.smAndUp ? '40%' : '100%'
     },
   },
   data: () => {

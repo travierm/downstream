@@ -1,9 +1,12 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
+import 'vuetify/styles';
 
-Vue.use(Vuetify)
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
-export default new Vuetify({
+const vuetify = createVuetify({
+  components,
+  directives,
   theme: {
     dark: true,
     themes: {
@@ -19,3 +22,6 @@ export default new Vuetify({
     iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
   },
 })
+
+
+export default vuetify

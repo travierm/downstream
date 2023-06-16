@@ -1,26 +1,30 @@
-import { VuetifyResolver } from 'unplugin-vue-components/resolvers';
-import Components from 'unplugin-vue-components/vite';
+import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
-import { createVuePlugin as vue } from 'vite-plugin-vue2';
 
-const path = require("path");
+const path = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), Components({
-      resolvers: [
-        // Vuetify
-        VuetifyResolver(),
-      ],
-    }),],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          compatConfig: {
+            MODE: 2,
+          },
+        },
+      },
+    }),
+  ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      process: "process/browser",
-      stream: "stream-browserify",
-      zlib: "browserify-zlib",
-      util: 'util'
+      vue: '@vue/compat',
+      '@': path.resolve(__dirname, './src'),
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      zlib: 'browserify-zlib',
+      util: 'util',
     },
-     extensions: ['.vue', '.js']
+    extensions: ['.vue', '.js'],
   },
 })

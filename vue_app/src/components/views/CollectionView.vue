@@ -95,7 +95,7 @@ export default {
       searchQueryUpdates: 'collection/searchQueryUpdates',
     }),
     mobileBreakpoint() {
-      return this.$vuetify.breakpoint.mobile
+      return this.$vuetify.display.mobile
     },
     collectionOrFilteredCollection() {
       return this.filteredCollection || this.collection

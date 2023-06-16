@@ -2,7 +2,7 @@
   <v-app-bar app color="dark" dark elevate-on-scroll>
     <div
       class="d-flex align-center"
-      v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
+      v-if="$vuetify.display.smAndUp || !loggedIn"
     >
       <router-link to="/" class="unstyled-link">
         <v-toolbar-title class="navbar-brand ds-gradient"
@@ -21,7 +21,7 @@
       </v-btn>
 
       <template
-        v-if="$vuetify.breakpoint.smAndUp && loggedIn && mediaStats.plays"
+        v-if="$vuetify.display.smAndUp && loggedIn && mediaStats.plays"
       >
         <v-toolbar-title class="ml-2 text-subtitle-1"
           >{{ mediaStats.plays.year }} videos played this year</v-toolbar-title
@@ -29,26 +29,26 @@
       </template>
     </div>
 
-    <v-spacer v-if="$vuetify.breakpoint.smAndUp || !loggedIn" />
+    <v-spacer v-if="$vuetify.display.smAndUp || !loggedIn" />
 
     <v-btn to="/login" outlined v-if="!loggedIn">Login</v-btn>
 
     <SearchBar v-if="loggedIn" class="mt-1" />
 
     <v-app-bar-nav-icon
-      v-if="loggedIn && $vuetify.breakpoint.smAndUp"
+      v-if="loggedIn && $vuetify.display.smAndUp"
       @click.stop="$store.dispatch('toggleNavDrawerStatus')"
       class="ml-2"
     ></v-app-bar-nav-icon>
 
     <!-- Loading Bar -->
-    <v-progress-linear
+    <!-- <v-progress-linear
       :active="showLoadingBar"
       :indeterminate="showLoadingBar"
       absolute
       bottom
       color="deep-purple accent-4"
-    ></v-progress-linear>
+    ></v-progress-linear> -->
   </v-app-bar>
 </template>
 

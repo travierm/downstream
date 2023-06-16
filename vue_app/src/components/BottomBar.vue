@@ -35,7 +35,7 @@
             lg
             @click="$store.dispatch('setPlaylistDrawerStatus', true)"
           >
-            <v-icon class="pr-1" v-if="$vuetify.breakpoint.smAndUp"
+            <v-icon class="pr-1" v-if="$vuetify.display.smAndUp"
               >mdi-playlist-music</v-icon
             >
             Playlists</v-btn
@@ -47,13 +47,13 @@
             @click="focusOnPlayingCard"
             color="primary"
             class="focusBtn ml-2"
-            ><v-icon class="pr-1" v-if="$vuetify.breakpoint.smAndUp"
+            ><v-icon class="pr-1" v-if="$vuetify.display.smAndUp"
               >mdi-magnify</v-icon
             >Focus</v-btn
           >
         </v-col>
 
-        <v-col lg="2" v-if="$vuetify.breakpoint.smAndUp">
+        <v-col lg="2" v-if="$vuetify.display.smAndUp">
           <VolumeSlider class="ml-4" />
         </v-col>
       </v-row>
