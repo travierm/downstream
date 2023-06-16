@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { getUrlParam } from '@/services/GlobalFunctions'
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
 
@@ -36,13 +37,19 @@ export default {
       value: '',
     }
   },
-  mounted() {},
+  mounted() {
+    const urlSearchQuery = getUrlParam('search')
+
+    if(urlSearchQuery) {
+      this.$store.dispatch('collection/setSearchQuery', urlSearchQuery)
+    }
+  },
   methods: {
     updateSearchQuery: _.debounce((self, newVal) => {
       self.$store.dispatch('collection/setSearchQuery', newVal)
     }, 100),
     handleInputClear() {
-
+      this.updateSearchQuery(null)
     }
   },
   watch: {
