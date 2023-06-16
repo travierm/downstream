@@ -1,6 +1,8 @@
-import _ from 'lodash'
-import router from '../../router'
-import CollectionService from '@/services/api/CollectionService'
+import CollectionService from '@/services/api/CollectionService';
+import { deleteUrlParam, setUrlParam } from '@/services/GlobalFunctions';
+import _ from 'lodash';
+
+import router from '../../router';
 
 export const namespaced = true
 export const state = {
@@ -62,6 +64,24 @@ export const getters = {
 }
 
 export const actions = {
+  setSearchQuery(context, newQuery) {
+
+    context.commit('SET_SEARCH_QUERY', newQuery)
+    if(newQuery === null) {
+      deleteUrlParam('search')
+    }else{
+      setUrlParam('search', newQuery)
+    }
+  
+    context.dispatch(
+      'player/updateGuidData',
+      {
+        guidIndexKey: newQuery === null ? `/collection` : `/collection?search=${newQuery}`,
+        mediaItems: context.getters.collectionSearchResults,
+      },
+      { root: true }
+    )
+  },
   shuffle(context) {
     context.commit('SHUFFLE_COLLECTION')
 

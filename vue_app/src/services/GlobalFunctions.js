@@ -14,3 +14,21 @@ export function generateElementId() {
 export function getAppVersion() {
   return packageJson.version
 }
+
+export function setUrlParam(param, value) {
+  let currentUrl = new URL(window.location.href)
+
+  currentUrl.searchParams.set(param, value)
+
+  let newUrl = currentUrl.toString()
+  window.history.replaceState({}, document.title, newUrl)
+}
+
+export function deleteUrlParam(param) {
+  let currentUrl = new URL(window.location.href)
+
+  currentUrl.searchParams.delete(param)
+
+  let newUrl = currentUrl.toString()
+  window.history.replaceState({}, document.title, newUrl)
+}

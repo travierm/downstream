@@ -1,5 +1,4 @@
-import _ from 'lodash'
-import YoutubePlayerManager from '../../services/YoutubePlayerManager'
+import YoutubePlayerManager from '../../services/YoutubePlayerManager';
 
 export const namespaced = true
 export const state = {
@@ -42,6 +41,7 @@ export const actions = {
   },
   updateGuidIndex({ commit }, { guidIndexKey, guidIndex }) {
     commit('UPDATE_GUID_INDEX', { guidIndexKey, guidIndex })
+    commit('SET_CURRENT_INDEX_KEY', guidIndexKey)
   },
   updateGuidVideoMap({}, map) {
     YoutubePlayerManager.updateGuidVideoMap(map)
@@ -62,6 +62,7 @@ export const actions = {
       }
     })
 
+    YoutubePlayerManager.setGuidIndex(guidIndex)
     dispatch('updateGuidIndex', { guidIndexKey, guidIndex })
     dispatch('updateGuidVideoMap', guidVideoMap)
   },
