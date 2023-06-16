@@ -41,6 +41,7 @@ export default {
     const urlSearchQuery = getUrlParam('search')
 
     if(urlSearchQuery) {
+      this.query = urlSearchQuery
       this.$store.dispatch('collection/setSearchQuery', urlSearchQuery)
     }
   },
