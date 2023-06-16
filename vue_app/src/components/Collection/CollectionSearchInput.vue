@@ -10,11 +10,14 @@
     hide-details
     hide-selected
     light
+    @click:clear="handleInputClear"
   ></v-text-field>
 </template>
 
 <script>
+import _ from 'lodash'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'CollectionSearchInput',
   props: ['collectionCount'],
@@ -34,13 +37,17 @@ export default {
     }
   },
   mounted() {},
-  methods: {},
-  watch: {
-    query: function (val) {
-      this.$store.commit('collection/SET_SEARCH_QUERY', val)
+  methods: {
+    updateSearchQuery: _.debounce((self, newVal) => {
+      self.$store.dispatch('collection/setSearchQuery', newVal)
+    }, 100),
+    handleInputClear() {
 
-      let indexes = _.map(this.collection, 'guid')
-      this.$store.dispatch('player/setGuidIndex', indexes)
+    }
+  },
+  watch: {
+    query: function (newVal) {
+      this.updateSearchQuery(this, newVal)
     },
   },
 }

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["vue_app/*", "vue_app/*.vue"]
+        },
+        "types": ["vue"],
+        "resolveJsonModule": true,
+        "esModuleInterop": true
+    },
+    "include": ["vue_app/**/*.js", "vue_app/**/*.vue"]
+}
