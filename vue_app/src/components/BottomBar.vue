@@ -90,13 +90,8 @@ export default {
     togglePlayerFullscreen() {
       this.isPlayerFullscreen = !this.isPlayerFullscreen
 
-      if (this.isPlayerFullscreen) {
-        const size = getPlayerSizeByCategory()
-
-        YoutubePlayerManager.setPlayerSize(size.width, size.height)
-      } else {
-        YoutubePlayerManager.setPlayerSize(200, 200)
-      }
+      const size = this.isPlayerFullscreen ? getPlayerSizeByCategory() : getPlayerSizeByCategory('sm')
+      YoutubePlayerManager.setPlayerSize(size.width, size.height)
     },
     replayCurrentCard() {
       const currentPlayingGuid = this.manager.currentPlayingGuid
@@ -163,6 +158,7 @@ export default {
   height: 360px; */
   background-color: black;
   visibility: visible;
+  overflow: hidden;
   z-index: 9999;
   /* Adjust the z-index value as needed */
 }
@@ -173,7 +169,8 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Adjust the opacity to your preference */
-  z-index: 999; /* Ensure the overlay appears above other elements */
-}
-</style>
+  background-color: rgba(0, 0, 0, 0.8);
+  /* Adjust the opacity to your preference */
+  z-index: 999;
+  /* Ensure the overlay appears above other elements */
+}</style>

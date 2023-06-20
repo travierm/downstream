@@ -13,7 +13,6 @@ export function getScreenSizeCategory() {
 }
 
 export function getPlayerSizeByCategory(category) {
-
   if (category === 'sm') {
     return {
       width: 356,
