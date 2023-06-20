@@ -36,4 +36,52 @@ class UserStatsRepo
             ];
         }, $topTracks->toArray());
     }
+
+    public function getPlayCountHistory(User $user, int $numOfMonths = 6)
+    {
+        $period = now()->subMonths($numOfMonths)->monthsUntil(now());
+
+        $data = [];
+        $categories = [];
+        foreach ($period as $date) {
+            $count = DB::table('user_media_plays')
+                ->where('user_id', $user->id)
+                ->whereYear('created_at', '=', $date->year)
+                ->whereMonth('created_at', '=', $date->month)
+                ->count();
+
+            $data[] = $count;
+            $categories[] = $date->shortMonthName.' '.$date->year;
+        }
+
+        return [
+            'data' => $data,
+            'categories' => $categories,
+        ];
+
+    }
+
+    public function getCollectionCountHistory(User $user, int $numOfMonths = 6)
+    {
+        $period = now()->subMonths($numOfMonths)->monthsUntil(now());
+
+        $data = [];
+        $categories = [];
+        foreach ($period as $date) {
+            $count = DB::table('user_media')
+                ->where('user_id', $user->id)
+                ->whereYear('created_at', '=', $date->year)
+                ->whereMonth('created_at', '=', $date->month)
+                ->count();
+
+            $data[] = $count;
+            $categories[] = $date->shortMonthName.' '.$date->year;
+        }
+
+        return [
+            'data' => $data,
+            'categories' => $categories,
+        ];
+
+    }
 }

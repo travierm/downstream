@@ -19,7 +19,19 @@ class UserStatsControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_can_get_top_played_tracks()
+    public function test_can_get_play_count()
+    {
+        $response = $this->get('/api/user/stats');
+        $response->assertStatus(200);
+    }
+
+     public function test_can_get_collection_count()
+     {
+         $response = $this->get('/api/user/stats');
+         $response->assertStatus(200);
+     }
+
+    public function test_can_get_top_ten_tracks()
     {
         $firstUserMedia = UserMedia::factory()->createOne([
             'user_id' => $this->user->id

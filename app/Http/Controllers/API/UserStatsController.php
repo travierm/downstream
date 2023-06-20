@@ -15,6 +15,8 @@ class UserStatsController extends Controller
 
         $stats = [
             'top_ten_tracks' => $userStatsRepo->getTopPlayedTracks($user, 10),
+            'play_count_history' => $userStatsRepo->getPlayCountHistory($user, 6),
+            'collection_count_history' => $userStatsRepo->getCollectionCountHistory($user, 6),
         ];
 
         return response()->json($stats);
