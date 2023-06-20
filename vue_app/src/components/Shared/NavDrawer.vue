@@ -27,13 +27,16 @@
 
     <v-list dense class="pt-0">
       <v-list-item v-for="item in navLinks" :key="item.title" class="ds-nav-drawer-item" @click="handleNavClick(item.to)">
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
+        <v-divider v-if="item.title === 'divider'"></v-divider>
+        <template v-else>
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </template>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -60,8 +63,16 @@ export default {
     },
     navLinks() {
       return [
-        { icon: 'mdi-album', title: 'Collection', to: '/collection' },
-        { icon: 'mdi-spotify', title: 'Spotify', to: '/spotify' },
+        {
+          icon: 'mdi-chart-bar-stacked',
+          title: 'Account Stats',
+          to: `/stats`,
+        },
+        { icon: 'mdi-database', title: 'Collection', to: '/collection' },
+        { icon: 'mdi-spotify', title: 'Spotify Sync', to: '/spotify' },
+        {
+          title: 'divider',
+        },
         {
           icon: 'mdi-star-circle',
           title: 'Top Users',
@@ -69,10 +80,9 @@ export default {
         },
         {
           icon: 'mdi-account',
-          title: 'My Profile',
+          title: 'Your Profile',
           to: `/profile/${this.user.hash}`,
         },
-
       ]
     },
   },
