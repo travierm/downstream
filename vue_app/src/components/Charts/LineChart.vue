@@ -12,6 +12,11 @@ export default {
             type: String,
             required: true,
         },
+        seriesColor: {
+            type: String,
+            required: false,
+            default: '#24b6ff',
+        },
         title: {
             type: String,
             required: true,
@@ -29,6 +34,7 @@ export default {
                     {
                         name: this.seriesName,
                         data: [],
+                        color: this.seriesColor
                     },
                 ],
                 options: {

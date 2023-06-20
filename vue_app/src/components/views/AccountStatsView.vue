@@ -2,7 +2,7 @@
     <div class="d-flex justify-center flex-column mx-8">
 
         <div class="d-flex">
-            <LineChart class="w-50 mr-4" v-if="stats.play_count_history" title="Plays by Month" series-name="Plays" :chart-data="stats.play_count_history" />
+            <LineChart class="w-50 mr-4" v-if="stats.play_count_history" title="Plays by Month" series-name="Plays" series-color="#d54dff" :chart-data="stats.play_count_history" />
             <LineChart class="w-50" v-if="stats.collection_count_history" title="Collected Items by Month" series-name="Items Collected" :chart-data="stats.collection_count_history" />
         </div>
         
