@@ -156,7 +156,6 @@ export default {
   transform: translate(-50%, -50%);
   /* width: 640px;
   height: 360px; */
-  background-color: black;
   visibility: visible;
   overflow: hidden;
   z-index: 9999;
