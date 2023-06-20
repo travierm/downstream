@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use DB;
+use Auth;
+use Hash;
 use App\Theme;
 use App\UserLike;
 use App\YouTubeVideo;
-use Auth;
-use DB;
-use Hash;
+use App\Models\UserMediaPlays;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -86,6 +87,11 @@ class User extends Authenticatable
             ->exists();
     }
 
+    public function userMediaPlays()
+    {
+        return $this->hasMany(UserMediaPlays::class);
+    }
+
     public function media()
     {
         return $this->hasMany(UserMedia::class);
@@ -136,15 +142,6 @@ class User extends Authenticatable
             ->count();
 
         return $followingMediaCount;
-    }
-
-    public static function likedYouTubeVideos()
-    {
-        $videoIndexes = UserLike::where('user_id', Auth::user()->id)
-            ->where('table', 'youtube_videos')
-            ->pluck('index');
-
-        return YouTubeVideo::whereIn('id', $videoIndexes)->get();
     }
 
     public function themeOption($key)

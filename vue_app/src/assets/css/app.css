@@ -1,15 +1,22 @@
 .ds-gradient {
-	background: #24B6FF;
-  background: -webkit-linear-gradient(to bottom right, #24B6FF 0%, #7C4DFF 100%);
-  background: -moz-linear-gradient(to bottom right, #24B6FF 0%, #7C4DFF 100%);
-  background: linear-gradient(to bottom right, #24B6FF 0%, #7C4DFF 100%);
+  background: #24b6ff;
+  background: -webkit-linear-gradient(
+    to bottom right,
+    #24b6ff 0%,
+    #7c4dff 100%
+  );
+  background: -moz-linear-gradient(to bottom right, #24b6ff 0%, #7c4dff 100%);
+  background: linear-gradient(to bottom right, #24b6ff 0%, #7c4dff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  }
+}
 
 .unstyled-link {
-  text-decoration: none; 
+  text-decoration: none;
   color: inherit;
 }
 
+.w-50 {
+  width: 50%;
+}

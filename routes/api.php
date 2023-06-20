@@ -42,6 +42,9 @@ Route::namespace('API')->group(function () {
         // UserController
         Route::get('/users/active', 'UserController@getActiveUsers');
 
+        // User Stats
+        Route::get('/user/stats', 'UserStatsController@getStats');
+
         // User Collection
         Route::get('/collection', 'CollectionController@getCollection');
         Route::get('/collection/{userHash}', 'CollectionController@getCollectionByHash');

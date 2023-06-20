@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import { sync } from 'vuex-router-sync'
-import * as Sentry from '@sentry/vue'
-import { BrowserTracing } from '@sentry/tracing'
+import { BrowserTracing } from '@sentry/tracing';
+import * as Sentry from '@sentry/vue';
+import Vue from 'vue';
+import { sync } from 'vuex-router-sync';
 
-import App from './App.vue'
-import router from './router'
-import vuetify from './plugins/vuetify'
-import store from './store'
-import loadGlobalComponents from './global_components'
+import App from './App.vue';
+import loadGlobalComponents from './global_components';
+import vuetify from './plugins/vuetify';
+import router from './router';
+import store from './store';
 
 Vue.config.productionTip = false
 
