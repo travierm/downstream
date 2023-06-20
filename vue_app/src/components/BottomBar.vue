@@ -1,24 +1,27 @@
 <template>
-  <v-app-bar app color="grey darken-4" dense dark fixed bottom>
-    <div class="video-container rounded-lg">
+  <div>
+    <div @click="togglePlayerFullscreen" class="overlay" v-if="isPlayerFullscreen"></div>
+    <div class="rounded-lg"
+      :class="{ 'video-container-fullscreen': isPlayerFullscreen, 'video-container': !isPlayerFullscreen }">
       <div class="video-instance" id="downstream-video-container"></div>
     </div>
 
-    <v-container>
-      <v-row no-gutters class="justify-left">
-        <v-col cols="auto" class="mr-1">
-          <span>{{ playerQueueCount }}</span>
-          <v-btn
-            @click="replayCurrentCard"
-            color="primary"
-            icon
-            class="ml-2 pa-1 mt-1"
-            small
-            ><v-icon large>{{ mdiReplay }}</v-icon></v-btn
-          >
-        </v-col>
+    <v-app-bar app color="grey darken-4" dense dark fixed bottom>
+      <v-container>
+        <v-row no-gutters class="justify-left">
 
-        <v-col cols="auto">
+          <v-col cols="auto" class="mr-1">
+            <span>{{ playerQueueCount }}</span>
+            <v-btn @click="replayCurrentCard" color="primary" icon class="ml-2 pa-1 mt-1" small><v-icon large>{{ mdiReplay
+            }}</v-icon></v-btn>
+          </v-col>
+
+          <v-col cols="auto">
+            <v-btn @click="togglePlayerFullscreen" color="primary"
+              class="focusBtn ml-2"><v-icon>mdi-fullscreen</v-icon></v-btn>
+          </v-col>
+
+          <!-- <v-col cols="auto">
           <v-btn
             v-if="onCollectionRoute"
             @click="shuffleCollection"
@@ -26,9 +29,9 @@
             class="focusBtn ml-2"
             ><v-icon>mdi-shuffle-variant</v-icon></v-btn
           >
-        </v-col>
+        </v-col> -->
 
-        <v-col cols="auto">
+          <!-- <v-col cols="auto">
           <v-btn
             class="ml-2"
             color="primary"
@@ -40,25 +43,20 @@
             >
             Playlists</v-btn
           >
-        </v-col>
+        </v-col> -->
 
-        <v-col cols="auto">
-          <v-btn
-            @click="focusOnPlayingCard"
-            color="primary"
-            class="focusBtn ml-2"
-            ><v-icon class="pr-1" v-if="$vuetify.breakpoint.smAndUp"
-              >mdi-magnify</v-icon
-            >Focus</v-btn
-          >
-        </v-col>
+          <v-col cols="auto">
+            <v-btn @click="focusOnPlayingCard" color="primary" class="focusBtn ml-2"><v-icon class="pr-1"
+                v-if="$vuetify.breakpoint.smAndUp">mdi-magnify</v-icon>Focus</v-btn>
+          </v-col>
 
-        <v-col lg="2" v-if="$vuetify.breakpoint.smAndUp">
-          <VolumeSlider class="ml-4" />
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-app-bar>
+          <v-col lg="2" v-if="$vuetify.breakpoint.smAndUp">
+            <VolumeSlider class="ml-4" />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-app-bar>
+  </div>
 </template>
 
 <script>
@@ -66,6 +64,7 @@ import { mdiReplay } from '@mdi/js'
 
 import VolumeSlider from './VolumeSlider'
 import YoutubePlayerManager from '../services/YoutubePlayerManager'
+import { getPlayerSizeByCategory } from '../services/api/ScreenSizeService'
 
 export default {
   name: 'BottomBar',
@@ -84,9 +83,21 @@ export default {
     return {
       mdiReplay,
       manager: YoutubePlayerManager,
+      isPlayerFullscreen: false,
     }
   },
   methods: {
+    togglePlayerFullscreen() {
+      this.isPlayerFullscreen = !this.isPlayerFullscreen
+
+      if (this.isPlayerFullscreen) {
+        const size = getPlayerSizeByCategory()
+
+        YoutubePlayerManager.setPlayerSize(size.width, size.height)
+      } else {
+        YoutubePlayerManager.setPlayerSize(200, 200)
+      }
+    },
     replayCurrentCard() {
       const currentPlayingGuid = this.manager.currentPlayingGuid
 
@@ -133,16 +144,36 @@ export default {
 }
 
 .video-container {
-  position: relative;
-  width: 200px;
+  position: fixed;
+  bottom: 0%;
+  left: 0%;
+  width: 356px;
   height: 200px;
-  bottom: 76px;
-  left: -16px;
   background-color: black;
-  display: flex;
   visibility: hidden;
+  z-index: 9999;
 }
 
-.video-instance {
+.video-container-fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* width: 640px;
+  height: 360px; */
+  background-color: black;
+  visibility: visible;
+  z-index: 9999;
+  /* Adjust the z-index value as needed */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust the opacity to your preference */
+  z-index: 999; /* Ensure the overlay appears above other elements */
 }
 </style>

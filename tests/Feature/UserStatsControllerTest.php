@@ -31,11 +31,12 @@ class UserStatsControllerTest extends TestCase
             'user_id' => $this->user->id
         ]);
 
+
         $response = $this->get('/api/user/stats');
         $response->assertStatus(200);
 
-        $this->assertEquals(5, $response->json('play_count_history')['data'][6]);
-        $this->assertEquals(1, $response->json('collection_count_history')['data'][6]);
+        $this->assertEquals(5, $response->json('play_count_history')['data'][9]);
+        $this->assertEquals(1, $response->json('collection_count_history')['data'][9]);
     }
 
     public function test_can_get_top_ten_tracks()
