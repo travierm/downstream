@@ -1,7 +1,8 @@
-import _ from 'lodash'
-import YTPlayer from 'yt-player'
+import _ from 'lodash';
+import YTPlayer from 'yt-player';
 
-import Cache from '../services/Cache'
+import Cache from '../services/Cache';
+import { getPlayerSizeByCategory } from './api/ScreenSizeService';
 
 const _DEBUG = true
 
@@ -26,6 +27,9 @@ class YoutubePlayerManager {
     this.videoPlayerInstance = false
 
     this.volumeChangeListener = []
+
+
+    this.playerSize = getPlayerSizeByCategory('sm')
   }
 
   getPlayingGuid() {
@@ -64,6 +68,17 @@ class YoutubePlayerManager {
 
   getVolume() {
     return this.volume
+  }
+
+  setPlayerSize(width, height) {
+    this.playerSize = {
+      width,
+      height
+    }
+
+    if(this.videoPlayerInstance) {
+      this.videoPlayerInstance._player.setSize(width, height)
+    }
   }
 
   setVolume(value) {
@@ -137,14 +152,15 @@ class YoutubePlayerManager {
     }
   }
 
-  loadVideo(videoId) {
+  loadVideo(videoId, seekTime = null) {
     const options = {
       volume: 5,
+      autoplay: true,
       fullscreen: true,
       playsinline: true,
       controls: false,
-      height: '200px',
-      width: '200px',
+      height: this.playerSize.height,
+      width: this.playerSize.width,
     }
 
     let videoPlayerInstance
@@ -154,7 +170,15 @@ class YoutubePlayerManager {
 
       videoPlayerInstance.setVolume(this.volume)
       videoPlayerInstance.load(videoId)
+      if(seekTime) {
+        videoPlayerInstance.seek(seekTime)
+      }
       videoPlayerInstance.play()
+
+      videoPlayerInstance.on('error', (err) => {
+        throw err
+      })
+      console.log('playing video', videoId)
 
       videoPlayerInstance.on('ended', () => {
         this.playNext()
@@ -168,7 +192,7 @@ class YoutubePlayerManager {
     this.playerVolumeChangeWatcher()
   }
 
-  playGuid(guid) {
+  playGuid(guid, seekTime = null) {
     const guidVideo = this.findVideoByGuid(guid)
     const previousPlayingGuid = _.clone(this.currentPlayingGuid)
 
@@ -180,7 +204,7 @@ class YoutubePlayerManager {
     // Update current playing card id
     this.currentPlayingGuid = guid
 
-    this.loadVideo(guidVideo.videoId)
+    this.loadVideo(guidVideo.videoId, seekTime)
   }
 
   onVolumeChange(listener) {
