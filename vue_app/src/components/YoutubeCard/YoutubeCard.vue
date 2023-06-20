@@ -38,7 +38,7 @@
         </router-link>
 
         <PushAction v-if="collected" :mediaId="mediaId" />
-        <PlaylistAction v-if="collected" :mediaId="mediaId" />
+        <!-- <PlaylistAction v-if="collected" :mediaId="mediaId" /> -->
         <CollectAction :videoId="videoId" :mediaId="mediaId" :collected="collected" />
       </v-card-actions>
 
