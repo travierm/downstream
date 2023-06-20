@@ -19,17 +19,24 @@ class UserStatsControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_can_get_play_count()
+    public function test_can_get_chart_data()
     {
+
+        $userMedia = UserMedia::factory()->createOne([
+            'user_id' => $this->user->id
+        ]);
+
+        $userMediaPlays = 5;
+        UserMediaPlays::factory()->times($userMediaPlays)->create([
+            'user_id' => $this->user->id
+        ]);
+
         $response = $this->get('/api/user/stats');
         $response->assertStatus(200);
-    }
 
-     public function test_can_get_collection_count()
-     {
-         $response = $this->get('/api/user/stats');
-         $response->assertStatus(200);
-     }
+        $this->assertEquals(5, $response->json('play_count_history')['data'][6]);
+        $this->assertEquals(1, $response->json('collection_count_history')['data'][6]);
+    }
 
     public function test_can_get_top_ten_tracks()
     {
