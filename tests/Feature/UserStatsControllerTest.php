@@ -19,7 +19,7 @@ class UserStatsControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_can_get_stats()
+    public function test_can_get_top_played_tracks()
     {
         $firstUserMedia = UserMedia::factory()->createOne([
             'user_id' => $this->user->id
@@ -40,10 +40,8 @@ class UserStatsControllerTest extends TestCase
             'media_id' => $secondUserMedia->media_id
         ]);
 
-
         $response = $this->get('/api/user/stats');
         $response->assertStatus(200);
-
 
         $json = $response->json();
         $this->assertEquals([
