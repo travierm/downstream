@@ -1,20 +1,21 @@
-import Activity from '@/components/views/Activity'
-import LoginView from '@/components/views/Auth/LoginView'
-import RegisterView from '@/components/views/Auth/RegisterView'
-import WaitListView from '@/components/views/Auth/WaitListView'
-import CollectionView from '@/components/views/CollectionView'
-import DiscoverTrackView from '@/components/views/DiscoverTrackView'
-import LandingView from '@/components/views/LandingView'
-import ProfileView from '@/components/views/ProfileView'
-import SearchView from '@/components/views/SearchView'
-import SpotifySyncView from '@/components/views/SpotifySyncView'
-import UserListView from '@/components/views/UserListView'
-import store from '@/store/index'
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import AccountStatsView from '@/components/views/AccountStatsView';
+import Activity from '@/components/views/Activity';
+import LoginView from '@/components/views/Auth/LoginView';
+import RegisterView from '@/components/views/Auth/RegisterView';
+import WaitListView from '@/components/views/Auth/WaitListView';
+import CollectionView from '@/components/views/CollectionView';
+import DiscoverTrackView from '@/components/views/DiscoverTrackView';
+import LandingView from '@/components/views/LandingView';
+import ProfileView from '@/components/views/ProfileView';
+import SearchView from '@/components/views/SearchView';
+import SpotifySyncView from '@/components/views/SpotifySyncView';
+import UserListView from '@/components/views/UserListView';
+import store from '@/store/index';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import { connectSpotify } from '../services/api/spotify'
-import { applyMiddleware } from './middleware'
+import { connectSpotify } from '../services/api/spotify';
+import { applyMiddleware } from './middleware';
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,14 @@ const routes = [
     path: '/collection',
     name: 'Collection',
     component: CollectionView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/stats',
+    name: 'Account Stats',
+    component: AccountStatsView,
     meta: {
       requiresAuth: true,
     },

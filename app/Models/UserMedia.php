@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserMedia extends Model
 {
@@ -15,6 +16,11 @@ class UserMedia extends Model
     protected $table = 'user_media';
 
     protected $fillable = ['media_id', 'user_id', 'pushed_at'];
+
+    public function media()
+    {
+        return $this->belongsTo(Media::class);
+    }
 
     public static function findById($mediaId, $userId)
     {
