@@ -21,6 +21,7 @@
           </template>
           <span>Restart the video </span>
         </v-tooltip>
+        <span class="ml-2" v-if="plays"> {{ plays }} Plays</span>
 
         <v-spacer></v-spacer>
 
@@ -81,6 +82,10 @@ export default {
     title: String,
     mediaId: Number,
     videoId: String,
+    plays: {
+      type: Number,
+      required: false,
+    },
     spotifyId: {
       type: String,
       required: false,

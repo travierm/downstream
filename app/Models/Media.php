@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use App\MediaRemoteReference;
 use App\MediaType\YoutubeVideo;
 use App\Services\Sources\SpotifyTrack;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
     use SoftDeletes;
     use HasFactory;
+
+    public bool $collected = true;
 
     protected $fillable = [
         'id',
@@ -27,6 +30,11 @@ class Media extends Model
 
     protected $hidden = [
         'created_at',
+    ];
+
+    protected $appends = [
+        'guid',
+        'collected'
     ];
 
     public function meta()
@@ -131,5 +139,15 @@ class Media extends Model
         }
 
         return $value;
+    }
+
+    public function getCollectedAttribute()
+    {
+        return $this->collected;
+    }
+
+    public function getGuidAttribute(): string
+    {
+        return sprintf('guid_%s', Str::random(35));
     }
 }

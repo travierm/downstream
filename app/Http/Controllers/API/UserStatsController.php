@@ -14,9 +14,10 @@ class UserStatsController extends Controller
         $userStatsRepo = new UserStatsRepo();
 
         $stats = [
-            'top_ten_tracks' => $userStatsRepo->getTopPlayedTracks($user, 10),
+            'top_played_tracks' => $userStatsRepo->getTopPlayedTracks($user, 24),
+            'collection_count_history' => $userStatsRepo->getCollectionCountHistory($user, 48),
             'play_count_history' => $userStatsRepo->getPlayCountHistory($user, 9),
-            'collection_count_history' => $userStatsRepo->getCollectionCountHistory($user, 9),
+            'play_count_history_by_days' => $userStatsRepo->getPlayCountHistoryByDays($user, 9),
         ];
 
         return response()->json($stats);

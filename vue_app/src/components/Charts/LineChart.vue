@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "_page_template",
+    name: "LineChart",
     props: {
         seriesName: {
             type: String,
@@ -24,6 +24,10 @@ export default {
         chartData: {
             type: Object,
             required: true,
+        },
+        hideBottomLabels: {
+            type: Boolean,
+            default: false
         }
     },
     components: {},
@@ -67,6 +71,9 @@ export default {
                     },
                     xaxis: {
                         categories: [],
+                         labels: {
+                            show: this.hideBottomLabels === false,
+                        }
                     },
                 },
             },

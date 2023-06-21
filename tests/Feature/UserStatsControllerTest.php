@@ -77,5 +77,6 @@ class UserStatsControllerTest extends TestCase
             'thumbnail' => $secondUserMedia->media->thumbnail,
             'plays' => $secondUserMediaPlays,
         ], $json['top_ten_tracks'][1]);
+
     }
 }
