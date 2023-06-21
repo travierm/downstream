@@ -34,6 +34,7 @@ class Media extends Model
 
     protected $appends = [
         'guid',
+        'media_id',
         'collected'
     ];
 
@@ -71,7 +72,7 @@ class Media extends Model
           ->first();
     }
 
-    public static function createFromYoutubeVideo(YoutubeVideo $video, array $meta = [])
+    public static function createFromYoutubeVideo(YoutubeVideo $video, array $meta = []): Media
     {
         $data = [
             'origin' => @$meta['origin'] ?: 'youtube#search',
@@ -90,6 +91,21 @@ class Media extends Model
         }
 
         return $media;
+    }
+
+    public static function updateFromYoutubeVideo(Media $media, YoutubeVideo $video, array $meta = [])
+    {
+        $data = [
+            'origin' => @$meta['origin'] ?: 'youtube#search',
+            'type' => 'youtube',
+            'subtype' => 'video',
+            'index' => $video->videoId,
+            'title' => $video->title,
+            'thumbnail' => $video->thumbnail,
+            'user_id' => $meta['user_id'],
+        ];
+
+        $media->update($data);
     }
 
     public static function addUserCollectedProp($rows)
@@ -144,6 +160,11 @@ class Media extends Model
     public function getCollectedAttribute()
     {
         return $this->collected;
+    }
+
+    public function getMediaIdAttribute()
+    {
+        return $this->id;
     }
 
     public function getGuidAttribute(): string

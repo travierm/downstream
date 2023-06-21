@@ -6,11 +6,11 @@
     v-if="!inCollection"
     @click="collectItem"
   >
-    <v-icon class="ml-1">{{ mdiMusicNotePlus }}</v-icon>
+    <v-icon class="">{{ mdiMusicNotePlus }}</v-icon>
   </v-btn>
 
   <v-btn icon class="removeBtn" v-else @click="showRemoveConfirmDialog">
-    <v-icon class="ml-1" color="red">{{ mdiMinusCircle }}</v-icon>
+    <v-icon color="red">{{ mdiMinusCircle }}</v-icon>
     <ConfirmDialog
       :show="showConfirmDialog"
       :message="removeConfirmMessage"

@@ -28,7 +28,7 @@
         <router-link v-if="mediaId" :to="{ path: `/discover/track/${videoId}` }">
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn v-on="on" v-bind="attrs" icon @click="handleDiscoverTrackClick">
+              <v-btn v-on="on" v-bind="attrs" icon>
                 <v-icon class="ml-1" color="deep-purple accent-2">{{
                     mdiLayersSearch
                 }}</v-icon>
@@ -38,9 +38,12 @@
           </v-tooltip>
         </router-link>
 
+        <AutoFixAction v-if="collected" :mediaId="mediaId" />
         <PushAction v-if="collected" :mediaId="mediaId" />
         <!-- <PlaylistAction v-if="collected" :mediaId="mediaId" /> -->
         <CollectAction :videoId="videoId" :mediaId="mediaId" :collected="collected" />
+
+
       </v-card-actions>
 
       <v-img :id="this.guid + '_media'" class="youtubeCardThumbnail" :src="thumbnail" :height="cardHeight"
@@ -61,6 +64,7 @@
 import PushAction from './PushAction'
 import CollectAction from './CollectAction'
 import PlaylistAction from './PlaylistAction'
+import AutoFixAction from './AutoFixAction'
 
 // Services
 import Analytics from '../../services/api/AnalyticsService'
@@ -78,7 +82,6 @@ export default {
     PlaylistAction,
   },
   props: {
-    guid: String,
     title: String,
     mediaId: Number,
     videoId: String,
@@ -130,10 +133,12 @@ export default {
     }
   },
   methods: {
-    handleDiscoverTrackClick() { },
     handleThumbnailClick() {
       this.$store.dispatch('player/playGuid', this.guid)
       Analytics.playedMedia(this.mediaId)
+    },
+    handleAutoFix() {
+      this.$store.dispatch('player/autoFix', this.mediaId)
     },
   },
 }

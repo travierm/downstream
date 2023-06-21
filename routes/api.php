@@ -50,6 +50,8 @@ Route::namespace('API')->group(function () {
         Route::get('/collection/{userHash}', 'CollectionController@getCollectionByHash');
 
         Route::get('/video/{videoId}', 'MediaController@getVideoByIndex');
+        Route::get('/video/autofix/{id}', 'MediaController@autofixByMediaId');
+
 
         Route::post('/media/push/{mediaId}', 'MediaCollectionController@pushItem');
         Route::post('/media/collect', 'MediaCollectionController@postCollectItem');

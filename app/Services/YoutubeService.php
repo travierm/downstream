@@ -5,6 +5,7 @@ namespace App\Services;
 use App\MediaType\YoutubeVideo;
 use App\Models\Media;
 use App\Models\UserMedia;
+use Exception;
 use Madcoda\Youtube\Facades\Youtube;
 
 class YoutubeService
@@ -50,7 +51,7 @@ class YoutubeService
         return $updatedVideos;
     }
 
-    public static function searchByQuery(string $query, int $maxResults = 12)
+    public static function searchByQuery(string $query, int $maxResults = 12): array
     {
         $results = Youtube::searchAdvanced([
             'q' => $query,
@@ -71,5 +72,19 @@ class YoutubeService
         }
 
         return $videos;
+    }
+
+    public static function fixBrokenVideo(Media $media)
+    {
+        $currentMediaTitle = $media->title;
+        $results = self::searchByQuery($currentMediaTitle, 1);
+        $firstResult = $results[0] ?? null;
+
+        if ($firstResult) {
+            Media::updateFromYoutubeVideo($media, $firstResult, ['user_id' => $media->user_id]);
+            return;
+        }
+
+        throw new Exception('Could not find a replacement video.');
     }
 }

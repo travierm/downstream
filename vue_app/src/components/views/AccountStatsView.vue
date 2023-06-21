@@ -23,7 +23,7 @@
                     <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
                         <YoutubeCard :plays="item.plays" :item="item.media" :guid="item.media.guid" :title="item.media.title" :mediaId="item.media.media_id"
                             :videoId="item.media.index" :spotifyId="item.media.spotify_id" :thumbnail="item.media.thumbnail"
-                            :collected="item.collected" :key="item.guid"></YoutubeCard>
+                            :collected="true" :key="item.guid"></YoutubeCard>
                     </v-lazy>
                 </CardCol>
             </v-row>
