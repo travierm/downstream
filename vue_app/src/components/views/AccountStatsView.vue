@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-center flex-column mx-8">
+    <div class="d-flex justify-center flex-column mx-8 mt-2">
         <div class="d-flex ml-3">
                 <LineChart class="w-50 mr-4" v-if="stats.play_count_history" title="Plays by Month" series-name="Plays"
                     series-color="#F5F3C1" :chart-data="stats.play_count_history" />
