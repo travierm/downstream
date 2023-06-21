@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\Media;
-use App\Services\YoutubeService;
 use Illuminate\Http\Request;
+use App\Services\YoutubeService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class MediaController extends Controller
 {
@@ -28,6 +29,13 @@ class MediaController extends Controller
 
     public function autofixByMediaId(string $id)
     {
+        $userType = Auth::user()->type;
+        if($userType !== 'admin') {
+            return response()->json([
+                'message' => 'Only admins can autofix videos',
+            ], 403);
+        }
+
         $media = Media::find($id);
         if(!$media) {
             return response()->json([
