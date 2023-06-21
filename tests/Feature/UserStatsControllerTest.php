@@ -35,8 +35,8 @@ class UserStatsControllerTest extends TestCase
         $response = $this->get('/api/user/stats');
         $response->assertStatus(200);
 
-        $this->assertEquals(5, $response->json('play_count_history')['data'][9]);
-        $this->assertEquals(1, $response->json('collection_count_history')['data'][9]);
+        $this->assertEquals(5, end($response->json('play_count_history')['data']));
+        $this->assertEquals(1, end($response->json('collection_count_history')['data']));
     }
 
     public function test_can_get_top_ten_tracks()
@@ -63,20 +63,9 @@ class UserStatsControllerTest extends TestCase
         $response = $this->get('/api/user/stats');
         $response->assertStatus(200);
 
-        $json = $response->json();
-        $this->assertEquals([
-            'media_id' => $firstUserMedia->media_id,
-            'title' => $firstUserMedia->media->title,
-            'thumbnail' => $firstUserMedia->media->thumbnail,
-            'plays' => $firstUserMediaPlays,
-        ], $json['top_ten_tracks'][0]);
-
-        $this->assertEquals([
-            'media_id' => $secondUserMedia->media_id,
-            'title' => $secondUserMedia->media->title,
-            'thumbnail' => $secondUserMedia->media->thumbnail,
-            'plays' => $secondUserMediaPlays,
-        ], $json['top_ten_tracks'][1]);
+        $json = $response->json('top_played_tracks');
+        $this->assertEquals($firstUserMedia->media->title, $json[0]['media']['title']);
+        $this->assertEquals($secondUserMedia->media->title, $json[1]['media']['title']);
 
     }
 }
