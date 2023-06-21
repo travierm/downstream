@@ -38,6 +38,12 @@
           </v-list-item-content>
         </template>
       </v-list-item>
+
+       <v-list-item style="position: absolute; bottom: 0;">
+            <span>
+              <small>App Version: {{ getAppVersion() }}</small>
+            </span>
+        </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -45,6 +51,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { identicon } from 'minidenticons'
+import { getAppVersion } from '@/services/GlobalFunctions'
 
 export default {
   name: 'NavDrawer',
@@ -106,6 +113,7 @@ export default {
     },
   },
   methods: {
+    getAppVersion,
     handleNavClick(path) {
       this.$router.push(path)
       this.$store.dispatch('toggleNavDrawerStatus')

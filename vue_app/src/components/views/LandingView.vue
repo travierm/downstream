@@ -5,20 +5,11 @@
         <h1 class="ds-gradient">downstream</h1>
         <h2>A private music collection service</h2>
 
-        <h3 class="mt-8">This site is under active development.</h3>
-
-        <h3>
-          App Version:
-          <v-chip label class="ma-2" color="orange" text-color="white">{{
-            getAppVersion()
-          }}</v-chip>
-        </h3>
-
-        <v-btn color="primary" to="/login" class="mt-4 mb-4" large>
+        <v-btn color="primary" to="/login" class="mt-4 mb-4" medium>
           Login
         </v-btn>
 
-        <v-btn
+        <!-- <v-btn
           color="primary"
           to="/waitlist"
           class="mt-4 mb-4 ml-2 text-dark"
@@ -27,17 +18,12 @@
         >
         <v-btn color="primary" to="/waitlist" class="mt-4 mb-4 ml-2" large
           >Signup with Invite Code</v-btn
-        >
+        > -->
       </v-col>
 
       <CardCol class="text-xs-center">
-        <PlayableYoutubeCard
-          :guid="'m_' + selectedMedia.videoId"
-          :videoId="selectedMedia.videoId"
-          :title="selectedMedia.title"
-          :thumbnail="selectedMedia.thumbnail"
-          :hide-actions="true"
-        ></PlayableYoutubeCard>
+        <PlayableYoutubeCard :guid="'m_' + selectedMedia.videoId" :videoId="selectedMedia.videoId"
+          :title="selectedMedia.title" :thumbnail="selectedMedia.thumbnail" :hide-actions="true"></PlayableYoutubeCard>
       </CardCol>
     </v-row>
   </v-container>
@@ -47,6 +33,7 @@
 import CardCol from '../CardCol'
 import { getAppVersion } from '@/services/GlobalFunctions'
 import PlayableYoutubeCard from '@/components/YoutubeCard/PlayableYoutubeCard'
+import { mdiMusicNotePlus } from '@mdi/js';
 
 const demoMediaItems = [
   {
@@ -54,11 +41,11 @@ const demoMediaItems = [
     title: 'Kuzu Mellow sunflower feelings (prod. by koruo)',
     thumbnail: 'https://i.ytimg.com/vi/OcnuAHbI2WI/sddefault.jpg',
   },
-  {
-    videoId: 'm_qlgFQs7E4',
-    title: 'Yas - Empty Crown',
-    thumbnail: 'https://i.ytimg.com/vi/m_qlgFQs7E4/sddefault.jpg',
-  },
+  // {
+  //   videoId: 'm_qlgFQs7E4',
+  //   title: 'Yas - Empty Crown',
+  //   thumbnail: 'https://i.ytimg.com/vi/m_qlgFQs7E4/sddefault.jpg',
+  // },
   {
     videoId: '6wi1nJWk-QE',
     title: 'lofi.samurai - water',

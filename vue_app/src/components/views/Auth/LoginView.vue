@@ -16,6 +16,7 @@
         <v-row class="mt-2">
           <v-col>
             <h1>Login</h1>
+            <p class="mt-2">An invite is required to join downstream.</p>
 
             <v-alert v-if="error" type="error" class="mt-2 mb-0">
               Email or Password is incorrect!
