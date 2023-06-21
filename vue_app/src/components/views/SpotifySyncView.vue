@@ -148,6 +148,8 @@ export default {
         this.syncing = true
         await runSpotifySync()
         await this.fetchImportStats()
+
+        this.$store.dispatch('collection/fetchCollection')
       } catch (error) {
         console.error(error)
       } finally {
