@@ -21,15 +21,12 @@
               class="focusBtn ml-2"><v-icon>mdi-fullscreen</v-icon></v-btn>
           </v-col>
 
-          <!-- <v-col cols="auto">
-          <v-btn
-            v-if="onCollectionRoute"
-            @click="shuffleCollection"
-            color="primary"
-            class="focusBtn ml-2"
-            ><v-icon>mdi-shuffle-variant</v-icon></v-btn
-          >
-        </v-col> -->
+          <v-col cols="auto">
+            <v-btn v-if="onCollectionRoute" @click="shuffleCollection" color="primary" class="focusBtn ml-2">
+              <v-icon v-if="!shuffled">mdi-shuffle-variant</v-icon>
+              <v-icon v-else>mdi-shuffle-disabled</v-icon>
+            </v-btn>
+          </v-col>
 
           <!-- <v-col cols="auto">
           <v-btn
@@ -65,6 +62,7 @@ import { mdiReplay } from '@mdi/js'
 import VolumeSlider from './VolumeSlider'
 import YoutubePlayerManager from '../services/YoutubePlayerManager'
 import { getPlayerSizeByCategory } from '../services/api/ScreenSizeService'
+import { mapState } from 'vuex'
 
 export default {
   name: 'BottomBar',
@@ -72,6 +70,9 @@ export default {
     VolumeSlider,
   },
   computed: {
+    ...mapState({
+      shuffled: (store) => store.collection.shuffled,
+    }),
     playerQueueCount() {
       return this.manager.guidQueue.length
     },
@@ -172,4 +173,5 @@ export default {
   /* Adjust the opacity to your preference */
   z-index: 999;
   /* Ensure the overlay appears above other elements */
-}</style>
+}
+</style>

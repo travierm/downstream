@@ -1,6 +1,6 @@
-import { getCurrentPathFromURL } from '@/services/GlobalFunctions';
+import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
 
-import YoutubePlayerManager from '../../services/YoutubePlayerManager';
+import YoutubePlayerManager from '../../services/YoutubePlayerManager'
 
 export const namespaced = true
 export const state = {
@@ -50,6 +50,10 @@ export const actions = {
     YoutubePlayerManager.updateGuidVideoMap(map)
   },
   updateGuidData({ dispatch }, { guidIndexKey, mediaItems }) {
+    if (!mediaItems) {
+      throw new Error('mediaItems are required')
+    }
+
     let guidIndex = []
 
     // @ TODO we need to clean up this map or it'll build up with duplicate guids
@@ -70,4 +74,3 @@ export const actions = {
     dispatch('updateGuidVideoMap', guidVideoMap)
   },
 }
-

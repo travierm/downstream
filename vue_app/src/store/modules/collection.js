@@ -1,8 +1,6 @@
-import CollectionService from '@/services/api/CollectionService';
-import { deleteUrlParam, setUrlParam } from '@/services/GlobalFunctions';
-import _ from 'lodash';
-
-import router from '../../router';
+import CollectionService from '@/services/api/CollectionService'
+import { deleteUrlParam, setUrlParam } from '@/services/GlobalFunctions'
+import _ from 'lodash'
 
 export const namespaced = true
 export const state = {
@@ -18,6 +16,9 @@ export const mutations = {
   SET_SEARCH_QUERY(state, query) {
     state.searchQuery = query
     state.searchQueryUpdates++
+  },
+  SET_SHUFFLED(state, value) {
+    state.shuffled = value
   },
   SHUFFLE_COLLECTION(state) {
     state.shuffled = true
@@ -65,41 +66,42 @@ export const getters = {
 
 export const actions = {
   setSearchQuery(context, newQuery) {
-
     context.commit('SET_SEARCH_QUERY', newQuery)
-    if(newQuery === null) {
+    if (newQuery === null) {
       deleteUrlParam('search')
-    }else{
+    } else {
       setUrlParam('search', newQuery)
     }
-  
+
     context.dispatch(
       'player/updateGuidData',
       {
-        guidIndexKey: newQuery === null ? `/collection` : `/collection?search=${newQuery}`,
+        guidIndexKey:
+          newQuery === null ? `/collection` : `/collection?search=${newQuery}`,
         mediaItems: context.getters.collectionSearchResults,
       },
       { root: true }
     )
   },
   shuffle(context) {
-    context.commit('SHUFFLE_COLLECTION')
+    const isShuffled = context.state.shuffled
 
-    context.dispatch(
-      'player/updateGuidIndex',
-      {
-        guidIndexKey: '/collection?shuffled=1',
-        guidIndex: context.getters.guidIndex,
-      },
-      {
-        root: true,
-      }
-    )
-
-    router.push({
-      path: '/collection',
-      query: { shuffled: 1 },
-    })
+    if (isShuffled) {
+      deleteUrlParam('shuffled')
+      context.commit('SET_SHUFFLED', false)
+      context.dispatch('fetchCollection')
+    } else {
+      setUrlParam('shuffled', 1)
+      context.commit('SHUFFLE_COLLECTION')
+      context.dispatch(
+        'player/updateGuidData',
+        {
+          guidIndexKey: '/collection?shuffled=1',
+          mediaItems: context.state.collection,
+        },
+        { root: true }
+      )
+    }
   },
   collectItem(commit, videoId) {
     return CollectionService.collectItem(videoId)
