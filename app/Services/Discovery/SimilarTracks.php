@@ -25,8 +25,6 @@ class SimilarTracks
 
         if (! $spotifyId) {
             throw new \Exception('Could not match video_id to discovery services');
-
-            return false;
         }
 
         // Use given track as a seed to find similar tracks on Spotify

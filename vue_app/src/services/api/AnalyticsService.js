@@ -1,14 +1,18 @@
 import http from './Client'
 
-async function playedMedia(mediaId = false) {
+async function playedMedia(mediaId = false, playType) {
   if (!mediaId) {
     return
   }
 
   try {
-    return http.get('/ana/media/play/' + mediaId)
+    console.info('Pinging server about played media', mediaId, playType)
+
+    return http.post('/ana/media/play/' + mediaId, {
+      playType,
+    })
   } catch (error) {
-    console.error(error)
+    throw Error
   }
 }
 

@@ -9,5 +9,5 @@ class UserMediaPlays extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'media_id'];
+    protected $fillable = ['user_id', 'media_id', 'play_type'];
 }

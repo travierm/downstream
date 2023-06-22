@@ -69,7 +69,6 @@ import AutoFixAction from './AutoFixAction'
 import CollectedByFooter from './CollectedByFooter.vue'
 
 // Services
-import Analytics from '../../services/api/AnalyticsService'
 import YoutubePlayerManager from '../../services/YoutubePlayerManager'
 
 import { mdiSpotify, mdiLayersSearch, mdiRepeat } from '@mdi/js'
@@ -140,7 +139,6 @@ export default {
   methods: {
     handleThumbnailClick() {
       this.$store.dispatch('player/playGuid', this.guid)
-      Analytics.playedMedia(this.mediaId)
     },
     handleAutoFix() {
       this.$store.dispatch('player/autoFix', this.mediaId)
