@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use DB;
 use App\Models\User;
-use App\Repos\MediaRepo;
 use App\Repos\FollowerRepo;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -15,7 +14,6 @@ class FollowerController extends Controller
 {
     public function getFollowingActivity()
     {
-        $mediaRepo = new MediaRepo();
         $followerRepo = new FollowerRepo();
 
         $items = $followerRepo->getRecentlyCollectedItemsFromFollowing(Auth::user(), 48);
