@@ -26,6 +26,7 @@ class DiscoverTrackController extends Controller
         $items = [];
         try {
             $items = SimilarTracks::similarTracksByMedia($media);
+            array_unshift($items, $media);
 
             $lc->info(sprintf('found %s similar tracks', count($items)));
         } catch(\Exception $e) {
