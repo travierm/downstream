@@ -179,29 +179,23 @@ class YoutubePlayerManager {
         throw err
       })
 
-      let previousTimestamp = null
-      videoPlayerInstance.on('timeupdate', (currentTimestamp) => {
-        if (
-          previousTimestamp !== null &&
-          previousTimestamp * 0.65 > currentTimestamp
-        ) {
-          const currentMediaId = this.findVideoByGuid(
-            this.currentPlayingGuid
-          )?.id
-
-          if (currentMediaId) {
-            AnalyticsService.playedMedia(
-              this.findVideoByGuid(this.currentPlayingGuid)?.id,
-              'rewind'
-            )
+      const currentMediaId = this.findVideoByGuid(this.currentPlayingGuid)?.id
+      if (currentMediaId) {
+        let previousTimestamp = null
+        videoPlayerInstance.on('timeupdate', (currentTimestamp) => {
+          if (
+            previousTimestamp !== null &&
+            previousTimestamp * 0.65 > currentTimestamp
+          ) {
+            AnalyticsService.playedMedia(currentMediaId, 'rewind')
 
             console.log(
               'The video was rewinded more than 35% from last time update.'
             )
           }
-        }
-        previousTimestamp = currentTimestamp
-      })
+          previousTimestamp = currentTimestamp
+        })
+      }
 
       videoPlayerInstance.on('ended', () => {
         this.playNext()
