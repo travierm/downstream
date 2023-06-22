@@ -1,4 +1,4 @@
-<h1>Downstream</h1>
+<h1>downstream</h1>
 
 ![](https://github.com/travierm/downstream/actions/workflows/laravel.yml/badge.svg)
 
