@@ -20,6 +20,7 @@
 import CardCol from '@/components/CardCol'
 import BottomBar from '@/components/BottomBar'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
+import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
 
 export default {
   name: 'SearchView',
@@ -56,7 +57,7 @@ export default {
           if (response.data.results) {
             this.results = response.data.results
             this.$store.dispatch('player/updateGuidData', {
-              guidIndexKey: this.$route.fullPath,
+              guidIndexKey: getCurrentPathFromURL(),
               mediaItems: response.data.results,
             })
           }

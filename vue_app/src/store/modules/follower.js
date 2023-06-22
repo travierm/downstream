@@ -1,4 +1,8 @@
-import FollowerService from '@/services/api/FollowerService'
+import {
+  fetchFollowage,
+  follow,
+  unFollow,
+} from '@/services/api/FollowerService'
 
 export const namespaced = true
 export const state = {
@@ -41,7 +45,7 @@ export const actions = {
       return
     }
 
-    const result = await FollowerService.fetchFollowage()
+    const result = await fetchFollowage()
 
     context.commit('SET_FOLLOWERS', result.data.followers)
     context.commit('SET_FOLLOWING', result.data.following)
@@ -51,7 +55,7 @@ export const actions = {
       return
     }
 
-    const result = await FollowerService.follow(followId)
+    const result = await follow(followId)
     context.commit('FOLLOW', result.data.followedUser)
   },
   async unfollow(context, followId) {
@@ -59,7 +63,7 @@ export const actions = {
       return
     }
 
-    await FollowerService.unFollow(followId)
+    await unFollow(followId)
     context.commit('UNFOLLOW', followId)
   },
 }

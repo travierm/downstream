@@ -35,6 +35,8 @@
 import { getUserStats } from '@/services/api/UserStatsService';
 import PlayCountHistoryChart from '../Charts/LineChart.vue';
 import LineChart from '../Charts/LineChart.vue';
+import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
+
 
 export default {
     name: 'AccountStatsView',
@@ -50,9 +52,8 @@ export default {
             this.stats = response.data;
 
             if(this.stats.top_played_tracks?.length >= 1) {
-                console.log(this.$route.fullPath);
                 this.$store.dispatch('player/updateGuidData', {
-                    guidIndexKey: this.$route.fullPath,
+                    guidIndexKey: getCurrentPathFromURL(),
                     mediaItems: this.stats.top_played_tracks.map((item) => item.media),
                 })
             }

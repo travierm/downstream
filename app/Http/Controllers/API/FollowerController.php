@@ -2,15 +2,27 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Auth;
 use DB;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Repos\FollowerRepo;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class FollowerController extends Controller
 {
+    public function getFollowingActivity()
+    {
+        $followerRepo = new FollowerRepo();
+
+        $items = $followerRepo->getRecentlyCollectedItemsFromFollowing(Auth::user(), 48);
+
+        return response()->json([
+            'items' => $items,
+        ], 200);
+    }
+
     public function follow(Request $request)
     {
         $authUser = Auth::user();

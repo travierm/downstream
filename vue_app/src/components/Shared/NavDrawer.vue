@@ -70,12 +70,12 @@ export default {
     },
     navLinks() {
       return [
+        { icon: 'mdi-database', title: 'Collection', to: '/collection' },
         {
           icon: 'mdi-chart-bar-stacked',
-          title: 'Account Stats',
+          title: 'Stats',
           to: `/stats`,
         },
-        { icon: 'mdi-database', title: 'Collection', to: '/collection' },
         { icon: 'mdi-spotify', title: 'Spotify Sync', to: '/spotify' },
         {
           title: 'divider',
@@ -86,9 +86,19 @@ export default {
           to: `/users`
         },
         {
-          icon: 'mdi-account',
-          title: 'Your Profile',
-          to: `/profile/${this.user.hash}`,
+          icon: 'mdi-bell-alert-outline',
+          title: 'Follower Feed',
+          to: '/follower/activity'
+        },
+        // {
+        //   icon: 'mdi-account-details',
+        //   title: 'Your Profile',
+        //   to: `/profile/${this.user.hash}`,
+        // },
+         {
+          icon: 'mdi-account-multiple-plus',
+          title: 'Invite Friends',
+          to: `/invite`,
         },
       ]
     },

@@ -20,7 +20,6 @@ export const mutations = {
 
 export const actions = {
   playGuid({ state, rootState, commit, dispatch }, guid) {
-    //const currentPath = rootState.route.fullPath
     const currentPath = getCurrentPathFromURL()
     const pathGuidIndex = state.guidIndexMap[currentPath]
 

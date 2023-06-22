@@ -22,6 +22,11 @@ class UserMedia extends Model
         return $this->belongsTo(Media::class);
     }
 
+     public function user()
+     {
+         return $this->belongsTo(User::class);
+     }
+
     public static function findById($mediaId, $userId)
     {
         return self::where('media_id', $mediaId)

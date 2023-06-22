@@ -78,6 +78,7 @@ Route::namespace('API')->group(function () {
         Route::get('/spotify/run-sync', 'SpotifyController@runSpotifySync');
 
         // Following API
+        Route::get('/following/activity', 'FollowerController@getFollowingActivity');
         Route::get('/followage', 'FollowerController@getFollowage');
         Route::put('/follow/{followId}', 'FollowerController@follow');
         Route::delete('/unfollow/{followId}', 'FollowerController@unfollow');

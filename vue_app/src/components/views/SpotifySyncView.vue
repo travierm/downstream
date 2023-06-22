@@ -201,7 +201,6 @@ export default {
     getAuthorizeUrl() {
       getAuthorizeUrl()
         .then((resp) => {
-          debugger
           window.open(resp.data, '_self')
         })
         .catch((err) => {

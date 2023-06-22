@@ -1,19 +1,21 @@
 import http from './Client'
 
-function fetchFollowage() {
+export function fetchFollowage() {
   return http.get(`/followage`)
 }
 
-function unFollow(followerId) {
+export function unFollow(followerId) {
   return http.delete(`/unfollow/${followerId}`)
 }
 
-function follow(followerId) {
+export function follow(followerId) {
   return http.put(`/follow/${followerId}`)
 }
 
-function getActiveUsers() {
+export function getActiveUsers() {
   return http.get(`/users/active`)
 }
 
-export default { fetchFollowage, follow, unFollow, getActiveUsers }
+export function getFollowingActivites() {
+  return http.get(`/following/activity`).then((res) => res.data)
+}
