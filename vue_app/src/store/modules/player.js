@@ -33,7 +33,7 @@ export const actions = {
       YoutubePlayerManager.setGuidIndex(pathGuidIndex)
     }
 
-    YoutubePlayerManager.playGuid(guid)
+    YoutubePlayerManager.playGuid(guid, null, 'click-to-play')
   },
   stop() {
     YoutubePlayerManager.stopPlayingGuid()
@@ -65,6 +65,7 @@ export const actions = {
         videoId: item.index ?? item.videoId,
         title: item.title,
         thumbnail: item.thumbnail,
+        id: item.id ?? item.media_id ?? item.mediaId,
       }
     })
 

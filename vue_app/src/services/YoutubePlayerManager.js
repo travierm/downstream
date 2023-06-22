@@ -1,8 +1,9 @@
-import _ from 'lodash';
-import YTPlayer from 'yt-player';
+import _ from 'lodash'
+import YTPlayer from 'yt-player'
 
-import Cache from '../services/Cache';
-import { getPlayerSizeByCategory } from './api/ScreenSizeService';
+import Cache from '../services/Cache'
+import AnalyticsService from './api/AnalyticsService'
+import { getPlayerSizeByCategory } from './api/ScreenSizeService'
 
 const _DEBUG = true
 
@@ -27,7 +28,6 @@ class YoutubePlayerManager {
     this.videoPlayerInstance = false
 
     this.volumeChangeListener = []
-
 
     this.playerSize = getPlayerSizeByCategory('sm')
   }
@@ -73,10 +73,10 @@ class YoutubePlayerManager {
   setPlayerSize(width, height) {
     this.playerSize = {
       width,
-      height
+      height,
     }
 
-    if(this.videoPlayerInstance) {
+    if (this.videoPlayerInstance) {
       this.videoPlayerInstance._player.setSize(width, height)
     }
   }
@@ -170,7 +170,7 @@ class YoutubePlayerManager {
 
       videoPlayerInstance.setVolume(this.volume)
       videoPlayerInstance.load(videoId)
-      if(seekTime) {
+      if (seekTime) {
         videoPlayerInstance.seek(seekTime)
       }
       videoPlayerInstance.play()
@@ -178,13 +178,36 @@ class YoutubePlayerManager {
       videoPlayerInstance.on('error', (err) => {
         throw err
       })
-      console.log('playing video', videoId)
+
+      let previousTimestamp = null
+      videoPlayerInstance.on('timeupdate', (currentTimestamp) => {
+        if (
+          previousTimestamp !== null &&
+          previousTimestamp * 0.65 > currentTimestamp
+        ) {
+          const currentMediaId = this.findVideoByGuid(
+            this.currentPlayingGuid
+          )?.id
+
+          if (currentMediaId) {
+            AnalyticsService.playedMedia(
+              this.findVideoByGuid(this.currentPlayingGuid)?.id,
+              'rewind'
+            )
+
+            console.log(
+              'The video was rewinded more than 35% from last time update.'
+            )
+          }
+        }
+        previousTimestamp = currentTimestamp
+      })
 
       videoPlayerInstance.on('ended', () => {
         this.playNext()
       })
     } catch (error) {
-      console.log(error)
+      throw error
     }
 
     this.videoPlayerInstance = videoPlayerInstance
@@ -192,7 +215,7 @@ class YoutubePlayerManager {
     this.playerVolumeChangeWatcher()
   }
 
-  playGuid(guid, seekTime = null) {
+  playGuid(guid, seekTime = null, playType = 'autoplay') {
     const guidVideo = this.findVideoByGuid(guid)
     const previousPlayingGuid = _.clone(this.currentPlayingGuid)
 
@@ -205,6 +228,7 @@ class YoutubePlayerManager {
     this.currentPlayingGuid = guid
 
     this.loadVideo(guidVideo.videoId, seekTime)
+    AnalyticsService.playedMedia(guidVideo.id, playType)
   }
 
   onVolumeChange(listener) {

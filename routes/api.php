@@ -68,7 +68,7 @@ Route::namespace('API')->group(function () {
         Route::delete('/playlist/{playlistId}/delete/{mediaId}', 'PlaylistController@deleteItem');
 
         // Analytics
-        Route::get('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');
+        Route::post('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');
 
         // Spotify
         Route::get('/spotify/stats', 'SpotifyController@getUserStats');

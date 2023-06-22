@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Models\UserMediaPlays;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\UserMediaPlays;
+use App\Http\Controllers\Controller;
 
 class AnalyticsController extends Controller
 {
@@ -29,7 +30,7 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function recordUserPlay($mediaId = false)
+    public function recordUserPlay(Request $request, int $mediaId)
     {
         $userId = Auth::user()->id;
 
@@ -43,6 +44,7 @@ class AnalyticsController extends Controller
         $created = UserMediaPlays::create([
             'user_id' => $userId,
             'media_id' => $mediaId,
+            'play_type' => $request->playType,
         ]);
 
         if ($created) {
