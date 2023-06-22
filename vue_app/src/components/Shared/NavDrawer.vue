@@ -70,12 +70,12 @@ export default {
     },
     navLinks() {
       return [
+        { icon: 'mdi-database', title: 'Collection', to: '/collection' },
         {
           icon: 'mdi-chart-bar-stacked',
-          title: 'Account Stats',
+          title: 'Stats',
           to: `/stats`,
         },
-        { icon: 'mdi-database', title: 'Collection', to: '/collection' },
         { icon: 'mdi-spotify', title: 'Spotify Sync', to: '/spotify' },
         {
           title: 'divider',

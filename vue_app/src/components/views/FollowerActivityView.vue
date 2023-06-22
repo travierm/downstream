@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="pt-0">
-      <h1 class="text-center my-2 ">Follower Feed</h1>
+      <h2 class="my-2 ml-1">Follower Feed</h2>
       <v-row>
         <CardCol v-for="video in items" :key="video.guid">
           <YoutubeCard
