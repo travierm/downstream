@@ -1,8 +1,9 @@
 import AccountStatsView from '@/components/views/AccountStatsView'
-import Activity from '@/components/views/Activity'
 import LoginView from '@/components/views/Auth/LoginView'
 import CollectionView from '@/components/views/CollectionView'
 import DiscoverTrackView from '@/components/views/DiscoverTrackView'
+import FollowerActivityView from '@/components/views/FollowerActivityView'
+import InviteView from '@/components/views/InviteView'
 import LandingView from '@/components/views/LandingView'
 import ProfileView from '@/components/views/ProfileView'
 import SearchView from '@/components/views/SearchView'
@@ -26,9 +27,9 @@ const routes = [
 
   // In App Routes
   {
-    path: '/activity',
-    name: 'Activity',
-    component: Activity,
+    path: '/follower/activity',
+    name: 'Follower Activity',
+    component: FollowerActivityView,
     meta: {
       requiresAuth: true,
     },
@@ -37,6 +38,14 @@ const routes = [
     path: '/users',
     name: 'User List',
     component: UserListView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/invite',
+    name: 'Invite Friend',
+    component: InviteView,
     meta: {
       requiresAuth: true,
     },

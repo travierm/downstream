@@ -54,6 +54,7 @@
         </div>
       </v-img>
 
+      <CollectedByFooter v-if="collectedAt && collectedBy" :collected-at="collectedAt" :collected-by="collectedBy" />
       <!-- <div class="video-instance embed-responsive" :id="guid"></div> -->
     </v-card>
   </div>
@@ -65,6 +66,7 @@ import PushAction from './PushAction'
 import CollectAction from './CollectAction'
 import PlaylistAction from './PlaylistAction'
 import AutoFixAction from './AutoFixAction'
+import CollectedByFooter from './CollectedByFooter.vue'
 
 // Services
 import Analytics from '../../services/api/AnalyticsService'
@@ -80,11 +82,14 @@ export default {
     PushAction,
     CollectAction,
     PlaylistAction,
-  },
+    CollectedByFooter
+},
   props: {
     title: String,
     mediaId: Number,
     videoId: String,
+    collectedAt: String,
+    collectedBy: String,
     plays: {
       type: Number,
       required: false,

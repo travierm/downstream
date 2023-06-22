@@ -17,6 +17,8 @@ class Media extends Model
 
     public bool $collected = true;
 
+    public array $objectMeta = [];
+
     protected $fillable = [
         'id',
         'origin',
@@ -35,7 +37,8 @@ class Media extends Model
     protected $appends = [
         'guid',
         'media_id',
-        'collected'
+        'collected',
+        'object_meta'
     ];
 
     public function meta()
@@ -160,6 +163,11 @@ class Media extends Model
     public function getCollectedAttribute()
     {
         return $this->collected;
+    }
+
+    public function getObjectMetaAttribute()
+    {
+        return $this->objectMeta;
     }
 
     public function getMediaIdAttribute()

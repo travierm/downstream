@@ -62,6 +62,7 @@ import CardCol from '@/components/CardCol'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
 
 import CollectionService from '@/services/api/CollectionService'
+import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
 
 export default {
   name: 'ProfileView',
@@ -131,7 +132,7 @@ export default {
       this.profileIcon = identicon(result.data.user.display_name)
 
       this.$store.dispatch('player/updateGuidData', {
-        guidIndexKey: this.$route.fullPath,
+        guidIndexKey: getCurrentPathFromURL(),
         mediaItems: collection,
       })
     },

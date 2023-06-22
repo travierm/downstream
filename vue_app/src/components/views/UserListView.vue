@@ -26,7 +26,7 @@
 
 <script>
 import BottomBar from '@/components/BottomBar'
-import FollowerService from '@/services/api/FollowerService'
+import { getActiveUsers } from '@/services/api/FollowerService'
 
 export default {
   name: 'UserListView',
@@ -39,7 +39,7 @@ export default {
   computed: {},
   methods: {},
   mounted() {
-    FollowerService.getActiveUsers().then((response) => {
+    getActiveUsers().then((response) => {
       this.users = response.data
     })
   },
