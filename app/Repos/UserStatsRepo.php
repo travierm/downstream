@@ -4,6 +4,7 @@ namespace App\Repos;
 
 use App\Models\User;
 use App\Models\Media;
+use App\Models\UserMedia;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -89,13 +90,11 @@ class UserStatsRepo
         $data = [];
         $categories = [];
         foreach ($period as $date) {
-            $count = DB::table('user_media')
-                ->select(DB::raw('COUNT(media_id) as count'))
-                ->where('user_id', $user->id)
+            $count = UserMedia::where('user_id', $user->id)
                 ->whereDate('created_at', '<=', $date->endOfMonth())
-                ->first();
+                ->count();
 
-            $data[] = $count->count;
+            $data[] = $count;
             $categories[] = $date->shortMonthName.' '.$date->year;
         }
 

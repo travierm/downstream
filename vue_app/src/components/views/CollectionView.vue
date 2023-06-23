@@ -101,6 +101,9 @@ export default {
       return this.filteredCollection || this.collection
     },
   },
+  mounted() {
+    this.$store.dispatch('player/setCurrentIndex', this.$route.path)
+  },
   data() {
     return {
       mdiPlaylistMusic,
