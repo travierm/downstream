@@ -2,21 +2,37 @@
 
 namespace App\Services\Discovery;
 
-use App\MediaType\Transformer\SpotifyTrackTransformer;
-use App\Models\Media;
-use App\Services\Sources\SpotifyTrack;
-use App\Services\YoutubeService;
 use Carbon\Carbon;
+use App\Models\Media;
+use App\MediaType\YoutubeVideo;
+use App\Services\YoutubeService;
 use Illuminate\Support\Facades\Cache;
+use App\Services\Sources\SpotifyTrack;
+use App\MediaType\Transformer\SpotifyTrackTransformer;
+use App\Services\CodeBenchmark;
+use Cumulati\Monolog\LogContext;
 
 class SimilarTracks
 {
-    public static function similarTracksByMedia(Media $media, int $limit = 24)
+    /**
+     * @param Media $media
+     * @param integer $limit
+     * @return array<YoutubeVideo>
+     */
+    public static function similarTracksByMedia(Media $media, int $limit = 24): array
     {
+        $benchmark = new CodeBenchmark();
+        $benchmark->start();
+        $lc = new LogContext(['media_id' => $media->id, 'limit' => $limit]);
+        $lc->info('fetching similar tracks');
+
         $cacheKey = sprintf('similar_tracks_cache_for_%s', $media->id);
 
+        /** @var array<YoutubeVideo> $similarTracks */
         $similarTracks = Cache::get($cacheKey, []);
         if (count($similarTracks) >= 1) {
+            $lc->info('found similar tracks in cache', ['count' => count($similarTracks)]);
+
             return $similarTracks;
         }
 
@@ -24,6 +40,7 @@ class SimilarTracks
         $spotifyId = $media->getOrFindSpotifyId();
 
         if (! $spotifyId) {
+            $lc->warning('could not find spotify_id for media');
             throw new \Exception('Could not match video_id to discovery services');
         }
 
@@ -40,6 +57,11 @@ class SimilarTracks
                 $similarTracks[] = $youtubeSearchResults[0];
             }
         }
+        $lc->info(sprintf('done fetching data from spotify and youtube', count($similarTracks)), [
+            'seed_tracks' => count($seedTracks),
+            'youtube_results' => count($similarTracks),
+            'exec_time' => $benchmark->end(),
+        ]);
 
         Cache::put($cacheKey, $similarTracks, Carbon::now()->addDay());
 

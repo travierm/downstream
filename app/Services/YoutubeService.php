@@ -51,6 +51,11 @@ class YoutubeService
         return $updatedVideos;
     }
 
+    /**
+     * @param string $query
+     * @param integer $maxResults
+     * @return array<YoutubeVideo>
+     */
     public static function searchByQuery(string $query, int $maxResults = 12): array
     {
         $results = Youtube::searchAdvanced([

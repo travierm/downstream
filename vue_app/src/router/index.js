@@ -1,6 +1,7 @@
 import AccountStatsView from '@/components/views/AccountStatsView'
 import LoginView from '@/components/views/Auth/LoginView'
 import CollectionView from '@/components/views/CollectionView'
+import DailyMixView from '@/components/views/DailyMixView'
 import DiscoverTrackView from '@/components/views/DiscoverTrackView'
 import FollowerActivityView from '@/components/views/FollowerActivityView'
 import InviteView from '@/components/views/InviteView'
@@ -70,6 +71,14 @@ const routes = [
     path: '/discover/track/:videoId',
     name: 'DiscoverTrack',
     component: DiscoverTrackView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/daily-mix',
+    name: 'DailyMix',
+    component: DailyMixView,
     meta: {
       requiresAuth: true,
     },

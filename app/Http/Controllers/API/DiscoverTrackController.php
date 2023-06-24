@@ -2,12 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\Media;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use App\Services\Discovery\SimilarTracks;
 
 class DiscoverTrackController extends Controller
 {
+    public function getDailyMix()
+    {
+        $dailyMixCache = Cache::get('daily-mix-' . Auth::user()->id, null);
+        if(!$dailyMixCache) {
+            return response()->json([
+                'message' => "Daily Mix has not been generated for you yet. Make sure you've collected atleast one track this week."
+            ], 404);
+        }
+
+        return response()->json($dailyMixCache, 200);
+    }
+
     public function similarTracks($videoId)
     {
         $lc = getRequestLogContext();

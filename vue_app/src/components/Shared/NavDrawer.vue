@@ -71,12 +71,14 @@ export default {
     navLinks() {
       return [
         { icon: 'mdi-database', title: 'Collection', to: '/collection' },
+        { icon: 'mdi-robot-happy', title: 'Daily Mix', to: '/daily-mix' },
         {
           icon: 'mdi-chart-bar-stacked',
           title: 'Stats',
           to: `/stats`,
         },
         { icon: 'mdi-spotify', title: 'Spotify Sync', to: '/spotify' },
+        
         {
           title: 'divider',
         },

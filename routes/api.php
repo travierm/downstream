@@ -38,6 +38,8 @@ Route::namespace('API')->group(function () {
 
         // Discover
         Route::get('/discover/track/{videoId}', 'DiscoverTrackController@similarTracks');
+        Route::get('/daily-mix', 'DiscoverTrackController@getDailyMix');
+
 
         // UserController
         Route::get('/users/active', 'UserController@getActiveUsers');

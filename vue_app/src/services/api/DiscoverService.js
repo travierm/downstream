@@ -4,4 +4,8 @@ async function getSimilarTracksByVideoId(videoId) {
   return http.get(`/discover/track/${videoId}`)
 }
 
-export default { getSimilarTracksByVideoId }
+async function getDailyMix() {
+  return http.get(`/daily-mix`)
+}
+
+export default { getSimilarTracksByVideoId, getDailyMix }
