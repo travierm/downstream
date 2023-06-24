@@ -23,7 +23,6 @@ export default {
     name: 'SearchView',
     components: {
         CardCol,
-        BottomBar,
         YoutubeCard,
     },
     data: () => ({
