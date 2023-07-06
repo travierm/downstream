@@ -1,9 +1,8 @@
 <template>
   <div>
     <div @click="togglePlayerFullscreen" class="overlay" v-if="isPlayerFullscreen"></div>
-    <div class="rounded-lg"
-      :class="{ 'video-container-fullscreen': isPlayerFullscreen, 'video-container': !isPlayerFullscreen }">
-      <div class="video-instance" id="downstream-video-container"></div>
+    <div :class="{ 'video-container-fullscreen': isPlayerFullscreen, 'video-container': !isPlayerFullscreen }">
+      <div class="video-instance rounded" id="downstream-video-container"></div>
     </div>
 
     <v-app-bar app color="grey darken-4" dense dark fixed bottom>
@@ -142,7 +141,7 @@ export default {
 .video-container {
   position: fixed;
   bottom: 0%;
-  left: 0%;
+  right: 0%;
   width: 356px;
   height: 200px;
   background-color: black;
