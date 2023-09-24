@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('filter:run')->hourly();
-        $schedule->command('hydrate:daily-mix')->dailyAt('03:00');
+        //$schedule->command('hydrate:daily-mix')->dailyAt('03:00');
 
         // Continuously loop through media collection and autofix videos
         /*($schedule->command('youtube:autofix-queue')
