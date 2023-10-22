@@ -27,6 +27,10 @@ class UserStatsRepo
 
         return array_map(function ($item) {
             $media = Media::find($item['media_id']);
+            if(!$media) {
+                return;
+            }
+
             return [
                 'media' => $media->toArray(),
                 'plays' => $item['plays'],
