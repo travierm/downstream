@@ -22,20 +22,24 @@ class UserStatsRepo
             ->select('media_id', DB::raw('count(*) as plays'))
             ->groupBy('media_id')
             ->orderBy('plays', 'desc')
+            ->whereDate('created_at', '>=', now()->subYear(2))
             ->limit($limit)
             ->get();
 
-        return array_map(function ($item) {
-            $media = Media::find($item['media_id']);
+        $results = [];
+        foreach($topTracks as $track) {
+            $media = Media::find($track->media_id);
             if(!$media) {
-                return;
+                continue;
             }
 
-            return [
+            $results[] = [
                 'media' => $media->toArray(),
-                'plays' => $item['plays'],
+                'plays' => $track->plays
             ];
-        }, $topTracks->toArray());
+        }
+
+        return $results;
     }
 
     public function getPlayCountHistory(User $user, int $numOfMonths = 6)
@@ -52,7 +56,7 @@ class UserStatsRepo
                 ->count();
 
             $data[] = $count;
-            $categories[] = $date->shortMonthName.' '.$date->year;
+            $categories[] = $date->shortMonthName . ' ' . $date->year;
         }
 
         return [
@@ -99,7 +103,7 @@ class UserStatsRepo
                 ->count();
 
             $data[] = $count;
-            $categories[] = $date->shortMonthName.' '.$date->year;
+            $categories[] = $date->shortMonthName . ' ' . $date->year;
         }
 
         return [
