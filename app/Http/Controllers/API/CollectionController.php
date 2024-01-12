@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -27,8 +28,8 @@ class CollectionController extends Controller
                 'message' => 'No UserID was found',
             ], 401);
         } else {
-            $collectionCacheKey = 'user_collection_items_'.$userId;
-            $itemHashCacheKey = 'user_collection_items_hash_'.$userId;
+            $collectionCacheKey = 'user_collection_items_' . $userId;
+            $itemHashCacheKey = 'user_collection_items_hash_' . $userId;
         }
 
         $lc->info('fetching user collection', [
@@ -66,19 +67,34 @@ class CollectionController extends Controller
         }
 
         if ($request->randomized) {
-            $queryBuilder->orderByRaw('RAND()');
+            $queryBuilder->orderBy('created_at', 'DESC');
         } else {
             $queryBuilder->orderBy('user_media.pushed_at', 'DESC');
         }
 
         $items = $queryBuilder->get();
+        if($request->randomized) {
+            $items = $items->shuffle();
+
+            // Chunk the groups into sizes of 10 and shuffle each chunk
+            $shuffledChunks = $items->map(function ($group) {
+                return $group->chunk(10);
+            })->values()->all();
+
+            // Shuffle the chunks
+            shuffle($shuffledChunks);
+
+            // Flatten the array
+            $items = collect($shuffledChunks)->flatten(1)->all();
+        }
+
         $lc->info(sprintf('fetched %s media items from database', count($items)));
 
         $collection = [];
         foreach ($items as $media) {
             // items in collection will always be collected
             $media->collected = true;
-            $media->guid = 'guid_'.Str::random(35);
+            $media->guid = 'guid_' . Str::random(35);
 
             $collection[] = $media;
         }
@@ -133,7 +149,7 @@ class CollectionController extends Controller
             if ($isViewingSelf) {
                 $media->collected = true;
             }
-            $media->guid = 'guid_'.Str::random(35);
+            $media->guid = 'guid_' . Str::random(35);
 
             if ($isViewingSelf) {
                 $collection[] = $media;
