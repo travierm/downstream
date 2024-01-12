@@ -6,10 +6,10 @@
         <v-tooltip top v-if="spotifyId">
           <template v-slot:activator="{ on, attrs }">
             <v-icon v-bind="attrs" v-on="on" class="float-left" color="green">{{
-                mdiSpotify
+              mdiSpotify
             }}</v-icon>
           </template>
-          <span>Video was imported from Spotify</span>
+          <span>Video was synced from Spotify</span>
         </v-tooltip>
 
         <!-- Repeat Button -->
@@ -30,7 +30,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-btn v-on="on" v-bind="attrs" icon>
                 <v-icon class="ml-1" color="deep-purple accent-2">{{
-                    mdiLayersSearch
+                  mdiLayersSearch
                 }}</v-icon>
               </v-btn>
             </template>
@@ -38,7 +38,7 @@
           </v-tooltip>
         </router-link>
 
-        <AutoFixAction v-if="collected" :mediaId="mediaId" />
+        <!-- <AutoFixAction v-if="collected" :mediaId="mediaId" /> -->
         <PushAction v-if="collected" :mediaId="mediaId" />
         <!-- <PlaylistAction v-if="collected" :mediaId="mediaId" /> -->
         <CollectAction :videoId="videoId" :mediaId="mediaId" :collected="collected" />
@@ -82,7 +82,7 @@ export default {
     CollectAction,
     PlaylistAction,
     CollectedByFooter
-},
+  },
   props: {
     title: String,
     mediaId: Number,
