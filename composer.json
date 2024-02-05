@@ -10,7 +10,7 @@
   "require": {
     "php": ">=8.1",
     "cumulati/monolog-context": "^2.0",
-    "doctrine/dbal": "^3.5",
+    "doctrine/dbal": "^4.0",
     "fruitcake/laravel-cors": "^3.0",
     "guzzlehttp/guzzle": "^7.2",
     "jwilsson/spotify-web-api-php": "5.4.0",
