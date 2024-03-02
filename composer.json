@@ -1,22 +1,29 @@
 {
-  "name": "laravel/laravel",
-  "description": "The Laravel Framework.",
+  "name": "travierm/downstream",
+  "description": "Music collection service",
   "keywords": [
     "framework",
     "laravel"
   ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "license": "MIT",
   "type": "project",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/travierm/monolog-context"
+    }
+  ],
   "require": {
-    "php": ">=8.1",
-    "cumulati/monolog-context": "^2.0",
+    "php": ">=8.2",
+    "cumulati/monolog-context": "dev-monolog-3-upgrade",
     "doctrine/dbal": "^3.5",
-    "fruitcake/laravel-cors": "^3.0",
     "guzzlehttp/guzzle": "^7.2",
     "jwilsson/spotify-web-api-php": "5.4.0",
-    "laravel/framework": "^9.0",
+    "laravel/framework": "^10.0",
     "laravel/helpers": "^1.2",
-    "laravel/sanctum": "^3.0",
+    "laravel/sanctum": "^3.2",
     "laravel/tinker": "^2.7",
     "madcoda/php-youtube-api": "^1.2.6"
   },
@@ -24,8 +31,8 @@
     "fakerphp/faker": "^1.14.0",
     "laravel/pint": "^1.2",
     "mockery/mockery": "1.4.2",
-    "nunomaduro/collision": " ^6.1",
-    "phpunit/phpunit": "^9.5.10"
+    "nunomaduro/collision": " ^7.0",
+    "phpunit/phpunit": "^10.0"
   },
   "autoload": {
     "files": [
