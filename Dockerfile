@@ -1,6 +1,6 @@
 ARG ALPINE_VERSION=3.14
 # FROM alpine:${ALPINE_VERSION}
-FROM php:8.1-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 LABEL Maintainer="Travier Moorlag"
 LABEL Description="Lightweight container for running Laravel API's"
@@ -13,28 +13,28 @@ RUN apk add --no-cache \
   curl \
   nginx \
   mysql-client \
-  php81 \
-  php81-ctype \
-  php81-curl \
-  php81-dom \
-  php81-fpm \
-  php81-gd \
-  php81-intl \
-  php81-json \
-  php81-mbstring \
-  php81-mysqli \
-  php81-opcache \
-  php81-openssl \
-  php81-phar \
-  php81-session \
-  php81-xml \
-  php81-xmlreader \
-  php81-zlib \
-  php81-fileinfo \
-  php81-tokenizer \
-  php81-xmlwriter \
-  php81-pdo \
-  php81-pdo_mysql \
+  php82 \
+  php82-ctype \
+  php82-curl \
+  php82-dom \
+  php82-fpm \
+  php82-gd \
+  php82-intl \
+  php82-json \
+  php82-mbstring \
+  php82-mysqli \
+  php82-opcache \
+  php82-openssl \
+  php82-phar \
+  php82-session \
+  php82-xml \
+  php82-xmlreader \
+  php82-zlib \
+  php82-fileinfo \
+  php82-tokenizer \
+  php82-xmlwriter \
+  php82-pdo \
+  php82-pdo_mysql \
   supervisor
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql
@@ -47,8 +47,8 @@ RUN docker-php-ext-enable mysqli
 COPY .deploy/config/nginx.conf /etc/nginx/nginx.conf
 
 # Configure PHP-FPM
-COPY .deploy/config/fpm-pool.conf /etc/php81/php-fpm.d/www.conf
-COPY .deploy/config/php.ini /etc/php81/conf.d/custom.ini
+COPY .deploy/config/fpm-pool.conf /etc/php82/php-fpm.d/www.conf
+COPY .deploy/config/php.ini /etc/php82/conf.d/custom.ini
 
 # Configure supervisord
 COPY .deploy/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
