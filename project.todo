@@ -1,109 +1,11 @@
 
--- Project TODO --
 
-v1.4 Features
-☐ Invitation / Registration Page
-    ☐ Allows users to register their email and wait for approval
-        ☐ Users with an invitation code head straight to the registation page
-            ☐ "Do you have an invite code or would you like to be put on the waiting list?"
-        ☐ Use Captcha Service
-☐ Follow other users
-    ☐ Find / Follow other users
-        ☐ See what your friends are listening too
-        ☐ View your friends profile
-    ☐ Make your account hidden
-        ☐ Other can't see what you're listening to
-        ☐ You can't be found in User Search
-    ☐ Make your account private
-        ☐ You can only be added by using friend code
-    ☐ Make your account public
-        ☐ You can be seeing in leaderboards and in user lists
-☐ Spotify Sync
-    ☐ Import songs from your DS Import playlist on click
-☐ Bug Fixes
-
-
-Active:
-    ☐ MAKE SURE ITEMS FOUND OFF SPOTIFY GET PROPER ID SAVED
-    ☐ Discover Feature @started(21-04-19 22:27)
-        ☐ Discovery should run in the background
-        ☐ Need a way to save results
-            ☐ When sending to user check collected field again
-    ☐ Make sure api stats count uses Detroit Timezone
-    ☐ Collection Links & Stats
-    ☐ Clear users collection besides test media before running e2e tests
-    ☐ Give feedback when push to top is clicked
-        ☐ Like a toast message!
-    
-Bugs:
-    ☐ Shuffling multiple times with cause play manager to act weird
-    ☐ updating volume of card when shuffled
-    ☐ Keyboard stays up after loading search route on mobile ( focus issue )
-
--- Release Plan --
-Features:
-    ☐ Mood List
-
--- Ideas only beyond this --
-Small Features:
-    ☐ Ability to queue replays of current song
-    ☐ Change title text depending on background image
-    ☐ Maybe check px to px what the bg color will be for the font
-    ☐ Full screen mode pop in and out of items at fullscreen
-
-Listen to Friends:
-    ☐ Allow users to stream music friends are playing ( include history )
-    ☐ Allow users to disable this feature
-    ☐ Queue current song friend is playing
-
-Theater View:
-    ☐ Cool visualizer / Or play video ( maybe both )
-    ☐ Collection / Moodlist items shows up at the bottom
-    ☐ Show current playing song at bottom
-    ☐ Click to open list of next songs
-    ☐ Switch between collection and moodlist allow shuffling
-
-Moodlist Feature Todo:
-    ☐ Moodlist Model
-        ☐ Open on each item
-        ☐ Create new moodlist ( name string, private boolean )
-        ☐ Add song to existing moodlist
-            ☐ Show item count list for each moodlist
-            ☐ Show checkmarks for each moodlist the item is already on
-            ☐ Be able to remove from lists
-            ☐ Be able to add to lists
-    ☐ Make modal that can create or update a moodlist from the collection
-    ☐ Choose moods to filter songs on collection
-    ☐ Direct link to moodlists
-
-Streaming Feature:
-    ☐ Allow 100+ video connections
-    ☐ Queue Songs to be Played
-    ☐ Song Player
-    ☐ Search Bar
-
-Experiments:
-    ☐ Picture in Picture support https://googlechrome.github.io/samples/picture-in-picture/
-
-Archive:  
-  ✔ Mood Lists @done(21-04-19 22:27) @project(Active)
-  ✔ Backend @done(21-04-19 22:27) @project(Active)
-  ✔ Soft delete items from lists unless the entire list is deleted @done(21-04-19 22:27) @project(Active)
-    Allows items to get back original created_at ( or added to list date )
-  ✔ Push to Top @done(21-02-15 23:17) @project(Active)
-  ✔ Improve Collection Search @done(21-04-19 22:27) @project(Active)
-  ✔ Collection Shuffle @done(21-02-15 23:17) @project(Active)
-  ✔ Redirect to HTTPS automatically @done(21-02-15 21:00) @project(Bugs)
-  ✔ Remove popup only shows up once @done(21-02-14 20:11) @project(Bugs)
-  ✔ Removing an item resets the guidIndex but keeps playing song @done(21-02-14 12:18) @project(Bugs)
-  ✔ Focus & Volume Bar @done(21-01-02 00:18) @project(Active)
-  ✔ Login Card on mobile @done(21-01-02 12:16) @project(Bugs)
-  ✔ Title has symbols in it from search results @done(21-01-02 12:20) @project(Bugs)
-  ✔ cleanup navbar move admin/ off or somewhere else @done(19-04-20 14:16) @project(Active)
-  ✔ Fix Collection loading forever when not logged in @done(19-03-19 20:04) @project(Active)
-  ✔ Fix toss collection bug @done(19-03-31 12:22) @project(Active)
-  ✔ Remove user_guide for now @done(19-03-31 12:22) @project(Active)
-  ✔ Fix empty collection issues @done(19-04-18 22:27) @project(Active)
-  ✔ Add ability to follow users @done(19-04-18 22:27) @project(Active)
-  ✔ Show badge on navbar for new feed items @done(19-04-20 14:16) @project(Active)
-  ✔ Track last vist to feed @done(19-04-20 14:16) @project(Active)
+Downstream 2.0:
+    ☐ Remove vue_app/
+    ☐ Add back server rendering via blade
+    ☐ Pick a css library
+        ☐ tailwind or bootstrap
+    ☐ Hook up Auth
+    ☐ Start on Collection Page
+    ☐ Redo Search Bar
+    ☐ Spotify import page
