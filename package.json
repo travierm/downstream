@@ -1,10 +1,13 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
-        "serve": "cd vue_app/ && yarn serve",
-        "build": "cd vue_app/ && yarn build",
-        "test:e2e": "cd vue_app/ && yarn test:e2e"
+        "dev": "vite",
+        "build": "vite build"
     },
-    "devDependencies": {},
-    "dependencies": {}
+    "devDependencies": {
+        "axios": "^1.6.4",
+        "laravel-vite-plugin": "^1.0.0",
+        "vite": "^5.0.0"
+    }
 }
