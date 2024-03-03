@@ -29,6 +29,7 @@
     "madcoda/php-youtube-api": "^1.2.6"
   },
   "require-dev": {
+    "barryvdh/laravel-debugbar": "^3.10",
     "fakerphp/faker": "^1.14.0",
     "laravel/pint": "^1.2",
     "mockery/mockery": "1.4.2",
