@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\MediaType\YoutubeVideo;
+use App\Models\MediaType\YoutubeVideo;
 use App\Models\Media;
 use App\Models\UserMedia;
 use Exception;

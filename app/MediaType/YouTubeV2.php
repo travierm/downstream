@@ -1,9 +1,9 @@
 <?php
 
-namespace App\MediaType;
+namespace App\Models\MediaType;
 
-use App\Media;
-use App\UserMedia;
+use App\Models\Media;
+use App\Models\UserMedia;
 use Cache;
 use DateInterval;
 use DateTime;

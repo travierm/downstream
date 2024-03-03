@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Media;
 use Illuminate\Database\Eloquent\Model;
 
 class GlobalQueue extends Model
@@ -30,8 +29,7 @@ class GlobalQueue extends Model
     {
         $ids = self::where('active', 1)->orderBy('active_at', 'ASC')->pluck('media_id');
 
-        $mediaItems = Media::byType('youtube')
-            ->whereIn('id', $ids)
+        $mediaItems = Media::whereIn('id', $ids)
             ->get();
 
         $mediaItems = $mediaItems->shuffle();

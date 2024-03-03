@@ -1,8 +1,8 @@
 <?php
 
-namespace App\MediaType;
+namespace App\Models\MediaType;
 
-use App\MediaType\Transformer\YoutubeSearchResult;
+use App\Models\MediaType\Transformer\YoutubeSearchResult;
 use App\Services\Filter;
 use Illuminate\Support\Str;
 

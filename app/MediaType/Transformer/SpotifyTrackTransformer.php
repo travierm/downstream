@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MediaType\Transformer;
+namespace App\Models\MediaType\Transformer;
 
 class SpotifyTrackTransformer
 {

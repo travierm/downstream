@@ -2,17 +2,18 @@
 
 namespace App\Mail;
 
-use App\Media;
-use App\MediaRemoteReference;
-use App\User;
-use App\UserMedia;
+use App\Models\Media;
+use App\Models\MediaRemoteReference;
+use App\Models\User;
+use App\Models\UserMedia;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class JoinDateAnniversary extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $collectionSize;
 

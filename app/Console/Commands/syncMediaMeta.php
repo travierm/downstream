@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Media;
-use App\MediaMeta;
-use App\MediaTag;
+use App\Models\Media;
+use App\Models\MediaMeta;
+use App\Models\MediaTag;
 use App\Tag;
 use Illuminate\Console\Command;
 
@@ -54,7 +54,7 @@ class syncMediaMeta extends Command
             $meta = $media->getMeta();
 
             //save new meta row
-            $mediaMeta = new MediaMeta;
+            $mediaMeta = new MediaMeta();
             $mediaMeta->media_id = $media->id;
             $mediaMeta->title = $meta->title;
             $mediaMeta->thumbnail = $meta->thumbnail;

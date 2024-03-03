@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\GlobalQueue;
 use App\Http\Controllers\Controller;
-use App\UserMedia;
+use App\Models\UserMedia;
 
 class GlobalQueueController extends Controller
 {

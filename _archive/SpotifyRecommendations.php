@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Media;
-use App\Media\YouTubeV2;
-use App\MediaRemoteReference;
+use App\Models\Media;
+use App\Models\Media\YouTubeV2;
+use App\Models\MediaRemoteReference;
 use App\Services\SpotifyAPI;
 use Cache;
 use DB;

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Media\YouTubeV2;
-use App\MediaTempItem;
+use App\Models\Media\YouTubeV2;
+use App\Models\MediaTempItem;
 use App\Services\SpotifyAPI;
 use Illuminate\Console\Command;
 

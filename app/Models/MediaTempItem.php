@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Media;
-use App\UserMedia;
+use App\Models\Media;
+use App\Models\UserMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class MediaTempItem extends Model

@@ -27,17 +27,17 @@
   <div class="row">
     <div class="col-lg-6">
       <ul class="list-group">
-        <li class="list-group-item list-group-item-warning">Total Users: {{ App\User::count() }}</li>
-        <li class="list-group-item list-group-item-warning">Total Media Items: {{ App\Media::count() }}</li>
+        <li class="list-group-item list-group-item-warning">Total Users: {{ App\Models\User::count() }}</li>
+        <li class="list-group-item list-group-item-warning">Total Media Items: {{ App\Models\Media::count() }}</li>
         <li class="list-group-item list-group-item-warning">
           Media created this week: 
           {{ 
-            App\Media::whereBetween('created_at', 
+            App\Models\Media::whereBetween('created_at', 
               [Carbon\Carbon::now()->startOfWeek(), Carbon\Carbon::now()->endOfWeek()]
             )->count()
           }}
         </li>
-        <li class="list-group-item list-group-item-primary">Autofix.lastMediaId: {{ Cache::get('youtubeAutofix.lastMediaId') }} / {{ App\Media::count() }}</li>
+        <li class="list-group-item list-group-item-primary">Autofix.lastMediaId: {{ Cache::get('youtubeAutofix.lastMediaId') }} / {{ App\Models\Media::count() }}</li>
         <li class="list-group-item list-group-item-primary">Autofix.fixedMediaItems: {{ Cache::get('youtubeAutofix.fixedMediaItems') }}</li>
       </ul>
     </div>

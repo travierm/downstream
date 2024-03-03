@@ -1,7 +1,7 @@
 <?php
 
-use App\Media;
-use App\User;
+use App\Models\Media;
+use App\Models\User;
 
 $_user_display_names = [];
 

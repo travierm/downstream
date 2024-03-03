@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\JoinDateAnniversary;
-use App\User;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Mail;
 

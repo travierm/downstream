@@ -4,11 +4,11 @@ namespace App\Services\Discovery;
 
 use Carbon\Carbon;
 use App\Models\Media;
-use App\MediaType\YoutubeVideo;
+use App\Models\MediaType\YoutubeVideo;
 use App\Services\YoutubeService;
 use Illuminate\Support\Facades\Cache;
 use App\Services\Sources\SpotifyTrack;
-use App\MediaType\Transformer\SpotifyTrackTransformer;
+use App\Models\MediaType\Transformer\SpotifyTrackTransformer;
 use App\Services\CodeBenchmark;
 use Cumulati\Monolog\LogContext;
 

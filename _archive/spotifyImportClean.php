@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\MediaMeta;
+use App\Models\MediaMeta;
 use App\Services\SpotifyAPI;
-use App\UserMedia;
-use App\UserSpotifyToken;
+use App\Models\UserMedia;
+use App\Models\UserSpotifyToken;
 use Illuminate\Console\Command;
 
 class spotifyImportClean extends Command

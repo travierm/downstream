@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\MediaTempItem;
+use App\Models\MediaTempItem;
 use Artisan;
 
 class ToplistController extends Controller
