@@ -2,7 +2,6 @@
 
 use Cumulati\Monolog\LogContext;
 use App\Global\RequestLogContext;
-use Illuminate\Database\Eloquent\Collection;
 
 function getRequestLogContext(): LogContext
 {
