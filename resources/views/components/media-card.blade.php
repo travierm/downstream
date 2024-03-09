@@ -1,4 +1,4 @@
-<div class="card text-truncate mt-4" style="width: 18rem;">
+<div class="card text-truncate mt-4">
     <div class="card-header">
         {{ $title }}
     </div>

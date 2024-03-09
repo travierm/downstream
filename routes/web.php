@@ -49,6 +49,8 @@ Route::get('/artists', "ArtistController@getIndex");
 
 // Collection
 Route::get('/collection', [CollectionController::class, 'getIndex']);
+Route::get('/collection/slice', [CollectionController::class, 'getSlice']);
+
 
 //Link Sharing
 //View a media item
