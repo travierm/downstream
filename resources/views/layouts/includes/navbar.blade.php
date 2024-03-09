@@ -55,28 +55,9 @@
                     @endif
 
                     <li class="nav-item">
-                        <router-link class="nav-link text-lg" to="/collection">Collection</router-link>
+                        <a class="nav-link" href="{{ url('/collection') }}">Collection</a>
                     </li>
 
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/discover">Discover <span
-                                class="badge badge-{{ @Auth::user() ? @Auth::user()->themeOption('style_type') : 'dark' }}">{{ $discovered_items_count }}</span></router-link>
-                    </li>
-
-                    <!-- <li class="nav-item">
-                    <router-link class="nav-link" to="/stream">Stream</router-link>
-                </li> -->
-
-                    <!-- <li class="nav-item">
-                    <a class="nav-link" href="">Global</a>
-                </li> -->
-
-                    <!-- <li class="nav-item">
-                    <router-link class="nav-link text-lg" to="/radio">Radio</router-link>
-                </li>-->
-                    <!--<li class="nav-item">
-                    <router-link class="nav-link" to="/playlists">Playlists</router-link>
-                </li>-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle cursor-pointer" data-bs-toggle="dropdown">User</a>
                         <div class="dropdown-menu">

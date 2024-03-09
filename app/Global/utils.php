@@ -9,6 +9,18 @@ function getRequestLogContext(): LogContext
     return RequestLogContext::getContext();
 }
 
+/**
+ * Get the Request Log Context
+ *
+ * Allows log messages to be chained using a request ID
+ *
+ * @return LogContext
+ */
+function rlc(): LogContext
+{
+    return getRequestLogContext();
+}
+
 function lc(array $context = []): LogContext
 {
     return new LogContext($context);
