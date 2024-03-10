@@ -13,6 +13,7 @@ class MediaCard extends Component
      */
     public function __construct(
         public string $title,
+        public string $videoId,
         public string $thumbnail,
     ) {
         //

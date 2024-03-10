@@ -45,10 +45,11 @@
                 @yield('content')
             </div>
 
-            @include('layouts.includes.sidebar')
+            {{-- @include('layouts.includes.sidebar') --}}
         </div>
 
-        @include('layouts.includes.footer')
+        @include('layouts.includes.playbar')
+        {{-- @include('layouts.includes.footer') --}}
     </div>
 
     @vite(['resources/js/app.js'])

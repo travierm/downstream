@@ -2,5 +2,5 @@
     <div class="card-header">
         {{ $title }}
     </div>
-    <img class="card-img-top" src="{{ $thumbnail }}" alt="">
+    <img onclick="playVideo('{{ $videoId }}')" class="card-img-top" src="{{ $thumbnail }}" alt="">
 </div>

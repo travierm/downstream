@@ -16,7 +16,7 @@ onRouteLoad('/collection', () => {
       if (entry.isIntersecting) {
         // Logic to load more images
         //console.log("Loader is visible, load more images!");
-        loadNextBatch();
+        getCollectionSlize();
         // After images have loaded, you might want to observe the new loader position if it has moved.
         // observer.unobserve(entry.target); // Optionally unobserve the current target
         // observer.observe(document.querySelector("#newLoader")); // If your loader moves or you need to observe a new target
@@ -25,16 +25,18 @@ onRouteLoad('/collection', () => {
   }
 })
 
-let nextStart = 16;
-let nextEnd = 20;
+const offset = 4;
+let sliceStart = 16;
 
-function loadNextBatch() {
-  window.axios.get(`/collection/slice?start=${nextStart}&offset=${nextEnd}`)
+function getCollectionSlize() {
+  const sliceEnd = sliceStart + offset
+
+  window.axios.get(`/collection/slice?start=${sliceStart}&offset=${sliceEnd}`)
     .then((res) => {
         const html = res.data;
 
         if (html === "") {
-          console.log("No more items to load!");
+          console.info("No more items to load!");
           return;
         }
 
@@ -48,7 +50,6 @@ function loadNextBatch() {
         }
     })
     .finally(() => {
-      nextStart += 4;
-      nextEnd += 4;
+      sliceStart += 4;
     });
 }
