@@ -29,7 +29,7 @@
     "minidenticons": "^3.1.2",
     "process": "^0.11.10",
     "sass": "~1.32.12",
-    "unplugin-vue-components": "^0.22.11",
+    "unplugin-vue-components": "^0.26.0",
     "vite": "^2.9.16",
     "vite-plugin-vue2": "1.9.0",
     "vite-plugin-vuetify": "^1.0.2",
