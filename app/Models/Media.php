@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
-use App\MediaRemoteReference;
-use App\MediaType\YoutubeVideo;
+use App\Models\MediaRemoteReference;
+use App\Models\MediaType\YoutubeVideo;
 use App\Services\Sources\SpotifyTrack;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -157,7 +157,11 @@ class Media extends Model
             return $meta;
         }
 
-        return $value;
+        $obj = new \stdClass();
+        $obj->title = $this->title;
+        $obj->thumbnail = $this->thumbnail;
+
+        return $obj;
     }
 
     public function getCollectedAttribute()

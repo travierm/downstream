@@ -2,11 +2,22 @@
 
 use Cumulati\Monolog\LogContext;
 use App\Global\RequestLogContext;
-use Illuminate\Database\Eloquent\Collection;
 
 function getRequestLogContext(): LogContext
 {
     return RequestLogContext::getContext();
+}
+
+/**
+ * Get the Request Log Context
+ *
+ * Allows log messages to be chained using a request ID
+ *
+ * @return LogContext
+ */
+function rlc(): LogContext
+{
+    return getRequestLogContext();
 }
 
 function lc(array $context = []): LogContext

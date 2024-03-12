@@ -1,0 +1,18 @@
+@import "navbar.css";
+@import "playbar.css";
+@import "tailwind.css";
+
+.color-preview {
+  height: 50px;
+  width: 100px;
+  background-color: pink;
+}
+
+.pushFromTop {
+  margin-top: 15px;
+} 
+
+.feature-col {
+  font-size: 2.3em !important;
+  display: inline;
+}

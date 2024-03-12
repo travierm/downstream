@@ -1,4 +1,0 @@
-- name: Verify MySQL connection
-  run: |
-    mysql --version
-    mysql --host 127.0.0.1 --port 8989 -uroot -ppassword -e "SHOW DATABASES"

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Media\YouTube;
+use App\Models\Media\YouTube;
 
 class MediaResolver
 {

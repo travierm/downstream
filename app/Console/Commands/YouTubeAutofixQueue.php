@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Media;
-use App\Media\YouTubeV2;
+use App\Models\Media;
+use App\Models\Media\YouTubeV2;
 use Cache;
 use Illuminate\Console\Command;
 use YouTubeService;

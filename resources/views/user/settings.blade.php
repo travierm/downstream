@@ -20,8 +20,7 @@
             </div>
 
             <div class="col-md-9">
-                <form id="settingsForm" method="POST">
-                    {{ csrf_field() }}
+               
 
                     <div class="card">
                         <div class="card-body">
@@ -44,10 +43,13 @@
                                         </div>
                                     @endif
                                     
-                                    @includeWhen($tab == "general", 'user.settings.general', $data)
                                     @includeWhen($tab == "themes", 'user.settings.theme', $data)
+                                     <form id="settingsForm" method="POST">
+                                    {{ csrf_field() }}
+                                    @includeWhen($tab == "general", 'user.settings.general', $data)
                                     @includeWhen($tab == "spotify", 'user.settings.spotify', $data)
                                     @includeWhen($tab == "privacy", 'user.settings.privacy', $data)
+                                    </form>
                                 </div>
 
                                 <div class="col-lg-12 mt-5">
@@ -57,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                
             </div>
         </div>
     </div>

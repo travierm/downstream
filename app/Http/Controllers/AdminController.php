@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Media;
-use App\MediaRemoteReference;
+use DB;
 use Cache;
+use App\Models\Media;
+use App\Models\MediaRemoteReference;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -15,7 +16,7 @@ class AdminController extends Controller
     }
 
     private $defaultSettings = [
-        'showLatestVideos' => 'yes',
+      'showLatestVideos' => 'yes'
     ];
 
     public function index()
@@ -26,18 +27,18 @@ class AdminController extends Controller
 
         return view('admin.index', [
             'settings' => $settings,
-            'engineBadIdCount' => count($badMediaIds),
+          'engineBadIdCount' => count($badMediaIds)
         ]);
     }
 
     public function getTestPlayer()
     {
-        $index = 'XbPhal1xzEI';
+        $index = "XbPhal1xzEI";
 
         $media = Media::findByType('youtube', $index)->orderBy('created_at', 'DESC')->first();
 
         return view('admin.test.player', [
-            'media' => $media,
+          'media' => $media
         ]);
     }
 
@@ -48,7 +49,7 @@ class AdminController extends Controller
         $items = Media::whereIn('id', $badMediaIds)->get();
 
         return view('admin.clean', [
-            'items' => $items,
+          'items' => $items
         ]);
     }
 
@@ -56,12 +57,13 @@ class AdminController extends Controller
     {
         $items = MediaRemoteReference::orderBy('created_at', 'DESC')->get();
 
-        foreach ($items as &$item) {
+        foreach($items as &$item) {
             $item->media_vid = Media::find($item->media_id)->index;
         }
 
+
         return view('admin.engine-feed', [
-            'items' => $items,
+          'items' => $items
         ]);
     }
 
@@ -74,11 +76,12 @@ class AdminController extends Controller
 
     private function updateSettings($request)
     {
-        foreach ($this->defaultSettings as $key => $default) {
-            $newValue = $request->input('settings_'.$key);
+        foreach($this->defaultSettings as $key => $default) {
+            $newValue = $request->input('settings_' . $key);
             $cacheValue = Cache::get($key);
 
-            if ($newValue !== $cacheValue) {
+            if($newValue !== $cacheValue) {
+
                 //only update on new value
                 Cache::forever($key, $newValue);
             }
@@ -90,9 +93,9 @@ class AdminController extends Controller
     private function cacheSync($settings)
     {
         $updated = [];
-        foreach ($settings as $name => $value) {
+        foreach($settings as $name => $value) {
             $cacheValue = Cache::get($name);
-            if (! $cacheValue) {
+            if(!$cacheValue) {
                 //setting default not in cache
 
                 //store admin settings forever

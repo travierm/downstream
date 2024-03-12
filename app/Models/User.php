@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use DB;
-use Auth;
-use Hash;
-use App\Theme;
-use App\UserLike;
-use App\YouTubeVideo;
 use App\Models\UserMediaPlays;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

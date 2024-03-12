@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MediaType;
+namespace App\Models\MediaType;
 
 interface MediaType
 {

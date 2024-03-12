@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MediaType\Transformer;
+namespace App\Models\MediaType\Transformer;
 
 class YoutubeSearchResult
 {
@@ -15,11 +15,11 @@ class YoutubeSearchResult
         if (@$snippet->thumbnails->high) {
             $thumbnail = $snippet->thumbnails->high->url;
 
-        // Medium Quality Thumbnail
+            // Medium Quality Thumbnail
         } elseif (@$snippet->thumbnails->medium) {
             $thumbnail = $snippet->thumbnails->medium->url;
 
-        // Default Quality Thumbnail
+            // Default Quality Thumbnail
         } elseif (@$snippet->thumbnails->default) {
             $thumbnail = $snippet->thumbnails->default->url;
         }

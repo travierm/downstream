@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MediaType;
+namespace App\Models\MediaType;
 
 use App\Models\Media;
 use YoutubeAPI;

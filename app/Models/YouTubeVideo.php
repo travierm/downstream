@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\UserCollection;
+use App\Models\UserCollection;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
