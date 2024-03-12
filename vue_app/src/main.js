@@ -32,7 +32,7 @@ if (!loggedIn && store.state.auth.token) {
 if (process.env.NODE_ENV == 'development') {
   window.dd = console.log
 } else {
-  window.dd = () => {}
+  window.dd = () => { }
 }
 
 loadGlobalComponents(Vue)

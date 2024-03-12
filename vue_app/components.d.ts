@@ -79,6 +79,7 @@ declare module 'vue' {
     VSheet: typeof import('vuetify/lib')['VSheet']
     VSlider: typeof import('vuetify/lib')['VSlider']
     VSpacer: typeof import('vuetify/lib')['VSpacer']
+    VTextarea: typeof import('vuetify/lib')['VTextarea']
     VTextField: typeof import('vuetify/lib')['VTextField']
     VToolbarTitle: typeof import('vuetify/lib')['VToolbarTitle']
     VTooltip: typeof import('vuetify/lib')['VTooltip']

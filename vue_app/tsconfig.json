@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*", "src/*.vue"]
+    },
+    // Adding "dom" to the lib array for better support with browser APIs
+    "lib": ["esnext", "dom"],
+    "types": ["webpack-env", "@types/node"], // Assuming you might be using Node.js and Webpack
+    // Enable JSX support in .vue files
+    "jsx": "preserve",
+    // Ensures .vue files are treated as a module
+    "moduleResolution": "node",
+    // Includes Vue shim declarations for better Vue file support
+    "typeRoots": ["./node_modules/@types", "./types"]
+  },
+  "include": [
+    "src/**/*.js",
+    "src/**/*.vue",
+    "types/**/*.d.ts" // Include custom type definitions if present
+  ],
+  "exclude": [
+    "node_modules",
+    "components.d.ts", // If you don't have this file, you can remove this line
+    "./src/global_components.js"
+  ]
+}

@@ -26,7 +26,8 @@
     <v-divider></v-divider>
 
     <v-list dense class="pt-0">
-      <v-list-item v-for="item in navLinks" :key="item.title" class="ds-nav-drawer-item" @click="handleNavClick(item.to)">
+      <v-list-item v-for="item in navLinks" :key="item.title" class="ds-nav-drawer-item"
+        @click="handleNavClick(item.to)">
         <v-divider v-if="item.title === 'divider'"></v-divider>
         <template v-else>
           <v-list-item-icon>
@@ -39,11 +40,11 @@
         </template>
       </v-list-item>
 
-       <v-list-item style="position: absolute; bottom: 0;">
-            <span>
-              <small>App Version: {{ getAppVersion() }}</small>
-            </span>
-        </v-list-item>
+      <v-list-item style="position: absolute; bottom: 0;">
+        <span>
+          <small>App Version: {{ getAppVersion() }}</small>
+        </span>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -71,14 +72,13 @@ export default {
     navLinks() {
       return [
         { icon: 'mdi-database', title: 'Collection', to: '/collection' },
-        { icon: 'mdi-robot-happy', title: 'Daily Mix', to: '/daily-mix' },
         {
           icon: 'mdi-chart-bar-stacked',
           title: 'Stats',
           to: `/stats`,
         },
         { icon: 'mdi-spotify', title: 'Spotify Sync', to: '/spotify' },
-        
+
         {
           title: 'divider',
         },
@@ -97,7 +97,7 @@ export default {
         //   title: 'Your Profile',
         //   to: `/profile/${this.user.hash}`,
         // },
-         {
+        {
           icon: 'mdi-account-multiple-plus',
           title: 'Invite Friends',
           to: `/invite`,

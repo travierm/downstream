@@ -8,7 +8,7 @@ const http = axios.create({
 
 const viteMode = import.meta.env.MODE;
 
-if(viteMode !== 'production') {
+if (viteMode !== 'production') {
   console.log('vite_mode:', viteMode);
 }
 
