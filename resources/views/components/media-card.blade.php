@@ -2,5 +2,6 @@
     <div class="card-header">
         {{ $title }}
     </div>
-    <img onclick="playVideo('{{ $videoId }}')" class="card-img-top" src="{{ $thumbnail }}" alt="">
+    <img onclick="playVideo('{{ $videoId }}')" data-index="{{ $videoId }}" class="card-img-top"
+        src="{{ $thumbnail }}" alt="">
 </div>

@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-fluid pushFromTop">
         <div id="collection" class="row">
-            @fragment('items')
+            @fragment('item-list')
                 @foreach ($items as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <x-media-card :video-id="$item->index" :thumbnail="$item->thumbnail" :title="$item->title" />

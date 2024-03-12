@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Repos\UserMediaRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\View;
-use Mauricius\LaravelHtmx\Facades\HtmxResponse;
 
 class CollectionController extends Controller
 {
@@ -18,7 +16,7 @@ class CollectionController extends Controller
     public function getIndex(Request $request)
     {
         $userId = $request->user()->id;
-        $collectionSlice = $this->userMediaRepo->getCollectionSlice($userId, 0, 16);
+        $collectionSlice = $this->userMediaRepo->getCollectionSlice($userId, 1, 16);
 
         return view('collection.index', [
             'items' => $collectionSlice
@@ -29,10 +27,10 @@ class CollectionController extends Controller
     {
         $userId = $request->user()->id;
         $start = $request->get('start', 0);
-        $offset = $request->get('offset', 16);
+        $offset = $request->get('limit', 16);
 
-        return HtmxResponse::renderFragment('collection.index', 'items', [
+        return view('collection.index', [
             'items' => $this->userMediaRepo->getCollectionSlice($userId, $start, $offset)
-        ]);
+        ])->fragment('item-list');
     }
 }

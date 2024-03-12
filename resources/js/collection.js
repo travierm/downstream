@@ -25,31 +25,31 @@ onRouteLoad('/collection', () => {
   }
 })
 
-const offset = 4;
-let sliceStart = 16;
+const offset = 8;
+let sliceStart = 17;
 
 function getCollectionSlize() {
-  const sliceEnd = sliceStart + offset
 
-  window.axios.get(`/collection/slice?start=${sliceStart}&offset=${sliceEnd}`)
+  console.log('fetching', sliceStart)
+  window.axios.get(`/collection/slice?start=${sliceStart}&limit=${offset}`)
     .then((res) => {
-        const html = res.data;
+      const html = res.data;
 
-        if (html === "") {
-          console.info("No more items to load!");
-          return;
-        }
+      if (html === "") {
+        console.info("No more items to load!");
+        return;
+      }
 
-        var tempDiv = document.createElement("div");
-        tempDiv.innerHTML = html;
+      var tempDiv = document.createElement("div");
+      tempDiv.innerHTML = html;
 
-        while (tempDiv.firstChild) {
-          document
-            .querySelector("#collection")
-            ?.appendChild(tempDiv.firstChild);
-        }
+      while (tempDiv.firstChild) {
+        document
+          .querySelector("#collection")
+          ?.appendChild(tempDiv.firstChild);
+      }
     })
     .finally(() => {
-      sliceStart += 4;
+      sliceStart += offset;
     });
 }
