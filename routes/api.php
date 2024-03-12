@@ -33,6 +33,7 @@ Route::namespace('API')->group(function () {
             return $request->user();
         });
 
+        Route::get('/invite/generate', 'UserController@generateInviteLink');
         Route::get('/search/{query}', 'SearchController@getResults');
         Route::get('/search/autocomplete/{query}', 'SearchAutocompleteController@getResults');
 

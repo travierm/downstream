@@ -8,6 +8,8 @@ import InviteView from '@/components/views/InviteView'
 import LandingView from '@/components/views/LandingView'
 import ProfileView from '@/components/views/ProfileView'
 import SearchView from '@/components/views/SearchView'
+import WaitListView from '@/components/views/Auth/WaitListView'
+import RegisterView from '@/components/views/Auth/RegisterView'
 import SpotifySyncView from '@/components/views/SpotifySyncView'
 import UserListView from '@/components/views/UserListView'
 import store from '@/store/index'
@@ -130,16 +132,16 @@ const routes = [
     name: 'Login',
     component: LoginView,
   },
-  // {
-  //   path: '/waitlist',
-  //   name: 'Wait List',
-  //   component: WaitListView,
-  // },
-  // {
-  //   path: '/register',
-  //   name: 'Register',
-  //   component: RegisterView,
-  // },
+  {
+    path: '/waitlist',
+    name: 'Wait List',
+    component: WaitListView,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView,
+  },
   {
     path: '/logout',
     name: 'Logout',
