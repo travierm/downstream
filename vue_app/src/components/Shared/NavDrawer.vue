@@ -51,7 +51,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { identicon } from 'minidenticons'
+import { minidenticon } from 'minidenticons'
 import { getAppVersion } from '@/services/GlobalFunctions'
 
 export default {
@@ -67,7 +67,7 @@ export default {
       loggedIn: 'auth/loggedIn',
     }),
     userIcon() {
-      return identicon(this.user.display_name)
+      return minidenticon(this.user.display_name)
     },
     navLinks() {
       return [

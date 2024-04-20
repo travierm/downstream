@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { identicon } from 'minidenticons'
+import { minidenticon } from 'minidenticons'
 import { mapGetters } from 'vuex'
 
 import BottomBar from '@/components/BottomBar'
@@ -110,7 +110,7 @@ export default {
           this.userCollection.length >= 20 ? 20 : this.userCollection.length
         this.collectionTop20 = this.userCollection.slice(0, collectionLength)
         this.profileOwner = this.user
-        this.profileIcon = identicon(this.user.display_name)
+        this.profileIcon = minidenticon(this.user.display_name)
         return
       }
 
@@ -129,7 +129,7 @@ export default {
       })
       this.collectionTop20 = collection
       this.profileOwner = result.data.user
-      this.profileIcon = identicon(result.data.user.display_name)
+      this.profileIcon = minidenticon(result.data.user.display_name)
 
       this.$store.dispatch('player/updateGuidData', {
         guidIndexKey: getCurrentPathFromURL(),
