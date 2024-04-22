@@ -22,7 +22,7 @@
     "@vitejs/plugin-vue": "^1.6.1",
     "apexcharts": "^3.35.3",
     "axios": "^0.21.1",
-    "core-js": "^3.6.4",
+    "core-js": "^3.37.0",
     "events": "^3.3.0",
     "jquery": "^3.6.3",
     "lodash": "^4.17.15",
