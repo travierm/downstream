@@ -21,7 +21,7 @@
     "@sentry/vue": "^6.17.6",
     "@vitejs/plugin-vue": "^1.6.1",
     "apexcharts": "^3.35.3",
-    "axios": "^0.21.1",
+    "axios": "^1.6.8",
     "core-js": "^3.6.4",
     "events": "^3.3.0",
     "jquery": "^3.6.3",
