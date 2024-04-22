@@ -33,7 +33,7 @@
     "vite": "^2.9.16",
     "vite-plugin-vue2": "1.9.0",
     "vite-plugin-vuetify": "^1.0.2",
-    "vue": "^2.6.11",
+    "vue": "^3.4.23",
     "vue-apexcharts": "^1.6.2",
     "vue-cli-plugin-vuetify": "~2.0.5",
     "vue-demi": "^0.13.11",
