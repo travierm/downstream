@@ -53,6 +53,8 @@ declare module 'vue' {
     VCardActions: typeof import('vuetify/lib')['VCardActions']
     VCardText: typeof import('vuetify/lib')['VCardText']
     VCardTitle: typeof import('vuetify/lib')['VCardTitle']
+    VChip: typeof import('vuetify/lib')['VChip']
+    VChipGroup: typeof import('vuetify/lib')['VChipGroup']
     VCol: typeof import('vuetify/lib')['VCol']
     VContainer: typeof import('vuetify/lib')['VContainer']
     VDialog: typeof import('vuetify/lib')['VDialog']

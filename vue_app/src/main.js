@@ -1,4 +1,3 @@
-import { BrowserTracing } from '@sentry/tracing'
 import * as Sentry from '@sentry/vue'
 import Vue from 'vue'
 import { sync } from 'vuex-router-sync'
@@ -28,13 +27,6 @@ const loggedIn = store.getters['auth/loggedIn']
 if (!loggedIn && store.state.auth.token) {
   store.dispatch('auth/getUser')
 }
-
-if (process.env.NODE_ENV == 'development') {
-  window.dd = console.log
-} else {
-  window.dd = () => { }
-}
-
 loadGlobalComponents(Vue)
 
 new Vue({

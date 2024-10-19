@@ -20,6 +20,7 @@
     "cumulati/monolog-context": "dev-monolog-3-upgrade",
     "doctrine/dbal": "^3.5",
     "guzzlehttp/guzzle": "^7.2",
+    "itsgoingd/clockwork": "^5.2",
     "jwilsson/spotify-web-api-php": "6.0.3",
     "laravel/framework": "^10.0",
     "laravel/helpers": "^1.2",
