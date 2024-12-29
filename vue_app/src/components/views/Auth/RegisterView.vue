@@ -3,7 +3,7 @@
     <v-sheet elevation="2" class="pl-10 pr-10 rounded" :width="sheetWidth">
       <v-row>
         <v-col>
-          <h1>Create an account on Downstream</h1>
+          <h2 class="mt-4 mb-4">Create an account on Downstream</h2>
           <h3>We're excited to have you join us!</h3>
 
           <alert-list style="margin-bottom: 0px" class="mt-2" ref="alertList"></alert-list>
@@ -23,21 +23,25 @@
               :rules="[(v) => !!v || 'Display Name is required']" required></v-text-field>
 
             <v-text-field name="password" outlined v-model="password" type="password" label="Password" :rules="[
-      (v) => !!v || 'Password is required',
-      (v) =>
-        v.length >= 6 || 'Password must be 6 or more characters long',
-    ]" required></v-text-field>
+              (v) => !!v || 'Password is required',
+              (v) =>
+                v.length >= 6 || 'Password must be 6 or more characters long',
+            ]" required></v-text-field>
 
             <v-text-field name="password" outlined v-model="password_confirmation" type="password"
               label="Confirm Password" :rules="[
-      (v) => v === this.password || 'Both password must match',
-    ]" required></v-text-field>
+                (v) => v === this.password || 'Both password must match',
+              ]" required></v-text-field>
 
             <v-btn color="primary" class="loginBtn" @click="register">Register</v-btn>
             <v-btn color="primary" class="ml-2" to="/waitlist">Join our waiting list</v-btn>
           </v-form>
         </v-col>
       </v-row>
+
+      <p class="mt-5 text-caption">By registering, you agree to our <router-link to="/tos">Terms of
+          Service</router-link>
+        and <router-link to="/privacy">Privacy Policy</router-link>.</p>
     </v-sheet>
   </v-container>
 </template>

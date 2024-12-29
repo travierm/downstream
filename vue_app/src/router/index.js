@@ -18,6 +18,8 @@ import VueRouter from 'vue-router'
 
 import { connectSpotify } from '../services/api/spotify'
 import { applyMiddleware } from './middleware'
+import PrivacyView from '@/components/views/PrivacyView.vue'
+import TermsView from '@/components/views/TermsView.vue'
 
 Vue.use(VueRouter)
 
@@ -124,6 +126,17 @@ const routes = [
         router.push('/spotify')
       })
     },
+  },
+
+  {
+    path: '/privacy',
+    name: 'Privacy',
+    component: PrivacyView
+  },
+  {
+    path: '/tos',
+    name: 'Terms',
+    component: TermsView
   },
 
   // Auth Views

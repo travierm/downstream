@@ -1,12 +1,7 @@
 <template>
   <v-container class="d-flex flex-wrap justify-center" @keyup.enter="login()">
     <!-- Login Sheet -->
-    <v-sheet
-      elevation="2"
-      class="pl-10 pr-10"
-      :width="sheetWidth"
-      style="min-width: 250px"
-    >
+    <v-sheet elevation="2" class="pl-10 pr-10" :width="sheetWidth" style="min-width: 250px">
       <div>
         <!-- Login Header Text -->
         <v-row class="mt-2">
@@ -25,9 +20,7 @@
 
         <v-row class="mt-2">
           <v-col align="center" justify="center">
-            <v-btn large class="loginBtn" color="primary" to="/register"
-              >Register with Invitation Code</v-btn
-            >
+            <v-btn large class="loginBtn" color="primary" to="/register">Register with Invitation Code</v-btn>
           </v-col>
         </v-row>
 
@@ -35,11 +28,7 @@
           <v-col>
             <h1 class="text-center">Or</h1>
 
-            <alert-list
-              style="margin-bottom: 0px"
-              class="mt-2"
-              ref="alertList"
-            ></alert-list>
+            <alert-list style="margin-bottom: 0px" class="mt-2" ref="alertList"></alert-list>
           </v-col>
         </v-row>
 
@@ -47,46 +36,31 @@
         <v-row class="mb-2">
           <v-col align="center" justify="center">
             <v-form ref="waitListForm" v-model="valid">
-              <v-text-field
-                name="email"
-                outlined
-                v-model="email"
-                label="Email"
-                :rules="[
-                  (v) => !!v || 'Email is required',
-                  (v) =>
-                    !v ||
-                    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/.test(v) ||
-                    'Email must be valid',
-                ]"
-                required
-                @change="this.$refs.alertList.clear()"
-              ></v-text-field>
+              <v-text-field name="email" outlined v-model="email" label="Email" :rules="[
+                (v) => !!v || 'Email is required',
+                (v) =>
+                  !v ||
+                  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/.test(v) ||
+                  'Email must be valid',
+              ]" required @change="this.$refs.alertList.clear()"></v-text-field>
 
-              <v-textarea
-                name="input-7-1"
-                outlined
-                v-model="textResponse"
-                rows="3"
-                label="What kind of music do you like?"
-                :rules="[(v) => !!v || 'A response is required']"
-                @change="this.$refs.alertList.clear()"
-              ></v-textarea>
+              <v-textarea name="input-7-1" outlined v-model="textResponse" rows="3"
+                label="What kind of music do you like?" :rules="[(v) => !!v || 'A response is required']"
+                @change="this.$refs.alertList.clear()"></v-textarea>
 
               <div>
-                <vue-recaptcha
-                  @verify="signup"
-                  :loadRecaptchaScript="true"
-                  sitekey="6LdXKYUeAAAAAAuBfqXR3mpHMGxQw8NRUlTVcHT_"
-                >
-                  <v-btn large class="loginBtn" color="primary"
-                    >Join the Wait List</v-btn
-                  >
+                <vue-recaptcha @verify="signup" :loadRecaptchaScript="true"
+                  sitekey="6LdXKYUeAAAAAAuBfqXR3mpHMGxQw8NRUlTVcHT_">
+                  <v-btn large class="loginBtn" color="primary">Join the Wait List</v-btn>
                 </vue-recaptcha>
               </div>
             </v-form>
           </v-col>
         </v-row>
+
+        <p class="mt-5 text-caption">By joining the waiting list, you agree to our <router-link to="/tos">Terms of
+            Service</router-link>
+          and <router-link to="/privacy">Privacy Policy</router-link>.</p>
       </div>
     </v-sheet>
   </v-container>

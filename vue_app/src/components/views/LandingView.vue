@@ -2,7 +2,7 @@
   <v-container fluid class="landingViewContent">
     <v-row justify="center">
       <v-col cols="12">
-        <h1 class="ds-gradient">downstream</h1>
+        <!-- <h1 class="ds-gradient">downstream</h1> -->
         <h2>A private music collection service</h2>
 
         <v-btn color="primary" to="/login" class="mt-4 mb-4" medium>
@@ -17,6 +17,20 @@
         <PlayableYoutubeCard :guid="'m_' + selectedMedia.videoId" :videoId="selectedMedia.videoId"
           :title="selectedMedia.title" :thumbnail="selectedMedia.thumbnail" :hide-actions="true"></PlayableYoutubeCard>
       </CardCol>
+    </v-row>
+
+    <v-row>
+      <div class="d-flex" style="gap: 8px; justify-content: center; width: 100%;">
+        <router-link to="/privacy" class="unstyled-link">
+          Privacy
+        </router-link>
+
+        <router-link to="/tos" class="unstyled-link">
+          ToS
+        </router-link>
+
+        <a class="unstyled-link" href="https://www.youtube.com/t/terms">YouTube ToS</a>
+      </div>
     </v-row>
   </v-container>
 </template>
