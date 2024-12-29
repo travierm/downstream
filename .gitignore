@@ -18,6 +18,7 @@ yarn-error.log
 .env
 .env.testing
 .env.prod
+.env.production
 /public/mix-manifest.json
 /public/js/app.js.map
 public/css/app\.css\.map
