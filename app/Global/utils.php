@@ -54,3 +54,12 @@ function dda(...$args): void
 
     dd(...$args);
 }
+
+function filterTitle(string $title, array $stringsToFilter): string
+{
+    foreach ($stringsToFilter as $filter) {
+        $title = str_replace($filter, '', $title);
+    }
+
+    return trim($title);
+}
