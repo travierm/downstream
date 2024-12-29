@@ -42,6 +42,9 @@ class UpdateYoutubeData extends Command
 
             if ($mostRecentMediaId !== $lastMediaId) {
                 $currentMediaId = $lastMediaId + 1;
+            } else {
+                Log::info('reset lastMediaId for command');
+                Cache::set('youtubeData.lastMediaId', $currentMediaId);
             }
         }
 
