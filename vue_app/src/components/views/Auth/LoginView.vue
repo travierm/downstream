@@ -1,23 +1,13 @@
 <template>
-  <v-container
-    rounded
-    class="d-flex flex-wrap justify-center"
-    @keyup.enter="login()"
-  >
+  <v-container rounded class="d-flex flex-wrap justify-center" @keyup.enter="login()">
     <!-- Login Sheet -->
-    <v-sheet
-      elevation="2"
-      class="pl-10 pr-10 rounded"
-      :width="sheetWidth"
-      style="min-width: 250px"
-    >
+    <v-sheet elevation="2" class="pl-10 pr-10 rounded" :width="sheetWidth" style="min-width: 250px">
       <div>
         <!-- Login Header Text -->
         <v-row class="mt-2">
           <v-col>
             <h1>Login</h1>
             <p class="mt-2">An invite is required to join downstream.</p>
-
             <v-alert v-if="error" type="error" class="mt-2 mb-0">
               Email or Password is incorrect!
             </v-alert>
@@ -29,31 +19,16 @@
           <v-col>
             <v-form ref="loginForm" v-model="valid">
               <!-- Login Form Inputs -->
-              <v-text-field
-                name="email"
-                outlined
-                v-model="email"
-                label="Email"
-                :rules="[(v) => !!v || 'Email is required']"
-                required
-              ></v-text-field>
+              <v-text-field name="email" outlined v-model="email" label="Email"
+                :rules="[(v) => !!v || 'Email is required']" required></v-text-field>
 
-              <v-text-field
-                name="password"
-                outlined
-                v-model="password"
-                type="password"
-                label="Password"
-                :rules="[(v) => !!v || 'Password is required']"
-                required
-              ></v-text-field>
+              <v-text-field name="password" outlined v-model="password" type="password" label="Password"
+                :rules="[(v) => !!v || 'Password is required']" required></v-text-field>
 
               <!-- <v-checkbox v-model="rememberMe" label="Remember Me"></v-checkbox> -->
 
               <!-- Login Form Actions -->
-              <v-btn color="primary" class="loginBtn" @click="login"
-                >Login</v-btn
-              >
+              <v-btn color="primary" class="loginBtn" @click="login">Login</v-btn>
               <!--<v-btn color="primary" class="ml-2" to="/waitlist"
                 >Join our waiting list</v-btn
               > -->
@@ -61,11 +36,17 @@
                 >Forgot Password?</v-btn
               > -->
             </v-form>
+            <p class="mt-5 text-caption">By logging in, you agree to our <router-link to="/tos">Terms of
+                Service</router-link>
+              and <router-link to="/privacy">Privacy Policy</router-link>.</p>
           </v-col>
         </v-row>
       </div>
     </v-sheet>
+
   </v-container>
+
+
 </template>
 
 <script>

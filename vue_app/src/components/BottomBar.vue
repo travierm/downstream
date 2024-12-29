@@ -11,8 +11,9 @@
 
           <v-col cols="auto" class="mr-1">
             <span>{{ playerQueueCount }}</span>
-            <v-btn @click="replayCurrentCard" color="primary" icon class="ml-2 pa-1 mt-1" small><v-icon large>{{ mdiReplay
-            }}</v-icon></v-btn>
+            <v-btn @click="replayCurrentCard" color="primary" icon class="ml-2 pa-1 mt-1" small><v-icon large>{{
+              mdiReplay
+                }}</v-icon></v-btn>
           </v-col>
 
           <v-col cols="auto">
@@ -51,6 +52,18 @@
           </v-col>
         </v-row>
       </v-container>
+
+      <div class="d-flex flex-row" style="gap: 8px;">
+        <router-link to="/privacy" class="unstyled-link">
+          Privacy
+        </router-link>
+
+        <router-link to="/tos" class="unstyled-link">
+          ToS
+        </router-link>
+
+        <a class="unstyled-link" href="https://www.youtube.com/t/terms">YouTube ToS</a>
+      </div>
     </v-app-bar>
   </div>
 </template>
