@@ -51,6 +51,9 @@ COPY .deploy/config/fpm-pool.conf /etc/php82/php-fpm.d/www.conf
 COPY .deploy/config/php.ini /etc/php82/conf.d/custom.ini
 
 # Configure supervisord
+RUN mkdir -p /var/log/supervisor && \
+  chmod -R 777 /var/log/supervisor
+
 COPY .deploy/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
