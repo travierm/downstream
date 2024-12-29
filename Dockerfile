@@ -18,6 +18,8 @@ RUN apk add --no-cache \
   oniguruma-dev \
   libxml2-dev
 
+RUN rm -f /usr/local/etc/php/conf.d/*pdo*.ini
+
 # Install PHP extensions
 RUN docker-php-ext-install \
   pdo \
@@ -65,3 +67,6 @@ RUN composer install --optimize-autoloader --no-interaction --no-progress
 
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+HEALTHCHECK --interval=5s --timeout=10s --start-period=30s --retries=3 \
+  CMD curl --silent --fail http://127.0.0.1:8080/api/ping || exit 1
