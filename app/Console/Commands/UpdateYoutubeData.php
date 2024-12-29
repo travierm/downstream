@@ -48,10 +48,7 @@ class UpdateYoutubeData extends Command
             }
         }
 
-        $this->info('running youtube data update', [
-            'startingMediaId' => $currentMediaId,
-
-        ]);
+        $this->info('running youtube data update');
         Log::info('running youtube data update', [
             'startingMediaId' => $currentMediaId,
         ]);
