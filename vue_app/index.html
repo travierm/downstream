@@ -15,25 +15,31 @@
       href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
     />
 
-    <script>window.global = window;</script>
+    <script>
+      window.global = window
+    </script>
     <script type="module">
-        import process from "process";
-        import EventEmitter from "events";
-        
-        window.process = process;
-        window.EventEmitter = EventEmitter;
+      import process from 'process'
+      import EventEmitter from 'events'
+
+      window.process = process
+      window.EventEmitter = EventEmitter
     </script>
   </head>
   <body>
     <noscript>
       <strong
-        >We're sorry but this app doesn't work
-        properly without JavaScript enabled. Please enable it to
-        continue.</strong
+        >We're sorry but this app doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong
       >
     </noscript>
     <div id="app"></div>
 
     <script type="module" src="/src/main.js"></script>
+    <script
+      defer
+      data-domain="downstream.us"
+      src="https://analytics.tecdrip.com/js/script.js"
+    ></script>
   </body>
 </html>
