@@ -30,3 +30,6 @@ test-full:
 
 test-migrate:
 	php artisan migrate --env testing
+
+deploy:
+	dotenv -f .env.production -- kamal deploy

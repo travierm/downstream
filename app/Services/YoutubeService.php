@@ -10,9 +10,13 @@ use Madcoda\Youtube\Facades\Youtube;
 
 class YoutubeService
 {
-    public static function getVideoById($id)
+    public static function getVideoById($id): ?YoutubeVideo
     {
         $result = Youtube::getVideoInfo($id);
+
+        if (!$result) {
+            return null;
+        }
 
         return YoutubeVideo::createFromSearchResult($result);
     }
