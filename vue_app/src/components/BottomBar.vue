@@ -59,10 +59,10 @@
         </router-link>
 
         <router-link to="/tos" class="unstyled-link">
-          ToS
+          Terms
         </router-link>
 
-        <a class="unstyled-link" href="https://www.youtube.com/t/terms">YouTube ToS</a>
+        <a class="unstyled-link" href="https://www.youtube.com/t/terms">YouTube Terms</a>
       </div>
     </v-app-bar>
   </div>
