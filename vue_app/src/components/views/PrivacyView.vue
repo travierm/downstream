@@ -2,13 +2,9 @@
     <div class="container">
         <h1 class="pt-5">Privacy Policy of Downstream</h1>
 
-        <p>By using Downstream you also agree to Privacy Policy of Google <a>https://policies.google.com/privacy</a></p>
-
         <p class="font-weight-bold">Downstream is a product of Tecdrip LLC, which is the legal entity responsible for
             this domain and the handling of your data.</p>
         <p>Downstream operates the https://downstream.us website.</p>
-
-
 
         <p>This Privacy Policy describes how we collect, use, process, and protect your personal information when you
             use our Service.
@@ -22,6 +18,19 @@
         <p>The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible at
             <a>https://downstream.us/tos</a>,
             unless otherwise defined in this Privacy Policy.
+        </p>
+
+        <h2>YouTube API Services</h2>
+        <p>
+            This application uses YouTube API Services to search for videos and retrieve video information.
+            By using our application, you agree to be bound by the
+            <a href="https://www.youtube.com/t/terms" target="_blank">YouTube Terms of Service</a>.
+        </p>
+        <p>
+            The application only accesses publicly available video data through the YouTube API Services
+            and does not access any personal YouTube account data. Our usage of the YouTube API Services
+            is subject to the <a href="http://www.google.com/policies/privacy" target="_blank">Google Privacy
+                Policy</a>.
         </p>
 
         <h2>Information Collection and Use</h2>
@@ -171,7 +180,7 @@
 
         <p>We aim to respond to all legitimate requests within 5 business days.</p>
 
-        <p class="mt-4"><small>Last updated: December 29, 2024</small></p>
+        <p class="mt-4"><small>Last updated: December 30, 2024</small></p>
     </div>
 </template>
 
