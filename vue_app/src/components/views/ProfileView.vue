@@ -1,54 +1,46 @@
 <template>
   <v-container fluid class="profile-view">
+    <header class="profile-header">
+      <div class="profile-identity">
+        <v-avatar size="64" class="profile-avatar">
+          <div class="profile-icon" v-html="profileIcon" aria-hidden="true"></div>
+        </v-avatar>
+        <div class="profile-details">
+          <h1 class="profile-name">{{ profileOwner.display_name }}</h1>
+          <p class="profile-subtitle">Music collection</p>
+        </div>
+      </div>
+
+      <v-btn
+        v-if="!isViewingSelf && followingUser !== undefined"
+        class="profile-follow"
+        :variant="followingUser ? 'tonal' : 'flat'"
+        color="primary"
+        :loading="followLoading"
+        @click="toggleFollow"
+      >
+        {{ followingUser === false ? 'Follow' : 'Unfollow' }}
+      </v-btn>
+    </header>
+
     <v-row>
-      <!-- Profile Card -->
-      <v-col class="col-md-12 col-12 pt-8">
-        <v-card elevation="2" variant="outlined" class="pa-4">
-          <div class="flex-grow-1">
-            <!-- Profile Card Header -->
-            <v-sheet class="profile-header mb-n6 pa-6" elevation="6">
-              <v-row class="mb-1">
-                <!-- Profile Icon -->
-                <v-avatar size="56" class="mr-3">
-                  <div class="profile-icon" v-html="profileIcon"></div>
-                </v-avatar>
-
-                <!-- Profile Name -->
-                <div class="text-h3 font-weight-light">
-                  {{ profileOwner.display_name }}
-                </div>
-              </v-row>
-
-              <!-- Profile Subtitle -->
-              <v-row justify="space-between">
-                <div class="text-subtitle-1 font-weight-light">
-                  {{ profileOwner.display_name }}'s collection
-                </div>
-
-                <!-- Profile actions -->
-                <div class="mt-n2">
-                  <v-btn v-if="!isViewingSelf && followingUser !== undefined" variant="flat" color="primary"
-                    :loading="followLoading" @click="toggleFollow">
-                    {{ followingUser === false ? 'Follow' : 'Unfollow' }}
-                  </v-btn>
-                </div>
-              </v-row>
-            </v-sheet>
-
-            <!-- Profile Top 8 Songs -->
-            <v-row>
-              <!-- TODO - Currently force reloading card when collected status is changed... There is a better way to handle this -->
-              <CardCol v-for="item in collectionTop20" :key="item.guid + item.collected">
-                <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
-                  <YoutubeCard :item="item" :guid="item.guid" :title="item.title" :mediaId="item.media_id"
-                    :videoId="item.index" :thumbnail="item.thumbnail" :collected="item.collected" :key="item.guid" dense
-                    light></YoutubeCard>
-                </v-lazy>
-              </CardCol>
-            </v-row>
-          </div>
-        </v-card>
-      </v-col>
+      <!-- Reload the card when its collected status changes. -->
+      <CardCol v-for="item in collectionTop20" :key="item.guid + item.collected">
+        <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
+          <YoutubeCard
+            :item="item"
+            :guid="item.guid"
+            :title="item.title"
+            :mediaId="item.media_id"
+            :videoId="item.index"
+            :thumbnail="item.thumbnail"
+            :collected="item.collected"
+            :key="item.guid"
+            dense
+            light
+          ></YoutubeCard>
+        </v-lazy>
+      </CardCol>
     </v-row>
   </v-container>
 </template>
@@ -57,7 +49,6 @@
 import { identicon } from 'minidenticons'
 import { mapGetters } from 'vuex'
 
-import BottomBar from '@/components/BottomBar'
 import CardCol from '@/components/CardCol'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
 
@@ -67,7 +58,6 @@ import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
 export default {
   name: 'ProfileView',
   components: {
-    BottomBar,
     CardCol,
     YoutubeCard,
   },
@@ -182,23 +172,62 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.profile-view {
-  .profile-header {
-    background-color: #424242;
-    position: relative;
-    z-index: 1;
-    top: -30px;
-    width: 100%;
-    margin-bottom: -24px !important;
-    border-radius: 8px;
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 24px 0 32px;
+}
 
-    .profile-icon {
-      width: 100%;
-      height: 100%;
-      background-color: #272727;
-    }
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  flex: 1 1 240px;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+  background: rgb(var(--v-theme-surface));
+}
+
+.profile-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.profile-details {
+  min-width: 0;
+}
+
+.profile-name {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.profile-subtitle {
+  margin: 6px 0 0;
+  color: rgba(var(--v-theme-on-background), 0.7);
+  font-size: 0.9375rem;
+}
+
+.profile-follow {
+  flex-shrink: 0;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@media (max-width: 599px) {
+  .profile-header {
+    padding: 16px 0 24px;
+    gap: 16px;
   }
 }
 </style>
