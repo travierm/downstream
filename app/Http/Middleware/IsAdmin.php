@@ -20,6 +20,10 @@ class IsAdmin
             return $next($request);
         }
 
+        if ($request->expectsJson()) {
+            abort(403, 'Administrator access required.');
+        }
+
         return redirect('/');
     }
 }

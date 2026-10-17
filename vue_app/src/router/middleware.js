@@ -25,6 +25,10 @@ export function applyMiddleware(router) {
       }
     }
 
+    if (to.matched.some((record) => record.meta.requiresAdmin) && store.state.auth.user?.type !== 'admin') {
+      return next(loggedIn ? '/collection' : '/')
+    }
+
     return next()
   })
 

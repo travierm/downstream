@@ -46,6 +46,8 @@ Route::namespace('API')->group(function () {
         // User Stats
         Route::get('/user/stats', 'UserStatsController@getStats');
 
+        Route::get('/admin/dashboard', 'AdminDashboardController@index')->middleware('admin');
+
         // User Collection
         Route::get('/collection', 'CollectionController@getCollection');
         Route::get('/collection/{userHash}', 'CollectionController@getCollectionByHash');

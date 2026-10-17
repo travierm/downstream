@@ -23,6 +23,12 @@ import TermsView from '@/components/views/TermsView.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('@/components/views/AdminView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true },
+  },
   // Default Route
   {
     path: '/',

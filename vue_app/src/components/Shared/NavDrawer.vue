@@ -52,6 +52,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { identicon } from 'minidenticons'
+import { mdiViewDashboardOutline } from '@mdi/js'
 import { getAppVersion } from '@/services/GlobalFunctions'
 
 export default {
@@ -71,6 +72,9 @@ export default {
     },
     navLinks() {
       return [
+        ...(this.user.type === 'admin'
+          ? [{ icon: mdiViewDashboardOutline, title: 'Admin Panel', to: '/admin' }]
+          : []),
         { icon: 'mdi-database', title: 'Collection', to: '/collection' },
         {
           icon: 'mdi-chart-bar-stacked',
