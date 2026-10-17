@@ -84,6 +84,13 @@ export default {
       return this.filteredCollection || this.collection
     },
   },
+  created() {
+    const { search, playlist_id: playlistId } = this.$route.query
+
+    this.$store.commit('collection/SET_SEARCH_QUERY', search || '')
+    this.$store.dispatch('playlist/setSelectedPlaylist', playlistId || false)
+    this.$store.dispatch('collection/fetchCollection', playlistId || false)
+  },
   mounted() {
     this.$store.dispatch('player/setCurrentIndex', this.$route.path)
   },
