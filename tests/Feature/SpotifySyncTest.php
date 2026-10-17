@@ -49,7 +49,7 @@ class SpotifySyncTest extends TestCase
             (object) ['id' => 'import-playlist', 'name' => 'DS Import'],
         ]]);
         $api->shouldReceive('getPlaylistTracks')->andReturn((object) ['items' => []]);
-        $api->shouldReceive('deletePlaylistTracks')->once()->with('import-playlist', ['tracks' => []]);
+        $api->shouldReceive('deletePlaylistTracks')->never();
         $invalidApi = Mockery::mock(SpotifyWebAPI::class);
         $invalidApi->shouldReceive('me')->andThrow(new SpotifyWebAPIException('Missing/invalid/expired access token', 401));
         $command = Mockery::mock(SpotifySyncClean::class)->makePartial()->shouldAllowMockingProtectedMethods();
@@ -63,5 +63,21 @@ class SpotifySyncTest extends TestCase
         $this->app->instance(SpotifySyncService::class, $sync);
 
         $this->getJson('/api/spotify/run-sync')->assertOk();
+    }
+
+    public function test_manual_sync_reports_cleanup_failures(): void
+    {
+        $api = Mockery::mock(SpotifyWebAPI::class);
+        $api->shouldReceive('me')->once()->andThrow(new SpotifyWebAPIException('Connection expired', 401));
+        $command = Mockery::mock(SpotifySyncClean::class)->makePartial()->shouldAllowMockingProtectedMethods();
+        $command->__construct();
+        $command->shouldReceive('apiForToken')->andReturn($api);
+        Artisan::getFacadeRoot()->registerCommand($command);
+        $sync = Mockery::mock(SpotifySyncService::class);
+        $sync->shouldReceive('syncByToken')->once();
+        $this->app->instance(SpotifySyncService::class, $sync);
+
+        $this->getJson('/api/spotify/run-sync')->assertStatus(502)
+            ->assertJsonPath('message', 'Tracks were synced, but the Spotify playlist could not be cleaned. Please try again.');
     }
 }

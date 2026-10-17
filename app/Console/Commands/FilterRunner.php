@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Media;
 use App\Models\MediaMeta;
 use App\Models\MediaTempItem;
+use App\Services\Filter;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -42,13 +43,7 @@ class FilterRunner extends Command
     public function handle()
     {
         $filters = DB::table('title_filters')->pluck('value');
-        if (! $filters) {
-            $this->error('No filters found');
-
-            return;
-        }
-
-        $this->info('Found '.count($filters).' active filters');
+        $this->info('Found '.count($filters).' custom title filters');
         $media = Media::all();
 
         foreach ($media as $item) {
@@ -57,7 +52,7 @@ class FilterRunner extends Command
                 continue;
             }
 
-            $filteredTitle = trim($this->applyFilters($title, $filters));
+            $filteredTitle = Filter::title($title, $filters);
 
             $mediaMeta = MediaMeta::find($item->id);
 
@@ -82,22 +77,13 @@ class FilterRunner extends Command
         $tempItems = MediaTempItem::all();
         foreach ($tempItems as $item) {
             $title = $item->title;
-            $filteredTitle = $this->applyFilters($title, $filters);
+            $filteredTitle = Filter::title($title, $filters);
 
             if ($title !== $filteredTitle) {
-                $item->title = trim($filteredTitle);
+                $item->title = $filteredTitle;
                 $item->save();
                 $this->info("updated $title => $filteredTitle");
             }
         }
-    }
-
-    private function applyFilters($value, $filters)
-    {
-        foreach ($filters as $filter) {
-            $value = str_replace($filter, '', $value);
-        }
-
-        return $value;
     }
 }

@@ -20,7 +20,7 @@ class SpotifySync extends Command
      *
      * @var string
      */
-    protected $description = 'Test Spotify User Commands';
+    protected $description = 'Import Spotify playlists for all connected users';
 
     /**
      * Create a new command instance.
@@ -30,20 +30,28 @@ class SpotifySync extends Command
     public function __construct(public SpotifySyncService $spotifySyncService)
     {
         parent::__construct();
-
-        //$this->spotifySyncService = new SpotifySyncService();
     }
 
     public function handle()
     {
+        $failed = false;
         $spotifyTokens = UserSpotifyToken::all();
 
         $this->info(sprintf('found %s spotify tokens', count($spotifyTokens)));
 
         foreach ($spotifyTokens as $token) {
-            $this->spotifySyncService->syncByToken($token);
+            try {
+                $this->spotifySyncService->syncByToken($token);
+                if ($this->call('spotify:sync-clean', ['--user-id' => $token->user_id]) !== self::SUCCESS) {
+                    $failed = true;
+                }
+            } catch (\Throwable $e) {
+                $failed = true;
+                lc()->error('Spotify sync failed', ['user_id' => $token->user_id, 'message' => $e->getMessage()]);
+                $this->error('Spotify sync failed for user '.$token->user_id);
+            }
         }
 
-        $this->call('spotify:sync-clean');
+        return $failed ? self::FAILURE : self::SUCCESS;
     }
 }

@@ -16,9 +16,7 @@ use Illuminate\Validation\ValidationException;
 
 class SpotifyController extends Controller
 {
-    public function __construct(public SpotifyRepo $spotifyRepo, public SpotifySyncService $spotifySyncService)
-    {
-    }
+    public function __construct(public SpotifyRepo $spotifyRepo, public SpotifySyncService $spotifySyncService) {}
 
     public function runSpotifySync()
     {
@@ -37,7 +35,13 @@ class SpotifyController extends Controller
             throw $e;
         }
 
-        Artisan::call('spotify:sync-clean', ['--user-id' => Auth::id()]);
+        if (Artisan::call('spotify:sync-clean', ['--user-id' => Auth::id()]) !== 0) {
+            $lc->error('Spotify playlist cleanup failed');
+
+            return response()->json([
+                'message' => 'Tracks were synced, but the Spotify playlist could not be cleaned. Please try again.',
+            ], 502);
+        }
 
         return response()->json([], 200);
     }
@@ -92,11 +96,11 @@ class SpotifyController extends Controller
 
         $token = UserSpotifyToken::where('user_id', $userId);
         if ($token) {
-            //delete existing tokens
+            // delete existing tokens
             $token = UserSpotifyToken::where('user_id', $userId)->delete();
         }
 
-        $token = new UserSpotifyToken();
+        $token = new UserSpotifyToken;
         $token->access_token = $accessToken;
         $token->refresh_token = $refreshToken;
         $token->user_id = $userId;

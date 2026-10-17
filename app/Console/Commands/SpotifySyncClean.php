@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Media;
 use App\Models\UserMedia;
 use App\Models\UserSpotifyToken;
+use App\Services\Spotify\ImportPlaylist;
 use App\Services\SpotifyAPI;
 use Illuminate\Console\Command;
 use SpotifyWebAPI\SpotifyWebAPI;
@@ -44,58 +45,39 @@ class SpotifySyncClean extends Command
     {
         $lc = lc();
         $lc->info('starting spotify:sync-clean');
+        $failed = false;
 
         $usersWithTokens = UserSpotifyToken::query()
             ->when($this->option('user-id') !== null, function ($query) {
                 $query->where('user_id', $this->option('user-id'));
             })
             ->get();
-        $lc->info('found ' . count($usersWithTokens) . ' users to clean DS Import playlist for');
+        $lc->info('found '.count($usersWithTokens).' users to clean DS Import playlist for');
 
         foreach ($usersWithTokens as $token) {
-            $api = $this->apiForToken($token);
-
-            $spotifyUser = $api->me();
-
-            $playlists = $api->getUserPlaylists($spotifyUser->id, [
-                'limit' => 50,
-            ]);
-
-            //find playlist named "DS Import"
-            $importPlaylist = false;
-            foreach ($playlists->items as $playlist) {
-                if (trim($playlist->name) == 'DS Import') {
-                    // $this->info("Found DS_Import playlist");
-                    $importPlaylist = $playlist;
-                }
-            }
-
-            if (! $importPlaylist) {
-                $lc->info("could not find DS Import playlist for user:" . $token->user_id);
-                continue;
-            }
-
-            $track = $api->getPlaylistTracks($importPlaylist->id);
-
-            if (! $track) {
-                $lc->info("no tracks to clean");
-                continue;
-            }
-
             try {
-                $tracksForTrash = $this->cleanTracks($token->user_id, $track->items);
+                $api = $this->apiForToken($token);
+                $playlists = new ImportPlaylist($api);
+                $importPlaylist = $playlists->find($api->me()->id);
+                if (! $importPlaylist) {
+                    $lc->info('could not find DS Import playlist for user:'.$token->user_id);
 
-                $tracks = [
-                    'tracks' => $tracksForTrash,
-                ];
+                    continue;
+                }
 
-                $lc->info('deleting '.count($tracksForTrash).' from users playlist'); 
-                
-                $api->deletePlaylistTracks($importPlaylist->id, $tracks);
-            } catch(\Exception $e) {
-                $lc->info('failed to delete playlist track:' . $e->getMessage());
+                // Finish reading before removing tracks, since removals change page offsets.
+                $tracksForTrash = $this->cleanTracks($token->user_id, $playlists->tracks($importPlaylist->id));
+                $lc->info('deleting '.count($tracksForTrash).' from users playlist');
+                foreach (array_chunk($tracksForTrash, 100) as $tracks) {
+                    $api->deletePlaylistTracks($importPlaylist->id, ['tracks' => $tracks]);
+                }
+            } catch (\Throwable $e) {
+                $failed = true;
+                $lc->error('Spotify cleanup failed', ['user_id' => $token->user_id, 'message' => $e->getMessage()]);
             }
         }
+
+        return $failed ? self::FAILURE : self::SUCCESS;
     }
 
     protected function apiForToken(UserSpotifyToken $token): SpotifyWebAPI
@@ -111,12 +93,17 @@ class SpotifySyncClean extends Command
                 continue;
             }
             $trackId = $track->track->id;
+            if (! $trackId) {
+                continue;
+            }
             $trackName = $track->track->name;
             $trackArtist = $track->track->artists[0]->name;
             $trackSearchQuery = $trackArtist.' '.$trackName;
             $this->info("Checking $trackSearchQuery against the meta table");
 
-            $media = Media::where('spotify_id', $trackId)->first();
+            $media = Media::where('spotify_id', $trackId)
+                ->orWhereHas('meta', fn ($query) => $query->where('spotify_id', $trackId))
+                ->first();
             if (! $media) {
                 $this->info('Not a media item');
 
@@ -127,10 +114,10 @@ class SpotifySyncClean extends Command
                 ->where('user_id', $userId)
                 ->first();
 
-            //track exists in media and in users collection
+            // track exists in media and in users collection
             if ($media && $userMedia) {
                 $this->info("Removing $trackSearchQuery from playlist");
-                $trackTrashcan[] = ['id' => $trackId, 'uri' => $track->track->uri ];
+                $trackTrashcan[] = ['uri' => $track->track->uri];
             }
         }
 

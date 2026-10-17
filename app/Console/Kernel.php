@@ -20,7 +20,6 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -28,7 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('filter:run')->hourly();
         $schedule->command('youtube:update-data')->dailyAt('04:00');
 
-        //$schedule->command('hydrate:daily-mix')->dailyAt('03:00');
+        // $schedule->command('hydrate:daily-mix')->dailyAt('03:00');
 
         // Continuously loop through media collection and autofix videos
         /*($schedule->command('youtube:autofix-queue')
@@ -41,8 +40,7 @@ class Kernel extends ConsoleKernel
            ->appendOutputTo(storage_path('logs/discovery.log'));*/
 
         // Import new tracks found in a user's DS Import playlist on Spotify
-        // $schedule->command('spotify:sync')
-        //    ->everyThirtyMinutes();
+        $schedule->command('spotify:sync')->hourly()->withoutOverlapping();
     }
 
     /**

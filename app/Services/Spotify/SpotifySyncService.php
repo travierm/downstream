@@ -11,7 +11,6 @@ use App\Models\UserSpotifyToken;
 use App\Repos\SpotifyRepo;
 use App\Services\SpotifyAPI;
 use App\Services\YoutubeService;
-use DB;
 use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifySyncService
@@ -27,25 +26,14 @@ class SpotifySyncService
 
     public function syncByToken(UserSpotifyToken $token): void
     {
-        try {
-            $spotifyApi = SpotifyAPI::getInstanceWithToken($token);
-        } catch (\Exception $e) {
-            throw $e;
-        }
+        $spotifyApi = $this->apiForToken($token);
 
         $importPlaylist = $this->getOrCreateImportPlaylist($spotifyApi, $spotifyApi->me());
         if (! $importPlaylist) {
             return;
         }
 
-        $tracks = $spotifyApi->getPlaylistTracks($importPlaylist->id);
-        $trackCount = count($tracks->items);
-
-        $this->lc->info(
-            sprintf('found %s tracks in import playlist', $trackCount)
-        );
-
-        foreach ($tracks->items as $track) {
+        foreach ((new ImportPlaylist($spotifyApi))->tracks($importPlaylist->id) as $track) {
             if (! $track->track) {
                 continue;
             }
@@ -58,22 +46,16 @@ class SpotifySyncService
         }
     }
 
+    protected function apiForToken(UserSpotifyToken $token): SpotifyWebAPI
+    {
+        return SpotifyAPI::getInstanceWithToken($token);
+    }
+
     public function getOrCreateImportPlaylist(SpotifyWebAPI $spotifyApi, object $spotifyUser): ?object
     {
-        //get list of user playlists
-        $playlists = $spotifyApi->getUserPlaylists($spotifyUser->id, [
-            'limit' => 50,
-        ]);
+        $importList = (new ImportPlaylist($spotifyApi))->find($spotifyUser->id);
 
-        //find playlist named "DS Import"
-        $importList = false;
-        foreach ($playlists->items as $playlist) {
-            if (trim($playlist->name) == 'DS Import') {
-                $importList = $playlist;
-            }
-        }
-
-        //could not find existing playlist, create new and exit
+        // could not find existing playlist, create new and exit
         if (! $importList) {
             $spotifyApi->createPlaylist([
                 'name' => 'DS Import',
@@ -112,68 +94,43 @@ class SpotifySyncService
 
     public function syncTrack(int $userId, object $track): bool
     {
-        $trackId = $track->track->id;
-        $trackName = $track->track->name;
-        $trackArtist = $track->track->artists[0]->name;
-        $trackArtistId = $track->track->artists[0]->id;
-        $trackSearchQuery = $trackArtist.' '.$trackName;
-
-        $this->lc->info('attempting to import with query '.$trackSearchQuery);
+        $trackId = $track->track->id ?? null;
         if (! $trackId) {
-            $this->lc->error('spotify track id is null');
-        }
-
-        //check if this spotify_track exists on Downstream
-        $media = DB::table('media_meta')
-            ->where('spotify_id', $trackId)
-            ->first();
-
-        //found existing media so add it to users collection
-        if (@$media->media_id) {
-            $this->lc->info('import already exists in media table');
-
-            $userMediaData = [
-                'media_id' => $media->media_id,
-                'user_id' => $userId,
-            ];
-
-            $userMedia = UserMedia::where($userMediaData)->first();
-
-            if ($userMedia) {
-                $this->lc->info('pushing item since it already existed in users collection');
-                $userMedia->pushed_at = now();
-                $userMedia->save();
-            } else {
-                $this->lc->info('adding item to users collection');
-                UserMedia::create($userMediaData);
-            }
-
-            return true;
-        }
-
-        $importRecord = $this->spotifyRepo->createSpotifyImport($userId, $trackName, $trackArtist, $trackSearchQuery);
-        //Find youtube video to create media from
-        $videos = YoutubeService::searchByQuery($trackSearchQuery);
-        if (! $videos && $videos[0]) {
-            $this->lc->error("failed to find video using search query $trackSearchQuery");
+            $this->lc->info('skipping track without a Spotify ID');
 
             return false;
         }
 
-        $video = $videos[0];
-        $videoIndex = $video->videoId;
+        $trackName = $track->track->name;
+        $trackArtist = $track->track->artists[0]->name;
+        $trackSearchQuery = $trackArtist.' '.$trackName;
 
-        $media = Media::where('index', $videoIndex)->first();
+        $this->lc->info('attempting to import with query '.$trackSearchQuery);
+        // Older imports may have the Spotify ID in only one of these tables.
+        $media = Media::query()
+            ->where('spotify_id', $trackId)
+            ->orWhereHas('meta', fn ($query) => $query->where('spotify_id', $trackId))
+            ->first();
+        $importRecord = null;
 
         if (! $media) {
+            $importRecord = $this->spotifyRepo->createSpotifyImport($userId, $trackName, $trackArtist, $trackSearchQuery);
+            $videos = YoutubeService::searchByQuery($trackSearchQuery);
+            if (empty($videos)) {
+                $this->lc->info("no video found using search query $trackSearchQuery");
+
+                return false;
+            }
+
+            $video = $videos[0];
             $media = Media::firstOrCreate([
-                'origin' => 'spotify#import',
                 'type' => 'youtube',
-                'subtype' => 'video',
                 'index' => $video->videoId,
+            ], [
+                'origin' => 'spotify#import',
+                'subtype' => 'video',
                 'user_id' => $userId,
                 'title' => $video->title,
-                'spotify_id' => $trackId,
                 'thumbnail' => $video->thumbnail,
             ]);
         }
@@ -183,28 +140,32 @@ class SpotifySyncService
             $media->save();
         }
 
-        UserMedia::firstOrCreate([
+        $userMedia = UserMedia::firstOrCreate([
             'media_id' => $media->id,
             'user_id' => $userId,
         ]);
-
-        //do media_meta check
-        $row = MediaMeta::where('media_id', $media->id)->first();
-        if (! $row) {
-            //create or find artist
-            $artist = Artist::findOrCreate($trackArtist);
-
-            $row = new MediaMeta();
-            $row->title = $video->title;
-            $row->artist_id = $artist->id;
-            $row->thumbnail = $video->thumbnail;
-            $row->media_id = $media->id;
-            $row->spotify_id = $trackId;
-            $row->save();
+        if (! $userMedia->wasRecentlyCreated) {
+            $userMedia->pushed_at = now();
+            $userMedia->save();
         }
 
-        $this->spotifyRepo->setImported($importRecord, $media->id);
-        $this->lc->info('created new media item '.$media->id);
+        $row = MediaMeta::where('media_id', $media->id)->first();
+        if (! $row) {
+            $row = new MediaMeta;
+            $row->title = $media->title;
+            $row->thumbnail = $media->thumbnail;
+            $row->media_id = $media->id;
+        }
+        if (! $row->artist_id) {
+            $row->artist_id = Artist::findOrCreate($trackArtist)->id;
+        }
+        $row->spotify_id = $trackId;
+        $row->save();
+
+        if ($importRecord) {
+            $this->spotifyRepo->setImported($importRecord, $media->id);
+        }
+        $this->lc->info('imported media item '.$media->id);
 
         return true;
     }

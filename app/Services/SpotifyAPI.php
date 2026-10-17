@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\UserSpotifyToken;
+use App\Services\Spotify\UserSpotifySession;
 use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
 
@@ -48,38 +49,7 @@ class SpotifyAPI
 
     public static function getInstanceWithToken(UserSpotifyToken $token): SpotifyWebAPI
     {
-        $session = new Session(
-            env('SPOTIFY_CLIENT_ID'),
-            env('SPOTIFY_CLIENT_SECRET'),
-            env('SPOTIFY_CONNECT_URL')
-        );
-
-        $newAccessToken = $session->getAccessToken();
-        $newRefreshToken = $session->getRefreshToken();
-
-        if ($token) {
-            $session->setAccessToken($token->access_token);
-            $session->setRefreshToken($token->refresh_token);
-        }
-
-        $options = [
-            'auto_refresh' => true,
-        ];
-
-        $api = new SpotifyWebAPI($options, $session);
-
-        // check for refresh
-        $newAccessToken = $session->getAccessToken();
-        $newRefreshToken = $session->getRefreshToken();
-
-        if ($token->access_token !== $newAccessToken) {
-            echo 'updating token';
-            $token->access_token = $newAccessToken;
-            $token->refresh_token = $newRefreshToken;
-            $token->save();
-        }
-
-        return $api;
+        return new SpotifyWebAPI(['auto_refresh' => true], new UserSpotifySession($token));
     }
 
     public static function getInstance(): SpotifyWebAPI
