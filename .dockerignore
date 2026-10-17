@@ -1,0 +1,37 @@
+# Local tools, credentials, and development dependencies.
+.git
+.github
+.idea
+.vscode
+.agents
+.codex
+.aws
+.kamal
+.env*
+!.env.example
+!.env.testing.example
+!.env.ci
+vendor
+**/node_modules
+**/*.log
+.phpunit.result.cache
+.phpunit.cache
+
+# These applications are built separately from the Laravel API.
+vue_app
+node_services
+_archive
+
+# Preserve Laravel's directory scaffold, excluding generated runtime files.
+bootstrap/cache/*.php
+storage/*.key
+storage/framework/cache/data
+storage/framework/sessions/*
+!storage/framework/sessions/.gitignore
+storage/framework/views/*
+!storage/framework/views/.gitignore
+storage/debugbar/*
+!storage/debugbar/.gitignore
+storage/clockwork
+public/storage
+database/*.sqlite*

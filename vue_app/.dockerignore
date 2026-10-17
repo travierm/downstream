@@ -1,0 +1,18 @@
+.git
+.github
+.idea
+.vscode
+.agents
+.codex
+.kamal
+node_modules
+dist
+coverage
+test-results
+playwright-report
+tests/e2e/videos
+**/*.log
+
+# Vite needs the public production settings during the build.
+.env*
+!.env.production

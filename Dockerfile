@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 ARG ALPINE_VERSION=3.14
 FROM php:8.2-fpm-alpine
 
@@ -55,15 +56,22 @@ RUN chown -R nobody:nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 # Switch to use a non-root user from here on
 USER nobody
 
+# Cache dependencies independently of application changes. Laravel scripts and
+# autoload generation need application files, so run them after the source copy.
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --chown=nobody composer.json composer.lock ./
+RUN --mount=type=cache,id=downstream-api-composer,target=/tmp/composer-cache,uid=65534,gid=65534 \
+  COMPOSER_CACHE_DIR=/tmp/composer-cache composer install \
+    --no-scripts --no-autoloader --no-interaction --no-progress --prefer-dist
+
 # Add application
 COPY --chown=nobody . /var/www/html/
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
 
-# Run Composer
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-RUN composer install --optimize-autoloader --no-interaction --no-progress
+# Generate autoload files and run the existing post-autoload Laravel scripts.
+RUN composer dump-autoload --optimize --no-interaction
 
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
