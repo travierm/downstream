@@ -18,6 +18,8 @@ class PlaylistTest extends TestCase
 
     public function setUp(): void
     {
+        $this->markTestSkipped('Playlist routes are temporarily disabled.');
+
         parent::setUp();
 
         $this->user = User::factory()->create();

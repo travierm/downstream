@@ -60,7 +60,8 @@ Route::namespace('API')->group(function () {
         Route::post('/media/collect', 'MediaCollectionController@postCollectItem');
         Route::delete('/media/collection/{itemId}', 'MediaCollectionController@removeItemFromCollection');
 
-        // Playlists
+        // Playlist routes are temporarily disabled.
+        /*
         Route::get('/playlist/all', 'PlaylistController@getAllLists');
         Route::post('/playlist/create', 'PlaylistController@createList');
         Route::delete('/playlist/delete/{playlistId}', 'PlaylistController@deleteList');
@@ -69,6 +70,7 @@ Route::namespace('API')->group(function () {
         Route::get('/playlist/{playlistId}', 'PlaylistController@getListItems');
         Route::post('/playlist/add', 'PlaylistController@addItem');
         Route::delete('/playlist/{playlistId}/delete/{mediaId}', 'PlaylistController@deleteItem');
+        */
 
         // Analytics
         Route::post('/ana/media/play/{mediaId}', 'AnalyticsController@recordUserPlay');

@@ -3,19 +3,6 @@
     <v-row>
       <v-col>
         <CollectionBar v-if="hasCollectionItems" />
-
-        <!-- Mobile Playlist Button -->
-        <div class="mr-4 ml-4">
-          <v-btn
-            v-if="mobileBreakpoint"
-            color="primary"
-            block
-            @click="$store.dispatch('setPlaylistDrawerStatus', true)"
-          >
-            <v-icon class="pr-1">{{ mdiPlaylistMusic }}</v-icon>
-            Playlists</v-btn
-          >
-        </div>
       </v-col>
     </v-row>
 
@@ -67,7 +54,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 
-import { mdiPlaylistMusic } from '@mdi/js'
 import CardCol from '@/components/CardCol'
 import BottomBar from '@/components/BottomBar'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
@@ -94,20 +80,12 @@ export default {
       filteredCollection: 'collection/collectionSearchResults',
       searchQueryUpdates: 'collection/searchQueryUpdates',
     }),
-    mobileBreakpoint() {
-      return this.$vuetify.breakpoint.mobile
-    },
     collectionOrFilteredCollection() {
       return this.filteredCollection || this.collection
     },
   },
   mounted() {
     this.$store.dispatch('player/setCurrentIndex', this.$route.path)
-  },
-  data() {
-    return {
-      mdiPlaylistMusic,
-    }
   },
 }
 </script>
