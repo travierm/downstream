@@ -1,8 +1,8 @@
 <template>
-  <v-container class="d-flex flex-wrap justify-center">
-    <v-sheet elevation="2" class="pl-10 pr-10 rounded" :width="sheetWidth">
-      <v-row>
-        <v-col>
+  <v-container class="d-flex flex-wrap justify-center px-0 px-sm-3">
+    <v-sheet elevation="2" class="px-2 px-sm-10 rounded" width="100%" max-width="560">
+      <v-row class="mx-0">
+        <v-col class="px-0">
           <h2 class="mt-4 mb-4">Create an account on Downstream</h2>
           <h3>We're excited to have you join us!</h3>
 
@@ -10,8 +10,8 @@
         </v-col>
       </v-row>
 
-      <v-row class="mb-2">
-        <v-col>
+      <v-row class="mb-2 mx-0">
+        <v-col class="px-0">
           <v-form ref="registerForm" v-model="valid" @submit.prevent="register">
             <v-text-field name="email" type="email" autocomplete="email" outlined v-model="email" label="Email"
               :rules="[(v) => !!v || 'Email is required']" required></v-text-field>
@@ -52,11 +52,6 @@ import { registerUser } from '../../../services/api/UserRegistrationService'
 export default {
   name: 'RegisterView',
   components: { TurnstileChallenge },
-  computed: {
-    sheetWidth() {
-      return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%'
-    },
-  },
   data: function () {
     return {
       valid: false,

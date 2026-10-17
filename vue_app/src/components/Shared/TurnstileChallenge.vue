@@ -55,7 +55,8 @@ export default {
         this.widgetId = turnstile.render(this.$refs.widget, {
           sitekey: this.siteKey,
           action: 'register',
-          size: 'compact',
+          size: 'flexible',
+          theme: this.$vuetify?.theme?.dark ? 'dark' : 'light',
           callback: token => {
             this.error = ''
             this.$emit('input', token)
