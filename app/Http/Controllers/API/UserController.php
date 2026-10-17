@@ -15,8 +15,12 @@ class UserController extends Controller
 
     public function getActiveUsers()
     {
-        return User::select('id', 'display_name', 'hash')
-            ->withCount('media')
+        return User::select('id', 'display_name', 'hash', 'created_at')
+            ->withCount([
+                'media',
+                'followers',
+                'spotifyImports' => fn ($query) => $query->where('imported', true),
+            ])
             ->public()
             ->orderBy('media_count', 'desc')
             ->limit(9)

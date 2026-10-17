@@ -97,6 +97,11 @@ class User extends Authenticatable
         return $this->hasMany(UserMedia::class);
     }
 
+    public function spotifyImports()
+    {
+        return $this->hasMany(UserSpotifyImport::class);
+    }
+
     public function isAdmin()
     {
         return $this->type == 'admin';

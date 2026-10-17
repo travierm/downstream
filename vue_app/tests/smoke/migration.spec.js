@@ -241,3 +241,50 @@ test('playlist drawer retains selection and navigation', async ({ page }) => {
   await expect(page.getByText(song.title, { exact: true })).toBeVisible()
   expect(errors).toEqual([])
 })
+
+test('community cards show profile stats and fit mobile and desktop layouts', async ({ page }) => {
+  const { errors } = await mockApp(page)
+  await page.route('**/users/active', route => route.fulfill({ json: Array.from({ length: 9 }, (_, index) => ({
+    id: index + 1, hash: `collector-${index}`, display_name: index === 0 ? 'A collector with a particularly long display name' : `Collector ${index}`,
+    created_at: '2021-06-15T00:00:00.000000Z', media_count: 12345,
+    spotify_imports_count: index === 0 ? 1200 : 0, followers_count: 42,
+  })) }))
+  await page.goto('/users')
+  await expect(page.getByRole('heading', { name: 'Top Users', exact: true })).toBeVisible()
+  const cards = page.locator('.user-card')
+  await expect(cards).toHaveCount(9)
+  await expect(cards.first()).toContainText('June 15, 2021')
+  await expect(cards.first()).toContainText('12,345')
+  await expect(cards.first()).toContainText('1,200')
+  await expect(cards.first().locator('.collection-stat .text-headline-large')).toHaveCSS('font-size', '32px')
+  await expect(cards.first().locator('.collection-stat svg path')).toHaveAttribute('d', /^M/)
+  await expect(cards.nth(1).locator('dd').first()).toHaveText('0')
+  await expect(cards.first().getByRole('link')).toHaveAttribute('href', '/profile/collector-0')
+  for (const [width, columns] of [[360, 1], [768, 2], [1440, 3]]) {
+    await page.setViewportSize({ width, height: 900 })
+    const first = await cards.first().boundingBox()
+    const nextRow = await cards.nth(columns).boundingBox()
+    expect(nextRow.y).toBeGreaterThan(first.y)
+    if (columns > 1) {
+      const neighbor = await cards.nth(1).boundingBox()
+      expect(neighbor.y).toBe(first.y)
+      expect(neighbor.height).toBe(first.height)
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+    await expect(cards.first()).toHaveCSS('border-radius', '24px')
+  }
+  expect(errors).toEqual([])
+})
+
+test('community request failures can be retried and empty results are explained', async ({ page }) => {
+  await mockApp(page)
+  let fail = true
+  await page.route('**/users/active', route => fail
+    ? route.fulfill({ status: 503, json: {} })
+    : route.fulfill({ json: [] }))
+  await page.goto('/users')
+  await expect(page.locator('.users-view').getByRole('alert')).toContainText('We couldn’t load the community')
+  fail = false
+  await page.getByRole('button', { name: 'Try again' }).click()
+  await expect(page.getByRole('heading', { name: 'A community in the making' })).toBeVisible()
+})
