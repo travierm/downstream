@@ -37,7 +37,7 @@ class SpotifyController extends Controller
             throw $e;
         }
 
-        Artisan::call('spotify:sync-clean');
+        Artisan::call('spotify:sync-clean', ['--user-id' => Auth::id()]);
 
         return response()->json([], 200);
     }

@@ -7,6 +7,7 @@ use App\Models\UserMedia;
 use App\Models\UserSpotifyToken;
 use App\Services\SpotifyAPI;
 use Illuminate\Console\Command;
+use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifySyncClean extends Command
 {
@@ -15,7 +16,7 @@ class SpotifySyncClean extends Command
      *
      * @var string
      */
-    protected $signature = 'spotify:sync-clean';
+    protected $signature = 'spotify:sync-clean {--user-id= : Only clean this user\'s import playlist}';
 
     /**
      * The console command description.
@@ -44,11 +45,15 @@ class SpotifySyncClean extends Command
         $lc = lc();
         $lc->info('starting spotify:sync-clean');
 
-        $usersWithTokens = UserSpotifyToken::all();
+        $usersWithTokens = UserSpotifyToken::query()
+            ->when($this->option('user-id') !== null, function ($query) {
+                $query->where('user_id', $this->option('user-id'));
+            })
+            ->get();
         $lc->info('found ' . count($usersWithTokens) . ' users to clean DS Import playlist for');
 
         foreach ($usersWithTokens as $token) {
-            $api = SpotifyAPI::getInstanceWithToken($token);
+            $api = $this->apiForToken($token);
 
             $spotifyUser = $api->me();
 
@@ -91,6 +96,11 @@ class SpotifySyncClean extends Command
                 $lc->info('failed to delete playlist track:' . $e->getMessage());
             }
         }
+    }
+
+    protected function apiForToken(UserSpotifyToken $token): SpotifyWebAPI
+    {
+        return SpotifyAPI::getInstanceWithToken($token);
     }
 
     public function cleanTracks($userId, $tracks)
