@@ -105,6 +105,33 @@ production frontend hostname, and store its matching secret in the API's
 deployment environment. Refresh Laravel's configuration cache with
 `php artisan config:cache` when configuration changes.
 
+Before serving updated API code, run `php artisan migrate --force`. Discover's
+request deduplication uses cache locks; the database cache requires the
+`cache_locks` table added by the migration. API workers must share the same
+cache store for cross-worker deduplication.
+
+To run migrations through Kamal, use `make migrate-prod`. This loads `.env.prod`
+and runs migrations once on the primary host in the running API container.
+That container must contain the migration files you intend to apply.
+
+Discover caches completed recommendations for a day and individual Spotify to
+YouTube matches for a day. Successful empty searches expire after five minutes;
+provider failures are not cached as completed recommendations. Discover and
+Daily Mix have separate cache entries for their requested result counts.
+The new recommendation cache keys start fresh on deployment; existing entries
+expire normally.
+YouTube searches run at most four at a time with a ten-second timeout per search.
+Set `DISCOVERY_YOUTUBE_CONCURRENCY=1` and refresh the configuration cache to
+return to sequential searches. The frontend reuses results for sixty seconds
+within the signed-in session and shares pending requests for the same track.
+
+Signed-in users can open Daily Mix from the navigation menu on desktop or mobile.
+`GET /api/daily-mix` serves the user's cached mix or generates one on demand under
+a per-user lock, so it works without enabling the optional hydration schedule.
+A mix lasts one day. Accounts without listening history can use collected tracks
+as seeds; accounts without any eligible tracks receive an empty list with guidance.
+The page shows loading, empty, and retry states.
+
 Build the frontend with your API URL and public site key:
 
 ```sh

@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Media;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
+use App\Models\Media;
+use App\Services\DailyMixService;
 use App\Services\Discovery\SimilarTracks;
+use Illuminate\Contracts\Cache\LockTimeoutException;
+use Illuminate\Support\Facades\Auth;
 
 class DiscoverTrackController extends Controller
 {
     public function getDailyMix()
     {
-        $dailyMixCache = Cache::get('daily-mix-' . Auth::user()->id, null);
-        if(!$dailyMixCache) {
+        try {
+            $mix = app(DailyMixService::class)->getDailyMix(Auth::user());
+        } catch (LockTimeoutException $e) {
             return response()->json([
-                'message' => "Daily Mix has not been generated for you yet. Make sure you've collected atleast one track this week."
-            ], 404);
+                'message' => 'Your Daily Mix is still being generated. Please try again shortly.',
+            ], 503)->header('Retry-After', '5');
         }
 
-        return response()->json($dailyMixCache, 200);
+        if (count($mix['videos']) === 0) {
+            $mix['message'] = 'No Daily Mix is available yet. Collect or play some tracks, then try again.';
+        }
+
+        return response()->json($mix);
     }
 
     public function similarTracks($videoId)
@@ -43,12 +49,10 @@ class DiscoverTrackController extends Controller
             array_unshift($items, $media);
 
             $lc->info(sprintf('found %s similar tracks', count($items)));
-        } catch(\Exception $e) {
-            throw $e;
-
+        } catch (LockTimeoutException $e) {
             return response()->json([
-                'message' => $e->getMessage(),
-            ], 500);
+                'message' => 'Similar tracks are still being generated. Please try again shortly.',
+            ], 503)->header('Retry-After', '5');
         }
 
         return response()->json(['items' => $items], 200);

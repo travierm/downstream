@@ -34,5 +34,9 @@ test-migrate:
 deploy:
 	dotenv -f .env.prod -- kamal deploy
 
+.PHONY: migrate-prod
+migrate-prod:
+	dotenv -f .env.prod -- kamal app exec --reuse --primary "php artisan migrate --force --no-interaction"
+
 deploy-vue:
 	cd vue_app/ && dotenv -f ../.env.prod -- kamal deploy

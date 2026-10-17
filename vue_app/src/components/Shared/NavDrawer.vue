@@ -76,6 +76,7 @@ export default {
           ? [{ icon: mdiViewDashboardOutline, title: 'Admin Panel', to: '/admin' }]
           : []),
         { icon: 'mdi-database', title: 'Collection', to: '/collection' },
+        { icon: 'mdi-music-note', title: 'Daily Mix', to: '/daily-mix' },
         {
           icon: 'mdi-chart-bar-stacked',
           title: 'Stats',

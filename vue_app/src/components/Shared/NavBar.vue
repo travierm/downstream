@@ -36,7 +36,8 @@
     <SearchBar v-if="loggedIn" class="mt-1" />
 
     <v-app-bar-nav-icon
-      v-if="loggedIn && $vuetify.breakpoint.smAndUp"
+      v-if="loggedIn"
+      aria-label="Open navigation menu"
       @click.stop="$store.dispatch('toggleNavDrawerStatus')"
       class="ml-2"
     ></v-app-bar-nav-icon>
