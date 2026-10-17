@@ -1,5 +1,7 @@
 .vscode/settings.json
 vue_app/coverage/
+vue_app/test-results/
+vue_app/playwright-report/
 vue_app/node_modules
 vue_app/tests/e2e/videos
 vue_app/dist
@@ -16,6 +18,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+/database/*.sqlite*
 .env.testing
 .env.prod
 .env.production
