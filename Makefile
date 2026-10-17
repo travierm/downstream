@@ -33,3 +33,6 @@ test-migrate:
 
 deploy:
 	dotenv -f .env.prod -- kamal deploy
+
+deploy-vue:
+	cd vue_app/ && dotenv -f ../.env.prod -- kamal deploy
