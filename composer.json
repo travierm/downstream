@@ -20,7 +20,7 @@
     "cumulati/monolog-context": "dev-monolog-3-upgrade",
     "doctrine/dbal": "^3.5",
     "guzzlehttp/guzzle": "^7.2",
-    "jwilsson/spotify-web-api-php": "5.4.0",
+    "jwilsson/spotify-web-api-php": "^5.7.1",
     "laravel/framework": "^10.0",
     "laravel/helpers": "^1.2",
     "laravel/sanctum": "^3.2",
@@ -30,7 +30,7 @@
   "require-dev": {
     "fakerphp/faker": "^1.14.0",
     "laravel/pint": "^1.2",
-    "mockery/mockery": "1.4.2",
+    "mockery/mockery": "^1.4.2",
     "nunomaduro/collision": " ^7.0",
     "phpunit/phpunit": "^10.0"
   },
@@ -78,6 +78,9 @@
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "platform": {
+      "php": "8.2.0"
+    }
   }
 }

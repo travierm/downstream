@@ -1,4 +1,3 @@
-import { BrowserTracing } from '@sentry/tracing'
 import * as Sentry from '@sentry/vue'
 import Vue from 'vue'
 import { sync } from 'vuex-router-sync'

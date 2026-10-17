@@ -21,7 +21,11 @@ class AddMediaTableIndexes extends Migration
         ];
 
         foreach ($duplicateMediaIndexes as $index) {
-            DB::statement("DELETE FROM media WHERE `index` = '{$index}' ORDER BY created_at ASC LIMIT 1");
+            $id = DB::table('media')->where('index', $index)->orderBy('created_at')->value('id');
+
+            if ($id !== null) {
+                DB::table('media')->where('id', $id)->delete();
+            }
         }
 
         Schema::table('media', function ($table) {

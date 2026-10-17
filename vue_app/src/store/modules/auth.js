@@ -1,4 +1,3 @@
-import router from '@/router/index'
 import { fetchInitUserData } from '../events'
 import AuthService from '@/services/api/AuthService'
 
@@ -76,7 +75,8 @@ export const actions = {
           commit('SET_USER', response.data)
         }
       })
-      .catch((error) => {
+      .catch(async (error) => {
+        const { default: router } = await import('@/router/index')
         if (router.history.current.path !== '/login') {
           router.push('/login')
         }
