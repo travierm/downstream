@@ -30,11 +30,15 @@ export default {
       return `Search ${this.collectionCount} items in your collection`
     },
   },
-  data: () => {
+  data() {
     return {
       items: [],
       query: '',
       value: '',
+      // Keep the debounce on each instance; Vue binds methods and drops .cancel.
+      updateSearchQuery: _.debounce((newVal) => {
+        this.$store.dispatch('collection/setSearchQuery', newVal)
+      }, 100),
     }
   },
   mounted() {
@@ -49,16 +53,13 @@ export default {
     this.updateSearchQuery.cancel()
   },
   methods: {
-    updateSearchQuery: _.debounce((self, newVal) => {
-      self.$store.dispatch('collection/setSearchQuery', newVal)
-    }, 100),
     handleInputClear() {
       this.query = ''
     }
   },
   watch: {
     query: function (newVal) {
-      this.updateSearchQuery(this, newVal)
+      this.updateSearchQuery(newVal)
     },
   },
 }

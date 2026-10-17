@@ -82,16 +82,12 @@ describe('admin dashboard', () => {
     const guards = []
     applyMiddleware({ beforeEach: guard => guards.push(guard) })
     const to = { matched: [{ meta: { requiresAuth: true, requiresAdmin: true } }] }
-    const next = vi.fn()
     store.getters['auth/loggedIn'] = false
-    await guards[1](to, {}, next)
-    expect(next).toHaveBeenLastCalledWith('/')
+    expect(await guards[1](to)).toBe('/')
     store.getters['auth/loggedIn'] = true
     store.state.auth.user = { type: 'user' }
-    await guards[1](to, {}, next)
-    expect(next).toHaveBeenLastCalledWith('/collection')
+    expect(await guards[1](to)).toBe('/collection')
     store.state.auth.user = { type: 'admin' }
-    await guards[1](to, {}, next)
-    expect(next).toHaveBeenLastCalledWith()
+    expect(await guards[1](to)).toBeUndefined()
   })
 })

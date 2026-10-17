@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="#121212" scroll-behavior="elevate">
+  <v-app-bar color="app-bar" scroll-behavior="elevate">
     <div
       class="d-flex align-center"
       v-if="$vuetify.display.smAndUp || !loggedIn"

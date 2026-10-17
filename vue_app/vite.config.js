@@ -26,7 +26,7 @@ export default defineConfig({
     setupFiles: ['./tests/unit/setup.js'],
     include: ['tests/unit/**/*.spec.js'],
   },
-  plugins: [vue(), vuetify({ autoImport: true })],
+  plugins: [vue(), vuetify({ autoImport: true, styles: { configFile: 'src/assets/css/vuetify.scss' } })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

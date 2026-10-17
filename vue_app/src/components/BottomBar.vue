@@ -6,24 +6,24 @@
     </div>
 
     <v-app-bar class="player-bar" color="grey-darken-4" location="bottom"
-      :height="$vuetify.display.smAndUp ? 64 : 96">
+      :height="$vuetify.display.mdAndUp ? 48 : 96">
       <v-container class="py-0">
-        <v-row no-gutters class="justify-left">
+        <v-row no-gutters class="justify-start align-center ga-2">
 
-          <v-col cols="auto" class="mr-1">
+          <v-col cols="auto" class="d-flex align-center ga-2">
             <span>{{ playerQueueCount }}</span>
-            <v-btn @click="replayCurrentCard" color="primary" icon class="ml-2 pa-1 mt-1" size="small"><v-icon size="large">{{
+            <v-btn @click="replayCurrentCard" color="primary" variant="text" icon height="36" width="36" aria-label="Replay current track"><v-icon size="32">{{
               mdiReplay
                 }}</v-icon></v-btn>
           </v-col>
 
           <v-col cols="auto">
             <v-btn @click="togglePlayerFullscreen" color="primary"
-              class="focusBtn ml-2"><v-icon>$mdi-fullscreen</v-icon></v-btn>
+              class="focusBtn" variant="elevated" height="36"><v-icon>$mdi-fullscreen</v-icon></v-btn>
           </v-col>
 
           <v-col cols="auto">
-            <v-btn v-if="onCollectionRoute" @click="shuffleCollection" color="primary" class="focusBtn ml-2">
+            <v-btn v-if="onCollectionRoute" @click="shuffleCollection" color="primary" class="focusBtn" variant="elevated" height="36">
               <v-icon v-if="!shuffled">$mdi-shuffle-variant</v-icon>
               <v-icon v-else>$mdi-shuffle-disabled</v-icon>
             </v-btn>
@@ -44,12 +44,12 @@
         </v-col> -->
 
           <v-col cols="auto">
-            <v-btn @click="focusOnPlayingCard" color="primary" class="focusBtn ml-2"><v-icon class="pr-1"
+            <v-btn @click="focusOnPlayingCard" color="primary" class="focusBtn player-focus" variant="elevated" height="36"><v-icon class="mr-2"
                 v-if="$vuetify.display.smAndUp">$mdi-magnify</v-icon>Focus</v-btn>
           </v-col>
 
-          <v-col lg="2" v-if="$vuetify.display.smAndUp">
-            <VolumeSlider class="ml-4" />
+          <v-col lg="2" v-if="$vuetify.display.smAndUp" class="d-flex align-center">
+            <VolumeSlider class="ml-2" />
           </v-col>
         </v-row>
       </v-container>
@@ -152,13 +152,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.player-focus {
+  min-width: 112px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.0892857143em;
+}
+
 .player-links {
   gap: 8px;
   white-space: nowrap;
   padding-right: 12px;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 959px) {
   .player-bar :deep(.v-toolbar__content) {
     flex-direction: column;
     justify-content: center;

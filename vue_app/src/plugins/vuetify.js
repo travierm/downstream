@@ -22,6 +22,10 @@ import {
 } from '@mdi/js'
 
 export default createVuetify({
+  display: {
+    // Keep runtime display checks aligned with the legacy grid in vuetify.scss.
+    thresholds: { xs: 0, sm: 600, md: 960, lg: 1264, xl: 1904, xxl: 2560 },
+  },
   theme: {
     defaultTheme: 'dark',
     themes: {
@@ -30,6 +34,7 @@ export default createVuetify({
         colors: {
           background: '#121212',
           surface: '#1e1e1e',
+          'app-bar': '#272727',
           primary: '#7C4DFF',
           secondary: '#b0bec5',
           accent: '#8c9eff',
