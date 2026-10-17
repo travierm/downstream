@@ -14,11 +14,12 @@ vi.mock('../../src/services/api/CollectionService', () => ({
 const song = { guid: 'saved-song', media_id: 1, title: 'My saved song' }
 const flush = () => new Promise(resolve => setTimeout(resolve, 0))
 
-async function navigateToCollection({ items = [], searchQuery = '', query = {}, from = '/admin' } = {}) {
+async function navigateToCollection({ items = [], searchQuery = '', query = {}, from = '/admin', response } = {}) {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(VueRouter)
   CollectionService.fetchCollection.mockReset().mockResolvedValue({ data: { hash: 'hash', items: [song] } })
+  if (response) CollectionService.fetchCollection.mockReturnValue(response)
   const store = new Vuex.Store({
     state: { showLoadingBar: false, auth: { token: 'test-token' } },
     actions: { setLoadingBarState: ({ state }, value) => { state.showLoadingBar = value } },
@@ -48,6 +49,24 @@ async function navigateToCollection({ items = [], searchQuery = '', query = {}, 
 }
 
 describe('collection navigation', () => {
+  it('keeps visible cards mounted when the navigation refresh returns new playback GUIDs', async () => {
+    let resolveResponse
+    const response = new Promise(resolve => { resolveResponse = resolve })
+    const { wrapper, store } = await navigateToCollection({ items: [song], response })
+    try {
+      const card = wrapper.find('.song').element
+      expect(card.textContent).toContain(song.title)
+      const refreshedSong = { ...song, guid: 'new-playback-guid', title: 'Updated title' }
+      resolveResponse({ data: { hash: 'hash', items: [refreshedSong] } })
+      await flush()
+
+      expect(CollectionService.fetchCollection).toHaveBeenCalledTimes(1)
+      expect(store.state.collection.collection).toEqual([refreshedSong])
+      expect(wrapper.find('.song').element).toBe(card)
+      expect(card.textContent).toContain('Updated title')
+    } finally { wrapper.destroy() }
+  })
+
   it.each(['/admin', '/stats', '/users'])('loads saved songs when entering from %s with no collection in memory', async (from) => {
     const { wrapper, store } = await navigateToCollection({ from })
     try {

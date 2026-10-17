@@ -7,7 +7,7 @@
     </v-row>
 
     <v-row v-if="hasCollectionItems">
-      <CardCol v-for="item in collectionOrFilteredCollection" :key="item.guid">
+      <CardCol v-for="item in collectionOrFilteredCollection" :key="item.media_id">
         <v-lazy :options="{ threshold: 0.5 }" transition="fade-transition">
           <YoutubeCard
             :item="item"
