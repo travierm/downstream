@@ -12,29 +12,28 @@
 
       <v-row class="mb-2">
         <v-col>
-          <v-form ref="registerForm" v-model="valid">
-            <v-text-field name="invite_code" outlined v-model="invite_code" label="Invite Code"
-              :rules="[(v) => !!v || 'Invite Code is required']" required></v-text-field>
-
-            <v-text-field name="email" outlined v-model="email" label="Email"
+          <v-form ref="registerForm" v-model="valid" @submit.prevent="register">
+            <v-text-field name="email" type="email" autocomplete="email" outlined v-model="email" label="Email"
               :rules="[(v) => !!v || 'Email is required']" required></v-text-field>
 
-            <v-text-field name="username" outlined v-model="display_name" label="Display Name"
+            <v-text-field name="username" autocomplete="nickname" outlined v-model="display_name" label="Display Name"
               :rules="[(v) => !!v || 'Display Name is required']" required></v-text-field>
 
-            <v-text-field name="password" outlined v-model="password" type="password" label="Password" :rules="[
+            <v-text-field name="password" autocomplete="new-password" outlined v-model="password" type="password" label="Password" :rules="[
               (v) => !!v || 'Password is required',
               (v) =>
-                v.length >= 6 || 'Password must be 6 or more characters long',
+                (v || '').length >= 6 || 'Password must be 6 or more characters long',
             ]" required></v-text-field>
 
-            <v-text-field name="password" outlined v-model="password_confirmation" type="password"
+            <v-text-field name="password_confirmation" autocomplete="new-password" outlined v-model="password_confirmation" type="password"
               label="Confirm Password" :rules="[
-                (v) => v === this.password || 'Both password must match',
+                (v) => v === this.password || 'Both passwords must match',
               ]" required></v-text-field>
 
-            <v-btn color="primary" class="loginBtn" @click="register">Register</v-btn>
-            <v-btn color="primary" class="ml-2" to="/waitlist">Join our waiting list</v-btn>
+            <turnstile-challenge ref="turnstile" v-model="turnstileToken" />
+            <v-btn color="primary" class="loginBtn" type="submit" :loading="submitting"
+              :disabled="!turnstileToken || submitting">Register</v-btn>
+            <v-btn text class="ml-2" to="/login">Log in</v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -47,56 +46,57 @@
 </template>
 
 <script>
+import TurnstileChallenge from '@/components/Shared/TurnstileChallenge.vue'
 import { registerUser } from '../../../services/api/UserRegistrationService'
 
 export default {
   name: 'RegisterView',
+  components: { TurnstileChallenge },
   computed: {
     sheetWidth() {
-      return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%)'
+      return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%'
     },
   },
   data: function () {
     return {
       valid: false,
-      invite_code: this.$route.query.invite_code ?? '',
+      turnstileToken: '',
+      submitting: false,
       email: '',
       display_name: '',
       password: '',
       password_confirmation: '',
     }
   },
-  mounted() { },
   methods: {
-    register() {
-      if (!this.$refs.registerForm.validate()) {
-        return
+    async register() {
+      if (this.submitting || !this.$refs.registerForm.validate() || !this.turnstileToken) return
+
+      this.submitting = true
+      try {
+        const response = await registerUser(
+          this.display_name,
+          this.email,
+          this.password,
+          this.password_confirmation,
+          this.turnstileToken
+        )
+        this.$refs.alertList.create('success', response.data.message)
+        await this.$store.dispatch('auth/login', { email: this.email, password: this.password })
+        if (this.$store.getters['auth/loggedIn']) {
+          await this.$router.push('/collection')
+        } else {
+          await this.$router.push('/login')
+        }
+      } catch (response) {
+        const errors = response?.data?.errors
+        const message = errors ? Object.values(errors).flat().join(' ') : response?.data?.message
+        this.$refs.alertList.create('error', message || 'Registration failed. Please try again.')
+      } finally {
+        this.submitting = false
+        this.$refs.turnstile?.reset()
       }
-
-      registerUser(
-        this.display_name,
-        this.email,
-        this.password,
-        this.invite_code
-      )
-        .then((response) => {
-          this.$refs.alertList.create('success', response.data.message)
-
-          const params = {
-            email: this.email,
-            password: this.password,
-          }
-          this.$store.dispatch('auth/login', params).then(() => {
-            this.$router.push('/collection')
-          })
-        })
-        .catch((response) => {
-          this.$refs.alertList.create('error', response.data.message)
-        })
     },
   },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>

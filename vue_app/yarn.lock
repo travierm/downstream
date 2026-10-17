@@ -2656,13 +2656,6 @@ vue-eslint-parser@^9.4.3:
     lodash "^4.17.21"
     semver "^7.3.6"
 
-vue-recaptcha@^2.0.1:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/vue-recaptcha/-/vue-recaptcha-2.0.3.tgz#7e035d4302cff921d53d320e237ed1912985d922"
-  integrity sha512-Rz0kLIETUgmOrp7CxFvaFE65DkhKdWu4pteWOTt2i+yTajTHPqtyOW6DqTg0BvALWTm+WUvWVV7k5XXFijQnBw==
-  dependencies:
-    vue-demi "^0.13.11"
-
 vue-router@^3.1.5:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.6.5.tgz#95847d52b9a7e3f1361cb605c8e6441f202afad8"

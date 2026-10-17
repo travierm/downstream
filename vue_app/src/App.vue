@@ -49,7 +49,7 @@ export default {
     }),
   },
   data: () => ({
-    authRoutes: ['/', '/login', '/waitlist', '/register'],
+    authRoutes: ['/', '/login', '/register'],
   }),
 }
 </script>

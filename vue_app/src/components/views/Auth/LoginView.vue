@@ -7,7 +7,7 @@
         <v-row class="mt-2">
           <v-col>
             <h1>Login</h1>
-            <p class="mt-2">An invite is required to join downstream.</p>
+            <p class="mt-2">Log in to your Downstream account.</p>
             <v-alert v-if="error" type="error" class="mt-2 mb-0">
               Email or Password is incorrect!
             </v-alert>
@@ -29,9 +29,7 @@
 
               <!-- Login Form Actions -->
               <v-btn color="primary" class="loginBtn" @click="login">Login</v-btn>
-              <!--<v-btn color="primary" class="ml-2" to="/waitlist"
-                >Join our waiting list</v-btn
-              > -->
+              <v-btn text class="ml-2" to="/register">Create an account</v-btn>
               <!-- <v-btn class="ml-2" small text color="primary"
                 >Forgot Password?</v-btn
               > -->

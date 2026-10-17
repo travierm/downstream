@@ -1,52 +1,142 @@
-## Development Setup
+# Running Downstream locally or on your own server
+
+Downstream is an open source project with a Laravel API and a Vue frontend.
+These instructions are for contributors and anyone hosting their own instance.
+Use your own service credentials and domains. The checked-in frontend and Kamal
+configuration include values for the public Downstream instance; replace them
+when running a separate installation.
 
 ### Requirements
 
-- PHP 8.1 or greater & Composer package manager
-- Database: MySQL, Sqlite, Postgres, MariaDB (choose one)
-- Latest NodeJS & Yarn
-- YouTube API key for search **required**
-- Spotify API key for recommendations and discovery **not required**
+- PHP 8.2 or greater and Composer
+- MySQL or MariaDB, with a database created for your instance
+- Node.js 22.12 or greater and Yarn 1.22
+- A YouTube API key for search
+- A Cloudflare Turnstile widget for account registration
+- Optional Spotify credentials for Spotify integration
 
-### Pre-setup requirements
+## API setup
 
-#### Install PHP's Composer dependency manager
-
-```php
-wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
-```
-
-### Setting up the application
-
-```php
-//clone downstream repo
-git clone https://github.com/Travier/downstream downstream
+```sh
+git clone https://github.com/travierm/downstream.git
 cd downstream
-
-// copy new .env for laravel install
 cp .env.example .env
-
-//install PHP deps
 composer install
-
-//setup database, add your api keys
-vim .env
-
-//run migrations against database
-php artisan migrate
-
-//start php dev server
-php artisan serve
-
-// setup vue app frontend
-cd vue_app/
-yarn
-yarn serve
+php artisan key:generate
 ```
 
-### Check the Wiki for fixes to common setup issues
+Edit `.env` with your database connection and `YOUTUBE_KEY`. For local
+development, use the following application settings:
 
-https://github.com/travierm/downstream/wiki/Common-Setup-Issues
+```dotenv
+APP_URL=http://localhost:8000
+APP_LINK_URL=http://localhost:5173
+CACHE_DRIVER=file
+```
+
+Configure registration verification as described below, then start the API:
+
+```sh
+php artisan migrate
+php artisan serve
+```
+
+## Frontend setup
+
+In a separate terminal, from the repository root:
+
+```sh
+cd vue_app
+yarn install --frozen-lockfile
+cp .env.example .env.local
+```
+
+Set the frontend values in `vue_app/.env.local`:
+
+```dotenv
+VITE_API_URL=http://localhost:8000/api
+VITE_TURNSTILE_SITE_KEY=your-widget-site-key
+```
+
+Start Vite with `yarn dev` and open the local URL it prints. Restart Vite after
+changing environment values. The frontend's `.env.local` is tracked in this
+repository and must contain only public configuration.
+
+## Registration verification
+
+Registration is open to everyone and protected by Cloudflare Turnstile. Create
+a widget for your instance, or reuse one you own. Configure its allowed hostnames
+for your frontend, including `localhost` and `127.0.0.1` if you use it locally.
+The public Downstream instance's widget is not intended for other installations.
+
+Set the widget's public site key as `VITE_TURNSTILE_SITE_KEY` in the frontend.
+Set its matching secret and the frontend hostname allowlist in the API's `.env`:
+
+```dotenv
+TURNSTILE_SECRET_KEY=your-widget-secret-key
+TURNSTILE_HOSTNAMES=localhost,127.0.0.1
+```
+
+Hostnames must match the frontend exactly and contain no scheme, port, or path.
+The API verifies the token, the `register` action, and the returned hostname
+before creating an account. Registration is unavailable if verification is
+unconfigured or cannot be completed.
+
+Keep secrets in the API's ignored `.env` file or your deployment's secret store.
+Never put the secret in frontend files, a `VITE_` variable, or version control.
+Run `php artisan config:clear` after changing local API configuration.
+
+See the [Turnstile documentation](https://developers.cloudflare.com/turnstile/)
+for widget management and
+[testing guidance](https://developers.cloudflare.com/turnstile/troubleshooting/testing/).
+
+## Hosting your own instance
+
+Configure the API for your production environment, including its database,
+application key, service credentials, `APP_ENV=production`, and `APP_DEBUG=false`.
+Use your own frontend hostname allowlist, for example:
+
+```dotenv
+TURNSTILE_HOSTNAMES=music.example.com
+```
+
+Production rejects local hostnames. Ensure your widget also allows your
+production frontend hostname, and store its matching secret in the API's
+deployment environment. Refresh Laravel's configuration cache with
+`php artisan config:cache` when configuration changes.
+
+Build the frontend with your API URL and public site key:
+
+```sh
+cd vue_app
+VITE_API_URL=https://api.example.com/api \
+  VITE_TURNSTILE_SITE_KEY=your-widget-site-key yarn build
+```
+
+Serve `vue_app/dist` with a fallback to `index.html` for client-side routes such
+as `/register`. Frontend environment values are embedded during the build;
+rebuild after changing them.
+
+The repository includes Dockerfiles and Kamal configuration for the API and
+frontend. If you use them, customize both `config/deploy.yml` files for your
+servers, images, domains, and credentials. Set the API's `TURNSTILE_HOSTNAMES`
+to your frontend domain; `.kamal/secrets` reads `TURNSTILE_SECRET_KEY` from your
+deployment environment.
+
+Before opening registration, verify that a fresh Turnstile token creates an
+account and that reusing the token with a different registration is rejected.
+Automated tests use mocked verification and do not validate your widget's live
+configuration.
+
+## Troubleshooting
+
+Check your API URL, database connection, and service credentials first. For
+registration failures, check that the frontend site key and API secret belong
+to the same widget, that its allowed domains include your frontend hostname,
+and that `TURNSTILE_HOSTNAMES` matches that hostname.
+
+The [community wiki](https://github.com/travierm/downstream/wiki/Common-Setup-Issues)
+also contains setup notes, though some may refer to older versions.
 
 ## Dictionary
 

@@ -24,8 +24,7 @@ Route::namespace('API')->group(function () {
 
     // Auth & User Routes
     Route::post('/auth/login', 'Auth\LoginController@postLogin');
-    Route::post('/user/register', 'User\UserRegistrationController@registerUser');
-    Route::post('/waitlist/signup', 'User\UserRegistrationController@createWaitListSignup');
+    Route::post('/user/register', 'User\UserRegistrationController@registerUser')->middleware('throttle:5,1,registration');
 
     /* Authenticated routes only */
     Route::middleware(['auth:sanctum', 'request.logcontext'])->group(function () {
@@ -33,7 +32,6 @@ Route::namespace('API')->group(function () {
             return $request->user();
         });
 
-        Route::get('/invite/generate', 'UserController@generateInviteLink');
         Route::get('/search/{query}', 'SearchController@getResults');
         Route::get('/search/autocomplete/{query}', 'SearchAutocompleteController@getResults');
 

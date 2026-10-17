@@ -9,8 +9,7 @@
           Login
         </v-btn>
 
-        <v-btn color="primary" to="/waitlist" class="mt-4 mb-4 ml-2 text-dark" medium>Join our waiting list</v-btn>
-        <v-btn color="primary" to="/waitlist" class="mt-4 mb-4 ml-2" medium>Signup with Invite Code</v-btn>
+        <v-btn color="primary" to="/register" class="mt-4 mb-4 ml-2" medium>Register</v-btn>
       </v-col>
 
       <CardCol class="text-xs-center">

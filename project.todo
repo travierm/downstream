@@ -5,7 +5,6 @@ v1.4 Features
 ☐ Invitation / Registration Page
     ☐ Allows users to register their email and wait for approval
         ☐ Users with an invitation code head straight to the registation page
-            ☐ "Do you have an invite code or would you like to be put on the waiting list?"
         ☐ Use Captcha Service
 ☐ Follow other users
     ☐ Find / Follow other users

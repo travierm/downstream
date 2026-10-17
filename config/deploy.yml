@@ -48,6 +48,7 @@ env:
     APP_DEBUG: false
     APP_URL: https://downstream.us
     APP_LINK_URL: https://downstream.us
+    TURNSTILE_HOSTNAMES: downstream.us
   secret:
     - APP_KEY
     - DB_CONNECTION
@@ -61,6 +62,7 @@ env:
     - SPOTIFY_CLIENT_SECRET
     - SPOTIFY_CONNECT_URL
     - LAST_FM_API
+    - TURNSTILE_SECRET_KEY
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\UserInviteCode;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -25,13 +24,4 @@ class UserController extends Controller
             ->makeHidden('has_spotify_connection');
     }
 
-    public function generateInviteLink(Request $request)
-    {
-        $userId = $request->user()->id;
-
-        $inviteCode = UserInviteCode::createInvite($userId);
-        $link = env('APP_URL') . '/register?invite_code=' . $inviteCode->invite_code;
-
-        return response()->json(['link' => $link], 200);
-    }
 }

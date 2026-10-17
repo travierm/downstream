@@ -2,8 +2,9 @@ import { expect, test } from '@playwright/test'
 
 const pages = [
   ['/', 'A private music collection service'],
-  ['/login', 'An invite is required'],
+  ['/login', 'Log in to your Downstream account.'],
   ['/register', 'Create an account on Downstream'],
+  ['/waitlist', 'Create an account on Downstream'],
   ['/privacy', 'Privacy Policy of Downstream'],
   ['/tos', 'TERMS OF SERVICE'],
 ]

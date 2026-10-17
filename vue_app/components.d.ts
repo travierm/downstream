@@ -43,6 +43,7 @@ declare module 'vue' {
     SearchView: typeof import('./src/components/views/SearchView.vue')['default']
     SpotifySyncView: typeof import('./src/components/views/SpotifySyncView.vue')['default']
     TermsView: typeof import('./src/components/views/TermsView.vue')['default']
+    TurnstileChallenge: typeof import('./src/components/Shared/TurnstileChallenge.vue')['default']
     UserListView: typeof import('./src/components/views/UserListView.vue')['default']
     VAlert: typeof import('vuetify/lib')['VAlert']
     VApp: typeof import('vuetify/lib')['VApp']
@@ -81,11 +82,9 @@ declare module 'vue' {
     VSheet: typeof import('vuetify/lib')['VSheet']
     VSlider: typeof import('vuetify/lib')['VSlider']
     VSpacer: typeof import('vuetify/lib')['VSpacer']
-    VTextarea: typeof import('vuetify/lib')['VTextarea']
     VTextField: typeof import('vuetify/lib')['VTextField']
     VToolbarTitle: typeof import('vuetify/lib')['VToolbarTitle']
     VTooltip: typeof import('vuetify/lib')['VTooltip']
-    WaitListView: typeof import('./src/components/views/Auth/WaitListView.vue')['default']
     YoutubeCard: typeof import('./src/components/YoutubeCard/YoutubeCard.vue')['default']
   }
 }

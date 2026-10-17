@@ -27,7 +27,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('filter:run')->hourly();
         $schedule->command('youtube:update-data')->dailyAt('04:00');
-        $schedule->command('invite:clear')->dailyAt('03:00');
 
         //$schedule->command('hydrate:daily-mix')->dailyAt('03:00');
 
