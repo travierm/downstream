@@ -16,11 +16,13 @@ class UserController extends Controller
 
     public function getActiveUsers()
     {
-        return User::withCount('media')
+        return User::select('id', 'display_name', 'hash')
+            ->withCount('media')
             ->public()
             ->orderBy('media_count', 'desc')
             ->limit(9)
-            ->get();
+            ->get()
+            ->makeHidden('has_spotify_connection');
     }
 
     public function generateInviteLink(Request $request)

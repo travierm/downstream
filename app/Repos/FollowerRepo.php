@@ -18,6 +18,7 @@ class FollowerRepo
     {
         $followingUserIds = $user->following()->pluck('follow_id');
         $followingCollectedMediaItems = UserMedia::whereIn('user_id', $followingUserIds)
+            ->whereHas('user', fn ($query) => $query->public())
             ->with('media', 'user')
             ->orderBy('created_at', 'DESC')
             ->limit($numOfItems)

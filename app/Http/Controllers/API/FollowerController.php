@@ -40,7 +40,7 @@ class FollowerController extends Controller
             ], 400);
         }
 
-        $followUser = User::find($followId);
+        $followUser = User::public()->find($followId);
         if (! $followUser) {
             return response()->json([
                 'message' => 'Can not follow unknown user',

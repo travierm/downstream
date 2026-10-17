@@ -131,7 +131,10 @@ class CollectionController extends Controller
         }
 
         if ($userHash && ! $isViewingSelf) {
-            $viewUser = User::select('id', 'display_name', 'hash')->where('hash', $userHash)->first();
+            $viewUser = User::select('id', 'display_name', 'hash')
+                ->public()
+                ->where('hash', $userHash)
+                ->firstOrFail();
             $userId = $viewUser->id;
         }
 

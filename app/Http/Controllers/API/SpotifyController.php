@@ -10,6 +10,9 @@ use App\Services\SpotifyAPI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class SpotifyController extends Controller
 {
@@ -48,7 +51,12 @@ class SpotifyController extends Controller
 
     public function getAuthorizeUrl()
     {
-        return SpotifyAPI::getAuthorizeUrl();
+        $state = Str::random(64);
+        $url = SpotifyAPI::getAuthorizeUrl($state);
+
+        Cache::put('spotify_oauth_state:'.Auth::id(), $state, now()->addMinutes(10));
+
+        return $url;
     }
 
     public function getUserStats()
@@ -58,7 +66,20 @@ class SpotifyController extends Controller
 
     public function getConnect(Request $request)
     {
-        $code = $request->input('code');
+        $input = $request->validate([
+            'code' => 'required|string',
+            'state' => 'required|string|size:64',
+        ]);
+
+        // Consume the pending state before exchanging any authorization code.
+        $expectedState = Cache::pull('spotify_oauth_state:'.Auth::id());
+        if (! is_string($expectedState) || ! hash_equals($expectedState, $input['state'])) {
+            throw ValidationException::withMessages([
+                'state' => ['Spotify authorization has expired or is invalid. Please connect again.'],
+            ]);
+        }
+
+        $code = $input['code'];
 
         $session = SpotifyAPI::getSession();
 

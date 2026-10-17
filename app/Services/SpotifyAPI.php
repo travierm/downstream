@@ -22,14 +22,12 @@ class SpotifyAPI
         'playlist-modify-public',
     ];
 
-    public static function getAuthorizeUrl(): string
+    public static function getAuthorizeUrl(string $state): string
     {
         $session = self::getSession();
         if (! $session) {
             return false;
         }
-
-        $state = $session->generateState();
 
         $options = [
             'scope' => self::$scopes,
