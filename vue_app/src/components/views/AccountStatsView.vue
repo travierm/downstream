@@ -34,14 +34,15 @@
 
 <script>
 import { getUserStats } from '@/services/api/UserStatsService';
-import PlayCountHistoryChart from '../Charts/LineChart.vue';
+import CardCol from '@/components/CardCol'
+import YoutubeCard from '@/components/YoutubeCard/YoutubeCard'
 import LineChart from '../Charts/LineChart.vue';
 import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
 
 
 export default {
     name: 'AccountStatsView',
-    components: { PlayCountHistoryChart, LineChart },
+    components: { CardCol, YoutubeCard, LineChart },
     data: () => ({
         stats: {}
     }),

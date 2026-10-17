@@ -1,10 +1,17 @@
 {
-    "private": true,
-    "scripts": {
-        "serve": "cd vue_app/ && yarn serve",
-        "build": "cd vue_app/ && yarn build",
-        "test:e2e": "cd vue_app/ && yarn test:e2e"
-    },
-    "devDependencies": {},
-    "dependencies": {}
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --dir vue_app dev",
+    "serve": "pnpm --dir vue_app serve",
+    "build": "pnpm --dir vue_app build",
+    "test:unit": "pnpm --dir vue_app test:unit",
+    "test:e2e": "pnpm --dir vue_app test:e2e",
+    "test:smoke": "pnpm --dir vue_app test:smoke"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=22.13.0"
+  }
 }

@@ -5,26 +5,27 @@
       <div class="video-instance rounded" id="downstream-video-container"></div>
     </div>
 
-    <v-app-bar app color="grey darken-4" dense dark fixed bottom>
-      <v-container>
+    <v-app-bar class="player-bar" color="grey-darken-4" location="bottom"
+      :height="$vuetify.display.smAndUp ? 64 : 96">
+      <v-container class="py-0">
         <v-row no-gutters class="justify-left">
 
           <v-col cols="auto" class="mr-1">
             <span>{{ playerQueueCount }}</span>
-            <v-btn @click="replayCurrentCard" color="primary" icon class="ml-2 pa-1 mt-1" small><v-icon large>{{
+            <v-btn @click="replayCurrentCard" color="primary" icon class="ml-2 pa-1 mt-1" size="small"><v-icon size="large">{{
               mdiReplay
                 }}</v-icon></v-btn>
           </v-col>
 
           <v-col cols="auto">
             <v-btn @click="togglePlayerFullscreen" color="primary"
-              class="focusBtn ml-2"><v-icon>mdi-fullscreen</v-icon></v-btn>
+              class="focusBtn ml-2"><v-icon>$mdi-fullscreen</v-icon></v-btn>
           </v-col>
 
           <v-col cols="auto">
             <v-btn v-if="onCollectionRoute" @click="shuffleCollection" color="primary" class="focusBtn ml-2">
-              <v-icon v-if="!shuffled">mdi-shuffle-variant</v-icon>
-              <v-icon v-else>mdi-shuffle-disabled</v-icon>
+              <v-icon v-if="!shuffled">$mdi-shuffle-variant</v-icon>
+              <v-icon v-else>$mdi-shuffle-disabled</v-icon>
             </v-btn>
           </v-col>
 
@@ -35,8 +36,8 @@
             lg
             @click="$store.dispatch('setPlaylistDrawerStatus', true)"
           >
-            <v-icon class="pr-1" v-if="$vuetify.breakpoint.smAndUp"
-              >mdi-playlist-music</v-icon
+            <v-icon class="pr-1" v-if="$vuetify.display.smAndUp"
+              >$mdi-playlist-music</v-icon
             >
             Playlists</v-btn
           >
@@ -44,16 +45,16 @@
 
           <v-col cols="auto">
             <v-btn @click="focusOnPlayingCard" color="primary" class="focusBtn ml-2"><v-icon class="pr-1"
-                v-if="$vuetify.breakpoint.smAndUp">mdi-magnify</v-icon>Focus</v-btn>
+                v-if="$vuetify.display.smAndUp">$mdi-magnify</v-icon>Focus</v-btn>
           </v-col>
 
-          <v-col lg="2" v-if="$vuetify.breakpoint.smAndUp">
+          <v-col lg="2" v-if="$vuetify.display.smAndUp">
             <VolumeSlider class="ml-4" />
           </v-col>
         </v-row>
       </v-container>
 
-      <div class="d-flex flex-row" style="gap: 8px;">
+      <div class="player-links d-flex flex-row">
         <router-link to="/privacy" class="unstyled-link">
           Privacy
         </router-link>
@@ -70,6 +71,7 @@
 
 <script>
 import { mdiReplay } from '@mdi/js'
+import { useGoTo } from 'vuetify'
 
 import VolumeSlider from './VolumeSlider'
 import YoutubePlayerManager from '../services/YoutubePlayerManager'
@@ -78,10 +80,13 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'BottomBar',
+  setup() {
+    return { goTo: useGoTo() }
+  },
   components: {
     VolumeSlider,
   },
-  beforeDestroy() {
+  beforeUnmount() {
     YoutubePlayerManager.destroyPlayer()
   },
   computed: {
@@ -113,12 +118,12 @@ export default {
       const currentPlayingGuid = this.manager.currentPlayingGuid
 
       if (currentPlayingGuid) {
-        this.manager.queueNextCard(currentPlayingGuid)
+        this.manager.queueNextGuid(currentPlayingGuid)
       }
     },
     shuffleCollection() {
       this.$store.dispatch('collection/shuffle')
-      this.$vuetify.goTo('#app', {
+      this.goTo('#app', {
         offset: 150,
         duration: 800,
         easing: 'easeInOutCubic',
@@ -128,13 +133,13 @@ export default {
       const playingCardGuid = YoutubePlayerManager.getPlayingGuid()
 
       if (playingCardGuid) {
-        this.$vuetify.goTo('#' + playingCardGuid + '_media', {
+        this.goTo('#' + playingCardGuid + '_media', {
           offset: 150,
           duration: 800,
           easing: 'easeInOutCubic',
         })
       } else {
-        this.$vuetify.goTo('#app', {
+        this.goTo('#app', {
           offset: 0,
           duration: 800,
           easing: 'easeInOutCubic',
@@ -147,6 +152,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.player-links {
+  gap: 8px;
+  white-space: nowrap;
+  padding-right: 12px;
+}
+
+@media (max-width: 599px) {
+  .player-bar :deep(.v-toolbar__content) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .player-bar .v-row {
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .player-links {
+    padding: 0;
+    font-size: 12px;
+  }
+}
+
 .bottom-bar {
   position: absolute;
   background-color: #4a52e8;

@@ -4,6 +4,7 @@
     class="volumeSlider"
     max="100"
     min="0"
+    :step="1"
     hide-details
     @click:prepend="toggleMute"
     :prepend-icon="volumeIcon"
@@ -20,6 +21,9 @@ export default {
   mounted() {
     YoutubePlayerManager.onVolumeChange(this.volmueChangeHandler)
   },
+  beforeUnmount() {
+    YoutubePlayerManager.removeVolumeChangeListeners(this.volmueChangeHandler)
+  },
   data: () => {
     return {
       value: YoutubePlayerManager.volume,
@@ -27,7 +31,7 @@ export default {
   },
   computed: {
     volumeIcon() {
-      return this.value !== 0 ? 'mdi-volume-high' : 'mdi-volume-variant-off'
+      return this.value !== 0 ? '$mdi-volume-high' : '$mdi-volume-variant-off'
     },
   },
   methods: {

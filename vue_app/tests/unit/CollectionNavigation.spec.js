@@ -1,6 +1,7 @@
-import { createLocalVue, mount } from '@vue/test-utils'
-import Vuex from 'vuex'
-import VueRouter from 'vue-router'
+import { mount } from '@vue/test-utils'
+import { h, resolveComponent } from 'vue'
+import { createStore } from 'vuex'
+import { createRouter, createMemoryHistory } from 'vue-router'
 import { describe, expect, it, vi } from 'vitest'
 import CollectionView from '../../src/components/views/CollectionView.vue'
 import * as collection from '../../src/store/modules/collection'
@@ -15,12 +16,9 @@ const song = { guid: 'saved-song', media_id: 1, title: 'My saved song' }
 const flush = () => new Promise(resolve => setTimeout(resolve, 0))
 
 async function navigateToCollection({ items = [], searchQuery = '', query = {}, from = '/admin', response } = {}) {
-  const localVue = createLocalVue()
-  localVue.use(Vuex)
-  localVue.use(VueRouter)
   CollectionService.fetchCollection.mockReset().mockResolvedValue({ data: { hash: 'hash', items: [song] } })
   if (response) CollectionService.fetchCollection.mockReturnValue(response)
-  const store = new Vuex.Store({
+  const store = createStore({
     state: { showLoadingBar: false, auth: { token: 'test-token' } },
     actions: { setLoadingBarState: ({ state }, value) => { state.showLoadingBar = value } },
     modules: {
@@ -29,18 +27,23 @@ async function navigateToCollection({ items = [], searchQuery = '', query = {}, 
       player: { namespaced: true, actions: { setCurrentIndex: vi.fn(), updateGuidData: vi.fn() } },
     },
   })
-  const router = new VueRouter({ mode: 'abstract', routes: [
-    { path: from, component: { render: h => h('div', 'Other page') } },
+  const router = createRouter({ history: createMemoryHistory(), routes: [
+    { path: from, component: { render: () => h('div', 'Other page') } },
     { path: '/collection', component: CollectionView },
   ] })
   await router.push(from)
-  const wrapper = mount({ render: h => h('router-view') }, {
-    localVue, store, router,
+  const wrapper = mount({ render: () => h(resolveComponent('RouterView')) }, {
+    global: {
+    plugins: [store, router],
     stubs: {
+      VContainer: { template: '<div><slot /></div>' },
+      VRow: { template: '<div><slot /></div>' },
+      VCol: { template: '<div><slot /></div>' },
       CardCol: { template: '<div><slot /></div>' },
       CollectionBar: true,
       YoutubeCard: { props: ['title'], template: '<div class="song">{{ title }}</div>' },
       VLazy: { template: '<div><slot /></div>' },
+    },
     },
   })
   await router.push({ path: '/collection', query })
@@ -64,7 +67,7 @@ describe('collection navigation', () => {
       expect(store.state.collection.collection).toEqual([refreshedSong])
       expect(wrapper.find('.song').element).toBe(card)
       expect(card.textContent).toContain('Updated title')
-    } finally { wrapper.destroy() }
+    } finally { wrapper.unmount() }
   })
 
   it.each(['/admin', '/stats', '/users'])('loads saved songs when entering from %s with no collection in memory', async (from) => {
@@ -74,7 +77,7 @@ describe('collection navigation', () => {
       expect(wrapper.text()).not.toContain('start your collection')
       expect(store.state.playlist.selectedPlaylist).toBe(false)
       expect(CollectionService.fetchCollection).toHaveBeenCalledWith(false)
-    } finally { wrapper.destroy() }
+    } finally { wrapper.unmount() }
   })
 
   it('preserves a search explicitly requested in the destination URL', async () => {
@@ -83,7 +86,7 @@ describe('collection navigation', () => {
       expect(store.state.collection.collection).toEqual([song])
       expect(store.state.collection.searchQuery).toBe('no matching song')
       expect(wrapper.text()).toContain('No results found')
-    } finally { wrapper.destroy() }
+    } finally { wrapper.unmount() }
   })
 
   it('loads the playlist requested in the destination URL', async () => {
@@ -92,7 +95,7 @@ describe('collection navigation', () => {
       expect(CollectionService.fetchCollection).toHaveBeenCalledWith('42')
       expect(store.state.playlist.selectedPlaylist).toBe('42')
       expect(wrapper.text()).toContain(song.title)
-    } finally { wrapper.destroy() }
+    } finally { wrapper.unmount() }
   })
 
   it('clears an old search when entering the unfiltered collection from admin', async () => {
@@ -100,6 +103,6 @@ describe('collection navigation', () => {
     try {
       expect(wrapper.text()).toContain(song.title)
       expect(wrapper.text()).not.toContain('No results found')
-    } finally { wrapper.destroy() }
+    } finally { wrapper.unmount() }
   })
 })

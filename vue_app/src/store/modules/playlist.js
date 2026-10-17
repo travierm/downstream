@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { getAllPlaylists } from '../../services/api/PlaylistService'
 
 export const namespaced = true
@@ -9,7 +8,7 @@ export const state = {
 
 export const mutations = {
   SET_PLAYLISTS(state, playlists) {
-    Vue.set(state, 'playlists', playlists)
+    state.playlists = playlists
   },
   SET_SELECTED_PLAYLIST(state, playlistId) {
     state.selectedPlaylist = playlistId

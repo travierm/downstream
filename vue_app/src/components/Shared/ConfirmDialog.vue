@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showDialog" persistent max-width="400">
     <v-card>
-      <v-card-title class="headline">
+      <v-card-title class="text-h5">
         Confirm
       </v-card-title>
       <v-card-text
@@ -22,7 +22,8 @@
 
 <script>
 export default {
-  name: 'ConfimDialog',
+  name: 'ConfirmDialog',
+  emits: ['confirmed', 'closed'],
   props: {
     show: {
       type: Boolean,

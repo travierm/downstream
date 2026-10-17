@@ -1,26 +1,23 @@
-import AccountStatsView from '@/components/views/AccountStatsView'
-import LoginView from '@/components/views/Auth/LoginView'
-import CollectionView from '@/components/views/CollectionView'
-import DailyMixView from '@/components/views/DailyMixView'
-import DiscoverTrackView from '@/components/views/DiscoverTrackView'
-import FollowerActivityView from '@/components/views/FollowerActivityView'
-import InviteView from '@/components/views/InviteView'
-import LandingView from '@/components/views/LandingView'
-import ProfileView from '@/components/views/ProfileView'
-import SearchView from '@/components/views/SearchView'
-import RegisterView from '@/components/views/Auth/RegisterView'
-import SpotifySyncView from '@/components/views/SpotifySyncView'
-import UserListView from '@/components/views/UserListView'
+import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store/index'
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
 import { connectSpotify } from '../services/api/spotify'
 import { applyMiddleware } from './middleware'
-import PrivacyView from '@/components/views/PrivacyView.vue'
-import TermsView from '@/components/views/TermsView.vue'
 
-Vue.use(VueRouter)
+const AccountStatsView = () => import('@/components/views/AccountStatsView.vue')
+const LoginView = () => import('@/components/views/Auth/LoginView.vue')
+const CollectionView = () => import('@/components/views/CollectionView.vue')
+const DailyMixView = () => import('@/components/views/DailyMixView.vue')
+const DiscoverTrackView = () => import('@/components/views/DiscoverTrackView.vue')
+const FollowerActivityView = () => import('@/components/views/FollowerActivityView.vue')
+const InviteView = () => import('@/components/views/InviteView.vue')
+const LandingView = () => import('@/components/views/LandingView.vue')
+const ProfileView = () => import('@/components/views/ProfileView.vue')
+const SearchView = () => import('@/components/views/SearchView.vue')
+const RegisterView = () => import('@/components/views/Auth/RegisterView.vue')
+const SpotifySyncView = () => import('@/components/views/SpotifySyncView.vue')
+const UserListView = () => import('@/components/views/UserListView.vue')
+const PrivacyView = () => import('@/components/views/PrivacyView.vue')
+const TermsView = () => import('@/components/views/TermsView.vue')
 
 const routes = [
   {
@@ -124,12 +121,12 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
-    beforeEnter(to, from, next) {
-      console.log(to)
-
-      connectSpotify(to.query.code, to.query.state).finally(() => {
-        router.push('/spotify')
-      })
+    async beforeEnter(to) {
+      try {
+        await connectSpotify(to.query.code, to.query.state)
+      } finally {
+        return '/spotify'
+      }
     },
   },
 
@@ -163,16 +160,15 @@ const routes = [
     path: '/logout',
     name: 'Logout',
     component: LoginView,
-    beforeEnter(to, from, next) {
-      store.dispatch('auth/logout')
-      router.push('/')
+    async beforeEnter() {
+      await store.dispatch('auth/logout')
+      return '/'
     },
   },
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 

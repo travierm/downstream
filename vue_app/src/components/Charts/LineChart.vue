@@ -37,7 +37,7 @@ export default {
                 series: [
                     {
                         name: this.seriesName,
-                        data: [],
+                        data: this.chartData.data,
                         color: this.seriesColor
                     },
                 ],
@@ -70,7 +70,7 @@ export default {
                         },
                     },
                     xaxis: {
-                        categories: [],
+                        categories: this.chartData.categories,
                          labels: {
                             show: this.hideBottomLabels === false,
                         }
@@ -78,18 +78,6 @@ export default {
                 },
             },
         }
-    },
-    mounted() {
-        this.chart.series[0].data = this.chartData.data
-        this.chart.options.xaxis = {
-            categories: this.chartData.categories,
-        }
-        this.$refs.chart.updateOptions({
-            ...this.chart.options,
-            xaxis: {
-                categories: this.chartData.categories,
-            },
-        })
     },
 }
 </script>

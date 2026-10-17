@@ -34,7 +34,7 @@ export default {
       return this.mobileBreakpoint ? 'pl-0 pr-0' : 'pa-2'
     },
     mobileBreakpoint() {
-      return this.$vuetify.breakpoint.mobile
+      return this.$vuetify.display.mobile
     },
     ...mapState({
       collection: (state) => state.collection.collection,

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showDialog" max-width="400">
     <v-card>
-      <v-card-title class="headline">
+      <v-card-title class="text-h5">
         Playlists
       </v-card-title>
 
@@ -24,7 +24,7 @@ import Playlist from './Playlist'
 
 export default {
   name: 'PlaylistDialog',
-  props: {},
+  emits: ['confirmed', 'closed'],
   components: {
     Playlist,
   },
@@ -38,13 +38,8 @@ export default {
   data: function() {
     return {
       playlists: [],
-      showDialog: this.show,
+      showDialog: false,
     }
-  },
-  watch: {
-    show(propVal) {
-      this.showDialog = propVal
-    },
   },
   methods: {
     openDialog() {

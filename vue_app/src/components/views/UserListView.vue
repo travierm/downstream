@@ -14,7 +14,7 @@
             <p>Collection Size: {{ user.media_count }}</p>
           </v-card-text>
           <v-card-actions>
-            <v-btn text color="primary" :to="'/profile/' + user.hash">
+            <v-btn variant="text" color="primary" :to="'/profile/' + user.hash">
               View Profile
             </v-btn>
           </v-card-actions>

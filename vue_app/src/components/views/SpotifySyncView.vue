@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <h1>
-      <v-icon x-large class="mr-1 mb-2" color="green">{{ mdiSpotify }}</v-icon>
+      <v-icon size="x-large" class="mr-1 mb-2" color="green">{{ mdiSpotify }}</v-icon>
       Spotify Sync
     </h1>
 
-    <h3 v-if="hasSpotifyConnection" class="green--text">
+    <h3 v-if="hasSpotifyConnection" class="text-green">
       Your Spotify Account is connected with Downstream!
     </h3>
-    <h3 v-if="!hasSpotifyConnection" class="amber--text">
+    <h3 v-if="!hasSpotifyConnection" class="text-amber">
       Your Spotify Account is not connected with Downstream.
     </h3>
 
@@ -16,7 +16,7 @@
       v-if="!hasSpotifyConnection"
       @click="getAuthorizeUrl()"
       class="mt-2 mb-2"
-      depressed
+      variant="flat"
       color="primary"
     >
       Connect Spotify Account
@@ -26,7 +26,7 @@
       v-if="hasSpotifyConnection"
       @click="clickSyncNow"
       class="mt-2 mb-2"
-      depressed
+      variant="flat"
       color="success"
       :loading="syncing"
     >
@@ -47,7 +47,7 @@
       v-if="hasSpotifyConnection"
       @click="disableAccess()"
       class="mt-2"
-      depressed
+      variant="flat"
       color="warning"
       :loading="disabling"
     >

@@ -1,3 +1,4 @@
+import { markRaw, reactive } from 'vue'
 import _ from 'lodash'
 import YTPlayer from 'yt-player'
 
@@ -11,7 +12,7 @@ const REWIND_COOLDOWN_MS = 30_000
 
 class YoutubePlayerManager {
   constructor() {
-    this.localCache = new Cache(true)
+    this.localCache = markRaw(new Cache(true))
     this.localCache.setStoragePrefix('player_manager_')
 
     this.volume = this.localCache.get('volume', 100)
@@ -206,7 +207,7 @@ class YoutubePlayerManager {
         this.playNext()
       })
 
-      this.videoPlayerInstance = player
+      this.videoPlayerInstance = markRaw(player)
     }
 
     const player = this.videoPlayerInstance
@@ -303,7 +304,7 @@ class YoutubePlayerManager {
   }
 }
 
-const $manager = new YoutubePlayerManager()
+const $manager = reactive(new YoutubePlayerManager())
 
 window.$manager = $manager
 

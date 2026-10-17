@@ -2,33 +2,27 @@
   <v-navigation-drawer
     v-if="drawerOpen"
     v-model="drawerOpen"
-    fixed
     temporary
-    dark
     color="#1e1e1e"
   >
     <v-list>
       <v-list-item link>
-        <v-list-item-content>
-          <v-list-item-title class="title"> Playlists </v-list-item-title>
-        </v-list-item-content>
+        <v-list-item-title class="text-h6">Playlists</v-list-item-title>
       </v-list-item>
     </v-list>
 
     <v-divider></v-divider>
 
-    <v-list nav dense>
+    <v-list nav density="compact">
       <v-list-item
         link
         v-for="playlist in playlistsWithCounts"
         :key="playlist.id"
         @click="updateSelectedPlaylist(playlist)"
       >
-        <v-list-item-icon>
-          <v-icon>mdi-playlist-music</v-icon>
-        </v-list-item-icon>
+        <template #prepend><v-icon>$mdi-playlist-music</v-icon></template>
         <v-list-item-title>{{ playlist.name }}</v-list-item-title>
-        <v-list-item-action-text>{{ playlist.count }}</v-list-item-action-text>
+        <template #append><span class="text-caption">{{ playlist.count }}</span></template>
       </v-list-item>
 
       <v-list-item v-if="playlists.length <= 0">
@@ -42,7 +36,7 @@
       </v-list-item>
 
       <v-list-item link @click="showCollection"
-        ><v-list-item-icon><v-icon>mdi-album</v-icon></v-list-item-icon>
+        ><template #prepend><v-icon>$mdi-album</v-icon></template>
         <v-list-item-title>View Collection</v-list-item-title>
       </v-list-item>
     </v-list>

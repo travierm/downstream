@@ -1,18 +1,12 @@
 <template>
-    <v-card-actions>
-          <v-list-item class="grow">
-            <v-list-item-content>
-              <v-list-item-title>{{ collectedBy }}</v-list-item-title>
-            </v-list-item-content>
-
-            <v-row
-              align="center"
-              justify="end"
-            >
-              <span class="subheading">{{ collectedAt }}</span>
-            </v-row>
-          </v-list-item>
-        </v-card-actions>
+  <v-card-actions>
+    <v-list-item class="flex-grow-1">
+      <v-list-item-title>{{ collectedBy }}</v-list-item-title>
+      <template #append>
+        <span class="text-subtitle-1">{{ collectedAt }}</span>
+      </template>
+    </v-list-item>
+  </v-card-actions>
 </template>
 
 <script>

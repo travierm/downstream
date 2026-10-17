@@ -1,7 +1,7 @@
 <template>
   <v-btn
     icon
-    color="green accent-3"
+    color="green-accent-3"
     class="collectBtn"
     v-if="!inCollection"
     @click="collectItem"

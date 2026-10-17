@@ -1,11 +1,11 @@
 <template>
-  <v-tooltip top>
-    <template v-slot:activator="{ on, attrs }">
+  <v-tooltip location="top">
+    <template v-slot:activator="{ props }">
       <v-btn
-        v-on="on"
-        v-bind="attrs"
+
+       v-bind="props"
         icon
-        color="green accent-3"
+        color="green-accent-3"
         @click="pushItem"
       >
         <v-icon>{{ mdiArrowUpThick }}</v-icon>

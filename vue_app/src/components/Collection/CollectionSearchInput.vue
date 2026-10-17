@@ -2,14 +2,14 @@
   <v-text-field
     color="secondary"
     v-model="query"
-    solo
-    dense
+    variant="solo"
+    density="compact"
     flat
     :label="labelText"
     clearable
     hide-details
     hide-selected
-    light
+    theme="light"
     @click:clear="handleInputClear"
   ></v-text-field>
 </template>
@@ -45,12 +45,15 @@ export default {
       this.$store.dispatch('collection/setSearchQuery', urlSearchQuery)
     }
   },
+  beforeUnmount() {
+    this.updateSearchQuery.cancel()
+  },
   methods: {
     updateSearchQuery: _.debounce((self, newVal) => {
       self.$store.dispatch('collection/setSearchQuery', newVal)
     }, 100),
     handleInputClear() {
-      this.updateSearchQuery(null)
+      this.query = ''
     }
   },
   watch: {

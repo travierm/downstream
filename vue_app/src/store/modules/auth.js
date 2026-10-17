@@ -24,9 +24,10 @@ export const mutations = {
     state.user = user
     window.localStorage.setItem('user', JSON.stringify(user))
   },
-  CLEAR_USER() {
+  CLEAR_USER(state) {
     state.user = false
     window.localStorage.clear()
+    state.token = null
   },
 }
 
@@ -75,11 +76,8 @@ export const actions = {
           commit('SET_USER', response.data)
         }
       })
-      .catch(async (error) => {
-        const { default: router } = await import('@/router/index')
-        if (router.history.current.path !== '/login') {
-          router.push('/login')
-        }
+      .catch(() => {
+        commit('CLEAR_USER')
       })
   },
 }

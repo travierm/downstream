@@ -3,8 +3,8 @@
     <v-row>
       <!-- Profile Card -->
       <v-col class="col-md-12 col-12 pt-8">
-        <v-card elevation="2" outlined class="pa-4">
-          <v-flex grow>
+        <v-card elevation="2" variant="outlined" class="pa-4">
+          <div class="flex-grow-1">
             <!-- Profile Card Header -->
             <v-sheet class="profile-header mb-n6 pa-6" elevation="6">
               <v-row class="mb-1">
@@ -14,20 +14,20 @@
                 </v-avatar>
 
                 <!-- Profile Name -->
-                <div class="display-2 font-weight-light">
+                <div class="text-h3 font-weight-light">
                   {{ profileOwner.display_name }}
                 </div>
               </v-row>
 
               <!-- Profile Subtitle -->
               <v-row justify="space-between">
-                <div class="subtitle-1 font-weight-light">
+                <div class="text-subtitle-1 font-weight-light">
                   {{ profileOwner.display_name }}'s collection
                 </div>
 
                 <!-- Profile actions -->
                 <div class="mt-n2">
-                  <v-btn v-if="!isViewingSelf && followingUser !== undefined" depressed color="primary"
+                  <v-btn v-if="!isViewingSelf && followingUser !== undefined" variant="flat" color="primary"
                     :loading="followLoading" @click="toggleFollow">
                     {{ followingUser === false ? 'Follow' : 'Unfollow' }}
                   </v-btn>
@@ -46,7 +46,7 @@
                 </v-lazy>
               </CardCol>
             </v-row>
-          </v-flex>
+          </div>
         </v-card>
       </v-col>
     </v-row>
