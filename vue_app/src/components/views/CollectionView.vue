@@ -35,14 +35,14 @@
 
     <v-row
       v-if="!hasCollectionItems && !showLoadingBar"
-      class="justify-center mb-6"
+      class="justify-center"
     >
       <h3>Search for a song you like above to start your collection!</h3>
     </v-row>
 
     <v-row v-if="!hasCollectionItems && !showLoadingBar" class="justify-center">
       <img
-        class="rounded mt-6"
+        class="rounded mt-4"
         src="https://media.giphy.com/media/6uGhT1O4sxpi8/giphy.gif"
         width="480"
         height="240"
