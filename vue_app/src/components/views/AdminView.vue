@@ -26,6 +26,17 @@
         </v-col>
       </v-row>
 
+      <v-card class="mt-4" aria-labelledby="plays-title">
+        <v-card-title class="d-flex flex-wrap align-center">
+          <h3 id="plays-title" class="text-h6">Songs played</h3>
+          <v-spacer />
+          <span class="text-caption text--secondary">Last 14 days<span v-if="dashboard.timezone"> · {{ dashboard.timezone }}</span></span>
+        </v-card-title>
+        <v-card-text>
+          <apexchart type="line" height="300" :options="playsChartOptions" :series="playsSeries" />
+        </v-card-text>
+      </v-card>
+
       <v-card class="mt-4" aria-labelledby="activity-title">
         <v-card-title class="d-flex flex-wrap align-center">
           <h3 id="activity-title" class="text-h6">Daily activity</h3>
@@ -39,6 +50,32 @@
           </div>
           <apexchart type="line" height="300" :options="chartOptions" :series="chartSeries" />
         </v-card-text>
+      </v-card>
+      <v-card class="mt-4" aria-labelledby="users-title">
+        <v-card-title>
+          <h3 id="users-title" class="text-h6">Recently registered users</h3>
+        </v-card-title>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th scope="col">User</th>
+                <th scope="col">Registered</th>
+                <th scope="col" class="text-right">Collection size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in dashboard.recent_users" :key="user.id">
+                <td>{{ user.display_name || 'Unnamed user' }}</td>
+                <td><time :datetime="user.created_at">{{ fullDate(user.created_at) }}</time></td>
+                <td class="text-right">{{ number(user.collection_count) }}</td>
+              </tr>
+              <tr v-if="!dashboard.recent_users.length">
+                <td colspan="3" class="text-center text--secondary">No registered users.</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
       </v-card>
       <div class="text-caption text--secondary mt-4">Updated {{ fullDate(dashboard.updated_at) }} · Last 7 days includes today</div>
     </template>
@@ -78,6 +115,12 @@ export default {
         { name: 'Songs collected', data: this.dashboard.activity.map(day => day.collections) },
         { name: 'New users', data: this.dashboard.activity.map(day => day.users) },
       ]
+    },
+    playsSeries() {
+      return [{ name: 'Songs played', data: this.dashboard.activity.map(day => day.plays) }]
+    },
+    playsChartOptions() {
+      return { ...this.chartOptions, colors: ['#F5F3C1'] }
     },
     chartOptions() {
       return {

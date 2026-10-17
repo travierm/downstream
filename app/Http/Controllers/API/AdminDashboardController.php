@@ -41,6 +41,7 @@ class AdminDashboardController extends Controller
 
         $signups = $this->dailyCounts(User::query(), $chartStart);
         $collects = $this->dailyCounts(clone $collections, $chartStart);
+        $plays = $this->dailyCounts(UserMediaPlays::query(), $chartStart);
         $activity = [];
         for ($day = $chartStart->copy(); $day->lte($today); $day->addDay()) {
             $date = $day->toDateString();
@@ -48,6 +49,7 @@ class AdminDashboardController extends Controller
                 'date' => $date,
                 'users' => (int) ($signups[$date] ?? 0),
                 'collections' => (int) ($collects[$date] ?? 0),
+                'plays' => (int) ($plays[$date] ?? 0),
             ];
         }
 

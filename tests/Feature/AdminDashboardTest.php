@@ -31,6 +31,7 @@ class AdminDashboardTest extends TestCase
         $missingSong->media->delete();
         UserMediaPlays::factory()->create(['user_id' => $user->id, 'media_id' => $song->id]);
         UserMediaPlays::factory()->create(['user_id' => $user->id, 'media_id' => $song->id, 'created_at' => now()->subDays(8)]);
+        UserMediaPlays::factory()->create(['user_id' => $user->id, 'media_id' => $song->id, 'created_at' => now()->subDays(14)]);
 
         $response = $this->actingAs($admin)->getJson('/api/admin/dashboard')->assertOk();
         $response->assertJsonPath('stats.users', 2)
@@ -43,9 +44,13 @@ class AdminDashboardTest extends TestCase
             ->assertJsonCount(14, 'activity')
             ->assertJsonPath('activity.0.date', '2026-10-04')
             ->assertJsonPath('activity.0.collections', 0)
+            ->assertJsonPath('activity.0.plays', 0)
+            ->assertJsonPath('activity.5.plays', 1)
+            ->assertJsonPath('activity.13.plays', 1)
             ->assertJsonPath('activity.13.collections', 1)
             ->assertJsonPath('activity.13.users', 1)
             ->assertJsonPath('recent_users.0.id', $user->id)
+            ->assertJsonPath('recent_users.0.collection_count', 1)
             ->assertJsonPath('recent_collections.0.id', $recent->id)
             ->assertJsonPath('recent_collections.0.title', 'A new discovery')
             ->assertJsonCount(2, 'recent_collections');
