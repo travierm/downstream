@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import DiscoverService from '../../services/api/DiscoverService'
 
 const freshnessMs = 60 * 1000
@@ -16,7 +15,7 @@ export const mutations = {
     state.errorMessage = message
   },
   SET_SIMILAR_TRACKS(state, { videoId, items }) {
-    Vue.set(state.similarTracks, videoId, items)
+    state.similarTracks[videoId] = items
   },
 }
 

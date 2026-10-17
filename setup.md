@@ -43,11 +43,12 @@ php artisan serve
 
 ## Frontend setup
 
+Use Node.js 22.13 or newer and pnpm 11.20.0 (`npm install --global pnpm@11.20.0`).
 In a separate terminal, from the repository root:
 
 ```sh
 cd vue_app
-yarn install --frozen-lockfile
+pnpm install --frozen-lockfile
 cp .env.example .env.local
 ```
 
@@ -58,7 +59,7 @@ VITE_API_URL=http://localhost:8000/api
 VITE_TURNSTILE_SITE_KEY=your-widget-site-key
 ```
 
-Start Vite with `yarn dev` and open the local URL it prints. Restart Vite after
+Start Vite with `pnpm dev` and open the local URL it prints. Restart Vite after
 changing environment values. The frontend's `.env.local` is tracked in this
 repository and must contain only public configuration.
 
@@ -137,7 +138,7 @@ Build the frontend with your API URL and public site key:
 ```sh
 cd vue_app
 VITE_API_URL=https://api.example.com/api \
-  VITE_TURNSTILE_SITE_KEY=your-widget-site-key yarn build
+  VITE_TURNSTILE_SITE_KEY=your-widget-site-key pnpm build
 ```
 
 Serve `vue_app/dist` with a fallback to `index.html` for client-side routes such

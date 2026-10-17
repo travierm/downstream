@@ -12,20 +12,20 @@ describe('registration', () => {
   let wrapper, store, router, validate, alert, reset
   beforeEach(() => {
     vi.clearAllMocks()
-    validate = vi.fn(() => true)
+    validate = vi.fn().mockResolvedValue({ valid: true })
     alert = vi.fn()
     reset = vi.fn()
     store = { dispatch: vi.fn().mockResolvedValue(), getters: { 'auth/loggedIn': true } }
     router = { push: vi.fn().mockResolvedValue() }
-    wrapper = shallowMount(RegisterView, {
-      mocks: { $vuetify: { breakpoint: { smAndUp: true } }, $store: store, $router: router },
+    wrapper = shallowMount(RegisterView, { global: {
+      mocks: { $vuetify: { display: { smAndUp: true } }, $store: store, $router: router },
       stubs: {
         'v-form': { template: '<form><slot /></form>', methods: { validate } },
         AlertList: { template: '<div />', methods: { create: alert } },
         TurnstileChallenge: { template: '<div />', methods: { reset } },
         'router-link': true,
       },
-    })
+    } })
     wrapper.setData({ email: 'new@example.com', display_name: 'Listener', password: 'secret123',
       password_confirmation: 'secret123', turnstileToken: 'verified-token' })
   })
@@ -35,10 +35,11 @@ describe('registration', () => {
     await wrapper.vm.register()
     expect(registerUser).not.toHaveBeenCalled()
     await wrapper.setData({ turnstileToken: 'verified-token' })
-    validate.mockReturnValue(false)
+    validate.mockResolvedValue({ valid: false })
     await wrapper.vm.register()
     expect(registerUser).not.toHaveBeenCalled()
-    wrapper.destroy()
+    expect(reset).not.toHaveBeenCalled()
+    wrapper.unmount()
   })
 
   it('sends confirmation and token, logs in, and opens the collection', async () => {
@@ -48,7 +49,7 @@ describe('registration', () => {
     expect(store.dispatch).toHaveBeenCalledWith('auth/login', { email: 'new@example.com', password: 'secret123' })
     expect(router.push).toHaveBeenCalledWith('/collection')
     expect(reset).toHaveBeenCalledOnce()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('shows API validation errors and refreshes the single-use token', async () => {
@@ -58,7 +59,7 @@ describe('registration', () => {
     expect(reset).toHaveBeenCalledOnce()
     expect(wrapper.vm.submitting).toBe(false)
     expect(store.dispatch).not.toHaveBeenCalled()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('blocks duplicate submissions while registration is pending', async () => {
@@ -66,10 +67,11 @@ describe('registration', () => {
     registerUser.mockImplementation(() => new Promise(done => { resolve = done }))
     const pending = wrapper.vm.register()
     await wrapper.vm.register()
+    await flush()
     expect(registerUser).toHaveBeenCalledOnce()
     resolve({ data: { message: 'Created' } })
     await pending
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('sends a created account to login if automatic login fails', async () => {
@@ -77,7 +79,7 @@ describe('registration', () => {
     store.getters['auth/loggedIn'] = false
     await wrapper.vm.register()
     expect(router.push).toHaveBeenCalledWith('/login')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 })
 
@@ -100,11 +102,11 @@ describe('Turnstile challenge', () => {
     options['expired-callback']()
     options['timeout-callback']()
     options['error-callback']()
-    expect(wrapper.emitted('input')).toEqual([['token'], [''], [''], ['']])
+    expect(wrapper.emitted('update:modelValue')).toEqual([['token'], [''], [''], ['']])
     expect(wrapper.vm.error).toContain('retry')
     wrapper.vm.retry()
     expect(window.turnstile.reset).toHaveBeenCalledWith('widget-id')
-    wrapper.destroy()
+    wrapper.unmount()
     expect(window.turnstile.remove).toHaveBeenCalledWith('widget-id')
   })
 
@@ -113,7 +115,7 @@ describe('Turnstile challenge', () => {
     await flush()
     expect(window.turnstile.render).not.toHaveBeenCalled()
     expect(wrapper.vm.error).toContain('unavailable')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('allows retry after the Cloudflare script fails to load', async () => {
@@ -129,7 +131,7 @@ describe('Turnstile challenge', () => {
     retriedScript.dispatchEvent(new Event('load'))
     await flush()
     expect(window.turnstile.render).toHaveBeenCalledOnce()
-    wrapper.destroy()
+    wrapper.unmount()
     retriedScript.remove()
   })
 })

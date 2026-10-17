@@ -2,8 +2,13 @@
   <v-slider
     v-model="value"
     class="volumeSlider"
+    color="primary"
+    track-color="primary"
+    :track-size="2"
+    :thumb-size="12"
     max="100"
     min="0"
+    :step="1"
     hide-details
     @click:prepend="toggleMute"
     :prepend-icon="volumeIcon"
@@ -20,6 +25,9 @@ export default {
   mounted() {
     YoutubePlayerManager.onVolumeChange(this.volmueChangeHandler)
   },
+  beforeUnmount() {
+    YoutubePlayerManager.removeVolumeChangeListeners(this.volmueChangeHandler)
+  },
   data: () => {
     return {
       value: YoutubePlayerManager.volume,
@@ -27,7 +35,7 @@ export default {
   },
   computed: {
     volumeIcon() {
-      return this.value !== 0 ? 'mdi-volume-high' : 'mdi-volume-variant-off'
+      return this.value !== 0 ? '$mdi-volume-high' : '$mdi-volume-variant-off'
     },
   },
   methods: {
@@ -49,6 +57,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 .volumeSlider {
+  .v-input__prepend > .v-icon {
+    opacity: 1;
+  }
+
   .v-slider {
     cursor: grab;
   }

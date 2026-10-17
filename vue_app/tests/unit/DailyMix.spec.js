@@ -9,7 +9,7 @@ vi.mock('../../src/services/api/DiscoverService', () => ({ default: { getDailyMi
 const flush = () => new Promise(resolve => setTimeout(resolve, 0))
 const videos = [{ videoId: 'a', title: 'Track', guid: 'guid_a' }]
 function mountMix() {
-  return shallowMount(DailyMixView, { mocks: { $store: { dispatch: vi.fn().mockResolvedValue() } } })
+  return shallowMount(DailyMixView, { global: { mocks: { $store: { dispatch: vi.fn().mockResolvedValue() } } } })
 }
 
 describe('Daily Mix access', () => {
@@ -18,29 +18,29 @@ describe('Daily Mix access', () => {
   it('offers Daily Mix in the signed-in navigation and opens its route', async () => {
     const store = {
       state: { navDrawerStatus: true, auth: { user: { display_name: 'Listener', type: 'user' } } },
-      getters: { 'auth/loggedIn': true }, dispatch: vi.fn(),
+      getters: { 'auth/loggedIn': true }, dispatch: vi.fn(), commit: vi.fn(),
     }
     const push = vi.fn()
-    const wrapper = shallowMount(NavDrawer, { mocks: { $store: store, $router: { push } } })
+    const wrapper = shallowMount(NavDrawer, { global: { mocks: { $store: store, $router: { push } } } })
     expect(wrapper.text()).toContain('Daily Mix')
-    const item = wrapper.findAll('.ds-nav-drawer-item').wrappers.find(item => item.text().includes('Daily Mix'))
+    const item = wrapper.findAllComponents({ name: 'VListItem' }).find(item => item.text().includes('Daily Mix'))
     item.vm.$emit('click')
     await wrapper.vm.$nextTick()
     expect(push).toHaveBeenCalledWith('/daily-mix')
-    expect(store.dispatch).toHaveBeenCalledWith('toggleNavDrawerStatus')
-    wrapper.destroy()
+    expect(store.commit).toHaveBeenCalledWith('SET_NAV_DRAWER_STATUS', false)
+    wrapper.unmount()
   })
 
   it('keeps the navigation menu available on mobile', () => {
-    const wrapper = shallowMount(NavBar, {
+    const wrapper = shallowMount(NavBar, { global: {
       mocks: {
-        $vuetify: { breakpoint: { smAndUp: false } },
+        $vuetify: { display: { smAndUp: false } },
         $store: { state: { collection: {}, mediaStats: {}, showLoadingBar: false }, getters: { 'auth/loggedIn': true } },
       },
       stubs: { SearchBar: true, 'router-link': true },
-    })
+    } })
     expect(wrapper.find('[aria-label="Open navigation menu"]').exists()).toBe(true)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('shows loading then registers returned tracks with the player', async () => {
@@ -54,7 +54,7 @@ describe('Daily Mix access', () => {
     expect(wrapper.vm.results).toEqual(videos)
     expect(wrapper.vm.loading).toBe(false)
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledWith('player/updateGuidData', { guidIndexKey: '/daily-mix', mediaItems: videos })
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('shows a useful empty state for an account without a mix', async () => {
@@ -63,7 +63,7 @@ describe('Daily Mix access', () => {
     await flush()
     expect(wrapper.text()).toContain('Collect or play some tracks.')
     expect(wrapper.find('[to="/collection"]').exists()).toBe(true)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('offers retry after a provider failure and avoids duplicate clicks while loading', async () => {
@@ -78,6 +78,6 @@ describe('Daily Mix access', () => {
     expect(DiscoverService.getDailyMix).toHaveBeenCalledTimes(2)
     expect(wrapper.vm.errorMessage).toBe(false)
     expect(wrapper.vm.results).toEqual(videos)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 })

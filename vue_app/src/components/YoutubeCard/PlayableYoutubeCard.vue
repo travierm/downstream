@@ -8,15 +8,15 @@
         :to="{ path: `/discover/track/${videoId}` }"
         target="_blank"
       >
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
+        <v-tooltip location="top">
+          <template v-slot:activator="{ props }">
             <v-btn
-              v-on="on"
-              v-bind="attrs"
+
+             v-bind="props"
               icon
               @click="handleDiscoverTrackClick"
             >
-              <v-icon class="ml-1" color="deep-purple accent-2">{{
+              <v-icon class="ml-1" color="deep-purple-accent-2">{{
                 mdiLayersSearch
               }}</v-icon>
             </v-btn>
@@ -41,7 +41,7 @@
       :height="dense ? '250px' : '435px'"
       @click="handleThumbnailClick"
       v-if="showThumbnail"
-    >
+     cover>
       <div
         style="width: 90%"
         class="text-subtitle-1 pl-4 pt-3 d-inline-block text-truncate youtubeCardTitle"
@@ -74,7 +74,6 @@ export default {
     PlaylistAction,
   },
   props: {
-    guid: String,
     title: String,
     mediaId: Number,
     videoId: String,
@@ -116,7 +115,6 @@ export default {
     handleVideoPlay() {
       this.showThumbnail = false
       $('#' + this.guid).show()
-      this.$set(this, 'showThumbnail', false)
     },
     handleVideoStop() {
       this.showThumbnail = true

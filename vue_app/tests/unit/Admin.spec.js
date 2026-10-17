@@ -14,12 +14,12 @@ const dashboard = () => ({
   recent_users: [], recent_collections: [], updated_at: '2026-10-17T12:00:00Z',
 })
 const flush = () => new Promise(resolve => setTimeout(resolve, 0))
-const mount = () => shallowMount(AdminView, {
+const mount = () => shallowMount(AdminView, { global: {
   stubs: {
     apexchart: { props: ['series', 'options'], template: '<div class="chart-stub" />' },
-    'v-simple-table': { template: '<table><slot /></table>' },
+    'v-table': { template: '<table><slot /></table>' },
   },
-})
+} })
 
 describe('admin dashboard', () => {
   beforeEach(() => vi.clearAllMocks())
@@ -31,7 +31,7 @@ describe('admin dashboard', () => {
     expect(wrapper.text()).toContain('42')
     expect(wrapper.text()).toContain('Total users')
     expect(wrapper.text()).toContain('Daily activity')
-    const charts = wrapper.findAll('.chart-stub')
+    const charts = wrapper.findAllComponents('.chart-stub')
     expect(charts).toHaveLength(2)
     expect(charts.at(0).props('series')).toEqual([{ name: 'Songs played', data: [0, 20] }])
     expect(charts.at(0).props('options').xaxis.categories).toEqual(['2026-10-16', '2026-10-17'])
@@ -41,7 +41,7 @@ describe('admin dashboard', () => {
     ])
     expect(wrapper.text()).toContain('No registered users.')
     expect(wrapper.vm.activityTotals).toEqual({ users: 2, collections: 5 })
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('shows recently registered users, registration dates, and collection sizes in a table', async () => {
@@ -55,13 +55,13 @@ describe('admin dashboard', () => {
     await flush()
     const rows = wrapper.findAll('tbody tr')
     expect(rows).toHaveLength(2)
-    expect(rows.at(0).findAll('td').wrappers.map(cell => cell.text())).toEqual([
+    expect(rows.at(0).findAll('td').map(cell => cell.text())).toEqual([
       'New listener', new Date(data.recent_users[0].created_at).toLocaleString(), '12',
     ])
     expect(rows.at(0).find('time').attributes('datetime')).toBe(data.recent_users[0].created_at)
     expect(rows.at(1).text()).toContain('Unnamed user')
     expect(rows.at(1).findAll('td').at(2).text()).toBe('0')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('allows retry after an error and clears protected data when access is revoked', async () => {
@@ -75,23 +75,19 @@ describe('admin dashboard', () => {
     await wrapper.vm.loadDashboard()
     expect(wrapper.vm.dashboard).toBeNull()
     expect(wrapper.text()).toContain('Administrator access is required')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('redirects guests and regular users while allowing admins through the route guard', async () => {
     const guards = []
     applyMiddleware({ beforeEach: guard => guards.push(guard) })
     const to = { matched: [{ meta: { requiresAuth: true, requiresAdmin: true } }] }
-    const next = vi.fn()
     store.getters['auth/loggedIn'] = false
-    await guards[1](to, {}, next)
-    expect(next).toHaveBeenLastCalledWith('/')
+    expect(await guards[1](to)).toBe('/')
     store.getters['auth/loggedIn'] = true
     store.state.auth.user = { type: 'user' }
-    await guards[1](to, {}, next)
-    expect(next).toHaveBeenLastCalledWith('/collection')
+    expect(await guards[1](to)).toBe('/collection')
     store.state.auth.user = { type: 'admin' }
-    await guards[1](to, {}, next)
-    expect(next).toHaveBeenLastCalledWith()
+    expect(await guards[1](to)).toBeUndefined()
   })
 })

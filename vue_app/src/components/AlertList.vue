@@ -3,7 +3,7 @@
     <v-alert
       class="mb-0"
       v-for="(message, index) in messages"
-      text
+      variant="tonal"
       :type="message.type"
       :key="index"
       >{{ message.message }}</v-alert

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import CardCol from '@/components/CardCol'
 import YoutubeCard from '@/components/YoutubeCard/YoutubeCard';
 import { getFollowingActivites } from '@/services/api/FollowerService';
 import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
@@ -27,6 +28,7 @@ import { getCurrentPathFromURL } from '@/services/GlobalFunctions'
 export default {
   name: 'FollowerActivityView',
   components: {
+    CardCol,
     'youtube-card': YoutubeCard
   },
   data: () => {

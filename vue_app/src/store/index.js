@@ -1,7 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
+import { createStore } from 'vuex'
 
 import * as auth from './modules/auth'
 import * as player from './modules/player'
@@ -13,7 +10,7 @@ import * as follower from './modules/follower'
 
 import Analytics from '../services/api/AnalyticsService'
 
-export default new Vuex.Store({
+export default createStore({
   state: {
     showLoadingBar: false,
     playlistDrawerStatus: false,
@@ -29,6 +26,9 @@ export default new Vuex.Store({
     },
     SET_LOADING_BAR_STATE(state, boolean) {
       state.showLoadingBar = boolean
+    },
+    SET_NAV_DRAWER_STATUS(state, value) {
+      state.navDrawerStatus = value
     },
     TOGGLE_NAV_DRAWER_STATUS(state) {
       state.navDrawerStatus = !state.navDrawerStatus

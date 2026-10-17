@@ -3,9 +3,9 @@
     <v-card :class="{ 'ma-auto': true, 'youtube-card': true, light: this.light }" style="z-index: 1">
       <v-card-actions v-if="!hideActions">
         <!-- Spotify Tag -->
-        <v-tooltip top v-if="spotifyId">
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon v-bind="attrs" v-on="on" class="float-left" color="green">{{
+        <v-tooltip location="top" v-if="spotifyId">
+          <template v-slot:activator="{ props }">
+            <v-icon v-bind="props" class="float-left" color="green">{{
               mdiSpotify
             }}</v-icon>
           </template>
@@ -13,9 +13,9 @@
         </v-tooltip>
 
         <!-- Repeat Button -->
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn v-on="on" v-bind="attrs" icon color="blue accent-3" @click="handleThumbnailClick">
+        <v-tooltip location="top">
+          <template v-slot:activator="{ props }">
+            <v-btn v-bind="props" icon color="blue-accent-3" @click="handleThumbnailClick">
               <v-icon>{{ mdiRepeat }}</v-icon>
             </v-btn>
           </template>
@@ -26,10 +26,10 @@
         <v-spacer></v-spacer>
 
         <router-link v-if="mediaId" :to="{ path: `/discover/track/${videoId}` }">
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn v-on="on" v-bind="attrs" icon>
-                <v-icon class="ml-1" color="deep-purple accent-2">{{
+          <v-tooltip location="top">
+            <template v-slot:activator="{ props }">
+              <v-btn v-bind="props" icon>
+                <v-icon class="ml-1" color="deep-purple-accent-2">{{
                   mdiLayersSearch
                 }}</v-icon>
               </v-btn>
@@ -47,9 +47,9 @@
       </v-card-actions>
 
       <v-img :id="this.guid + '_media'" class="youtubeCardThumbnail" :src="thumbnail" :height="cardHeight"
-        @click="handleThumbnailClick">
+        @click="handleThumbnailClick" cover>
         <div style="width: 100%"
-          class="black text-subtitle-1 pl-4 pt-4 pb-3 d-inline-block text-truncate youtubeCardTitle">
+          class="bg-black text-subtitle-1 pl-4 pt-4 pb-3 d-inline-block text-truncate youtubeCardTitle">
           {{ cardTitle }}
         </div>
       </v-img>

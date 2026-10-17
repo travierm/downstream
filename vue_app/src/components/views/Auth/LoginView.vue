@@ -1,5 +1,5 @@
 <template>
-  <v-container rounded class="d-flex flex-wrap justify-center" @keyup.enter="login()">
+  <v-container rounded class="d-flex flex-wrap justify-center" >
     <!-- Login Sheet -->
     <v-sheet elevation="2" class="pl-10 pr-10 rounded" :width="sheetWidth" style="min-width: 250px">
       <div>
@@ -17,20 +17,20 @@
         <!-- Login Form -->
         <v-row class="mb-2">
           <v-col>
-            <v-form ref="loginForm" v-model="valid">
+            <v-form ref="loginForm" v-model="valid" @submit.prevent="login">
               <!-- Login Form Inputs -->
-              <v-text-field name="email" outlined v-model="email" label="Email"
+              <v-text-field name="email" variant="outlined" v-model="email" label="Email"
                 :rules="[(v) => !!v || 'Email is required']" required></v-text-field>
 
-              <v-text-field name="password" outlined v-model="password" type="password" label="Password"
+              <v-text-field name="password" variant="outlined" v-model="password" type="password" label="Password"
                 :rules="[(v) => !!v || 'Password is required']" required></v-text-field>
 
               <!-- <v-checkbox v-model="rememberMe" label="Remember Me"></v-checkbox> -->
 
               <!-- Login Form Actions -->
-              <v-btn color="primary" class="loginBtn" @click="login">Login</v-btn>
-              <v-btn text class="ml-2" to="/register">Create an account</v-btn>
-              <!-- <v-btn class="ml-2" small text color="primary"
+              <v-btn color="primary" class="loginBtn" type="submit" :loading="submitting">Login</v-btn>
+              <v-btn variant="text" class="ml-2" to="/register">Create an account</v-btn>
+              <!-- <v-btn class="ml-2" size="small" variant="text" color="primary"
                 >Forgot Password?</v-btn
               > -->
             </v-form>
@@ -58,7 +58,7 @@ export default {
   computed: {
     ...mapState('auth', ['error']),
     sheetWidth() {
-      return this.$vuetify.breakpoint.smAndUp ? '40%' : '100%)'
+      return this.$vuetify.display.smAndUp ? '40%' : '100%'
     },
   },
   data: () => {
@@ -67,24 +67,22 @@ export default {
       password: '',
       rememberMe: false,
       valid: false,
+      submitting: false,
       failedLogin: false,
     }
   },
   methods: {
-    login() {
-      if (!this.$refs.loginForm.validate()) {
-        return
+    async login() {
+      if (this.submitting) return
+      this.submitting = true
+      try {
+        const { valid } = await this.$refs.loginForm.validate()
+        if (!valid) return
+        await this.$store.dispatch('auth/login', { email: this.email, password: this.password })
+        if (!this.error) await this.$router.push(afterLoginRoute)
+      } finally {
+        this.submitting = false
       }
-
-      const params = {
-        email: this.email,
-        password: this.password,
-      }
-      this.$store.dispatch('auth/login', params).then(() => {
-        if (!this.error) {
-          this.$router.push(afterLoginRoute)
-        }
-      })
     },
   },
 }

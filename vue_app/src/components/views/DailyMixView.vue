@@ -5,9 +5,9 @@
       <p>A curated list of songs based on your collection and listening history.</p>
     </div>
     <p v-if="loading" role="status">Finding tracks for your Daily Mix...</p>
-    <v-alert v-else-if="errorMessage" type="error" outlined role="alert">
+    <v-alert v-else-if="errorMessage" type="error" variant="outlined" role="alert">
       {{ errorMessage }}
-      <v-btn text @click="loadDailyMix">Try again</v-btn>
+      <v-btn variant="text" @click="loadDailyMix">Try again</v-btn>
     </v-alert>
     <v-row v-else-if="results.length">
       <CardCol v-for="video in results" :key="video.guid">
@@ -17,8 +17,8 @@
     </v-row>
     <div v-else>
       <p role="status">{{ emptyMessage }}</p>
-      <v-btn to="/collection" text>Go to collection</v-btn>
-      <v-btn text @click="loadDailyMix">Try again</v-btn>
+      <v-btn to="/collection" variant="text">Go to collection</v-btn>
+      <v-btn variant="text" @click="loadDailyMix">Try again</v-btn>
     </div>
   </v-container>
 </template>

@@ -1,59 +1,47 @@
 <template>
   <div>
-    <div class="ml-4 mt-2" v-if="playlists.length <= 0">
+    <div v-if="playlists.length <= 0" class="ml-4 mt-2">
       <h3>No playlists created yet..</h3>
     </div>
-    <v-list flat v-else>
-      <v-list-item-group dark color="white" :ripple="false">
-        <v-list-item
-          exact-active-class="no-active"
-          v-for="item in playlists"
-          :key="item.id"
-          @click="clickedListItem(item)"
-        >
-          <v-list-item-icon>
-            <v-icon>{{
-              item.itemAdded ? mdiCheckboxIntermediate : mdiCheckboxBlankOutline
-            }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title v-text="item.name"></v-list-item-title>
-          </v-list-item-content>
-
-          <v-btn
-            icon
-            class="removeBtn"
-            @click.stop.prevent="confirmPlaylistDelete(item)"
-          >
+    <v-list v-else>
+      <v-list-item
+        v-for="item in playlists"
+        :key="item.id"
+        :active="false"
+        :ripple="false"
+        @click="clickedListItem(item)"
+      >
+        <template #prepend>
+          <v-icon>{{ item.itemAdded ? mdiCheckboxIntermediate : mdiCheckboxBlankOutline }}</v-icon>
+        </template>
+        <v-list-item-title v-text="item.name" />
+        <template #append>
+          <v-btn icon class="removeBtn" @click.stop.prevent="confirmPlaylistDelete(item)">
             <v-icon class="ml-1" color="red">{{ mdiMinusCircle }}</v-icon>
           </v-btn>
-        </v-list-item>
-
-        <ConfirmDialog
-          :show="showConfirmDialog"
-          message="Are you sure you want to delete this playlist?"
-          v-on:closed="showConfirmDialog = false"
-          v-on:confirmed="deleteList(selectedItem)"
-        />
-      </v-list-item-group>
+        </template>
+      </v-list-item>
+      <ConfirmDialog
+        :show="showConfirmDialog"
+        message="Are you sure you want to delete this playlist?"
+        @closed="showConfirmDialog = false"
+        @confirmed="deleteList(selectedItem)"
+      />
     </v-list>
 
-    <v-divider dark></v-divider>
-
+    <v-divider />
     <div class="ml-4 mr-4 mt-4">
       <v-text-field
-        solo
-        light
-        dense
         v-model="listNameInput"
+        variant="solo"
+        theme="light"
+        density="compact"
         label="Create new Playlist"
         required
         clearable
         hide-details
-      ></v-text-field>
-
-      <v-btn @click="createList" class="mt-2" color="primary">Create</v-btn>
+      />
+      <v-btn class="mt-2" color="primary" @click="createList">Create</v-btn>
     </div>
   </div>
 </template>

@@ -1,0 +1,13 @@
+@use 'vuetify/settings' with (
+  // Preserve the Vue 2 layout: two cards through tablet sizes, four on desktop,
+  // and six only on wide screens. Vuetify 4's defaults add columns much sooner.
+  $grid-breakpoints: (
+    'xs': 0,
+    'sm': 600px,
+    'md': 960px,
+    'lg': 1264px,
+    'xl': 1904px,
+    'xxl': 2560px,
+  ),
+  $container-padding-x: 12px,
+);

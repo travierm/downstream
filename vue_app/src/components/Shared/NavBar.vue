@@ -1,8 +1,8 @@
 <template>
-  <v-app-bar app color="dark" dark elevate-on-scroll>
+  <v-app-bar color="app-bar" scroll-behavior="elevate">
     <div
       class="d-flex align-center"
-      v-if="$vuetify.breakpoint.smAndUp || !loggedIn"
+      v-if="$vuetify.display.smAndUp || !loggedIn"
     >
       <router-link to="/" class="unstyled-link">
         <v-toolbar-title class="navbar-brand ds-gradient"
@@ -13,15 +13,15 @@
       <v-btn
         href="https://github.com/travierm/downstream"
         target="_blank"
-        text
-        fab
-        small
+        variant="text"
+        icon
+        size="small"
       >
-        <v-icon>mdi-github</v-icon>
+        <v-icon>$mdi-github</v-icon>
       </v-btn>
 
       <template
-        v-if="$vuetify.breakpoint.smAndUp && loggedIn && mediaStats.plays"
+        v-if="$vuetify.display.smAndUp && loggedIn && mediaStats.plays"
       >
         <v-toolbar-title class="ml-2 text-subtitle-1"
           >{{ mediaStats.plays.year }} videos played this year</v-toolbar-title
@@ -29,9 +29,9 @@
       </template>
     </div>
 
-    <v-spacer v-if="$vuetify.breakpoint.smAndUp || !loggedIn" />
+    <v-spacer v-if="$vuetify.display.smAndUp || !loggedIn" />
 
-    <v-btn to="/login" outlined v-if="!loggedIn">Login</v-btn>
+    <v-btn to="/login" variant="outlined" v-if="!loggedIn">Login</v-btn>
 
     <SearchBar v-if="loggedIn" class="mt-1" />
 
@@ -47,8 +47,8 @@
       :active="showLoadingBar"
       :indeterminate="showLoadingBar"
       absolute
-      bottom
-      color="deep-purple accent-4"
+      location="bottom"
+      color="deep-purple-accent-4"
     ></v-progress-linear>
   </v-app-bar>
 </template>

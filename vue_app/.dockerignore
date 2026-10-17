@@ -16,3 +16,4 @@ tests/e2e/videos
 # Vite needs the public production settings during the build.
 .env*
 !.env.production
+.pnpm-store/

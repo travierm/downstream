@@ -11,7 +11,7 @@
 
     <v-row v-if="errorMessage">
       <v-col lg="3">
-        <v-alert dense outlined type="error">
+        <v-alert density="compact" variant="outlined" type="error">
           {{ errorMessage }}
         </v-alert>
       </v-col>

@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="collectBtn" @click="toggleDialog" icon color="blue lighten-1">
+  <v-btn class="collectBtn" @click="toggleDialog" icon color="blue-lighten-1">
     <v-icon class="ml-1">{{ mdiPlaylistMusic }}</v-icon>
 
     <PlaylistDialog :mediaId='mediaId' ref="playlistDialog" />

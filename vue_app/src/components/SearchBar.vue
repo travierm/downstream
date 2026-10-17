@@ -3,16 +3,16 @@
         id="searchInput"
         class="main-search"
         placeholder="Search for music..."
-        solo
-        dense
+        variant="solo"
+        density="compact"
         flat
         clearable
         hide-no-data
-        append-icon=""
+        append-inner-icon=""
         :items="items"
         v-model="value"
-        :search-input.sync="query"
-        @input="dispatchSearchRoute()"
+        v-model:search="query"
+        @update:model-value="dispatchSearchRoute()"
         @keyup.enter="dispatchSearchRoute()"
     >
     </v-autocomplete>

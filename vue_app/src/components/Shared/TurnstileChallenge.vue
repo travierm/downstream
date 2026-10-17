@@ -2,7 +2,7 @@
   <div class="mb-4">
     <div ref="widget"></div>
     <v-alert v-if="error" type="error" role="alert">{{ error }}</v-alert>
-    <v-btn v-if="error && siteKey" small text @click="retry">Retry verification</v-btn>
+    <v-btn v-if="error && siteKey" size="small" variant="text" @click="retry">Retry verification</v-btn>
   </div>
 </template>
 
@@ -30,15 +30,18 @@ function loadTurnstile() {
 
 export default {
   name: 'TurnstileChallenge',
+  emits: ['update:modelValue'],
   data: () => ({
     siteKey: import.meta.env.VITE_TURNSTILE_SITE_KEY,
     widgetId: null,
+    disposed: false,
     error: '',
   }),
   mounted() {
     this.renderWidget()
   },
-  beforeDestroy() {
+  beforeUnmount() {
+    this.disposed = true
     if (this.widgetId !== null && window.turnstile) {
       window.turnstile.remove(this.widgetId)
     }
@@ -51,31 +54,31 @@ export default {
       }
       try {
         const turnstile = await loadTurnstile()
-        if (this._isDestroyed || this._isBeingDestroyed) return
+        if (this.disposed) return
         this.widgetId = turnstile.render(this.$refs.widget, {
           sitekey: this.siteKey,
           action: 'register',
           size: 'flexible',
-          theme: this.$vuetify?.theme?.dark ? 'dark' : 'light',
+          theme: this.$vuetify?.theme?.current?.dark ? 'dark' : 'light',
           callback: token => {
             this.error = ''
-            this.$emit('input', token)
+            this.$emit('update:modelValue', token)
           },
-          'expired-callback': () => this.$emit('input', ''),
+          'expired-callback': () => this.$emit('update:modelValue', ''),
           'error-callback': () => {
-            this.$emit('input', '')
+            this.$emit('update:modelValue', '')
             this.error = 'Verification failed to load. Please retry.'
           },
-          'timeout-callback': () => this.$emit('input', ''),
+          'timeout-callback': () => this.$emit('update:modelValue', ''),
         })
       } catch (error) {
-        if (!this._isDestroyed) {
+        if (!this.disposed) {
           this.error = 'Verification failed to load. Please retry.'
         }
       }
     },
     reset() {
-      this.$emit('input', '')
+      this.$emit('update:modelValue', '')
       if (this.widgetId !== null && window.turnstile) {
         window.turnstile.reset(this.widgetId)
       }

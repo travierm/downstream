@@ -1,5 +1,5 @@
 app-dev:
-	cd vue_app/ && yarn dev
+	cd vue_app/ && pnpm dev
 
 api-dev:
 	php artisan serve

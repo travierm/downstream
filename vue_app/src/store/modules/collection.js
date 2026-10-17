@@ -39,7 +39,7 @@ export const mutations = {
 }
 
 export const getters = {
-  searchQueryUpdates() {
+  searchQueryUpdates(state) {
     return state.searchQueryUpdates
   },
   guidIndex(state) {

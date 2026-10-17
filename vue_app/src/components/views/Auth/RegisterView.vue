@@ -13,19 +13,19 @@
       <v-row class="mb-2 mx-0">
         <v-col class="px-0">
           <v-form ref="registerForm" v-model="valid" @submit.prevent="register">
-            <v-text-field name="email" type="email" autocomplete="email" outlined v-model="email" label="Email"
+            <v-text-field name="email" type="email" autocomplete="email" variant="outlined" v-model="email" label="Email"
               :rules="[(v) => !!v || 'Email is required']" required></v-text-field>
 
-            <v-text-field name="username" autocomplete="nickname" outlined v-model="display_name" label="Display Name"
+            <v-text-field name="username" autocomplete="nickname" variant="outlined" v-model="display_name" label="Display Name"
               :rules="[(v) => !!v || 'Display Name is required']" required></v-text-field>
 
-            <v-text-field name="password" autocomplete="new-password" outlined v-model="password" type="password" label="Password" :rules="[
+            <v-text-field name="password" autocomplete="new-password" variant="outlined" v-model="password" type="password" label="Password" :rules="[
               (v) => !!v || 'Password is required',
               (v) =>
                 (v || '').length >= 6 || 'Password must be 6 or more characters long',
             ]" required></v-text-field>
 
-            <v-text-field name="password_confirmation" autocomplete="new-password" outlined v-model="password_confirmation" type="password"
+            <v-text-field name="password_confirmation" autocomplete="new-password" variant="outlined" v-model="password_confirmation" type="password"
               label="Confirm Password" :rules="[
                 (v) => v === this.password || 'Both passwords must match',
               ]" required></v-text-field>
@@ -33,7 +33,7 @@
             <turnstile-challenge ref="turnstile" v-model="turnstileToken" />
             <v-btn color="primary" class="loginBtn" type="submit" :loading="submitting"
               :disabled="!turnstileToken || submitting">Register</v-btn>
-            <v-btn text class="ml-2" to="/login">Log in</v-btn>
+            <v-btn variant="text" class="ml-2" to="/login">Log in</v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -65,10 +65,13 @@ export default {
   },
   methods: {
     async register() {
-      if (this.submitting || !this.$refs.registerForm.validate() || !this.turnstileToken) return
-
+      if (this.submitting || !this.turnstileToken) return
       this.submitting = true
+      let registrationAttempted = false
       try {
+        const { valid } = await this.$refs.registerForm.validate()
+        if (!valid) return
+        registrationAttempted = true
         const response = await registerUser(
           this.display_name,
           this.email,
@@ -89,7 +92,7 @@ export default {
         this.$refs.alertList.create('error', message || 'Registration failed. Please try again.')
       } finally {
         this.submitting = false
-        this.$refs.turnstile?.reset()
+        if (registrationAttempted) this.$refs.turnstile?.reset()
       }
     },
   },

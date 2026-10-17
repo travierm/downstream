@@ -1,17 +1,17 @@
 <template>
   <v-select
-    item-text="name"
-    item-id="id"
+    item-title="name"
+    item-value="id"
     :items="playlists"
     label="Playlist"
-    solo
-    dense
-    light
+    variant="solo"
+    density="compact"
+    theme="light"
     hide-details
     v-model="selectedPlaylist"
     return-object
     clearable
-    @change="updateSelectedPlaylist"
+    @update:model-value="updateSelectedPlaylist"
   >
   </v-select>
 </template>

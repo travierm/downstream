@@ -3,9 +3,7 @@
     <NavBar />
 
     <NavDrawer />
-    <div class="position: absolute;">
-      <PlaylistDrawer />
-    </div>
+    <PlaylistDrawer />
 
     <v-main>
       <router-view></router-view>
@@ -16,7 +14,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import NavBar from '@/components/Shared/NavBar.vue'
 import PlaylistDrawer from '@/components/PlaylistDrawer'
 import NavDrawer from '@/components/Shared/NavDrawer.vue'
@@ -40,17 +37,11 @@ export default {
   computed: {
     canShowBottomBar() {
       return !this.onNonAuthedRoute
-    },  
-    onNonAuthedRoute() {
-      return this.authRoutes.includes(this.route)
     },
-    ...mapState({
-      route: (state) => state.route.path,
-    }),
+    onNonAuthedRoute() {
+      return !this.$route.meta.requiresAuth
+    },
   },
-  data: () => ({
-    authRoutes: ['/', '/login', '/register'],
-  }),
 }
 </script>
 

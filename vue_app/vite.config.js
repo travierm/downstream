@@ -1,35 +1,37 @@
-import { VuetifyResolver } from 'unplugin-vue-components/resolvers';
-import Components from 'unplugin-vue-components/vite';
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue2';
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vuetify from 'vite-plugin-vuetify'
 
-const path = require("path");
-
-// https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    target: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
+    target: 'baseline-widely-available',
+    rollupOptions: {
+      output: {
+        onlyExplicitManualChunks: true,
+        manualChunks(id) {
+          if (!id.includes('/node_modules/')) return
+          if (id.includes('/apexcharts/dist/core')) return 'chart-engine'
+          if (id.includes('/@sentry/')) return 'sentry'
+          if (id.includes('/vuetify/')) return 'vuetify'
+          if (/\/(?:@vue|vue|vue-router|vuex)\//.test(id)) return 'vue'
+        },
+      },
+    },
   },
   test: {
+    server: { deps: { inline: ['vuetify'] } },
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./tests/unit/setup.js'],
     include: ['tests/unit/**/*.spec.js'],
   },
-  plugins: [vue(), Components({
-      resolvers: [
-        // Vuetify
-        VuetifyResolver(),
-      ],
-    }),],
+  plugins: [vue(), vuetify({ autoImport: true, styles: { configFile: 'src/assets/css/vuetify.scss' } })],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      process: "process/browser",
-      stream: "stream-browserify",
-      zlib: "browserify-zlib",
-      util: 'util'
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      process: 'process/browser',
     },
-     extensions: ['.vue', '.js']
+    extensions: ['.vue', '.js', '.mjs', '.json'],
   },
 })

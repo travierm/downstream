@@ -3,15 +3,15 @@
     <div class="d-flex align-center mb-4">
       <h2>Admin</h2>
       <v-spacer />
-      <v-btn outlined class="mr-2" :href="logViewerUrl" target="_blank" rel="noopener noreferrer">
+      <v-btn variant="outlined" class="mr-2" :href="logViewerUrl" target="_blank" rel="noopener noreferrer">
         View logs
       </v-btn>
-      <v-btn outlined :loading="loading" @click="loadDashboard">
-        <v-icon left small>{{ icons.refresh }}</v-icon> Refresh
+      <v-btn variant="outlined" :loading="loading" @click="loadDashboard">
+        <v-icon  size="small">{{ icons.refresh }}</v-icon> Refresh
       </v-btn>
     </div>
 
-    <v-alert v-if="error" type="error" outlined role="alert">{{ error }}</v-alert>
+    <v-alert v-if="error" type="error" variant="outlined" role="alert">{{ error }}</v-alert>
     <div v-if="loading && !dashboard" class="text-center py-12" role="status" aria-label="Loading statistics">
       <v-progress-circular indeterminate color="primary" />
     </div>
@@ -22,7 +22,7 @@
           <v-card class="fill-height">
             <v-card-text>
               <div class="text-subtitle-1">{{ card.label }}</div>
-              <div class="text-h4 my-2 text--primary">{{ number(card.value) }}</div>
+              <div class="text-h4 my-2 text-high-emphasis">{{ number(card.value) }}</div>
               <div class="text-caption">{{ card.detail }}</div>
             </v-card-text>
           </v-card>
@@ -33,7 +33,7 @@
         <v-card-title class="d-flex flex-wrap align-center">
           <h3 id="plays-title" class="text-h6">Songs played</h3>
           <v-spacer />
-          <span class="text-caption text--secondary">Last 14 days<span v-if="dashboard.timezone"> · {{ dashboard.timezone }}</span></span>
+          <span class="text-caption text-medium-emphasis">Last 14 days<span v-if="dashboard.timezone"> · {{ dashboard.timezone }}</span></span>
         </v-card-title>
         <v-card-text>
           <apexchart type="line" height="300" :options="playsChartOptions" :series="playsSeries" />
@@ -44,7 +44,7 @@
         <v-card-title class="d-flex flex-wrap align-center">
           <h3 id="activity-title" class="text-h6">Daily activity</h3>
           <v-spacer />
-          <span class="text-caption text--secondary">Last 14 days<span v-if="dashboard.timezone"> · {{ dashboard.timezone }}</span></span>
+          <span class="text-caption text-medium-emphasis">Last 14 days<span v-if="dashboard.timezone"> · {{ dashboard.timezone }}</span></span>
         </v-card-title>
         <v-card-text>
           <div class="d-flex flex-wrap mb-2">
@@ -58,7 +58,7 @@
         <v-card-title>
           <h3 id="users-title" class="text-h6">Recently registered users</h3>
         </v-card-title>
-        <v-simple-table>
+        <v-table>
           <template v-slot:default>
             <thead>
               <tr>
@@ -74,13 +74,13 @@
                 <td class="text-right">{{ number(user.collection_count) }}</td>
               </tr>
               <tr v-if="!dashboard.recent_users.length">
-                <td colspan="3" class="text-center text--secondary">No registered users.</td>
+                <td colspan="3" class="text-center text-medium-emphasis">No registered users.</td>
               </tr>
             </tbody>
           </template>
-        </v-simple-table>
+        </v-table>
       </v-card>
-      <div class="text-caption text--secondary mt-4">Updated {{ fullDate(dashboard.updated_at) }} · Last 7 days includes today</div>
+      <div class="text-caption text-medium-emphasis mt-4">Updated {{ fullDate(dashboard.updated_at) }} · Last 7 days includes today</div>
     </template>
   </v-container>
 </template>

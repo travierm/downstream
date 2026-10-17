@@ -2,7 +2,7 @@ import store from '../store/index'
 
 export function applyMiddleware(router) {
   // Search Middleware
-  router.beforeEach((to, from, next) => {
+  router.beforeEach((to, from) => {
     if (to.path == '/search' && to.query.query) {
       store.dispatch('search/setQuery', to.query.query)
     }
@@ -11,39 +11,33 @@ export function applyMiddleware(router) {
       store.dispatch('playlist/setSelectedPlaylist', false)
       store.dispatch('collection/fetchCollection')
     }
-
-    next()
   })
 
   // Redirect to landing page when not loggedIn on requiresAuth routes
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach((to) => {
     const loggedIn = store.getters['auth/loggedIn']
 
     if (to.matched.some((record) => record.meta.requiresAuth)) {
       if (loggedIn == false) {
-        return next('/')
+        return '/'
       }
     }
 
     if (to.matched.some((record) => record.meta.requiresAdmin) && store.state.auth.user?.type !== 'admin') {
-      return next(loggedIn ? '/collection' : '/')
+      return loggedIn ? '/collection' : '/'
     }
-
-    return next()
   })
 
   // If path /login and already loggedIn redirect to /collection
-  router.beforeEach((to, from, next) => {
+  router.beforeEach((to) => {
     const loggedIn = store.getters['auth/loggedIn']
 
     if (to.path == '/login' && loggedIn) {
-      return next('/collection')
+      return '/collection'
     }
 
     if (to.path == '/' && loggedIn) {
-      return next('/collection')
+      return '/collection'
     }
-
-    return next()
   })
 }
