@@ -164,19 +164,12 @@ export default {
   isolation: isolate;
   border-radius: 4px;
 
-  &::before,
   &::after {
     content: none;
     position: absolute;
     pointer-events: none;
     border-radius: inherit;
     background: linear-gradient(125deg, #24b6ff 0%, #7c4dff 55%, #f472b6 100%);
-  }
-
-  // A crisp rim gives the soft halo definition without changing the card layout.
-  &::before {
-    inset: -1px;
-    opacity: 0.65;
   }
 
   &::after {
@@ -186,25 +179,9 @@ export default {
     opacity: 0.5;
   }
 
-  &:focus-within::before,
-  &--active::before,
   &--active::after {
     content: '';
-  }
-
-  &--active::before {
-    opacity: 1;
-  }
-
-  &--active::after {
     animation: youtube-card-glow-breathe 4s ease-in-out infinite alternate;
-  }
-}
-
-// Touch scrolling should not leave cards in a sticky hover state.
-@media (hover: hover) and (pointer: fine) {
-  .youtube-card-glow:hover::before {
-    content: '';
   }
 }
 
@@ -232,7 +209,6 @@ export default {
     outline-offset: 2px;
   }
 
-  .youtube-card-glow::before,
   .youtube-card-glow::after {
     content: none;
   }
