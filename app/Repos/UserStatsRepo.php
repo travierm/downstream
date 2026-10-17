@@ -22,7 +22,6 @@ class UserStatsRepo
             ->select('media_id', DB::raw('count(*) as plays'))
             ->groupBy('media_id')
             ->orderBy('plays', 'desc')
-            ->whereDate('created_at', '>=', now()->subYear(2))
             ->limit($limit)
             ->get();
 

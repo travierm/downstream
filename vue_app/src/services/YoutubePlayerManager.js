@@ -6,6 +6,8 @@ import AnalyticsService from './api/AnalyticsService'
 import { getPlayerSizeByCategory } from './api/ScreenSizeService'
 
 const _DEBUG = true
+const MIN_REWIND_SECONDS = 30
+const REWIND_COOLDOWN_MS = 30_000
 
 class YoutubePlayerManager {
   constructor() {
@@ -27,6 +29,7 @@ class YoutubePlayerManager {
 
     this.videoPlayerInstance = false
     this.previousTimestamp = null
+    this.lastRewindAt = null
 
     this.volumeChangeListener = []
 
@@ -148,6 +151,7 @@ class YoutubePlayerManager {
     if (this.videoPlayerInstance) {
       this.videoPlayerInstance.stop()
       this.previousTimestamp = null
+      this.lastRewindAt = null
     }
   }
 
@@ -158,12 +162,14 @@ class YoutubePlayerManager {
     }
 
     this.previousTimestamp = null
+    this.lastRewindAt = null
     this.currentPlayingGuid = false
   }
 
   loadVideo(videoId, seekTime = null) {
     this.showVideoElement()
     this.previousTimestamp = null
+    this.lastRewindAt = null
 
     if (!this.videoPlayerInstance) {
       const player = new YTPlayer('#downstream-video-container', {
@@ -182,16 +188,16 @@ class YoutubePlayerManager {
 
       player.on('timeupdate', (currentTimestamp) => {
         const currentMediaId = this.findVideoByGuid(this.currentPlayingGuid)?.id
+        const now = Date.now()
+        // Substantial rewinds signal interest; small seeks and rapid scrubbing don't.
         if (
           currentMediaId &&
           this.previousTimestamp !== null &&
-          this.previousTimestamp * 0.65 > currentTimestamp
+          this.previousTimestamp - currentTimestamp >= MIN_REWIND_SECONDS &&
+          (this.lastRewindAt === null || now - this.lastRewindAt >= REWIND_COOLDOWN_MS)
         ) {
+          this.lastRewindAt = now
           AnalyticsService.playedMedia(currentMediaId, 'rewind')
-
-          console.log(
-            'The video was rewinded more than 35% from last time update.'
-          )
         }
         this.previousTimestamp = currentTimestamp
       })
