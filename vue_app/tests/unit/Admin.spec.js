@@ -19,12 +19,14 @@ const mount = () => shallowMount(AdminView, { stubs: ['apexchart'] })
 describe('admin dashboard', () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('renders totals, empty feeds, and activity from the API', async () => {
+  it('renders statistics and the activity chart from the API', async () => {
     getAdminDashboard.mockResolvedValue({ data: dashboard() })
     const wrapper = mount()
     await flush()
     expect(wrapper.text()).toContain('42')
-    expect(wrapper.text()).toContain('New users will appear here')
+    expect(wrapper.text()).toContain('Total users')
+    expect(wrapper.text()).toContain('Daily activity')
+    expect(wrapper.find('apexchart-stub').attributes('type')).toBe('line')
     expect(wrapper.vm.chartSeries[0].data).toEqual([5])
     expect(wrapper.vm.activityTotals).toEqual({ users: 2, collections: 5 })
     wrapper.destroy()
