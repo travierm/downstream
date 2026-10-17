@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 const user = { id: 1, hash: 'listener', display_name: 'Listener', type: 'admin' }
+const otherUser = { id: 2, hash: 'collector', display_name: 'Collector', media_count: 100, followers_count: 5 }
 const song = {
   guid: 'saved-song', media_id: 1, index: 'video-one', title: 'Saved migration song',
   collected: true, thumbnail: 'https://images.example.test/song.svg',
@@ -36,7 +37,8 @@ async function mockApp(page, { signedIn = true } = {}) {
     if (path === '/auth/user') json = user
     if (path.startsWith('/collection')) json = { hash: 'test-hash', items: [song], user }
     if (path === '/followage') json = { following: [], followers: [] }
-    if (path === '/users/active') json = [user]
+    if (path === '/users/active') json = [user, otherUser]
+    if (path === '/follow/2') json = { followedUser: otherUser }
     if (path === '/following/activity') json = { items: [] }
     if (path === '/spotify/stats') json = { data: [], categories: [] }
     if (path === '/ana/media/stats') json = { plays: { year: 10 } }
@@ -223,6 +225,36 @@ test('every sidebar destination renders when navigating without reloading', asyn
     await expect(page.locator('main')).toContainText(text)
     await expect(page.locator('.ds-nav-drawer')).not.toHaveClass(/v-navigation-drawer--active/)
   }
+  expect(errors).toEqual([])
+})
+
+test('user cards follow and unfollow users and recover from failed requests', async ({ page }) => {
+  const { errors, requests } = await mockApp(page)
+  await page.goto('/users')
+  const card = page.locator('.user-card').filter({ hasText: otherUser.display_name })
+  await expect(card).toBeVisible()
+  await expect(page.getByText('The Downstream community', { exact: true })).toHaveCount(0)
+  await expect(page.locator('.user-card').filter({ hasText: 'Listener' }).getByRole('button', { name: /follow/i })).toHaveCount(0)
+  const followers = card.locator('.profile-stats > div').last().locator('dd')
+  await card.getByRole('button', { name: 'Follow Collector', exact: true }).click()
+  await expect(card.getByRole('button', { name: 'Unfollow Collector', exact: true })).toBeVisible()
+  await expect(followers).toHaveText('6')
+  await card.getByRole('button', { name: 'Unfollow Collector', exact: true }).click()
+  await expect(card.getByRole('button', { name: 'Follow Collector', exact: true })).toBeVisible()
+  await expect(followers).toHaveText('5')
+  expect(requests.some(request => request.path === '/follow/2' && request.method === 'PUT')).toBe(true)
+  expect(requests.some(request => request.path === '/unfollow/2' && request.method === 'DELETE')).toBe(true)
+  await page.route('**/api/follow/2', route => route.fulfill({ status: 500, json: {} }))
+  await card.getByRole('button', { name: 'Follow Collector', exact: true }).click()
+  await expect(card.getByRole('alert')).toContainText('Couldn’t update follow status')
+  await expect(followers).toHaveText('5')
+  await page.unroute('**/api/follow/2')
+  await card.getByRole('button', { name: 'Follow Collector', exact: true }).click()
+  await expect(card.getByRole('alert')).toHaveCount(0)
+  await expect(followers).toHaveText('6')
+  await page.setViewportSize({ width: 390, height: 844 })
+  await expect(card.getByRole('link', { name: "View Collector's profile" })).toHaveAttribute('href', '/profile/collector')
+  await expect(card.getByRole('button', { name: 'Unfollow Collector', exact: true })).toBeVisible()
   expect(errors).toEqual([])
 })
 

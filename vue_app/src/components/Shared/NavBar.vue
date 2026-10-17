@@ -1,7 +1,7 @@
 <template>
   <v-app-bar color="app-bar" scroll-behavior="elevate">
     <div
-      class="d-flex align-center"
+      class="d-flex align-center pl-4"
       v-if="$vuetify.display.smAndUp || !loggedIn"
     >
       <router-link to="/" class="unstyled-link">

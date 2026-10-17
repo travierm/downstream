@@ -1,12 +1,7 @@
 <template>
   <v-container class="users-view px-4 px-sm-6 py-6 py-sm-10">
     <header class="mb-8">
-      <div class="text-label-small text-primary mb-2">The Downstream community</div>
       <h1 class="text-headline-large text-sm-display-medium font-weight-bold mb-3">Top Users</h1>
-      <p class="text-body-large text-medium-emphasis users-intro">
-        Find your next source of inspiration. Explore the community's biggest collections
-        and the people behind them.
-      </p>
       <v-chip variant="tonal" color="primary" size="small" class="mt-4">
         <v-icon icon="$mdi-playlist-music" start size="16" />
         Ranked by collection size
@@ -15,7 +10,7 @@
 
     <v-row v-if="loading" aria-label="Loading community profiles" aria-busy="true">
       <v-col v-for="index in 6" :key="index" cols="12" sm="6" lg="4">
-        <v-skeleton-loader type="avatar, heading, paragraph, actions" rounded="xl" />
+        <v-skeleton-loader type="avatar, heading, paragraph, actions" rounded="lg" />
       </v-col>
     </v-row>
 
@@ -26,15 +21,14 @@
       </template>
     </v-alert>
 
-    <v-sheet v-else-if="!users.length" rounded="xl" class="pa-8 text-center" border>
+    <v-sheet v-else-if="!users.length" rounded="lg" class="pa-8 text-center" border>
       <v-icon icon="$mdi-account-details" size="40" color="primary" class="mb-3" />
-      <h2 class="text-title-large mb-2">A community in the making</h2>
-      <p class="text-body-medium text-medium-emphasis mb-0">Public profiles will appear here as people join Downstream.</p>
+      <h2 class="text-title-large">No users found</h2>
     </v-sheet>
 
     <v-row v-else>
       <v-col v-for="(user, index) in users" :key="user.id" cols="12" sm="6" lg="4" class="d-flex">
-        <v-card rounded="xl" variant="outlined" class="user-card d-flex flex-column w-100">
+        <v-card rounded="lg" variant="outlined" class="user-card d-flex flex-column w-100">
           <v-card-text class="pa-6 flex-grow-1">
             <div class="d-flex align-center ga-3 mb-5">
               <v-avatar size="56" color="primary" variant="tonal" rounded="lg">
@@ -42,7 +36,6 @@
               </v-avatar>
               <div class="user-identity flex-grow-1">
                 <h2 class="text-title-large font-weight-bold user-name">{{ user.display_name }}</h2>
-                <div class="text-body-small text-medium-emphasis">Downstream collector</div>
               </div>
               <v-chip size="small" variant="tonal" :color="index === 0 ? 'primary' : undefined"
                 :aria-label="`Collection rank ${index + 1}`" class="align-self-start">
@@ -77,11 +70,19 @@
               </div>
             </dl>
           </v-card-text>
+          <v-alert v-if="followErrors[user.id]" type="error" variant="tonal" density="compact"
+            class="mx-4 mb-4" role="alert">{{ followErrors[user.id] }}</v-alert>
           <v-divider />
           <v-card-actions class="pa-4">
-            <v-btn block variant="tonal" color="primary" rounded="lg" :to="'/profile/' + user.hash"
+            <v-btn class="flex-grow-1" variant="tonal" color="primary" rounded="lg" :to="'/profile/' + user.hash"
               :aria-label="`View ${user.display_name}'s profile`">
               View profile
+            </v-btn>
+            <v-btn v-if="user.id !== currentUser.id" class="flex-grow-1" variant="flat" color="primary" rounded="lg"
+              :loading="followPending[user.id]" :disabled="isFollowing(user.id) === undefined"
+              :aria-label="`${isFollowing(user.id) ? 'Unfollow' : 'Follow'} ${user.display_name}`"
+              @click="toggleFollow(user)">
+              {{ isFollowing(user.id) ? 'Unfollow' : 'Follow' }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -92,6 +93,7 @@
 
 <script>
 import { identicon } from 'minidenticons'
+import { mapGetters, mapState } from 'vuex'
 import { getActiveUsers } from '@/services/api/FollowerService'
 
 const countFormatter = new Intl.NumberFormat('en-US')
@@ -105,8 +107,30 @@ export default {
     users: [],
     loading: true,
     error: '',
+    followPending: {},
+    followErrors: {},
   }),
+  computed: {
+    ...mapGetters('follower', ['isFollowing']),
+    ...mapState({ currentUser: (state) => state.auth.user }),
+  },
   methods: {
+    async toggleFollow(user) {
+      if (this.followPending[user.id] || user.id === this.currentUser.id || this.isFollowing(user.id) === undefined) return
+      const following = this.isFollowing(user.id)
+      this.followPending[user.id] = true
+      this.followErrors[user.id] = ''
+      try {
+        await this.$store.dispatch(following ? 'follower/unfollow' : 'follower/follow', user.id)
+        if (user.followers_count != null) {
+          user.followers_count = Math.max(0, Number(user.followers_count) + (following ? -1 : 1))
+        }
+      } catch {
+        this.followErrors[user.id] = 'Couldn’t update follow status. Please try again.'
+      } finally {
+        this.followPending[user.id] = false
+      }
+    },
     avatar(user) {
       return `data:image/svg+xml,${encodeURIComponent(identicon(user.display_name || user.hash))}`
     },
@@ -124,7 +148,7 @@ export default {
         const response = await getActiveUsers()
         this.users = response.data
       } catch {
-        this.error = 'We couldn’t load the community. Please try again.'
+        this.error = 'Couldn’t load users. Please try again.'
       } finally {
         this.loading = false
       }
@@ -139,10 +163,6 @@ export default {
 <style scoped>
 .users-view {
   max-width: 1200px;
-}
-
-.users-intro {
-  max-width: 560px;
 }
 
 .user-card {
