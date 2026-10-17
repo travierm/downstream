@@ -81,6 +81,9 @@ export default {
   components: {
     VolumeSlider,
   },
+  beforeDestroy() {
+    YoutubePlayerManager.destroyPlayer()
+  },
   computed: {
     ...mapState({
       shuffled: (store) => store.collection.shuffled,

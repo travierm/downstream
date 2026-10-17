@@ -26,6 +26,7 @@ class YoutubePlayerManager {
     this.currentPlayingGuid = false
 
     this.videoPlayerInstance = false
+    this.previousTimestamp = null
 
     this.volumeChangeListener = []
 
@@ -146,81 +147,76 @@ class YoutubePlayerManager {
   stopPlayingGuid() {
     if (this.videoPlayerInstance) {
       this.videoPlayerInstance.stop()
-      this.videoPlayerInstance.destroy()
-
-      //this.hideVideoElement()
+      this.previousTimestamp = null
     }
   }
 
-  loadVideo(videoId, seekTime = null) {
-    const options = {
-      volume: 5,
-      autoplay: true,
-      fullscreen: true,
-      playsinline: true,
-      controls: false,
-      height: this.playerSize.height,
-      width: this.playerSize.width,
+  destroyPlayer() {
+    if (this.videoPlayerInstance) {
+      this.videoPlayerInstance.destroy()
+      this.videoPlayerInstance = false
     }
 
-    let videoPlayerInstance
-    try {
-      this.showVideoElement()
-      videoPlayerInstance = new YTPlayer('#downstream-video-container', options)
+    this.previousTimestamp = null
+    this.currentPlayingGuid = false
+  }
 
-      videoPlayerInstance.setVolume(this.volume)
-      videoPlayerInstance.load(videoId)
-      if (seekTime) {
-        videoPlayerInstance.seek(seekTime)
-      }
-      videoPlayerInstance.play()
+  loadVideo(videoId, seekTime = null) {
+    this.showVideoElement()
+    this.previousTimestamp = null
 
-      videoPlayerInstance.on('error', (err) => {
+    if (!this.videoPlayerInstance) {
+      const player = new YTPlayer('#downstream-video-container', {
+        volume: 5,
+        autoplay: true,
+        fullscreen: true,
+        playsinline: true,
+        controls: false,
+        height: this.playerSize.height,
+        width: this.playerSize.width,
+      })
+
+      player.on('error', (err) => {
         throw err
       })
 
-      const currentMediaId = this.findVideoByGuid(this.currentPlayingGuid)?.id
-      if (currentMediaId) {
-        let previousTimestamp = null
-        videoPlayerInstance.on('timeupdate', (currentTimestamp) => {
-          if (
-            previousTimestamp !== null &&
-            previousTimestamp * 0.65 > currentTimestamp
-          ) {
-            AnalyticsService.playedMedia(currentMediaId, 'rewind')
+      player.on('timeupdate', (currentTimestamp) => {
+        const currentMediaId = this.findVideoByGuid(this.currentPlayingGuid)?.id
+        if (
+          currentMediaId &&
+          this.previousTimestamp !== null &&
+          this.previousTimestamp * 0.65 > currentTimestamp
+        ) {
+          AnalyticsService.playedMedia(currentMediaId, 'rewind')
 
-            console.log(
-              'The video was rewinded more than 35% from last time update.'
-            )
-          }
-          previousTimestamp = currentTimestamp
-        })
-      }
+          console.log(
+            'The video was rewinded more than 35% from last time update.'
+          )
+        }
+        this.previousTimestamp = currentTimestamp
+      })
 
-      videoPlayerInstance.on('ended', () => {
+      player.on('ended', () => {
         this.playNext()
       })
-    } catch (error) {
-      throw error
+
+      this.videoPlayerInstance = player
     }
 
-    this.videoPlayerInstance = videoPlayerInstance
+    const player = this.videoPlayerInstance
+    player.setVolume(this.volume)
+    player.load(videoId)
+    if (seekTime !== null) {
+      player.seek(seekTime)
+    }
 
     this.playerVolumeChangeWatcher()
   }
 
   playGuid(guid, seekTime = null, playType = 'autoplay') {
     const guidVideo = this.findVideoByGuid(guid)
-    const previousPlayingGuid = _.clone(this.currentPlayingGuid)
 
-    if (previousPlayingGuid) {
-      // Stop playing previous card because a new one would like to play
-      this.stopPlayingGuid(guid)
-    }
-
-    // Update current playing card id
     this.currentPlayingGuid = guid
-
     this.loadVideo(guidVideo.videoId, seekTime)
     AnalyticsService.playedMedia(guidVideo.id, playType)
   }
