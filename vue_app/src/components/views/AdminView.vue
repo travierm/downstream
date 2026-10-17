@@ -3,6 +3,9 @@
     <div class="d-flex align-center mb-4">
       <h2>Admin</h2>
       <v-spacer />
+      <v-btn outlined class="mr-2" :href="logViewerUrl" target="_blank" rel="noopener noreferrer">
+        View logs
+      </v-btn>
       <v-btn outlined :loading="loading" @click="loadDashboard">
         <v-icon left small>{{ icons.refresh }}</v-icon> Refresh
       </v-btn>
@@ -95,6 +98,9 @@ export default {
     icons: { refresh: mdiRefresh },
   }),
   computed: {
+    logViewerUrl() {
+      return `${import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '')}/log-viewer`
+    },
     statCards() {
       const stats = this.dashboard.stats
       return [

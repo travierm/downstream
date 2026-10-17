@@ -25,7 +25,8 @@
     "laravel/helpers": "^1.2",
     "laravel/sanctum": "^3.2",
     "laravel/tinker": "^2.7",
-    "madcoda/php-youtube-api": "^1.2.6"
+    "madcoda/php-youtube-api": "^1.2.6",
+    "opcodesio/log-viewer": "^3.0"
   },
   "require-dev": {
     "fakerphp/faker": "^1.14.0",

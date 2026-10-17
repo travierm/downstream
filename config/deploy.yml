@@ -48,6 +48,7 @@ env:
     APP_DEBUG: false
     APP_URL: https://downstream.us
     APP_LINK_URL: https://downstream.us
+    LOG_CHANNEL: stack
     TURNSTILE_HOSTNAMES: downstream.us
   secret:
     - APP_KEY
@@ -75,10 +76,9 @@ env:
 # ssh:
 #   user: app
 
-# Use a persistent storage volume.
-#
-# volumes:
-#   - "app_storage:/app/storage"
+# Keep rotating application logs across container replacements.
+volumes:
+  - "downstream_logs:/var/www/html/storage/logs"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old

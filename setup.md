@@ -180,3 +180,20 @@ Users can collect any item available on Downstream or through organic search. It
 No item exists on Downstream until a user discovers an item through search. That item is then used as a seed for our discovery service to find additional items related to what you collected.
 
 These discovered items are temporary on Downstream until a user collects them and then they become a discovered media item on the site.
+
+## Viewing Laravel logs
+
+Use **View logs** in the Admin panel, or open `/log-viewer` on the Laravel API host
+(production: `https://api.downstream.us/log-viewer`). Sign in at the browser prompt
+with an existing admin account's email and password. The viewer and all its API
+endpoints require an account with `type=admin`, including in local environments.
+The browser prompt authenticates separately from the frontend's bearer-token login.
+Use HTTPS in production.
+
+OPcodes Log Viewer provides search, filters, and exception stack traces. The
+`stack` logging channel writes to stderr and daily files in `storage/logs`, retained
+for 14 days. Set `LOG_CHANNEL=stack` in existing environments so new application
+logs appear in the viewer. Logs previously written only to stderr are not imported.
+Kamal mounts a persistent volume for these files so they survive deployments.
+Set `LOG_VIEWER_ENABLED=false` to disable the viewer. After changing environment
+settings, rebuild any Laravel configuration cache with `php artisan config:cache`.
