@@ -4,7 +4,11 @@
       <h1>Daily Mix</h1>
       <p>Recommendations based on music you collected in the last 30 days. Your mix refreshes every 24 hours.</p>
     </div>
-    <p v-if="loading" role="status">Finding tracks for your Daily Mix...</p>
+    <v-row v-if="loading">
+      <v-col>
+        <h3 style="color: #1de9b6" role="status">Finding tracks for your Daily Mix...</h3>
+      </v-col>
+    </v-row>
     <v-alert v-else-if="errorMessage" type="error" variant="outlined" role="alert">
       {{ errorMessage }}
       <v-btn variant="text" @click="loadDailyMix">Try again</v-btn>
@@ -46,6 +50,7 @@ export default {
       this.loading = true
       this.errorMessage = false
       try {
+        this.$store.dispatch('setLoadingBarState', true)
         const response = await DiscoverService.getDailyMix()
         this.results = response.data.videos || []
         this.emptyMessage = response.data.message || 'Add some tracks to your collection to get your Daily Mix.'
@@ -57,6 +62,7 @@ export default {
         this.errorMessage = error?.data?.message || 'Could not load your Daily Mix. Please try again.'
       } finally {
         this.loading = false
+        this.$store.dispatch('setLoadingBarState', false)
       }
     },
   },

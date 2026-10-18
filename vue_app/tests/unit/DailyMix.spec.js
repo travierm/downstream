@@ -8,8 +8,8 @@ import DiscoverService from '../../src/services/api/DiscoverService'
 vi.mock('../../src/services/api/DiscoverService', () => ({ default: { getDailyMix: vi.fn() } }))
 const flush = () => new Promise(resolve => setTimeout(resolve, 0))
 const videos = [{ videoId: 'a', title: 'Track', guid: 'guid_a' }]
-function mountMix() {
-  return shallowMount(DailyMixView, { global: { mocks: { $store: { dispatch: vi.fn().mockResolvedValue() } } } })
+function mountMix(dispatch = vi.fn().mockResolvedValue()) {
+  return shallowMount(DailyMixView, { global: { mocks: { $store: { dispatch } } } })
 }
 
 describe('Daily Mix access', () => {
@@ -79,11 +79,32 @@ describe('Daily Mix access', () => {
     const wrapper = mountMix()
     await wrapper.vm.$nextTick()
     expect(wrapper.text()).toContain('Finding tracks')
+    expect(wrapper.find('h3[role="status"]').attributes('style')).toContain('color: rgb(29, 233, 182)')
+    expect(wrapper.vm.$store.dispatch).toHaveBeenCalledWith('setLoadingBarState', true)
+    expect(wrapper.vm.$store.dispatch).not.toHaveBeenCalledWith('setLoadingBarState', false)
     complete({ data: { videos } })
     await flush()
     expect(wrapper.vm.results).toEqual(videos)
     expect(wrapper.vm.loading).toBe(false)
+    expect(wrapper.find('h3[role="status"]').exists()).toBe(false)
+    expect(wrapper.vm.$store.dispatch).toHaveBeenLastCalledWith('setLoadingBarState', false)
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledWith('player/updateGuidData', { guidIndexKey: '/daily-mix', mediaItems: videos })
+    wrapper.unmount()
+  })
+
+  it('keeps both loading indicators active until player registration finishes', async () => {
+    let finishRegistration
+    const registration = new Promise(resolve => { finishRegistration = resolve })
+    const dispatch = vi.fn(name => name === 'player/updateGuidData' ? registration : Promise.resolve())
+    DiscoverService.getDailyMix.mockResolvedValue({ data: { videos } })
+    const wrapper = mountMix(dispatch)
+    await flush()
+    expect(wrapper.find('h3[role="status"]').exists()).toBe(true)
+    expect(dispatch).not.toHaveBeenCalledWith('setLoadingBarState', false)
+    finishRegistration()
+    await flush()
+    expect(wrapper.find('h3[role="status"]').exists()).toBe(false)
+    expect(dispatch).toHaveBeenLastCalledWith('setLoadingBarState', false)
     wrapper.unmount()
   })
 
@@ -93,21 +114,35 @@ describe('Daily Mix access', () => {
     await flush()
     expect(wrapper.text()).toContain('Add some tracks to your collection.')
     expect(wrapper.find('[to="/collection"]').exists()).toBe(true)
+    expect(wrapper.find('h3[role="status"]').exists()).toBe(false)
+    expect(wrapper.vm.$store.dispatch).toHaveBeenLastCalledWith('setLoadingBarState', false)
     wrapper.unmount()
   })
 
   it('offers retry after a provider failure and avoids duplicate clicks while loading', async () => {
+    let finishRetry
     DiscoverService.getDailyMix.mockRejectedValueOnce({ status: 503, data: { message: 'Please try again shortly.' } })
-      .mockResolvedValueOnce({ data: { videos } })
+      .mockReturnValueOnce(new Promise(resolve => { finishRetry = resolve }))
     const wrapper = mountMix()
     await flush()
     expect(wrapper.text()).toContain('Please try again shortly.')
+    expect(wrapper.find('h3[role="status"]').exists()).toBe(false)
+    expect(wrapper.vm.$store.dispatch).toHaveBeenLastCalledWith('setLoadingBarState', false)
     const request = wrapper.vm.loadDailyMix()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('h3[role="status"]').exists()).toBe(true)
+    expect(wrapper.vm.$store.dispatch).toHaveBeenLastCalledWith('setLoadingBarState', true)
     await wrapper.vm.loadDailyMix()
+    finishRetry({ data: { videos } })
     await request
     expect(DiscoverService.getDailyMix).toHaveBeenCalledTimes(2)
     expect(wrapper.vm.errorMessage).toBe(false)
     expect(wrapper.vm.results).toEqual(videos)
+    expect(wrapper.find('h3[role="status"]').exists()).toBe(false)
+    expect(wrapper.vm.$store.dispatch.mock.calls.filter(([name]) => name === 'setLoadingBarState')).toEqual([
+      ['setLoadingBarState', true], ['setLoadingBarState', false],
+      ['setLoadingBarState', true], ['setLoadingBarState', false],
+    ])
     wrapper.unmount()
   })
 })

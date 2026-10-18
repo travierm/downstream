@@ -33,8 +33,6 @@
 
     <v-btn to="/login" variant="outlined" v-if="!loggedIn">Login</v-btn>
 
-    <SearchBar v-if="loggedIn" class="mt-1" />
-
     <v-tooltip v-if="loggedIn && hasDailyMixCollection" location="bottom">
       <template #activator="{ props }">
         <v-btn v-bind="props" to="/daily-mix" icon variant="text" aria-label="Open Daily Mix">
@@ -43,6 +41,8 @@
       </template>
       <span>Daily Mix — recommendations from your recent collections</span>
     </v-tooltip>
+
+    <SearchBar v-if="loggedIn" class="mt-1" />
 
     <v-app-bar-nav-icon
       v-if="loggedIn"
