@@ -127,10 +127,20 @@ return to sequential searches. The frontend reuses results for sixty seconds
 within the signed-in session and shares pending requests for the same track.
 
 Signed-in users can open Daily Mix from the navigation menu on desktop or mobile.
+The header also shows a music-note shortcut with a hover/focus tooltip when the
+loaded collection contains at least one track added in the last 30 days.
 `GET /api/daily-mix` serves the user's cached mix or generates one on demand under
 a per-user lock, so it works without enabling the optional hydration schedule.
-A mix lasts one day. Accounts without listening history can use collected tracks
-as seeds; accounts without any eligible tracks receive an empty list with guidance.
+A mix lasts 24 hours from generation; collecting more music does not refresh a
+cached mix immediately. Seeds come only from tracks collected in the past 30 days,
+using up to six distinct tracks, newest first. Listening history is not used.
+Each successfully used seed has its own three-day cooldown; other seeds' cooldowns
+are not extended. If every eligible seed is on cooldown, the newest eligible
+tracks can be reused. Removed tracks and older collections are excluded.
+Each seed requests six recommendations. Empty recommendation results last five
+minutes; failures do not advance cooldowns. Accounts without eligible collections
+receive an uncached empty list with guidance to collect music.
+Daily Mix cache keys are versioned to ignore older mixes and exclusion lists.
 The page shows loading, empty, and retry states.
 
 Build the frontend with your API URL and public site key:

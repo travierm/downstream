@@ -2,7 +2,7 @@
   <v-container fluid>
     <div class="ml-1">
       <h1>Daily Mix</h1>
-      <p>A curated list of songs based on your collection and listening history.</p>
+      <p>Recommendations based on music you collected in the last 30 days. Your mix refreshes every 24 hours.</p>
     </div>
     <p v-if="loading" role="status">Finding tracks for your Daily Mix...</p>
     <v-alert v-else-if="errorMessage" type="error" variant="outlined" role="alert">
@@ -35,7 +35,7 @@ export default {
     results: [],
     loading: false,
     errorMessage: false,
-    emptyMessage: 'Collect or play some tracks to get your Daily Mix.',
+    emptyMessage: 'Add some tracks to your collection to get your Daily Mix.',
   }),
   mounted() {
     this.loadDailyMix()
@@ -48,7 +48,7 @@ export default {
       try {
         const response = await DiscoverService.getDailyMix()
         this.results = response.data.videos || []
-        this.emptyMessage = response.data.message || 'Collect or play some tracks to get your Daily Mix.'
+        this.emptyMessage = response.data.message || 'Add some tracks to your collection to get your Daily Mix.'
         await this.$store.dispatch('player/updateGuidData', {
           guidIndexKey: '/daily-mix',
           mediaItems: this.results,

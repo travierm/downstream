@@ -35,6 +35,15 @@
 
     <SearchBar v-if="loggedIn" class="mt-1" />
 
+    <v-tooltip v-if="loggedIn && hasDailyMixCollection" location="bottom">
+      <template #activator="{ props }">
+        <v-btn v-bind="props" to="/daily-mix" icon variant="text" aria-label="Open Daily Mix">
+          <v-icon>$mdi-music-note</v-icon>
+        </v-btn>
+      </template>
+      <span>Daily Mix — recommendations from your recent collections</span>
+    </v-tooltip>
+
     <v-app-bar-nav-icon
       v-if="loggedIn"
       aria-label="Open navigation menu"
@@ -63,6 +72,15 @@ export default {
     SearchBar,
   },
   computed: {
+    hasDailyMixCollection() {
+      const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000
+      return (this.collection || []).some((item) => {
+        // Collection timestamps are returned as UTC SQL dates by the API.
+        const date = item.created_at?.replace(' ', 'T')
+        const collectedAt = Date.parse(date && !/(Z|[+-]\d{2}:?\d{2})$/.test(date) ? `${date}Z` : date)
+        return !item.deleted_at && collectedAt >= cutoff
+      })
+    },
     ...mapState({
       collection: (state) => state.collection.collection,
     }),

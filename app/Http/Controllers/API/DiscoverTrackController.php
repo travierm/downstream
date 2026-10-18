@@ -22,7 +22,7 @@ class DiscoverTrackController extends Controller
         }
 
         if (count($mix['videos']) === 0) {
-            $mix['message'] = 'No Daily Mix is available yet. Collect or play some tracks, then try again.';
+            $mix['message'] = 'No Daily Mix is available yet. Add some tracks to your collection, then try again.';
         }
 
         return response()->json($mix);

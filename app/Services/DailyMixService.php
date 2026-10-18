@@ -7,13 +7,12 @@ use App\Models\User;
 use App\Services\Discovery\SimilarTracks;
 use Cumulati\Monolog\LogContext;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class DailyMixService
 {
     public function getDailyMix(User $user): array
     {
-        $key = 'daily-mix-'.$user->id;
+        $key = 'daily-mix:v2:'.$user->id;
         $cached = Cache::get($key);
         if ($cached !== null) {
             return $cached;
@@ -28,12 +27,13 @@ class DailyMixService
     {
         $lc = new LogContext(['user_id' => $user->id]);
 
-        $existingIgnoreIds = Cache::get('daily-mix-ignore-'.$user->id, []);
-        $lc->debug('existing ignore ids', ['ids' => $existingIgnoreIds]);
+        $cooldownKey = 'daily-mix-cooldowns:v2:'.$user->id;
+        $cooldowns = array_filter(Cache::get($cooldownKey, []), fn ($expiresAt) => $expiresAt > now()->timestamp);
 
-        $seedIds = $this->getSeedMediaIds($user, $existingIgnoreIds);
+        $seedIds = $this->getSeedMediaIds($user, array_keys($cooldowns));
         $lc->info('using seed ids', ['ids' => $seedIds]);
-        $mediaItems = Media::whereIn('id', $seedIds)->get();
+        $mediaItems = Media::whereIn('id', $seedIds)->get()
+            ->sortBy(fn ($media) => array_search($media->id, $seedIds))->values();
 
         $videos = collect();
         foreach ($mediaItems as $item) {
@@ -48,9 +48,12 @@ class DailyMixService
             return $mix;
         }
 
-        Cache::put('daily-mix-'.$user->id, $mix, $videos->isEmpty() ? now()->addMinutes(5) : now()->addDay());
+        Cache::put('daily-mix:v2:'.$user->id, $mix, $videos->isEmpty() ? now()->addMinutes(5) : now()->addDay());
         if ($videos->isNotEmpty()) {
-            Cache::put('daily-mix-ignore-'.$user->id, array_values(array_unique(array_merge($existingIgnoreIds, $seedIds))), now()->addMonth());
+            foreach ($seedIds as $seedId) {
+                $cooldowns[$seedId] = now()->addDays(3)->timestamp;
+            }
+            Cache::put($cooldownKey, $cooldowns, now()->addDays(3));
         }
 
         return $mix;
@@ -58,42 +61,20 @@ class DailyMixService
 
     private function getSeedMediaIds(User $user, array $ignoredIds = []): array
     {
-        // Prefer recent listening plus up to three popular older tracks.
-
-        $itemsCollectedThisWeek = $user->userMediaPlays()
-            ->select('media_id', DB::raw('count(*) as plays'))
-            ->whereDate('created_at', '>=', now()->subWeek())
-            ->whereNotIn('media_id', $ignoredIds)
-            ->whereIn('media_id', Media::select('id'))
+        $query = $user->media()->whereHas('media')
+            ->where('created_at', '>=', now()->subDays(30))
+            ->select('media_id')
             ->groupBy('media_id')
-            ->inRandomOrder()
-            ->limit(3)
-            ->pluck('media_id');
+            ->orderByRaw('MAX(created_at) DESC')
+            ->orderByDesc('media_id')
+            ->limit(6);
 
-        $itemsCollectedAMonthOrMoreAgo = $user->userMediaPlays()
-            ->select('media_id', DB::raw('count(*) as plays'))
-            ->whereDate('created_at', '<', now()->subMonth())
-            ->whereNotIn('media_id', $ignoredIds)
-            ->whereIn('media_id', Media::select('id'))
-            ->groupBy('media_id')
-            ->orderBy('plays', 'desc')
-            ->limit(50)
-            ->pluck('media_id');
-
-        $allItems = $itemsCollectedThisWeek->merge(
-            $itemsCollectedAMonthOrMoreAgo->random(min(3, $itemsCollectedAMonthOrMoreAgo->count()))
-        )->unique()->values();
-
-        if ($allItems->isEmpty()) {
-            $allItems = $user->media()->whereHas('media')
-                ->whereNotIn('media_id', $ignoredIds)
-                ->latest()->limit(3)->pluck('media_id');
-        }
-        // Small libraries should still get a mix when all available seeds were used.
-        if ($allItems->isEmpty() && count($ignoredIds)) {
-            return $this->getSeedMediaIds($user);
+        $seedIds = (clone $query)->whereNotIn('media_id', $ignoredIds)->pluck('media_id');
+        // Reuse seeds only when every eligible collection is on cooldown.
+        if ($seedIds->isEmpty() && count($ignoredIds)) {
+            $seedIds = $query->pluck('media_id');
         }
 
-        return $allItems->all();
+        return $seedIds->all();
     }
 }

@@ -43,6 +43,36 @@ describe('Daily Mix access', () => {
     wrapper.unmount()
   })
 
+  it.each([
+    ['recent collection', true, [{ created_at: '2026-10-17 12:00:00', deleted_at: null }], true],
+    ['30-day boundary', true, [{ created_at: '2026-09-18T12:00:00Z' }], true],
+    ['older collection', true, [{ created_at: '2026-09-18T11:59:59Z' }], false],
+    ['empty collection', true, [], false],
+    ['removed track', true, [{ created_at: '2026-10-17T12:00:00Z', deleted_at: '2026-10-18' }], false],
+    ['unknown date', true, [{ title: 'Track' }], false],
+    ['signed out', false, [{ created_at: '2026-10-17T12:00:00Z' }], false],
+  ])('shows the header Daily Mix shortcut appropriately for %s', (_, loggedIn, collection, visible) => {
+    const now = vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-10-18T12:00:00Z'))
+    const wrapper = shallowMount(NavBar, { global: {
+      mocks: {
+        $vuetify: { display: { smAndUp: false } },
+        $store: { state: { collection: { collection }, mediaStats: {}, showLoadingBar: false }, getters: { 'auth/loggedIn': loggedIn } },
+      },
+      stubs: {
+        SearchBar: true, 'router-link': true,
+        VTooltip: { template: '<div><slot name="activator" :props="{}" /><slot /></div>' },
+      },
+    } })
+    const shortcut = wrapper.find('[aria-label="Open Daily Mix"]')
+    expect(shortcut.exists()).toBe(visible)
+    if (visible) {
+      expect(shortcut.attributes('to')).toBe('/daily-mix')
+      expect(wrapper.text()).toContain('Daily Mix — recommendations from your recent collections')
+    }
+    wrapper.unmount()
+    now.mockRestore()
+  })
+
   it('shows loading then registers returned tracks with the player', async () => {
     let complete
     DiscoverService.getDailyMix.mockReturnValue(new Promise(resolve => { complete = resolve }))
@@ -58,10 +88,10 @@ describe('Daily Mix access', () => {
   })
 
   it('shows a useful empty state for an account without a mix', async () => {
-    DiscoverService.getDailyMix.mockResolvedValue({ data: { videos: [], message: 'Collect or play some tracks.' } })
+    DiscoverService.getDailyMix.mockResolvedValue({ data: { videos: [], message: 'Add some tracks to your collection.' } })
     const wrapper = mountMix()
     await flush()
-    expect(wrapper.text()).toContain('Collect or play some tracks.')
+    expect(wrapper.text()).toContain('Add some tracks to your collection.')
     expect(wrapper.find('[to="/collection"]').exists()).toBe(true)
     wrapper.unmount()
   })
