@@ -19,7 +19,7 @@
     "php": ">=8.2",
     "cumulati/monolog-context": "dev-monolog-3-upgrade",
     "doctrine/dbal": "^3.5",
-    "guzzlehttp/guzzle": "^7.2",
+    "guzzlehttp/guzzle": "^8.2",
     "jwilsson/spotify-web-api-php": "^5.7.1",
     "laravel/framework": "^10.0",
     "laravel/helpers": "^1.2",
