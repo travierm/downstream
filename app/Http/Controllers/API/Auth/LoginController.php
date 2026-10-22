@@ -20,7 +20,8 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|string',
+            'device_name' => 'nullable|string|max:255',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -31,7 +32,7 @@ class LoginController extends Controller
             ]);
         }
 
-        $deviceName = $request->device_name || 'webapp';
+        $deviceName = $request->input('device_name') ?: 'webapp';
         $token = $user->createToken($deviceName)->plainTextToken;
 
         $data = [

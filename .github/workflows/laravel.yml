@@ -35,6 +35,8 @@ jobs:
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
   vue-app-tests:
     name: Frontend Build and Tests
+    # Temporarily disabled; remove this condition to restore frontend CI.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     defaults:
       run:

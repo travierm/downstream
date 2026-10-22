@@ -23,6 +23,7 @@ class MediaCollectionController extends Controller
         if ($item) {
             $item->pushed_at = now();
             $item->save();
+            $this->clearCollectionCache($userId);
 
             return response()->json([
                 'mediaId' => $mediaId,
@@ -33,7 +34,7 @@ class MediaCollectionController extends Controller
         return response()->json([
             'mediaId' => $mediaId,
             'message' => 'Failed to update pushed_at date on item',
-        ], 500);
+        ], 404);
     }
 
     /**
@@ -73,10 +74,15 @@ class MediaCollectionController extends Controller
             }
         }
 
-        $userMediaId = UserMedia::firstOrCreate([
+        $userMediaId = UserMedia::withTrashed()->firstOrCreate([
             'media_id' => $media->id,
             'user_id' => $userId,
         ]);
+
+        if ($userMediaId->trashed()) {
+            $userMediaId->pushed_at = now();
+            $userMediaId->restore();
+        }
 
         // Add mediaId to users collection
         if (! $userMediaId) {
