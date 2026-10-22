@@ -1,7 +1,7 @@
 # Downstream Frontend
 
 The frontend uses Vue 3, Vuetify 4, Vue Router 5, Vuex 4, and Vite.
-Use Node.js 22.13 or newer and pnpm 11.20.0.
+Use Node.js 24.22.1 LTS or newer and pnpm 11.20.0. The root `.node-version` pins the tested Node release.
 
 ```sh
 npm install --global pnpm@11.20.0

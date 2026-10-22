@@ -10,7 +10,7 @@ when running a separate installation.
 
 - PHP 8.2 or greater and Composer
 - MySQL or MariaDB, with a database created for your instance
-- Node.js 22.12 or greater and Yarn 1.22
+- Node.js 24.22.1 LTS or newer and pnpm 11.20.0
 - A YouTube API key for search
 - A Cloudflare Turnstile widget for account registration
 - Optional Spotify credentials for Spotify integration
@@ -43,7 +43,7 @@ php artisan serve
 
 ## Frontend setup
 
-Use Node.js 22.13 or newer and pnpm 11.20.0 (`npm install --global pnpm@11.20.0`).
+Use Node.js 24.22.1 LTS or newer and pnpm 11.20.0 (`npm install --global pnpm@11.20.0`).
 In a separate terminal, from the repository root:
 
 ```sh
