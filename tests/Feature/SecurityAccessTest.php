@@ -62,7 +62,7 @@ class SecurityAccessTest extends TestCase
         $response = $this->actingAs($publicUser)->getJson('/api/users/active')->assertOk();
         $this->assertCount(1, $response->json());
         $this->assertEqualsCanonicalizing(
-            ['id', 'display_name', 'hash', 'media_count'],
+            ['id', 'display_name', 'hash', 'created_at', 'media_count', 'followers_count', 'spotify_imports_count'],
             array_keys($response->json('0'))
         );
         $response->assertJsonMissing(['id' => $privateUser->id]);
