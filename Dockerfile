@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG ALPINE_VERSION=3.14
-FROM php:8.2-fpm-alpine
+FROM php:8.5.12-fpm-alpine
 
 LABEL Maintainer="Travier Moorlag"
 LABEL Description="Lightweight container for running Laravel API's"
@@ -21,12 +20,11 @@ RUN apk add --no-cache \
 
 RUN rm -f /usr/local/etc/php/conf.d/*pdo*.ini
 
-# Install PHP extensions
+# Install PHP extensions (OPcache is built into PHP 8.5).
 RUN docker-php-ext-install \
   pdo \
   pdo_mysql \
-  mysqli \
-  opcache
+  mysqli
 
 RUN docker-php-ext-configure gd && \
   docker-php-ext-install gd
