@@ -39,7 +39,7 @@
     "@vue/compiler-dom": "^3.5.44",
     "@vue/compiler-sfc": "^3.5.44",
     "@vue/test-utils": "^2.5.1",
-    "eslint": "^8.57.1",
+    "eslint": "^10.13.0",
     "eslint-plugin-vue": "^10.11.1",
     "jsdom": "^26.1.0",
     "sass": "^1.105.2",
