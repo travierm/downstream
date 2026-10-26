@@ -24,7 +24,7 @@
     "events": "^3.3.0",
     "jquery": "^3.7.1",
     "lodash": "^4.18.1",
-    "minidenticons": "^3.1.2",
+    "minidenticons": "^4.2.1",
     "process": "^0.11.10",
     "vue": "^3.5.44",
     "vue-router": "^5.4.0",
